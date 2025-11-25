@@ -1,0 +1,471 @@
+using System;
+using Godot;
+using System.Collections.Generic;
+using System.Linq;
+using ArkhamHunters.Scripts;
+using ArkhamHunters.Scripts.Items;
+using Container = ArkhamHunters.Scripts.Container;
+using ArkhamHunters.Scripts.Abilities;
+using System.Diagnostics;
+
+public partial class Player : Character
+{
+	private class DialogueState : ICharacterState
+	{
+		private IDialogueInteractable _dialogueSource;
+		private DialogueGraph _dialogueNode;
+		private int _currentPhraseIndex;
+		private double _timeSinceLastWrite;
+
+		public DialogueState(IDialogueInteractable dialogueSource)
+		{
+			_dialogueSource = dialogueSource;
+			_dialogueNode = dialogueSource.GetDialogue();
+			_currentPhraseIndex = 0;
+			_timeSinceLastWrite = 0;
+		}
+
+		public void Process(double delta, Character character)
+		{
+			var player = (Player)character;
+			player._dialoguePanel.Visible = true;
+			var currentPhrase = _dialogueNode.Phrases[_currentPhraseIndex];
+			var writingDone = currentPhrase.Length == player._dialogueLabel.Text.Length;
+			if (!writingDone)
+			{
+				// Continue writing
+				_timeSinceLastWrite += delta;
+				if (_timeSinceLastWrite >= player._typewriterSpeed)
+				{
+					_timeSinceLastWrite = 0;
+					var currentChar = currentPhrase[player._dialogueLabel.Text.Length];
+					player._dialogueLabel.Text += currentChar;
+				}
+			}
+
+			if (Input.IsActionJustPressed("Interact") && writingDone)
+			{
+				player._dialogueLabel.Text = "";
+				_currentPhraseIndex += 1;
+				if (_currentPhraseIndex >= _dialogueNode.Phrases.Count)
+				{
+					player._dialoguePanel.Visible = false;
+					player.State = new NavigationState();
+				}
+			}
+
+			if (Input.IsActionJustPressed("Interact") && !writingDone)
+			{
+				player._dialogueLabel.Text = currentPhrase;
+			}
+		}
+
+		public void PhysicsProcess(double delta, Character player) { }
+	}
+
+	private class InventoryState : ICharacterState
+	{
+		public InventoryState(Player player)
+		{
+			player._inventoryDisplay.CurrentInventory = player.Inventory;
+			player._inventoryDisplay.CurrentEquipment = player.EquipmentSet;
+			player._inventoryDisplay.Visible = true;
+		}
+		public void Process(double delta, Character character)
+		{
+			var player = (Player)character;
+			if (Input.IsActionJustPressed("Open Inventory"))
+			{
+				player._inventoryDisplay.Visible = false;
+				player.State = new NavigationState();
+			}
+		}
+
+		public void PhysicsProcess(double delta, Character player) { }
+	}
+
+	private class NavigationState : ICharacterState
+	{
+		public void Process(double delta, Character character)
+		{
+			var player = (Player)character;
+
+			// Handle interactable badges
+			var closestInteractable = player.GetClosestInteractable();
+
+			if (closestInteractable != player._lastBadgedInteractable)
+			{
+				if (player._lastBadgedInteractable != null)
+				{
+					player._lastBadgedInteractable.SetShowBadge(false);
+				}
+				if (closestInteractable != null)
+				{
+					closestInteractable.SetShowBadge(true);
+				}
+				player._lastBadgedInteractable = closestInteractable;
+			}
+
+			if (Input.IsActionPressed("Move West"))
+			{
+				player.SpriteAnim.Play("walk_west");
+			}
+			else if (Input.IsActionPressed("Move South"))
+			{
+				player.SpriteAnim.Play("walk_south");
+			}
+			else if (Input.IsActionPressed("Move East"))
+			{
+				player.SpriteAnim.Play("walk_east");
+			}
+			else if (Input.IsActionPressed("Move North"))
+			{
+				player.SpriteAnim.Play("walk_north");
+			}
+			else
+			{
+				player.SpriteAnim.Pause();
+			}
+
+			if (Input.IsActionJustPressed("Interact"))
+			{
+				if (closestInteractable != null)
+				{
+					switch (closestInteractable.GetInteractionType())
+					{
+						case InteractionType.Dialogue:
+							{
+								player.State = new DialogueState((IDialogueInteractable)closestInteractable);
+								break;
+							}
+						case InteractionType.Container:
+							{
+								player.State = new ContainerSearchState(player);
+								break;
+							}
+						case InteractionType.Toggleable:
+							{
+								var toggle = (IToggleableInteractable)closestInteractable;
+								toggle.Toggle();
+								break;
+							}
+					}
+				}
+			}
+
+			if (Input.IsActionJustPressed("Open Inventory"))
+			{
+				player.State = new InventoryState(player);
+			}
+		}
+
+		public void PhysicsProcess(double delta, Character character)
+		{
+			var player = (Player)character;
+
+			// Get the input direction and handle the movement.
+			Vector2 direction = Input.GetVector("Move West", "Move East", "Move North", "Move South");
+			player.Velocity = direction * player.Speed;
+
+			player.MoveAndSlide();
+		}
+	}
+
+	private class ContainerSearchState : ICharacterState
+	{
+		private readonly Container _container;
+		private Player _player;
+
+		private void OnContainerItemSelect(Item item)
+		{
+			_player.Inventory.Add(item);
+			_container.RemoveItem(item);
+			_player._containerDisplay.DisplayItemList(_container.GetItems());
+		}
+
+		public ContainerSearchState(Character character)
+		{
+			_player = (Player)character;
+			_container = (Container)_player.GetClosestInteractable();
+			_player._containerDisplay.DisplayItemList(_container.GetItems());
+			_player._containerDisplay.OnItemSelected += OnContainerItemSelect;
+		}
+
+		public void Process(double delta, Character character)
+		{
+			_player = (Player)character;
+			var closeRequested = _player._containerDisplay.GetAllPressed() || _player._containerDisplay.ClosePressed();
+			if (closeRequested)
+			{
+				if (_player._containerDisplay.GetAllPressed())
+				{
+					_player.Inventory.AddRange(_container.GetItems());
+					_container.ClearItems();
+				}
+
+				_player._containerDisplay.Visible = false;
+				_player._containerDisplay.OnItemSelected -= OnContainerItemSelect;
+				_player.State = new NavigationState();
+			}
+		}
+
+		public void PhysicsProcess(double delta, Character character) { }
+	}
+
+	private class CombatState : ICharacterState
+	{
+		private NavigationState _substate;
+
+		public CombatState()
+		{
+			_substate = new NavigationState();
+		}
+
+		public void Process(double delta, Character character)
+		{
+			_substate.Process(delta, character);
+		}
+
+		public void PhysicsProcess(double delta, Character character)
+		{
+			_substate.PhysicsProcess(delta, character);
+		}
+	}
+
+	private class PursuitState : ICharacterState
+	{
+		private Character _target;
+		private Ability _ability;
+
+		public PursuitState(NavigationAgent2D agent, Character target, Ability ability)
+		{
+			_target = target;
+			_ability = ability;
+			var player = agent.GetParent() as Player;
+
+            agent.VelocityComputed += (safeVelocity) =>
+			{
+				OnVelocityComputed(player, safeVelocity.LimitLength(player.Speed));
+			};
+
+			agent.TargetPosition = target.GetClosestOnCollSurface(player.Position);
+			agent.TargetDesiredDistance = ability.Range; 
+		}
+
+		public void Process(double delta, Character character)
+		{
+		}
+
+		public void PhysicsProcess(double delta, Character character)
+		{
+			var player = (Player)character;
+			// Do not query when the map has never synchronized and is empty.
+			if (NavigationServer2D.MapGetIterationId(player._navigationAgent.GetNavigationMap()) == 0)
+			{
+				return;
+			}
+
+			if (player._navigationAgent.IsNavigationFinished())
+			{
+				if (_ability != null)
+				{
+					player.State = new AttackState(_target, _ability);
+				}
+				return;
+			}
+
+			Vector2 nextPathPosition = player._navigationAgent.GetNextPathPosition();
+			Vector2 newVelocity = player.GlobalPosition.DirectionTo(nextPathPosition) * player.Speed;
+			if (player._navigationAgent.AvoidanceEnabled)
+			{
+				player._navigationAgent.Velocity = newVelocity;
+			}
+			else
+			{
+				OnVelocityComputed(player, newVelocity);
+			}
+		}
+
+		private void OnVelocityComputed(Player player, Vector2 safeVelocity)
+		{
+			player.Velocity = safeVelocity;
+			player.MoveAndSlide();
+		}
+    }
+		
+	private class AttackState : ICharacterState
+	{
+		private readonly Character _target;
+		private readonly Ability _ability;
+
+		public AttackState(Character target, Ability ability)
+		{
+			_target = target;
+			_ability = ability;
+		}
+
+		public void Process(double delta, Character character)
+		{
+			var player = (Player)character;
+			var distance = player.GlobalPosition.DistanceTo(_target.GetClosestOnCollSurface(player.Position));
+			if (distance > _ability.Range)
+			{
+				player.State = new PursuitState(player._navigationAgent, _target, _ability);
+			}
+			else
+			{
+                GD.Print($"Activating ability: {_ability.Name} on {_target.Name}");
+                CombatSystem.UseAbility(_ability, player, _target);
+				player.State = new CombatState();
+			}
+		}
+
+		public void PhysicsProcess(double delta, Character character) { }
+	}
+
+	[Export]
+	public float Speed = 300.0f;
+	[Export]
+	private float _typewriterSpeed = 1.0f;
+
+	private Panel _dialoguePanel;
+	private Label _dialogueLabel;
+	private Area2D _interactableRange;
+	private ContainerDisplay _containerDisplay;
+	private InventoryDisplay _inventoryDisplay;
+	private IInteractable _lastBadgedInteractable;
+	private Area2D _senseArea;
+
+	private BasicAttack _basicAttack;
+
+	[Export]
+	private Godot.Collections.Array<Ability> _abilities = new();
+
+	private Dictionary<Enemy, Action> _combatInteractions = new();
+
+	private NavigationAgent2D _navigationAgent;
+
+	private List<IInteractable> GetInteractablesInRange()
+	{
+		return _interactableRange.GetOverlappingBodies().ToList().Where(n => n is IInteractable).Select(n => n as IInteractable).ToList();
+	}
+
+	private IInteractable GetClosestInteractable()
+	{
+		var interactables = GetInteractablesInRange();
+		IInteractable closestInteractable = null;
+		float closestDistance = float.MaxValue;
+
+		foreach (var interactable in interactables)
+		{
+			var node = (Node2D)interactable;
+			var distance = GlobalPosition.DistanceTo(node.GlobalPosition);
+			if (distance < closestDistance)
+			{
+				closestDistance = distance;
+				closestInteractable = interactable;
+			}
+		}
+
+		return closestInteractable;
+	}
+
+	public override void _Ready()
+	{
+		base._Ready();
+		SpriteAnim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		_dialoguePanel = GetNode<Panel>("DialoguePanel");
+		_dialogueLabel = GetNode<Label>("DialoguePanel/Label");
+		_interactableRange = GetNode<Area2D>("InteractableRange");
+		_containerDisplay = GetNode<ContainerDisplay>("ContainerDisplay");
+		_inventoryDisplay = GetNode<InventoryDisplay>("InventoryDisplay");
+		_inventoryDisplay.OnItemSelected += OnInventorySelection;
+		_senseArea = GetNode<Area2D>("SenseArea");
+
+		_basicAttack = new BasicAttack();
+		_abilities = new Godot.Collections.Array<Ability>
+		{
+			_basicAttack
+		};
+
+		_navigationAgent = GetNode<NavigationAgent2D>("NavigationAgent2D");
+
+		State = new NavigationState();
+		_senseArea.BodyEntered += OnEnemyEnteredSenseArea;
+		_senseArea.BodyExited += OnEnemyExitedSenseArea;
+	}
+
+	private void OnInventorySelection(Item item)
+	{
+		var itemToEquip = item.Equipped ? Item.NoneItem() : item;
+		if (MeetsEquipRequirements(itemToEquip))
+		{
+			switch (item.ItemType)
+			{
+				case ItemType.Weapon:
+					{
+						EquipmentSet.Weapon = itemToEquip;
+						_basicAttack.SetWeapon(itemToEquip);
+						break;
+					}
+				case ItemType.Armor:
+					{
+						EquipmentSet.Armor = itemToEquip;
+						break;
+					}
+				case ItemType.Wearable:
+					{
+						EquipmentSet.Helmet = itemToEquip;
+						break;
+					}
+				default:
+					{
+						break;
+					}
+			}
+
+			_inventoryDisplay.CurrentEquipment = EquipmentSet;
+			_inventoryDisplay.CurrentInventory = Inventory;
+		}
+	}
+
+	private void OnEnemyEnteredSenseArea(Node2D body)
+	{
+		if (body is Enemy enemy)
+		{
+			GD.Print($"Enemy entered sense area: {body.Name}");
+			var combatMenu = enemy.GetCombatInteractionMenu();
+			if (combatMenu != null)
+			{
+				combatMenu.Visible = true;
+				combatMenu.SetAbilities(_abilities);
+				_combatInteractions[enemy] = () =>
+				{
+					var ability = combatMenu.GetCurrentAbility();
+					if (ability != null)
+					{
+						GD.Print($"Entering attack state");
+						State = new AttackState(enemy, ability);
+					}
+				};
+
+				combatMenu._activationButton.Pressed += _combatInteractions[enemy];
+			}
+		}
+	}
+	
+	private void OnEnemyExitedSenseArea(Node2D body)
+	{
+		if (body is Enemy enemy)
+		{
+			var combatMenu = enemy.GetCombatInteractionMenu();
+			if (combatMenu != null)
+			{
+				combatMenu.Visible = false;
+				combatMenu.SetAbilities(new Godot.Collections.Array<Ability>());
+				combatMenu._activationButton.Pressed -= _combatInteractions[enemy];
+				_combatInteractions.Remove(enemy);
+			}
+		}
+	}
+}

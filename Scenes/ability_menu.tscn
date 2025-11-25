@@ -1,0 +1,62 @@
+[gd_scene load_steps=10 format=3 uid="uid://brdmuedpkp0jn"]
+
+[ext_resource type="Texture2D" uid="uid://di2o52umbf010" path="res://Sprites/Images/arrow.png" id="1_e7t4l"]
+[ext_resource type="Script" path="res://Scripts/AbilityMenu.cs" id="1_muvf5"]
+[ext_resource type="Texture2D" uid="uid://ctnegrdyuamw5" path="res://Sprites/Images/arrow_outline.png" id="2_gpnv8"]
+[ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://Sprites/Images/spr_itemsncolectables.png" id="3_gaum7"]
+[ext_resource type="Texture2D" uid="uid://clru4be0tsesu" path="res://Sprites/Images/spr_itemsncolectables-outlined.png" id="4_fxx1f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_285tm"]
+atlas = ExtResource("3_gaum7")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m2ibf"]
+atlas = ExtResource("4_fxx1f")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jjbt4"]
+atlas = ExtResource("4_fxx1f")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5rioy"]
+atlas = ExtResource("4_fxx1f")
+region = Rect2(0, 16, 16, 16)
+
+[node name="AbilityMenu" type="PanelContainer"]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1888.0
+offset_bottom = -1020.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_muvf5")
+
+[node name="UpButton" type="TextureButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture_normal = ExtResource("1_e7t4l")
+texture_pressed = ExtResource("2_gpnv8")
+texture_hover = ExtResource("2_gpnv8")
+texture_focused = ExtResource("2_gpnv8")
+
+[node name="ActivationButton" type="TextureButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = SubResource("AtlasTexture_285tm")
+texture_pressed = SubResource("AtlasTexture_m2ibf")
+texture_hover = SubResource("AtlasTexture_jjbt4")
+texture_focused = SubResource("AtlasTexture_5rioy")
+
+[node name="DownButton" type="TextureButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+texture_normal = ExtResource("1_e7t4l")
+texture_pressed = ExtResource("2_gpnv8")
+texture_hover = ExtResource("2_gpnv8")
+texture_focused = ExtResource("2_gpnv8")
+flip_v = true

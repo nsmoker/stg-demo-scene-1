@@ -1,0 +1,98 @@
+[gd_resource type="Resource" script_class="Item" load_steps=28 format=3 uid="uid://vuejdeymb45b"]
+
+[ext_resource type="Script" uid="uid://5hcjkamye5ns" path="res://Scripts/Items/AttributeBonus.cs" id="1_tdf5l"]
+[ext_resource type="Script" uid="uid://c54dlxcx6qrkd" path="res://Scripts/Items/SkillBonus.cs" id="2_e4vmd"]
+[ext_resource type="Script" uid="uid://dgvr4h6v7mkj5" path="res://Scripts/Items/ArmorStats.cs" id="3_vbwnk"]
+[ext_resource type="Script" uid="uid://bg3xbg8f0cawp" path="res://Scripts/Items/AttributeRequirement.cs" id="4_he5wo"]
+[ext_resource type="Script" uid="uid://cn548gp046jaa" path="res://Scripts/Items/ConsumableStats.cs" id="5_jevp6"]
+[ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://Sprites/Images/spr_itemsncolectables.png" id="6_nnguv"]
+[ext_resource type="Texture2D" uid="uid://clru4be0tsesu" path="res://Sprites/Images/spr_itemsncolectables-outlined.png" id="7_5o1h1"]
+[ext_resource type="Script" uid="uid://bjq8iqwdrtj6w" path="res://Scripts/Items/SkillRequirement.cs" id="8_l67oy"]
+[ext_resource type="Script" uid="uid://cs3jsnbfssvyu" path="res://Scripts/Items/WeaponStats.cs" id="9_1vyfw"]
+[ext_resource type="Script" uid="uid://mxrfbr2ffrey" path="res://Scripts/DamageRoll.cs" id="9_hi3ru"]
+[ext_resource type="Script" uid="uid://bpuijyxf410pp" path="res://Scripts/Items/WearableStats.cs" id="10_w3cqs"]
+[ext_resource type="Script" uid="uid://bu40wng0pu1b6" path="res://Scripts/Items/Item.cs" id="11_pl7b0"]
+
+[sub_resource type="Resource" id="Resource_k248y"]
+script = ExtResource("1_tdf5l")
+
+[sub_resource type="Resource" id="Resource_xyxv0"]
+script = ExtResource("2_e4vmd")
+BonusProficiencies = null
+
+[sub_resource type="Resource" id="Resource_y1brm"]
+script = ExtResource("3_vbwnk")
+SkillBonuses = SubResource("Resource_xyxv0")
+AttributeBonuses = SubResource("Resource_k248y")
+
+[sub_resource type="Resource" id="Resource_31qge"]
+script = ExtResource("4_he5wo")
+MinimumStrength = 500
+MinimumDexterity = 500
+MinimumEndurance = 500
+MinimumIntelligence = 500
+MinimumWisdom = 500
+MinimumCharisma = 500
+MinimumWillpower = 500
+
+[sub_resource type="Resource" id="Resource_y40vd"]
+script = ExtResource("5_jevp6")
+DamageRolls = null
+HealRolls = null
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ej1s"]
+atlas = ExtResource("6_nnguv")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uhliu"]
+atlas = ExtResource("7_5o1h1")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="Resource" id="Resource_wgcb0"]
+script = ExtResource("8_l67oy")
+Proficiencies = Array[int]([2])
+
+[sub_resource type="Resource" id="Resource_5a5jb"]
+script = ExtResource("1_tdf5l")
+
+[sub_resource type="Resource" id="Resource_iokjr"]
+script = ExtResource("9_hi3ru")
+Rolls = Array[int]([6])
+Mod = 1
+Melee = true
+
+[sub_resource type="Resource" id="Resource_thl1a"]
+script = ExtResource("2_e4vmd")
+BonusProficiencies = null
+
+[sub_resource type="Resource" id="Resource_c4wqk"]
+script = ExtResource("9_1vyfw")
+DamageRolls = SubResource("Resource_iokjr")
+ToHitMod = 5
+SkillBonuses = SubResource("Resource_thl1a")
+AttributeBonuses = SubResource("Resource_5a5jb")
+
+[sub_resource type="Resource" id="Resource_3xdml"]
+script = ExtResource("1_tdf5l")
+
+[sub_resource type="Resource" id="Resource_gwxkh"]
+script = ExtResource("2_e4vmd")
+BonusProficiencies = null
+
+[sub_resource type="Resource" id="Resource_w2bgh"]
+script = ExtResource("10_w3cqs")
+SkillBonuses = SubResource("Resource_gwxkh")
+AttributeBonuses = SubResource("Resource_3xdml")
+
+[resource]
+script = ExtResource("11_pl7b0")
+AttributeRequirements = SubResource("Resource_31qge")
+SkillRequirements = SubResource("Resource_wgcb0")
+ConsumableStats = SubResource("Resource_y40vd")
+WearableStats = SubResource("Resource_w2bgh")
+ArmorStats = SubResource("Resource_y1brm")
+WeaponStats = SubResource("Resource_c4wqk")
+Name = "GIGA ITEM"
+Description = "WEEWOO WEEWOO ENDGAME ITEM WEEWOO"
+Icon = SubResource("AtlasTexture_0ej1s")
+OutlineIcon = SubResource("AtlasTexture_uhliu")

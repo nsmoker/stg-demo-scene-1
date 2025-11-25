@@ -1,0 +1,87 @@
+[gd_scene load_steps=11 format=3 uid="uid://c87rbgv3boios"]
+
+[ext_resource type="Texture2D" uid="uid://dmkwnll0x5ygd" path="res://Sprites/Images/Characters/char_01.png" id="1_xy86o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3qc4"]
+atlas = ExtResource("1_xy86o")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ls3n2"]
+atlas = ExtResource("1_xy86o")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3bo6t"]
+atlas = ExtResource("1_xy86o")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bgpng"]
+atlas = ExtResource("1_xy86o")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6iwk0"]
+atlas = ExtResource("1_xy86o")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vsdq4"]
+atlas = ExtResource("1_xy86o")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ofh5c"]
+atlas = ExtResource("1_xy86o")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sc206"]
+atlas = ExtResource("1_xy86o")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ux55k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d3qc4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ls3n2")
+}],
+"loop": true,
+"name": &"walk_east",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3bo6t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bgpng")
+}],
+"loop": true,
+"name": &"walk_north",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6iwk0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vsdq4")
+}],
+"loop": true,
+"name": &"walk_south",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ofh5c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sc206")
+}],
+"loop": true,
+"name": &"walk_west",
+"speed": 5.0
+}]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_ux55k")
+animation = &"walk_east"

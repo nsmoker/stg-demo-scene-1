@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://ctgni16h8tre6"]
+
+[ext_resource type="Script" path="res://Scripts/ContainerDisplay.cs" id="1_iodxy"]
+[ext_resource type="PackedScene" uid="uid://ce04r4c7q8n5i" path="res://Scenes/item_display.tscn" id="2_x5ufq"]
+
+[sub_resource type="Theme" id="Theme_dxbun"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gyblq"]
+bg_color = Color(0.099986, 0.099986, 0.099986, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_tkvgk"]
+font_names = PackedStringArray("Arial")
+subpixel_positioning = 0
+oversampling = 10.0
+
+[sub_resource type="Theme" id="Theme_8dxy5"]
+default_font = SubResource("SystemFont_tkvgk")
+default_font_size = 6
+
+[node name="ContainerDisplay" type="PanelContainer"]
+offset_left = -49.0
+offset_top = -48.0
+offset_right = 71.0
+offset_bottom = 72.0
+theme = SubResource("Theme_dxbun")
+theme_override_styles/panel = SubResource("StyleBoxFlat_gyblq")
+script = ExtResource("1_iodxy")
+ItemDisplayScene = ExtResource("2_x5ufq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="GetAllButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_8dxy5")
+text = "GET ALL"
+
+[node name="CloseButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_8dxy5")
+text = "CLOSE"
