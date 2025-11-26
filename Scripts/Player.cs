@@ -153,9 +153,15 @@ public partial class Player : Character
 				}
 			}
 
-			if (Input.IsActionJustPressed("Open Inventory"))
+            if (Input.IsActionJustPressed("Pause"))
+            {
+                character.GetTree().Paused = true;
+				player.SetState(new PauseState(this));
+            }
+
+            if (Input.IsActionJustPressed("Open Inventory"))
 			{
-				player.State = new InventoryState(player);
+				player.SetState(new InventoryState(player));
 			}
 		}
 
@@ -224,6 +230,11 @@ public partial class Player : Character
 		public void Process(double delta, Character character)
 		{
 			_substate.Process(delta, character);
+			if (Input.IsActionJustPressed("Pause"))
+			{
+				character.GetTree().Paused = true;
+				character.SetState(new PauseState(this));
+			}
 		}
 
 		public void PhysicsProcess(double delta, Character character)
@@ -306,7 +317,12 @@ public partial class Player : Character
 
 		public void Process(double delta, Character character)
 		{
-			var player = (Player)character;
+
+		}
+
+		public void PhysicsProcess(double delta, Character character)
+		{
+			var player = (Player) character;
 			var distance = player.GlobalPosition.DistanceTo(_target.GetClosestOnCollSurface(player.Position));
 			if (distance > _ability.Range)
 			{
@@ -314,14 +330,33 @@ public partial class Player : Character
 			}
 			else
 			{
-                GD.Print($"Activating ability: {_ability.Name} on {_target.Name}");
-                CombatSystem.UseAbility(_ability, player, _target);
+				CombatSystem.UseAbility(_ability, player, _target);
 				player.State = new CombatState();
 			}
 		}
-
-		public void PhysicsProcess(double delta, Character character) { }
 	}
+
+	private class PauseState: ICharacterState
+	{
+		private ICharacterState _resumeState;
+        public PauseState(ICharacterState resumeState)
+        {
+			_resumeState = resumeState;
+        }
+
+        public void Process(double delta, Character character)
+        {
+            if (Input.IsActionJustPressed("Pause"))
+            {
+                character.GetTree().Paused = false;
+                character.SetState(_resumeState);
+            }
+        }
+
+        public void PhysicsProcess(double delta, Character character)
+        {
+        }
+    }
 
 	[Export]
 	public float Speed = 300.0f;
@@ -373,6 +408,7 @@ public partial class Player : Character
 	public override void _Ready()
 	{
 		base._Ready();
+		CombatLog.Initialize();
 		SpriteAnim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_dialoguePanel = GetNode<Panel>("DialoguePanel");
 		_dialogueLabel = GetNode<Label>("DialoguePanel/Label");
@@ -439,13 +475,15 @@ public partial class Player : Character
 			{
 				combatMenu.Visible = true;
 				combatMenu.SetAbilities(_abilities);
+				combatMenu.ProcessMode = ProcessModeEnum.Always;
 				_combatInteractions[enemy] = () =>
 				{
 					var ability = combatMenu.GetCurrentAbility();
 					if (ability != null)
 					{
 						GD.Print($"Entering attack state");
-						State = new AttackState(enemy, ability);
+						GetTree().Paused = false;
+						SetState(new AttackState(enemy, ability));
 					}
 				};
 
@@ -462,7 +500,7 @@ public partial class Player : Character
 			if (combatMenu != null)
 			{
 				combatMenu.Visible = false;
-				combatMenu.SetAbilities(new Godot.Collections.Array<Ability>());
+				combatMenu.SetAbilities([]);
 				combatMenu._activationButton.Pressed -= _combatInteractions[enemy];
 				_combatInteractions.Remove(enemy);
 			}

@@ -59,7 +59,7 @@ public partial class Enemy : Character
 
             foreach (var body in enemy._senseArea.GetOverlappingBodies())
             {
-                if (body is Player player)
+                if (body is Player)
                 {
                     enemy.State = new CombatState();
                     return;

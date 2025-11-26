@@ -28,6 +28,7 @@ If Visual Studio gives you trouble, run Project -> Tools -> C# -> Create C# Solu
 * Enemies with in-editor patrol route definition.
 * Combat system with ability menu UI.
 * Pathfinding and range handling during combat.
+* Pause function
 
 ## Missing Features
 
@@ -37,7 +38,6 @@ This was pretty much a "for-fun" project when I did it, and some features we wou
 * Skill checks in dialogue. 
 * Global "Conditions" triggered from dialogue. 
 * Saves
-* Pause function
 
 ## Other Technical Considerations
 

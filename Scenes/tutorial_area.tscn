@@ -16,6 +16,7 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Arr
 agent_radius = 7.0
 
 [node name="Tutorial Area" type="Node2D"]
+process_mode = 1
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_tpjvx")
@@ -43,8 +44,10 @@ _items = Array[Object]([ExtResource("4_nqcrx"), ExtResource("5_kqxyy"), ExtResou
 [node name="Campfire" parent="NavigationRegion2D" instance=ExtResource("7_4ktae")]
 
 [node name="Player" parent="." instance=ExtResource("8_cyqer")]
+process_mode = 3
 Speed = 50.0
 _typewriterSpeed = 0.1
 
 [node name="Enemy" parent="." instance=ExtResource("9_0e4jb")]
+process_mode = 1
 position = Vector2(-19, -181)

@@ -49,9 +49,8 @@ script = ExtResource("4_0dfef")
 [sub_resource type="Resource" id="Resource_745s3"]
 script = ExtResource("1_m5pl2")
 
-[sub_resource type="Resource" id="Resource_jasn7"]
+[sub_resource type="Resource" id="Resource_gsdq5"]
 script = ExtResource("9_gsdq5")
-Rolls = null
 
 [sub_resource type="Resource" id="Resource_m3poj"]
 script = ExtResource("3_l283y")

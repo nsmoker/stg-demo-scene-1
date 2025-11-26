@@ -47,9 +47,10 @@ public abstract partial class Character : CharacterBody2D
     public int WisdomMod => ComputeAttributeMod(Wisdom);
     public int CharismaMod => ComputeAttributeMod(Charisma);
     public int WillpowerMod => ComputeAttributeMod(Willpower);
-    public int Hitpoints = 100;
+    public int MaxHitpoints = 100;
+    public int CurrentHitpoints = 100;
 
-    protected interface ICharacterState
+    public interface ICharacterState
     {
         void Process(double delta, Character character);
         void PhysicsProcess(double delta, Character character);
@@ -61,8 +62,6 @@ public abstract partial class Character : CharacterBody2D
     {
         SpriteAnim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         collider = GetNode<CollisionShape2D>("MainCollider");
-
-        CombatSystem.abilityEventHandler += OnAbilityEvent;
     }
 
     public override void _Process(double delta)
@@ -105,22 +104,8 @@ public abstract partial class Character : CharacterBody2D
         return supportPoint + Position;
     }
 
-    private void OnAbilityEvent(AbilityUseEvent e)
+    public void SetState(ICharacterState characterState)
     {
-        if (e.target.GetInstanceId() == GetInstanceId() && e.hit)
-        {
-            Hitpoints -= e.targetDamage;
-            GD.Print($"{Hitpoints} HP remaining for {Name}");
-        }
-        else if (e.hit)
-        {
-            var targetDist = (e.target.Position - Position).Length();
-            if (targetDist <= e.ability.AreaRadius)
-            {
-                Hitpoints -= e.areaDamage;
-                GD.Print($"{Hitpoints} HP remaining for {Name}");
-            }
-        }
-
+        State = characterState;
     }
 }
