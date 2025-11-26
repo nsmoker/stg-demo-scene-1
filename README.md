@@ -44,3 +44,6 @@ This was pretty much a "for-fun" project when I did it, and some features we wou
 A lot of the code handling dialogue, for example, is written to make use of Godot's object hierarchy in passing data between objects. This approach can work, but when multiple objects need access to the same data for any reason, it gets tedious. 
 This is why the combat system is written with events instead of passing data around at the object level. Refactoring the dialogue system and probably some other parts of the code to use events would be a good thing to do once we start needing to extend these systems. 
 
+## Art Credit
+
+The art in this demo is placeholder. I did not make it; I bought it several years ago as part of an itch.io bundle in support of Palestine. The artist is Itch.io user Raou. You can find the set here. https://raou.itch.io/dungeon-tileset-top-down-rpg
