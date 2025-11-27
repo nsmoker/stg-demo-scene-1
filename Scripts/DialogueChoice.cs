@@ -14,6 +14,7 @@ public partial class DialogueChoice : Resource
     [Export]
     public DialogueGraph Continuation;
 
+    // Do not remove.
     public DialogueChoice()
     {
         Phrase = "";

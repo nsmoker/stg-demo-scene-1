@@ -11,6 +11,7 @@ public partial class DialogueGraph : Resource
     [Export]
     public Godot.Collections.Array<DialogueChoice> Choices = new();
 
+    // Do not remove.
     public DialogueGraph() { }
 
     public DialogueGraph(List<string> phrases, List<DialogueChoice> choices)

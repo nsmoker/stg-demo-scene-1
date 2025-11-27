@@ -36,7 +36,6 @@ radius = 25.0
 radius = 120.0
 
 [node name="Player" type="CharacterBody2D"]
-position = Vector2(-20, 87)
 script = ExtResource("1_co212")
 BaseAttributes = SubResource("Resource_hu0ow")
 BaseSkills = SubResource("Resource_hviba")
