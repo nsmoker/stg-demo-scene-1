@@ -7,7 +7,7 @@ using ArkhamHunters.Scripts;
 public partial class Sign : StaticBody2D, IDialogueInteractable, IInteractable
 {
 	[Export] 
-	public Godot.Collections.Array<string> Text;
+	public DialogueGraph Dialogue;
 
 	private Sprite2D _badgeSprite;
 	
@@ -19,7 +19,7 @@ public partial class Sign : StaticBody2D, IDialogueInteractable, IInteractable
 
 	public DialogueGraph GetDialogue()
 	{
-		return new DialogueGraph(Text.ToList(), new List<DialogueChoice>());
+		return Dialogue;
 	}
 
 	public void SetShowBadge(bool showBadge)

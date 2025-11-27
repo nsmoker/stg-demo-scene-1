@@ -1,17 +1,17 @@
+using Godot;
 using System.Collections.Generic;
 
 namespace ArkhamHunters.Scripts;
 
-public struct DialogueChoice
+[GlobalClass]
+public partial class DialogueGraph : Resource
 {
-    public string Phrase;
-    public DialogueGraph Continuation;
-}
+    [Export]
+    public Godot.Collections.Array<string> Phrases = new();
+    [Export]
+    public Godot.Collections.Array<DialogueChoice> Choices = new();
 
-public class DialogueGraph
-{
-    public List<string> Phrases = new();
-    public List<DialogueChoice> Choices = new();
+    public DialogueGraph() { }
 
     public DialogueGraph(List<string> phrases, List<DialogueChoice> choices)
     {

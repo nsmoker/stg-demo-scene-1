@@ -14,8 +14,6 @@ public partial class Enemy : Character
 
     private Area2D _senseArea;
 
-    private CollisionShape2D _collisionShape;
-
     private AbilityMenu _combatInteractionMenu;
 
     private class CombatState : ICharacterState
@@ -91,16 +89,10 @@ public partial class Enemy : Character
         _senseArea = GetNode<Area2D>("SenseArea");
         _combatInteractionMenu = GetNode<AbilityMenu>("CombatInteractionMenu");
         _combatInteractionMenu.Visible = false;
-        _collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
     }
 
     public AbilityMenu GetCombatInteractionMenu()
     {
         return _combatInteractionMenu;
-    }
-    
-    public CollisionShape2D GetCollisionShape()
-    {
-        return _collisionShape;
     }
 }

@@ -13,50 +13,26 @@ public partial class Player : Character
 	private class DialogueState : ICharacterState
 	{
 		private IDialogueInteractable _dialogueSource;
-		private DialogueGraph _dialogueNode;
-		private int _currentPhraseIndex;
-		private double _timeSinceLastWrite;
+		private DialogueDisplay _dialogueDisplay;
 
-		public DialogueState(IDialogueInteractable dialogueSource)
+		public DialogueState(IDialogueInteractable dialogueSource, DialogueDisplay display)
 		{
 			_dialogueSource = dialogueSource;
-			_dialogueNode = dialogueSource.GetDialogue();
-			_currentPhraseIndex = 0;
-			_timeSinceLastWrite = 0;
+			_dialogueDisplay = display;
+			_dialogueDisplay.SetActiveGraph(dialogueSource.GetDialogue());
+			_dialogueDisplay.Visible = true;
+			_dialogueDisplay.ProcessMode = ProcessModeEnum.Always;
 		}
 
 		public void Process(double delta, Character character)
 		{
 			var player = (Player)character;
-			player._dialoguePanel.Visible = true;
-			var currentPhrase = _dialogueNode.Phrases[_currentPhraseIndex];
-			var writingDone = currentPhrase.Length == player._dialogueLabel.Text.Length;
-			if (!writingDone)
-			{
-				// Continue writing
-				_timeSinceLastWrite += delta;
-				if (_timeSinceLastWrite >= player._typewriterSpeed)
-				{
-					_timeSinceLastWrite = 0;
-					var currentChar = currentPhrase[player._dialogueLabel.Text.Length];
-					player._dialogueLabel.Text += currentChar;
-				}
-			}
 
-			if (Input.IsActionJustPressed("Interact") && writingDone)
+			if (Input.IsActionJustPressed("Interact") && !_dialogueDisplay.Advance())
 			{
-				player._dialogueLabel.Text = "";
-				_currentPhraseIndex += 1;
-				if (_currentPhraseIndex >= _dialogueNode.Phrases.Count)
-				{
-					player._dialoguePanel.Visible = false;
-					player.State = new NavigationState();
-				}
-			}
-
-			if (Input.IsActionJustPressed("Interact") && !writingDone)
-			{
-				player._dialogueLabel.Text = currentPhrase;
+                _dialogueDisplay.ProcessMode = ProcessModeEnum.Disabled;
+                _dialogueDisplay.Visible = false;
+                player.SetState(new NavigationState());
 			}
 		}
 
@@ -135,7 +111,7 @@ public partial class Player : Character
 					{
 						case InteractionType.Dialogue:
 							{
-								player.State = new DialogueState((IDialogueInteractable)closestInteractable);
+								player.State = new DialogueState((IDialogueInteractable)closestInteractable, player._dialogueDisplay);
 								break;
 							}
 						case InteractionType.Container:
@@ -360,11 +336,8 @@ public partial class Player : Character
 
 	[Export]
 	public float Speed = 300.0f;
-	[Export]
-	private float _typewriterSpeed = 1.0f;
 
-	private Panel _dialoguePanel;
-	private Label _dialogueLabel;
+	private DialogueDisplay _dialogueDisplay;
 	private Area2D _interactableRange;
 	private ContainerDisplay _containerDisplay;
 	private InventoryDisplay _inventoryDisplay;
@@ -410,8 +383,7 @@ public partial class Player : Character
 		base._Ready();
 		CombatLog.Initialize();
 		SpriteAnim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-		_dialoguePanel = GetNode<Panel>("DialoguePanel");
-		_dialogueLabel = GetNode<Label>("DialoguePanel/Label");
+		_dialogueDisplay = GetNode<DialogueDisplay>("DialogueDisplay");
 		_interactableRange = GetNode<Area2D>("InteractableRange");
 		_containerDisplay = GetNode<ContainerDisplay>("ContainerDisplay");
 		_inventoryDisplay = GetNode<InventoryDisplay>("InventoryDisplay");

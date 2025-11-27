@@ -1,8 +1,5 @@
 using ArkhamHunters.Scripts;
 using ArkhamHunters.Scripts.Abilities;
-using Godot;
-using System;
-using System.Security.Cryptography.X509Certificates;
 
 public struct DamageEvent
 {

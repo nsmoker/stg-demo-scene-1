@@ -47,7 +47,9 @@ public abstract partial class Character : CharacterBody2D
     public int WisdomMod => ComputeAttributeMod(Wisdom);
     public int CharismaMod => ComputeAttributeMod(Charisma);
     public int WillpowerMod => ComputeAttributeMod(Willpower);
+    [Export]
     public int MaxHitpoints = 100;
+    [Export]
     public int CurrentHitpoints = 100;
 
     public interface ICharacterState
