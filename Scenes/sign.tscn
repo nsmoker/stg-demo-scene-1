@@ -1,62 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://c0t4mgxxnb428"]
+[gd_scene load_steps=8 format=3 uid="uid://c0t4mgxxnb428"]
 
 [ext_resource type="Script" uid="uid://dolf38tlsle5r" path="res://Scripts/Sign.cs" id="1_55kfr"]
-[ext_resource type="Script" uid="uid://c1p5wc0xfhy8b" path="res://Scripts/DialogueGraph.cs" id="2_6c32n"]
+[ext_resource type="Resource" uid="uid://dt8fi3r4hla46" path="res://Conversations/new_resource2.tres" id="2_6c32n"]
 [ext_resource type="Texture2D" uid="uid://b54j5wdw56gj0" path="res://Sprites/Images/ts_outerworld.png" id="2_a1n6o"]
-[ext_resource type="Script" uid="uid://b1ol6eyi2cseu" path="res://Scripts/DialogueChoice.cs" id="2_v8ien"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://Sprites/Images/spr_itemsncolectables.png" id="3_xo15y"]
-
-[sub_resource type="Resource" id="Resource_6fgx1"]
-script = ExtResource("2_6c32n")
-Phrases = Array[String](["Oh... cool?"])
-metadata/_custom_type_script = "uid://c1p5wc0xfhy8b"
-
-[sub_resource type="Resource" id="Resource_v8ien"]
-script = ExtResource("2_v8ien")
-Phrase = "Just kidding."
-Continuation = SubResource("Resource_6fgx1")
-metadata/_custom_type_script = "uid://b1ol6eyi2cseu"
-
-[sub_resource type="Resource" id="Resource_bqbd3"]
-script = ExtResource("2_6c32n")
-Phrases = Array[String]([":( why??"])
-Choices = Array[ExtResource("2_v8ien")]([SubResource("Resource_v8ien")])
-metadata/_custom_type_script = "uid://c1p5wc0xfhy8b"
-
-[sub_resource type="Resource" id="Resource_qwoug"]
-script = ExtResource("2_v8ien")
-Phrase = "I hate signs!"
-Continuation = SubResource("Resource_bqbd3")
-metadata/_custom_type_script = "uid://b1ol6eyi2cseu"
-
-[sub_resource type="Resource" id="Resource_rkgis"]
-script = ExtResource("2_6c32n")
-Phrases = Array[String](["Yeah"])
-metadata/_custom_type_script = "uid://c1p5wc0xfhy8b"
-
-[sub_resource type="Resource" id="Resource_hmvxv"]
-script = ExtResource("2_v8ien")
-Phrase = "Nice!"
-Continuation = SubResource("Resource_rkgis")
-metadata/_custom_type_script = "uid://b1ol6eyi2cseu"
-
-[sub_resource type="Resource" id="Resource_gmbl6"]
-script = ExtResource("2_6c32n")
-Phrases = Array[String](["Well, dynamically rewrite our contents, but in a sense, yes!"])
-Choices = Array[ExtResource("2_v8ien")]([SubResource("Resource_hmvxv")])
-metadata/_custom_type_script = "uid://c1p5wc0xfhy8b"
-
-[sub_resource type="Resource" id="Resource_klxxh"]
-script = ExtResource("2_v8ien")
-Phrase = "You guys can talk?"
-Continuation = SubResource("Resource_gmbl6")
-metadata/_custom_type_script = "uid://b1ol6eyi2cseu"
-
-[sub_resource type="Resource" id="Resource_u6bny"]
-script = ExtResource("2_6c32n")
-Phrases = Array[String](["Hey there! I'm a sign."])
-Choices = Array[ExtResource("2_v8ien")]([SubResource("Resource_qwoug"), SubResource("Resource_klxxh")])
-metadata/_custom_type_script = "uid://c1p5wc0xfhy8b"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ntfr8"]
 size = Vector2(14, 13)
@@ -71,7 +18,7 @@ region = Rect2(0, 64, 16, 16)
 
 [node name="Sign" type="StaticBody2D"]
 script = ExtResource("1_55kfr")
-Dialogue = SubResource("Resource_u6bny")
+Dialogue = ExtResource("2_6c32n")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -0.5)

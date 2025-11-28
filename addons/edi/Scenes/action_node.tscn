@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuhqjd7vck3h1"]
+
+[ext_resource type="Script" uid="uid://bhprlsy2j8t81" path="res://addons/edi/Scripts/DialogueNode.cs" id="1_b0amj"]
+
+[node name="Script Action" type="GraphNode"]
+offset_left = 288.0
+offset_top = 343.0
+offset_right = 440.0
+offset_bottom = 514.0
+mouse_filter = 1
+position_offset = Vector2(275, 136)
+resizable = true
+title = "Script Action"
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 1
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+script = ExtResource("1_b0amj")
+NodeType = 1
+metadata/_custom_type_script = "uid://chq2r48v12rkm"
+
+[node name="Description" type="TextEdit" parent="."]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Placeholder"

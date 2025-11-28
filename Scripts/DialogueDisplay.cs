@@ -2,12 +2,15 @@ using ArkhamHunters.Scripts;
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 
 public partial class DialogueDisplay : PanelContainer
 {
-    private DialogueGraph _runningGraph;
 
-    private int _currentPhraseIndex = 0;
+    public Conversation Conversation;
+
+    private DialogueGraphNode _runningGraph;
+
     private double _timeSinceLastWrite;
     private Label _dialogueLabel;
     private VBoxContainer _container;
@@ -24,7 +27,7 @@ public partial class DialogueDisplay : PanelContainer
 
     public override void _Process(double delta)
     {
-        var currentPhrase = _runningGraph.Phrases[_currentPhraseIndex];
+        var currentPhrase = _runningGraph.Content;
         var writingDone = currentPhrase.Length == _dialogueLabel.Text.Length;
         if (!writingDone)
         {
@@ -46,10 +49,9 @@ public partial class DialogueDisplay : PanelContainer
         }
     }
 
-    public void SetActiveGraph(DialogueGraph graph)
+    public void SetActiveNode(DialogueGraphNode graph)
     {
         _runningGraph = graph;
-        _currentPhraseIndex = 0;
         _timeSinceLastWrite = 0;
         foreach (var label in _choiceLabels)
         {
@@ -58,57 +60,71 @@ public partial class DialogueDisplay : PanelContainer
         _choiceLabels.Clear();
         _dialogueLabel.Text = "";
 
-        for (int i = 0; i < _runningGraph.Choices.Count; ++i)
+        var responses = Conversation.GetResponsesForNode(_runningGraph);
+
+        for (int i = 0; i < responses.Count; ++i)
         {
-            DialogueChoice choice = _runningGraph.Choices[i];
-            var choiceLabel = new Label();
-            choiceLabel.Visible = false;
-            choiceLabel.Text = $"{i + 1}. {choice.Phrase}";
-            choiceLabel.CustomMinimumSize = _dialogueLabel.CustomMinimumSize;
-            choiceLabel.LabelSettings = (LabelSettings) _dialogueLabel.LabelSettings.DuplicateDeep();
-            choiceLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
-            choiceLabel.JustificationFlags = TextServer.JustificationFlag.Kashida | TextServer.JustificationFlag.WordBound;
-            choiceLabel.AutowrapTrimFlags = TextServer.LineBreakFlag.TrimStartEdgeSpaces | TextServer.LineBreakFlag.TrimEndEdgeSpaces;
-            choiceLabel.ClipText = true;
-            choiceLabel.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
-            choiceLabel.MouseFilter = MouseFilterEnum.Stop;
-            choiceLabel.MouseEntered += () =>
+            var choice = responses[i];
+            if (choice.NodeType == EverydayDialogueEditor.DialogueNodeType.PlayerResponse)
             {
-                choiceLabel.LabelSettings.FontColor = new Color(1, 1, 0, 1);
-            };
-            choiceLabel.MouseExited += () =>
-            {
-                choiceLabel.LabelSettings.FontColor = new Color(1, 1, 1, 1);
-            };
-            choiceLabel.GuiInput += (InputEvent e) =>
-            {
-                if (e is InputEventMouseButton mouseEvent && mouseEvent.IsPressed() && mouseEvent.ButtonIndex == MouseButton.Left)
+                var choiceLabel = new Label();
+                choiceLabel.Visible = false;
+                choiceLabel.Text = $"{i + 1}. {choice.Content}";
+                choiceLabel.CustomMinimumSize = _dialogueLabel.CustomMinimumSize;
+                choiceLabel.LabelSettings = (LabelSettings) _dialogueLabel.LabelSettings.DuplicateDeep();
+                choiceLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+                choiceLabel.JustificationFlags = TextServer.JustificationFlag.Kashida | TextServer.JustificationFlag.WordBound;
+                choiceLabel.AutowrapTrimFlags = TextServer.LineBreakFlag.TrimStartEdgeSpaces | TextServer.LineBreakFlag.TrimEndEdgeSpaces;
+                choiceLabel.ClipText = true;
+                choiceLabel.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
+                choiceLabel.MouseFilter = MouseFilterEnum.Stop;
+                choiceLabel.MouseEntered += () =>
                 {
-                    SetActiveGraph(choice.Continuation);
-                }
-            };
-            _container.AddChild(choiceLabel);
-            _choiceLabels.Add(choiceLabel);
+                    choiceLabel.LabelSettings.FontColor = new Color(1, 1, 0, 1);
+                };
+                choiceLabel.MouseExited += () =>
+                {
+                    choiceLabel.LabelSettings.FontColor = new Color(1, 1, 1, 1);
+                };
+                choiceLabel.GuiInput += (InputEvent e) =>
+                {
+                    if (e is InputEventMouseButton mouseEvent && mouseEvent.IsPressed() && mouseEvent.ButtonIndex == MouseButton.Left)
+                    {
+                        SetActiveNode(choice);
+                    }
+                };
+                _container.AddChild(choiceLabel);
+                _choiceLabels.Add(choiceLabel);
+            }
         }
     }
 
     public bool Advance()
     {
-        var currentPhrase = _runningGraph.Phrases[_currentPhraseIndex];
+        var currentPhrase = _runningGraph.Content;
 
-        if (currentPhrase.Length == _dialogueLabel.Text.Length && _runningGraph.Choices.Count == 0)
+        if (currentPhrase.Length == _dialogueLabel.Text.Length)
         {
-            _currentPhraseIndex = 0;
-            _timeSinceLastWrite = 0;
-            foreach (var label in _choiceLabels)
+            var continuations = Conversation.GetResponsesForNode(_runningGraph);
+            if (continuations.Count == 0)
             {
-                label.QueueFree();
+                _timeSinceLastWrite = 0;
+                foreach (var label in _choiceLabels)
+                {
+                    label.QueueFree();
+                }
+                _dialogueLabel.Text = "";
+                return false;
             }
-            _dialogueLabel.Text = "";
-            return false;
+            else
+            {
+                SetActiveNode(continuations[0]);
+            }
         }
-
-        _dialogueLabel.Text = currentPhrase;
+        else
+        {   
+            _dialogueLabel.Text = currentPhrase;
+        }
 
         return true;
     }

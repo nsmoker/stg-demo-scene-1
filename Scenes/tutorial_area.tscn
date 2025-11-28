@@ -1,11 +1,10 @@
-[gd_scene load_steps=22 format=4 uid="uid://l1bcdmrxgp74"]
+[gd_scene load_steps=12 format=4 uid="uid://l1bcdmrxgp74"]
 
 [ext_resource type="TileSet" uid="uid://cem5hy2763dx" path="res://Sprites/Tilesets/placeholder_tile_set.tres" id="1_dw8ip"]
 [ext_resource type="PackedScene" uid="uid://c0t4mgxxnb428" path="res://Scenes/sign.tscn" id="2_akivm"]
+[ext_resource type="Resource" uid="uid://cgqw7qqfwpih6" path="res://Conversations/tutorial_conversation.tres" id="3_3wsrn"]
 [ext_resource type="PackedScene" uid="uid://dvydi4qxrxfyp" path="res://Scenes/container.tscn" id="3_slqck"]
-[ext_resource type="Script" uid="uid://b1ol6eyi2cseu" path="res://Scripts/DialogueChoice.cs" id="3_u4jjt"]
 [ext_resource type="Resource" uid="uid://bg48w042cr6xu" path="res://Items/clothing.tres" id="4_nqcrx"]
-[ext_resource type="Script" uid="uid://c1p5wc0xfhy8b" path="res://Scripts/DialogueGraph.cs" id="4_rymyd"]
 [ext_resource type="Resource" uid="uid://kftvfg1stwmt" path="res://Items/sword.tres" id="5_kqxyy"]
 [ext_resource type="Resource" uid="uid://vuejdeymb45b" path="res://Items/giga_item.tres" id="6_v35qn"]
 [ext_resource type="PackedScene" uid="uid://denkyqh4dplr3" path="res://Scenes/campfire.tscn" id="7_4ktae"]
@@ -16,58 +15,6 @@
 vertices = PackedVector2Array(-519, 329, -521, 329, -521, 327, -519, 327, 359, -119, 329, -119, -329, -121, -327, -121, 297, -231, 297, -199, 281, -199, 39, -201, 39, -231, -201, 265, -231, 265, -377, 263, -377, 233, -279, 247, -441, 39, -345, 7, -137, -41, -71, -55, -377, 57, -423, 57, -265, -151, -295, -151, -345, -153, -345, -183, -231, -167, 297, -121, -265, -121, -201, -137, 281, -137, 441, 329, -489, 329, 391, 327, 425, 327, 361, 327, 89, -25, 89, 121, 84.7969, 53, -409, -41, -247, -57, -217, -57, -345, -23, -375, -23, 455, 297, 425, 297, 231, 247, 231, 217, -167, -41, -231, -137, 82.4062, 44.1172, -375, 7, -441, 9, 82.4062, 61.8828, 52, 38, 52, 43.7031, 51.5938, 44.1172, 41.6875, 43, 40, 36.6875, 40, 28, 82, 43.7031, 82, 38, 87, -9, 82, 62.2891, 82, 68, 47, 98.2969, 48.6875, 92, 47, 105, 75.8828, 68.4062, 47, 85.6875, 47, 78, 67, 70.7969, -217, -87, -167, -71, 7, 295, 7, 249, 57, 281, 57, 311, -441, -137, -375, -153, -359, -151, -359, -121, -409, -71, -439, -71, 40, 49.2969, 49.2031, 53, 40, 58, 51.5938, 61.8828, 52, 68, 39.3125, 78, 33, 76.3125, -247, -87, -345, 135, -345, 89, -71, 151, -201, 201, -231, 201, 361, 297, 87, 311, 87, 281, 137, 247, -345, 295, -295, 295, -375, 295, -489, 313, 313, -233, 313, -231, -521, -233, 9, -231, 297, -137, 9, -201, -201, -167, 327, -121, 327, -137, 343, -137, 343, -167, 311, -167, 311, -185, 343, -185, 343, -233, 457, -233, 457, -71, 441, -71, 423, -87, 441, -41, 439, -41, 439, -71, 423, -71, 391, -87, 391, -103, 359, -103, -25, -89, 329, -89, -89, -57, -25, -119, -55, -119, 345, -89, 345, -73, 361, -73, 361, -57, 119, -55, 41, -55, -55, -89, -89, -87, 393, -57, 393, -41, 119, 151, 457, -41, 457, 313, 455, 313, 41, -25, 57, -25, 57, -9, 87, -25, 76.2891, 38, 75.8828, 37.5938, 67, 35.2031, 12, 36.6875, 10.3125, 43, -41, 121, -41, -25, 7, -25, 12, 28, -361, 89, -361, 73, -377, 73, -423, 87, -407, 87, -407, 103, -409, 105, -439, 105, -391, 103, -391, 119, -409, 135, -375, 119, -375, 135, 151, 217, 151, 201, -201, 231, -71, 201, -71, 231, -249, 247, 137, 231, -23, 249, -231, 231, -249, 217, 441, 327, 391, 297, -23, 295, -201, 295, -375, 265, -505, 313, -505, 297, -407, 263, -471, 39, -521, 297, -471, 9, -119, -87, -439, -41, 58.1172, 37.5938, -279, 217, -375, -183, -441, -167, 57.7109, 38, 28.5625, 28, 26, 27.3125, 23.4375, 28, 7, -55, 19, 105, 24.5703, 105, 25.1562, 105.594, 40.8438, 105.594, 41.4297, 105, 52, 62.2891, 57.7109, 68, 58.1172, 68.4062, 76.2891, 68, 26, 58.6875, 28.5625, 58, 26.6875, 78, 19, 78, 12, 58, 23.4375, 58, -439, 135, -471, -137, 33, 107.688, 19, 98.2969, 17.3125, 92, 19, 85.6875, 12, 49.2969, -119, -57, -137, -71, -407, 233, -231, 295, -265, 295, -265, 265, -295, 265, -345, 265, -471, -167, -329, -151, -295, -121, -297, -121, -297, -151, -327, -151)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 9, 10, 11, 12), PackedInt32Array(13, 14, 15, 16, 17), PackedInt32Array(18, 19, 20, 21, 22, 23), PackedInt32Array(24, 25, 26, 27, 28), PackedInt32Array(29, 30, 31, 32), PackedInt32Array(33, 34, 35, 36), PackedInt32Array(37, 35, 34), PackedInt32Array(38, 39, 40), PackedInt32Array(41, 42, 43, 44, 45), PackedInt32Array(46, 47, 48, 49), PackedInt32Array(50, 20, 19), PackedInt32Array(51, 31, 30), PackedInt32Array(38, 40, 52), PackedInt32Array(53, 19, 18, 54), PackedInt32Array(55, 40, 39), PackedInt32Array(56, 57, 58, 59, 60, 61), PackedInt32Array(38, 52, 62, 63, 64), PackedInt32Array(65, 55, 39, 66), PackedInt32Array(67, 68, 66, 39, 69), PackedInt32Array(51, 30, 24, 28), PackedInt32Array(70, 66, 68, 71, 72, 73), PackedInt32Array(43, 74, 75, 50), PackedInt32Array(43, 50, 19, 44), PackedInt32Array(76, 77, 78, 79), PackedInt32Array(80, 81, 82, 83, 84, 85), PackedInt32Array(86, 59, 58, 87, 88), PackedInt32Array(88, 87, 89, 90, 72, 91, 92), PackedInt32Array(6, 93, 42, 41, 84, 83), PackedInt32Array(94, 95, 21, 96, 97, 98), PackedInt32Array(48, 99, 37, 100, 101, 102), PackedInt32Array(100, 37, 34, 79), PackedInt32Array(79, 34, 103, 104), PackedInt32Array(105, 103, 34, 106), PackedInt32Array(107, 108, 8, 109), PackedInt32Array(109, 8, 12), PackedInt32Array(109, 12, 110), PackedInt32Array(32, 111, 29), PackedInt32Array(112, 11, 10, 32, 31, 113), PackedInt32Array(114, 115, 116, 4), PackedInt32Array(117, 118, 119, 120), PackedInt32Array(120, 121, 122, 123), PackedInt32Array(117, 120, 123, 124, 125), PackedInt32Array(124, 126, 127, 128), PackedInt32Array(128, 129, 125), PackedInt32Array(125, 130, 131), PackedInt32Array(131, 132, 4), PackedInt32Array(133, 5, 134, 135), PackedInt32Array(5, 133, 136), PackedInt32Array(6, 5, 136), PackedInt32Array(6, 136, 137), PackedInt32Array(134, 138, 139, 135), PackedInt32Array(135, 139, 140, 141, 142, 143), PackedInt32Array(144, 133, 135, 145), PackedInt32Array(142, 141, 146, 147, 148), PackedInt32Array(126, 149, 150, 46), PackedInt32Array(150, 151, 46), PackedInt32Array(126, 46, 49, 148, 127), PackedInt32Array(147, 127, 148), PackedInt32Array(61, 152, 153, 154, 56), PackedInt32Array(64, 155, 38), PackedInt32Array(154, 64, 63, 156, 157), PackedInt32Array(154, 157, 158), PackedInt32Array(159, 160, 161, 162, 163, 164), PackedInt32Array(95, 165, 166, 21), PackedInt32Array(166, 167, 22, 21), PackedInt32Array(168, 169, 170, 171, 172), PackedInt32Array(171, 170, 173, 174, 175), PackedInt32Array(174, 176, 177, 175), PackedInt32Array(49, 178, 179), PackedInt32Array(180, 181, 182, 183), PackedInt32Array(181, 180, 97, 96, 148), PackedInt32Array(183, 182, 184, 102, 77, 185), PackedInt32Array(186, 180, 183), PackedInt32Array(186, 183, 187, 98), PackedInt32Array(36, 188, 33), PackedInt32Array(47, 36, 35, 189), PackedInt32Array(48, 47, 189), PackedInt32Array(48, 189, 99), PackedInt32Array(185, 190, 191, 13), PackedInt32Array(15, 192, 105, 106, 193, 194, 195), PackedInt32Array(196, 194, 197, 109, 198), PackedInt32Array(109, 110, 112, 113, 28, 27), PackedInt32Array(6, 137, 144, 145, 199), PackedInt32Array(200, 41, 45, 53, 54, 198), PackedInt32Array(154, 158, 201), PackedInt32Array(148, 49, 179), PackedInt32Array(148, 179, 181), PackedInt32Array(94, 98, 187, 202, 177), PackedInt32Array(177, 202, 17, 175), PackedInt32Array(109, 27, 203), PackedInt32Array(109, 203, 81, 204), PackedInt32Array(154, 201, 205, 56), PackedInt32Array(152, 61, 206, 207), PackedInt32Array(143, 152, 207, 208, 164, 163, 209), PackedInt32Array(210, 211, 212, 161), PackedInt32Array(213, 214, 69, 39), PackedInt32Array(124, 128, 125), PackedInt32Array(117, 125, 131), PackedInt32Array(117, 131, 4, 116), PackedInt32Array(89, 215, 90), PackedInt32Array(90, 216, 217, 72), PackedInt32Array(70, 218, 66), PackedInt32Array(217, 73, 72), PackedInt32Array(219, 220, 88, 92, 221, 222), PackedInt32Array(223, 224, 219, 222, 161), PackedInt32Array(196, 18, 23, 168, 172), PackedInt32Array(225, 175, 17, 16), PackedInt32Array(102, 101, 78, 77), PackedInt32Array(183, 185, 13, 17), PackedInt32Array(226, 85, 200, 198, 109), PackedInt32Array(227, 213, 39), PackedInt32Array(227, 39, 161), PackedInt32Array(212, 227, 161), PackedInt32Array(228, 210, 161, 229), PackedInt32Array(230, 229, 161, 222), PackedInt32Array(231, 223, 161, 160), PackedInt32Array(135, 143, 209), PackedInt32Array(135, 209, 21), PackedInt32Array(135, 21, 20, 232), PackedInt32Array(232, 20, 233, 199), PackedInt32Array(6, 199, 233, 74), PackedInt32Array(196, 172, 225), PackedInt32Array(225, 16, 234), PackedInt32Array(196, 225, 234, 195, 194), PackedInt32Array(233, 75, 74), PackedInt32Array(6, 74, 93), PackedInt32Array(226, 80, 85), PackedInt32Array(190, 76, 79), PackedInt32Array(191, 190, 79), PackedInt32Array(29, 114, 4), PackedInt32Array(235, 191, 79), PackedInt32Array(235, 79, 236), PackedInt32Array(14, 235, 236, 237), PackedInt32Array(15, 14, 237), PackedInt32Array(15, 237, 238), PackedInt32Array(104, 236, 79), PackedInt32Array(238, 104, 103, 239), PackedInt32Array(15, 238, 239), PackedInt32Array(15, 239, 192), PackedInt32Array(240, 226, 109), PackedInt32Array(204, 240, 109), PackedInt32Array(80, 204, 81), PackedInt32Array(82, 81, 26, 241), PackedInt32Array(30, 29, 4), PackedInt32Array(242, 30, 4), PackedInt32Array(242, 4, 243), PackedInt32Array(25, 242, 243, 244), PackedInt32Array(26, 25, 244), PackedInt32Array(26, 244, 245), PackedInt32Array(241, 26, 245), PackedInt32Array(241, 245, 7, 6), PackedInt32Array(4, 7, 243)])
 agent_radius = 7.0
-
-[sub_resource type="Resource" id="Resource_6fgx1"]
-script = ExtResource("4_rymyd")
-Phrases = Array[String](["Oh... cool?"])
-metadata/_custom_type_script = "uid://c1p5wc0xfhy8b"
-
-[sub_resource type="Resource" id="Resource_v8ien"]
-script = ExtResource("3_u4jjt")
-Phrase = "Just kidding."
-Continuation = SubResource("Resource_6fgx1")
-metadata/_custom_type_script = "uid://b1ol6eyi2cseu"
-
-[sub_resource type="Resource" id="Resource_bqbd3"]
-script = ExtResource("4_rymyd")
-Phrases = Array[String]([":( why??"])
-Choices = Array[ExtResource("3_u4jjt")]([SubResource("Resource_v8ien")])
-metadata/_custom_type_script = "uid://c1p5wc0xfhy8b"
-
-[sub_resource type="Resource" id="Resource_qwoug"]
-script = ExtResource("3_u4jjt")
-Phrase = "I hate signs!"
-Continuation = SubResource("Resource_bqbd3")
-metadata/_custom_type_script = "uid://b1ol6eyi2cseu"
-
-[sub_resource type="Resource" id="Resource_rkgis"]
-script = ExtResource("4_rymyd")
-Phrases = Array[String](["Yeah"])
-metadata/_custom_type_script = "uid://c1p5wc0xfhy8b"
-
-[sub_resource type="Resource" id="Resource_hmvxv"]
-script = ExtResource("3_u4jjt")
-Phrase = "Nice!"
-Continuation = SubResource("Resource_rkgis")
-metadata/_custom_type_script = "uid://b1ol6eyi2cseu"
-
-[sub_resource type="Resource" id="Resource_gmbl6"]
-script = ExtResource("4_rymyd")
-Phrases = Array[String](["Well, dynamically rewrite our contents, but in a sense, yes."])
-Choices = Array[ExtResource("3_u4jjt")]([SubResource("Resource_hmvxv")])
-metadata/_custom_type_script = "uid://c1p5wc0xfhy8b"
-
-[sub_resource type="Resource" id="Resource_klxxh"]
-script = ExtResource("3_u4jjt")
-Phrase = "You guys can talk?"
-Continuation = SubResource("Resource_gmbl6")
-metadata/_custom_type_script = "uid://b1ol6eyi2cseu"
-
-[sub_resource type="Resource" id="Resource_88o6m"]
-script = ExtResource("4_rymyd")
-Phrases = Array[String](["Hey there! I'm a sign."])
-Choices = Array[ExtResource("3_u4jjt")]([SubResource("Resource_qwoug"), SubResource("Resource_klxxh")])
-metadata/_custom_type_script = "uid://c1p5wc0xfhy8b"
 
 [node name="Tutorial Area" type="Node2D"]
 process_mode = 1
@@ -90,7 +37,7 @@ navigation_enabled = false
 
 [node name="Sign" parent="NavigationRegion2D" instance=ExtResource("2_akivm")]
 position = Vector2(33, 92)
-Dialogue = SubResource("Resource_88o6m")
+Dialogue = ExtResource("3_3wsrn")
 
 [node name="Container" parent="NavigationRegion2D" instance=ExtResource("3_slqck")]
 position = Vector2(67, 53)

@@ -20,7 +20,8 @@ public interface IInteractable
 
 public interface IDialogueInteractable
 {
-    public DialogueGraph GetDialogue();
+    public Conversation GetDialogue();
+    public DialogueGraphNode GetEntryPoint();
 }
 
 public interface IContainerInteractable

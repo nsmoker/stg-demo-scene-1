@@ -19,7 +19,8 @@ public partial class Player : Character
 		{
 			_dialogueSource = dialogueSource;
 			_dialogueDisplay = display;
-			_dialogueDisplay.SetActiveGraph(dialogueSource.GetDialogue());
+			_dialogueDisplay.Conversation = dialogueSource.GetDialogue();
+            _dialogueDisplay.SetActiveNode(dialogueSource.GetEntryPoint());
 			_dialogueDisplay.Visible = true;
 			_dialogueDisplay.ProcessMode = ProcessModeEnum.Always;
 		}

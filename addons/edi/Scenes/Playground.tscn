@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=3 uid="uid://bv7xmogfphbop"]
+
+[ext_resource type="PackedScene" uid="uid://dceevy3rt3bak" path="res://addons/edi/Scenes/context_menu.tscn" id="1_cgwkj"]
+[ext_resource type="PackedScene" uid="uid://mkl7uk3c5tsv" path="res://addons/edi/Scenes/dialogue_node.tscn" id="1_mq3q5"]
+[ext_resource type="Script" uid="uid://bhprlsy2j8t81" path="res://addons/edi/Scripts/DialogueNode.cs" id="2_emuj5"]
+[ext_resource type="PackedScene" uid="uid://dnha6twpswkno" path="res://addons/edi/Scenes/response_node.tscn" id="3_bimlb"]
+[ext_resource type="PackedScene" uid="uid://d2uuqw0lvij1m" path="res://addons/edi/Scenes/entry_node.tscn" id="4_emuj5"]
+[ext_resource type="PackedScene" uid="uid://cuhqjd7vck3h1" path="res://addons/edi/Scenes/action_node.tscn" id="6_jnhut"]
+
+[node name="Playground" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="DialogueNode" parent="." instance=ExtResource("1_mq3q5")]
+layout_mode = 0
+script = ExtResource("2_emuj5")
+
+[node name="ContextMenu" parent="." instance=ExtResource("1_cgwkj")]
+layout_mode = 0
+
+[node name="ResponseNode" parent="." instance=ExtResource("3_bimlb")]
+layout_mode = 0
+
+[node name="EntryNode" parent="." instance=ExtResource("4_emuj5")]
+layout_mode = 0
+
+[node name="ActionNode" parent="." instance=ExtResource("6_jnhut")]
+layout_mode = 0

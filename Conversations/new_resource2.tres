@@ -1,0 +1,187 @@
+[gd_resource type="Resource" script_class="Conversation" load_steps=35 format=3 uid="uid://dt8fi3r4hla46"]
+
+[ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="1_qbbd1"]
+[ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="2_0orbb"]
+[ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/edi/Scripts/Conversation.cs" id="3_k7vb6"]
+
+[sub_resource type="Resource" id="Resource_0n471"]
+script = ExtResource("1_qbbd1")
+toNode = 1
+
+[sub_resource type="Resource" id="Resource_p1cnf"]
+script = ExtResource("1_qbbd1")
+fromNode = 1
+toNode = 2
+
+[sub_resource type="Resource" id="Resource_da647"]
+script = ExtResource("1_qbbd1")
+fromNode = 2
+toNode = 3
+
+[sub_resource type="Resource" id="Resource_suooj"]
+script = ExtResource("1_qbbd1")
+fromNode = 3
+toNode = 4
+
+[sub_resource type="Resource" id="Resource_42bt5"]
+script = ExtResource("1_qbbd1")
+fromNode = 4
+toNode = 5
+
+[sub_resource type="Resource" id="Resource_8qc6l"]
+script = ExtResource("1_qbbd1")
+fromNode = 3
+toNode = 6
+
+[sub_resource type="Resource" id="Resource_rcuhd"]
+script = ExtResource("1_qbbd1")
+fromNode = 6
+toNode = 7
+
+[sub_resource type="Resource" id="Resource_3r1hg"]
+script = ExtResource("1_qbbd1")
+fromNode = 7
+toNode = 8
+
+[sub_resource type="Resource" id="Resource_ail7h"]
+script = ExtResource("1_qbbd1")
+fromNode = 8
+toNode = 9
+
+[sub_resource type="Resource" id="Resource_n0cck"]
+script = ExtResource("1_qbbd1")
+fromNode = 8
+toNode = 10
+
+[sub_resource type="Resource" id="Resource_voc7g"]
+script = ExtResource("1_qbbd1")
+fromNode = 1
+toNode = 11
+
+[sub_resource type="Resource" id="Resource_bxhx3"]
+script = ExtResource("1_qbbd1")
+fromNode = 11
+toNode = 12
+
+[sub_resource type="Resource" id="Resource_sn3fi"]
+script = ExtResource("1_qbbd1")
+fromNode = 12
+toNode = 6
+
+[sub_resource type="Resource" id="Resource_2k0lq"]
+script = ExtResource("1_qbbd1")
+fromNode = 12
+toNode = 13
+
+[sub_resource type="Resource" id="Resource_oastx"]
+script = ExtResource("1_qbbd1")
+fromNode = 13
+toNode = 14
+
+[sub_resource type="Resource" id="Resource_sh45a"]
+script = ExtResource("2_0orbb")
+NodeType = 2
+DNodeId = 1407495142637596
+
+[sub_resource type="Resource" id="Resource_vgse0"]
+script = ExtResource("2_0orbb")
+NodeType = 2
+DNodeId = 1407495142637596
+
+[sub_resource type="Resource" id="Resource_cp17p"]
+script = ExtResource("2_0orbb")
+Content = "Hey, I'm a sign!"
+Speaker = "Sign"
+Addressee = "Player"
+DNodeId = 1407495142637597
+
+[sub_resource type="Resource" id="Resource_nrior"]
+script = ExtResource("2_0orbb")
+NodeType = 3
+Content = "I hate signs!"
+DNodeId = 1407499437604893
+
+[sub_resource type="Resource" id="Resource_u2b43"]
+script = ExtResource("2_0orbb")
+Content = "W-why?"
+Speaker = "Sign"
+Addressee = "Player"
+DNodeId = 1407499437604894
+
+[sub_resource type="Resource" id="Resource_5eqel"]
+script = ExtResource("2_0orbb")
+NodeType = 3
+Content = "Just kidding."
+DNodeId = 1407503732572190
+
+[sub_resource type="Resource" id="Resource_y3juu"]
+script = ExtResource("2_0orbb")
+Content = "What a weird thing to say."
+Speaker = "Sign"
+Addressee = "Player"
+DNodeId = 1407503732572191
+
+[sub_resource type="Resource" id="Resource_voivg"]
+script = ExtResource("2_0orbb")
+NodeType = 3
+Content = "My parents were killed by a falling sign during a storm."
+DNodeId = 1407508027539487
+
+[sub_resource type="Resource" id="Resource_v51wd"]
+script = ExtResource("2_0orbb")
+Content = "That's horrible. I'm so sorry for your loss."
+Speaker = "Sign"
+Addressee = "Player"
+DNodeId = 1407508027539488
+
+[sub_resource type="Resource" id="Resource_vqtgy"]
+script = ExtResource("2_0orbb")
+Content = "Humans killed my parents when I was two months old and replaced them with a glass pane."
+Speaker = "Sign"
+Addressee = "Player"
+DNodeId = 1407508027539489
+
+[sub_resource type="Resource" id="Resource_s32kk"]
+script = ExtResource("2_0orbb")
+NodeType = 3
+Content = "I have to go"
+DNodeId = 1407512322506785
+
+[sub_resource type="Resource" id="Resource_6srvc"]
+script = ExtResource("2_0orbb")
+NodeType = 3
+Content = "Shut up"
+DNodeId = 1407516617474081
+
+[sub_resource type="Resource" id="Resource_ewn0k"]
+script = ExtResource("2_0orbb")
+NodeType = 3
+Content = "You guys can talk?"
+DNodeId = 1407520912441377
+
+[sub_resource type="Resource" id="Resource_ph621"]
+script = ExtResource("2_0orbb")
+Content = "Signs can't talk, silly! We can, however, rewrite our contents."
+Speaker = "Sign"
+Addressee = "Player"
+DNodeId = 1407520912441378
+
+[sub_resource type="Resource" id="Resource_lagab"]
+script = ExtResource("2_0orbb")
+NodeType = 3
+Content = "Neat!"
+DNodeId = 1407525207408674
+
+[sub_resource type="Resource" id="Resource_x3s72"]
+script = ExtResource("2_0orbb")
+Content = "Yup"
+Speaker = "Sign"
+Addressee = "Player"
+DNodeId = 1407525207408675
+
+[resource]
+script = ExtResource("3_k7vb6")
+Nodes = Array[ExtResource("2_0orbb")]([SubResource("Resource_vgse0"), SubResource("Resource_cp17p"), SubResource("Resource_nrior"), SubResource("Resource_u2b43"), SubResource("Resource_5eqel"), SubResource("Resource_y3juu"), SubResource("Resource_voivg"), SubResource("Resource_v51wd"), SubResource("Resource_vqtgy"), SubResource("Resource_s32kk"), SubResource("Resource_6srvc"), SubResource("Resource_ewn0k"), SubResource("Resource_ph621"), SubResource("Resource_lagab"), SubResource("Resource_x3s72")])
+EntryPoints = Array[ExtResource("2_0orbb")]([SubResource("Resource_sh45a")])
+Connections = Array[ExtResource("1_qbbd1")]([SubResource("Resource_0n471"), SubResource("Resource_p1cnf"), SubResource("Resource_da647"), SubResource("Resource_suooj"), SubResource("Resource_42bt5"), SubResource("Resource_8qc6l"), SubResource("Resource_rcuhd"), SubResource("Resource_3r1hg"), SubResource("Resource_ail7h"), SubResource("Resource_n0cck"), SubResource("Resource_voc7g"), SubResource("Resource_bxhx3"), SubResource("Resource_sn3fi"), SubResource("Resource_2k0lq"), SubResource("Resource_oastx")])
+metadata/_custom_type_script = "uid://cmw85ukaae1eh"

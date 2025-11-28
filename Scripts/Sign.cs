@@ -7,7 +7,10 @@ using ArkhamHunters.Scripts;
 public partial class Sign : StaticBody2D, IDialogueInteractable, IInteractable
 {
 	[Export] 
-	public DialogueGraph Dialogue;
+	public Conversation Dialogue;
+
+	[Export]
+	public int EntryPoint;
 
 	private Sprite2D _badgeSprite;
 	
@@ -17,9 +20,22 @@ public partial class Sign : StaticBody2D, IDialogueInteractable, IInteractable
 		_badgeSprite = GetNode<Sprite2D>("BadgeSprite");
 	}
 
-	public DialogueGraph GetDialogue()
+	public Conversation GetDialogue()
 	{
 		return Dialogue;
+	}
+
+	public DialogueGraphNode GetEntryPoint()
+	{
+		var entryNode = Dialogue.EntryPoints[EntryPoint];
+		GD.Print(EntryPoint);
+		GD.Print(Dialogue.EntryPoints.Count);
+		GD.Print(Dialogue.Nodes.Count);
+		// This is a hack that only works because we don't have conditions. 
+		var conns = Dialogue.GetNodeConnections(Dialogue.GetIndexOfNode(entryNode));
+		GD.Print(Dialogue.Nodes.IndexOf(entryNode));
+        GD.Print(conns.Count);
+        return conns[0];
 	}
 
 	public void SetShowBadge(bool showBadge)

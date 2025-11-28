@@ -19,7 +19,7 @@ If Visual Studio gives you trouble, run Project -> Tools -> C# -> Create C# Solu
 ## Current Features
 
 * Movement and collision on a sprite-based tilemap.
-* Branching dialogue with typewriter dialogue boxes.
+* Branching dialogue with typewriter dialogue boxes and a node-based editor.
 * Data-driven items linked to the Godot editor.
 * Player inventory with equipment slots and stat bonuses from equipped items.
 * Containers with contents customizable in the Godot editor.
