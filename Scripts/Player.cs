@@ -45,8 +45,8 @@ public partial class Player : Character
 		public InventoryState(Player player)
 		{
 			player._inventoryDisplay.CurrentInventory = player.Inventory;
-			player._inventoryDisplay.CurrentEquipment = player.EquipmentSet;
 			player._inventoryDisplay.Visible = true;
+			player._inventoryDisplay.EquipmentId = player.GetInstanceId();
 		}
 		public void Process(double delta, Character character)
 		{
@@ -55,6 +55,7 @@ public partial class Player : Character
 			{
 				player._inventoryDisplay.Visible = false;
 				player.State = new NavigationState();
+                EquipmentSystem.RetrieveEquipment(player.GetInstanceId(), out EquipmentSet eq);
 			}
 		}
 
@@ -407,24 +408,25 @@ public partial class Player : Character
 	private void OnInventorySelection(Item item)
 	{
 		var itemToEquip = item.Equipped ? Item.NoneItem() : item;
+		var eq = GetEquipmentSet();
 		if (MeetsEquipRequirements(itemToEquip))
 		{
 			switch (item.ItemType)
 			{
 				case ItemType.Weapon:
 					{
-						EquipmentSet.Weapon = itemToEquip;
+						eq.Weapon = itemToEquip;
 						_basicAttack.SetWeapon(itemToEquip);
 						break;
 					}
 				case ItemType.Armor:
 					{
-						EquipmentSet.Armor = itemToEquip;
+						eq.Armor = itemToEquip;
 						break;
 					}
 				case ItemType.Wearable:
 					{
-						EquipmentSet.Helmet = itemToEquip;
+						eq.Helmet = itemToEquip;
 						break;
 					}
 				default:
@@ -433,7 +435,7 @@ public partial class Player : Character
 					}
 			}
 
-			_inventoryDisplay.CurrentEquipment = EquipmentSet;
+			EquipmentSystem.SetEquipment(GetInstanceId(), eq, true);
 			_inventoryDisplay.CurrentInventory = Inventory;
 		}
 	}

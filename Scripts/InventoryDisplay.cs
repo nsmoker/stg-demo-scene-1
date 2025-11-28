@@ -11,10 +11,9 @@ public partial class InventoryDisplay: Panel
     private readonly List<InventoryButton> _buttons = new();
     
     private ItemListDisplay _itemListDisplay;
-    
-    private EquipmentSet _equipmentSet;
-    
-    
+
+    public ulong EquipmentId;
+
     private List<Item> _currentInventory = new();
     public List<Item> CurrentInventory 
     {
@@ -25,6 +24,13 @@ public partial class InventoryDisplay: Panel
             _itemListDisplay.DisplayItemList(_currentInventory);
         }
     }
+
+    private InventoryButton _armorButton;
+    private InventoryButton _weaponButton;
+    private InventoryButton _helmetButton;
+
+    private Label _attModLabel;
+    private Label _skillModLabel;
     
     private string BuildPropDesc(string name, int val)
     {
@@ -74,24 +80,6 @@ public partial class InventoryDisplay: Panel
             return "";
         }
     }
-    
-    [Export]
-    public EquipmentSet CurrentEquipment
-    {
-        get => _equipmentSet;
-        set
-        {
-            _equipmentSet = value;
-            GetNode<InventoryButton>("ArmorButton").SetItem(_equipmentSet.Armor);
-            GetNode<InventoryButton>("WeaponButton").SetItem(_equipmentSet.Weapon);
-            GetNode<InventoryButton>("HelmetButton").SetItem(_equipmentSet.Helmet);
-
-            var attModLabel = GetNode<Label>("StatDisplayBox/AttMods");
-            var skillModLabel = GetNode<Label>("StatDisplayBox/SkillMods");
-            attModLabel.Text = BuildAttModDesc(_equipmentSet.ComputeAttributeBonus());
-            skillModLabel.Text = BuildSkillModDesc(_equipmentSet.ComputeSkillBonus());
-        } 
-    }
 
     public ItemSelected OnItemSelected;
 
@@ -102,6 +90,15 @@ public partial class InventoryDisplay: Panel
         _buttons.Add(GetNode<InventoryButton>("WeaponButton"));
         _itemListDisplay = GetNode<ItemListDisplay>("ItemListDisplay");
         _itemListDisplay.OnItemSelected += OnSelection;
+
+        _armorButton = GetNode<InventoryButton>("ArmorButton");
+        _weaponButton = GetNode<InventoryButton>("WeaponButton");
+        _helmetButton = GetNode<InventoryButton>("HelmetButton");
+
+        _attModLabel = GetNode<Label>("StatDisplayBox/AttMods");
+        _skillModLabel = GetNode<Label>("StatDisplayBox/SkillMods");
+
+        EquipmentSystem.EquipmentChangeHandlers += OnEquipSetChanged;
     }
 
     public override void _Process(double delta)
@@ -130,5 +127,18 @@ public partial class InventoryDisplay: Panel
     private void OnSelection(Item item)
     {
         OnItemSelected?.Invoke(item);
+    }
+
+    private void OnEquipSetChanged(ulong id, EquipmentSet equipmentSet)
+    {
+        if (id == EquipmentId)
+        {
+            _armorButton.SetItem(equipmentSet.Armor);
+            _weaponButton.SetItem(equipmentSet.Weapon);
+            _helmetButton.SetItem(equipmentSet.Helmet);
+
+            _attModLabel.Text = BuildAttModDesc(equipmentSet.ComputeAttributeBonus());
+            _skillModLabel.Text = BuildSkillModDesc(equipmentSet.ComputeSkillBonus());
+        }
     }
 }

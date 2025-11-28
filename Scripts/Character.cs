@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using ArkhamHunters.Scripts.Abilities;
 using Godot;
@@ -11,18 +12,17 @@ public abstract partial class Character : CharacterBody2D
     public CollisionShape2D collider;
     protected AnimatedSprite2D SpriteAnim;
     protected readonly List<Item> Inventory = new();
-    protected EquipmentSet EquipmentSet = new();
 
     [Export] protected AttributeSet BaseAttributes = new();
     [Export] protected SkillSet BaseSkills = new();
 
-    public int Strength => BaseAttributes.Strength + EquipmentSet.ComputeAttributeBonus().StrengthBonus;
-    public int Endurance => BaseAttributes.Endurance + EquipmentSet.ComputeAttributeBonus().EnduranceBonus;
-    public int Dexterity => BaseAttributes.Dexterity + EquipmentSet.ComputeAttributeBonus().DexterityBonus;
-    public int Intelligence => BaseAttributes.Intelligence + EquipmentSet.ComputeAttributeBonus().IntelligenceBonus;
-    public int Wisdom => BaseAttributes.Wisdom + EquipmentSet.ComputeAttributeBonus().WisdomBonus;
-    public int Charisma => BaseAttributes.Charisma + EquipmentSet.ComputeAttributeBonus().CharismaBonus;
-    public int Willpower => BaseAttributes.Willpower + EquipmentSet.ComputeAttributeBonus().WillpowerBonus;
+    public int Strength => BaseAttributes.Strength + GetEquipmentSet().ComputeAttributeBonus().StrengthBonus;
+    public int Endurance => BaseAttributes.Endurance + GetEquipmentSet().ComputeAttributeBonus().EnduranceBonus;
+    public int Dexterity => BaseAttributes.Dexterity + GetEquipmentSet().ComputeAttributeBonus().DexterityBonus;
+    public int Intelligence => BaseAttributes.Intelligence + GetEquipmentSet().ComputeAttributeBonus().IntelligenceBonus;
+    public int Wisdom => BaseAttributes.Wisdom + GetEquipmentSet().ComputeAttributeBonus().WisdomBonus;
+    public int Charisma => BaseAttributes.Charisma + GetEquipmentSet().ComputeAttributeBonus().CharismaBonus;
+    public int Willpower => BaseAttributes.Willpower + GetEquipmentSet().ComputeAttributeBonus().WillpowerBonus;
 
     public AttributeSet FinalAttributes => new AttributeSet()
     {
@@ -76,21 +76,35 @@ public abstract partial class Character : CharacterBody2D
         State.PhysicsProcess(delta, this);
     }
 
+    protected EquipmentSet GetEquipmentSet()
+    {
+        EquipmentSet eq;
+        if (EquipmentSystem.RetrieveEquipment(GetInstanceId(), out eq))
+        {
+            return eq;
+        }
+        else
+        {
+            return new EquipmentSet();
+        }
+    }
+
     public int ComputeAc()
     {
-        return EquipmentSet.ComputeAc() + DexterityMod;
+        return GetEquipmentSet().ComputeAc() + DexterityMod;
     }
 
     public DamageRoll GetDamageRolls()
     {
-        var @base = EquipmentSet.GetDamageRolls();
+        var @base = GetEquipmentSet().GetDamageRolls();
         return @base;
     }
 
     public int ComputeToHitMod()
     {
-        var @base = EquipmentSet.ComputeToHitMod();
-        return @base + (EquipmentSet.Weapon.WeaponStats.Melee ? StrengthMod : DexterityMod);
+        var eq = GetEquipmentSet();
+        var @base = eq.ComputeToHitMod();
+        return @base + (eq.Weapon.WeaponStats.Melee ? StrengthMod : DexterityMod);
     }
 
     public bool MeetsEquipRequirements(Item item)
