@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://c0t4mgxxnb428"]
 
 [ext_resource type="Script" uid="uid://dolf38tlsle5r" path="res://Scripts/Sign.cs" id="1_55kfr"]
-[ext_resource type="Resource" uid="uid://dt8fi3r4hla46" path="res://Conversations/new_resource2.tres" id="2_6c32n"]
+[ext_resource type="Resource" uid="uid://cgqw7qqfwpih6" path="res://Conversations/tutorial_conversation.tres" id="2_6c32n"]
 [ext_resource type="Texture2D" uid="uid://b54j5wdw56gj0" path="res://Sprites/Images/ts_outerworld.png" id="2_a1n6o"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://Sprites/Images/spr_itemsncolectables.png" id="3_xo15y"]
 

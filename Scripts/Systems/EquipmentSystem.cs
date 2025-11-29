@@ -37,6 +37,14 @@ public static class EquipmentSystem
 
     public static EquipmentSet GetPlayerEquipment()
     {
-        return _equipmentMap[_playerId];
+        
+        if (_equipmentMap.TryGetValue(_playerId, out EquipmentSet equipmentSet))
+        {
+            return equipmentSet;
+        }
+        else
+        {
+            return new EquipmentSet();
+        }
     }
 }

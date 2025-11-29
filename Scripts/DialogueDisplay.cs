@@ -118,7 +118,14 @@ public partial class DialogueDisplay : PanelContainer
             }
             else
             {
-                SetActiveNode(continuations[0]);
+                foreach (var continuation in continuations)
+                {
+                    if (continuation.Condition == null || continuation.Condition.Evaluate())
+                    {
+                        SetActiveNode(continuation);
+                        break;
+                    }
+                }
             }
         }
         else

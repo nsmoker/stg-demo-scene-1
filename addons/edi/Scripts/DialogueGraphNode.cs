@@ -16,6 +16,8 @@ public partial class DialogueGraphNode : Resource
     public string Addressee;
     [Export]
     public ulong DNodeId = 0;
+    [Export]
+    public DialogueCondition Condition;
 
     public DialogueGraphNode() { }
 }

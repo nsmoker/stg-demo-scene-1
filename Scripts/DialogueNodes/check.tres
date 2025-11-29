@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ItemCheck" load_steps=2 format=3 uid="uid://i44ipjnwwvgw"]
+
+[ext_resource type="Script" uid="uid://c3ofd66ji5yj3" path="res://Scripts/DialogueNodes/ItemCheck.cs" id="1_wmlre"]
+
+[resource]
+script = ExtResource("1_wmlre")
+metadata/_custom_type_script = "uid://c3ofd66ji5yj3"

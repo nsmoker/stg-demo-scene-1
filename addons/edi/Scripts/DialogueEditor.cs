@@ -2,6 +2,7 @@ using EverydayDialogueEditor;
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 [Tool]
 public partial class DialogueEditor : Control
@@ -9,6 +10,7 @@ public partial class DialogueEditor : Control
     private Panel _contextMenu;
     private GraphEdit _editor;
     private List<DialogueNode> _entryPoints = [];
+    private List<DialogueNode> _selection = [];
     private ushort _entryCounter = 0;
     private ushort _nodeCounter = 0;
     private ushort _responseCounter = 0;
@@ -43,10 +45,28 @@ public partial class DialogueEditor : Control
         _editor.GuiInput += OnInputEvent;
         _editor.GetMenuHBox().AddChild(_editorResourcePicker);
 
+        _editor.NodeSelected += (Node node) =>
+        {
+            if (node is DialogueNode dnode)
+            {
+                _selection.Add(dnode);
+            }
+        };
+
+        _editor.NodeDeselected += (Node node) =>
+        {
+            if (node is DialogueNode dnode)
+            {
+                _selection.Remove(dnode);
+            }
+        };
+
         var dialogueButton = _contextMenu.GetNode<Button>("VBoxContainer/DialogueButton");
         var entryButton = _contextMenu.GetNode<Button>("VBoxContainer/EntryButton");
         var responseButton = _contextMenu.GetNode<Button>("VBoxContainer/ResponseButton");
         var actionButton = _contextMenu.GetNode<Button>("VBoxContainer/ActionButton");
+        var conditionButton = _contextMenu.GetNode<Button>("VBoxContainer/ConditionButton");
+        var removeConditionButton = _contextMenu.GetNode<Button>("VBoxContainer/RemoveConditionButton");
         dialogueButton.Pressed += () =>
         {
             AddNode("res://addons/edi/Scenes/dialogue_node.tscn");
@@ -65,6 +85,16 @@ public partial class DialogueEditor : Control
         actionButton.Pressed += () =>
         {
             AddNode("res://addons/edi/Scenes/action_node.tscn");
+        };
+
+        conditionButton.Pressed += () =>
+        {
+            _selection[0].AddCondition();
+        };
+
+        removeConditionButton.Pressed += () =>
+        {
+            _selection[0].RemoveCondition();
         };
 
         _editor.ConnectionRequest += OnConnectionRequest;
@@ -113,6 +143,7 @@ public partial class DialogueEditor : Control
                 editorNode.NodeType = node.NodeType;
                 editorNode.Addressee = node.Addressee;
                 editorNode.Content = node.Content;
+                editorNode.Condition = node.Condition;
                 _editor.AddChild(editorNode);
                 nodes.Add(editorNode);
             }
@@ -132,6 +163,10 @@ public partial class DialogueEditor : Control
             {
                 _contextMenu.Visible = !_contextMenu.Visible;
                 _contextMenu.Position = GetLocalMousePosition();
+
+                _contextMenu.GetNode<Button>("VBoxContainer/ConditionButton").Visible = _selection.Count == 1 && _selection.Where(x => x.NodeType != DialogueNodeType.ScriptEntry).Count() == 1;
+                _contextMenu.GetNode<Button>("VBoxContainer/RemoveConditionButton").Visible = 
+                    _selection.Count == 1 && _selection.Where(x => x.NodeType != DialogueNodeType.ScriptEntry && x.Condition != null).Count() == 1;
             }
             else if (mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.IsPressed())
             {

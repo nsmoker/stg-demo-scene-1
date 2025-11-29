@@ -28,13 +28,15 @@ public partial class Sign : StaticBody2D, IDialogueInteractable, IInteractable
 	public DialogueGraphNode GetEntryPoint()
 	{
 		var entryNode = Dialogue.EntryPoints[EntryPoint];
-		GD.Print(EntryPoint);
-		GD.Print(Dialogue.EntryPoints.Count);
-		GD.Print(Dialogue.Nodes.Count);
 		// This is a hack that only works because we don't have conditions. 
 		var conns = Dialogue.GetNodeConnections(Dialogue.GetIndexOfNode(entryNode));
-		GD.Print(Dialogue.Nodes.IndexOf(entryNode));
-        GD.Print(conns.Count);
+		foreach ( var connsNode in conns)
+		{
+			if (connsNode.Condition == null || connsNode.Condition.Evaluate())
+			{
+				return connsNode;
+			}
+		}
         return conns[0];
 	}
 

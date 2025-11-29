@@ -20,6 +20,7 @@ If Visual Studio gives you trouble, run Project -> Tools -> C# -> Create C# Solu
 
 * Movement and collision on a sprite-based tilemap.
 * Branching dialogue with typewriter dialogue boxes and a node-based editor.
+* Arbitrary condition checks in dialogue, addable and visible in node editor.
 * Data-driven items linked to the Godot editor.
 * Player inventory with equipment slots and stat bonuses from equipped items.
 * Containers with contents customizable in the Godot editor.
@@ -35,8 +36,6 @@ If Visual Studio gives you trouble, run Project -> Tools -> C# -> Create C# Solu
 This was pretty much a "for-fun" project when I did it, and some features we would need to make a game are missing, including:
 
 * Sophisticated Enemy AI (by far the biggest thing missing).
-* Skill checks in dialogue. 
-* Global "Conditions" triggered from dialogue. 
 * Saves
 
 ## Other Technical Considerations

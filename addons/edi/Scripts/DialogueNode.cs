@@ -25,10 +25,13 @@ public partial class DialogueNode : GraphNode
     public string Addressee;
     [Export]
     public ulong DNodeId = 0;
+    [Export]
+    public DialogueCondition Condition;
 
     private LineEdit _speakerEdit;
     private LineEdit _addresseeEdit;
     private TextEdit _contentEdit;
+    private EditorResourcePicker _editorResourcePicker;
 
     public override void _Ready()
     {
@@ -41,6 +44,41 @@ public partial class DialogueNode : GraphNode
             _contentEdit = GetNode<TextEdit>("Content");
             _contentEdit.Text = Content;
         }
+
+        _editorResourcePicker = new EditorResourcePicker();
+        _editorResourcePicker.CustomMinimumSize = new Vector2(400, 30);
+        _editorResourcePicker.BaseType = "DialogueCondition";
+        _editorResourcePicker.ResourceChanged += (Resource resource) =>
+        {
+            GD.Print("HIT");
+            if (_editorResourcePicker.EditedResource != null && _editorResourcePicker.EditedResource is DialogueCondition condition)
+            {
+                GD.Print("HIT 2");
+                Condition = condition;
+            };
+        };
+
+        _editorResourcePicker.Visible = false;
+
+        if (Condition != null)
+        {
+            _editorResourcePicker.EditedResource = Condition;
+            _editorResourcePicker.Visible = true;
+        }
+
+        AddChild(_editorResourcePicker);
+    }
+
+    public void AddCondition()
+    {
+        _editorResourcePicker.Visible = true;
+    }
+
+    public void RemoveCondition()
+    {
+        _editorResourcePicker.Visible = false;
+        _editorResourcePicker.EditedResource = null;
+        Condition = null;
     }
 
     public DialogueGraphNode Save()
@@ -67,6 +105,7 @@ public partial class DialogueNode : GraphNode
             Speaker = Speaker,
             Addressee = Addressee,
             DNodeId = DNodeId,
+            Condition = Condition,
         };
     }
 }
