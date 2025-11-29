@@ -69,22 +69,22 @@ public partial class DialogueEditor : Control
         var removeConditionButton = _contextMenu.GetNode<Button>("VBoxContainer/RemoveConditionButton");
         dialogueButton.Pressed += () =>
         {
-            AddNode("res://addons/edi/Scenes/dialogue_node.tscn", GetLocalMousePosition());
+            AddNode("res://addons/edi/Scenes/dialogue_node.tscn", _editor.ScrollOffset + GetLocalMousePosition());
         };
 
         entryButton.Pressed += () =>
         {
-            AddNode("res://addons/edi/Scenes/entry_node.tscn", GetLocalMousePosition());
+            AddNode("res://addons/edi/Scenes/entry_node.tscn", _editor.ScrollOffset + GetLocalMousePosition());
         };
 
         responseButton.Pressed += () =>
         {
-            AddNode("res://addons/edi/Scenes/response_node.tscn", GetLocalMousePosition());
+            AddNode("res://addons/edi/Scenes/response_node.tscn", _editor.ScrollOffset + GetLocalMousePosition());
         };
 
         actionButton.Pressed += () =>
         {
-            AddNode("res://addons/edi/Scenes/action_node.tscn", GetLocalMousePosition());
+            AddNode("res://addons/edi/Scenes/action_node.tscn", _editor.ScrollOffset + GetLocalMousePosition());
         };
 
         conditionButton.Pressed += () =>
