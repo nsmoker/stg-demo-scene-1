@@ -87,11 +87,15 @@ toNode = 15
 script = ExtResource("2_s18b8")
 NodeType = 2
 DNodeId = 281474976710656
+EditorPos = Vector2(120, 440)
+EditorSize = Vector2(222, 171)
 
 [sub_resource type="Resource" id="Resource_d5tal"]
 script = ExtResource("2_s18b8")
 NodeType = 2
 DNodeId = 281474976710656
+EditorPos = Vector2(120, 440)
+EditorSize = Vector2(222, 171)
 
 [sub_resource type="Resource" id="Resource_8dkci"]
 script = ExtResource("2_s18b8")
@@ -100,6 +104,8 @@ Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281474976710657
 Condition = ExtResource("3_s18b8")
+EditorPos = Vector2(440, 460)
+EditorSize = Vector2(480.0003, 339.99976)
 
 [sub_resource type="Resource" id="Resource_2afuy"]
 script = ExtResource("2_s18b8")
@@ -107,12 +113,16 @@ Content = "Hey, I'm a sign!"
 Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281474976710658
+EditorPos = Vector2(440, 900)
+EditorSize = Vector2(320.00006, 359.99927)
 
 [sub_resource type="Resource" id="Resource_75xkh"]
 script = ExtResource("2_s18b8")
 NodeType = 3
 Content = "I hate signs!"
 DNodeId = 281479271677954
+EditorPos = Vector2(1020, 1360)
+EditorSize = Vector2(319.99976, 300.00006)
 
 [sub_resource type="Resource" id="Resource_f2m6o"]
 script = ExtResource("2_s18b8")
@@ -120,12 +130,16 @@ Content = "W-why?"
 Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281479271677955
+EditorPos = Vector2(2080, 1360)
+EditorSize = Vector2(300.00024, 320.00006)
 
 [sub_resource type="Resource" id="Resource_xcja8"]
 script = ExtResource("2_s18b8")
 NodeType = 3
 Content = "Just kidding."
 DNodeId = 281483566645251
+EditorPos = Vector2(3020, 1800)
+EditorSize = Vector2(288.00024, 257.00012)
 
 [sub_resource type="Resource" id="Resource_5r2cy"]
 script = ExtResource("2_s18b8")
@@ -133,12 +147,16 @@ Content = "What a weird thing to say."
 Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281483566645252
+EditorPos = Vector2(3400, 1800)
+EditorSize = Vector2(440.0005, 320.00012)
 
 [sub_resource type="Resource" id="Resource_5p0oh"]
 script = ExtResource("2_s18b8")
 NodeType = 3
 Content = "My parents were killed by a falling sign during a storm."
 DNodeId = 281487861612548
+EditorPos = Vector2(2480, 1360)
+EditorSize = Vector2(819.99927, 340.00006)
 
 [sub_resource type="Resource" id="Resource_0quph"]
 script = ExtResource("2_s18b8")
@@ -146,6 +164,8 @@ Content = "That's horrible. I'm so sorry for your loss."
 Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281487861612549
+EditorPos = Vector2(3400, 1360)
+EditorSize = Vector2(640, 340.00006)
 
 [sub_resource type="Resource" id="Resource_wd7x5"]
 script = ExtResource("2_s18b8")
@@ -153,24 +173,32 @@ Content = "Humans killed my parents when I was two months old."
 Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281487861612550
+EditorPos = Vector2(4140, 1340)
+EditorSize = Vector2(820, 360.00012)
 
 [sub_resource type="Resource" id="Resource_h45vy"]
 script = ExtResource("2_s18b8")
 NodeType = 3
 Content = "I have to go"
 DNodeId = 281492156579846
+EditorPos = Vector2(5060, 1360)
+EditorSize = Vector2(288, 257.00006)
 
 [sub_resource type="Resource" id="Resource_awa2i"]
 script = ExtResource("2_s18b8")
 NodeType = 3
 Content = "Shut up"
 DNodeId = 281496451547142
+EditorPos = Vector2(5060, 1720)
+EditorSize = Vector2(288, 257.00024)
 
 [sub_resource type="Resource" id="Resource_5efnd"]
 script = ExtResource("2_s18b8")
 NodeType = 3
 Content = "You guys can talk?"
 DNodeId = 281500746514438
+EditorPos = Vector2(1020, 900)
+EditorSize = Vector2(359.99976, 359.9995)
 
 [sub_resource type="Resource" id="Resource_vqhk2"]
 script = ExtResource("2_s18b8")
@@ -178,12 +206,16 @@ Content = "Signs can't talk, silly! We can, however, rewrite our contents."
 Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281500746514439
+EditorPos = Vector2(1480, 900)
+EditorSize = Vector2(900, 360)
 
 [sub_resource type="Resource" id="Resource_nw3ho"]
 script = ExtResource("2_s18b8")
 NodeType = 3
 Content = "Neat!"
 DNodeId = 281505041481735
+EditorPos = Vector2(3020, 900)
+EditorSize = Vector2(288.0005, 257.00024)
 
 [sub_resource type="Resource" id="Resource_1xqi1"]
 script = ExtResource("2_s18b8")
@@ -191,6 +223,8 @@ Content = "Yup"
 Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281505041481736
+EditorPos = Vector2(3400, 900)
+EditorSize = Vector2(340.0005, 257.00024)
 
 [resource]
 script = ExtResource("3_h7dhw")

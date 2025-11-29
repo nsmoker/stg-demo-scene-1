@@ -106,6 +106,8 @@ public partial class DialogueNode : GraphNode
             Addressee = Addressee,
             DNodeId = DNodeId,
             Condition = Condition,
+            EditorPos = PositionOffset,
+            EditorSize = Size
         };
     }
 }

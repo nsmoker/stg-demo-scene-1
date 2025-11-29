@@ -69,22 +69,22 @@ public partial class DialogueEditor : Control
         var removeConditionButton = _contextMenu.GetNode<Button>("VBoxContainer/RemoveConditionButton");
         dialogueButton.Pressed += () =>
         {
-            AddNode("res://addons/edi/Scenes/dialogue_node.tscn");
+            AddNode("res://addons/edi/Scenes/dialogue_node.tscn", GetLocalMousePosition());
         };
 
         entryButton.Pressed += () =>
         {
-            AddNode("res://addons/edi/Scenes/entry_node.tscn");
+            AddNode("res://addons/edi/Scenes/entry_node.tscn", GetLocalMousePosition());
         };
 
         responseButton.Pressed += () =>
         {
-            AddNode("res://addons/edi/Scenes/response_node.tscn");
+            AddNode("res://addons/edi/Scenes/response_node.tscn", GetLocalMousePosition());
         };
 
         actionButton.Pressed += () =>
         {
-            AddNode("res://addons/edi/Scenes/action_node.tscn");
+            AddNode("res://addons/edi/Scenes/action_node.tscn", GetLocalMousePosition());
         };
 
         conditionButton.Pressed += () =>
@@ -145,6 +145,11 @@ public partial class DialogueEditor : Control
                 editorNode.Content = node.Content;
                 editorNode.Condition = node.Condition;
                 _editor.AddChild(editorNode);
+                editorNode.PositionOffset = node.EditorPos;
+                if (node.EditorSize != Vector2.Zero)
+                {
+                    editorNode.Size = node.EditorSize;
+                }
                 nodes.Add(editorNode);
             }
 
@@ -219,9 +224,10 @@ public partial class DialogueEditor : Control
         return newNode;
     }
 
-    public DialogueNode AddNode(string localPath)
+    public DialogueNode AddNode(string localPath, Vector2 pos = new Vector2() )
     {
         var newNode = _AddNodeInternal(localPath);
+        newNode.PositionOffset = pos;
         undoRedoManager.CreateAction($"Add {newNode.Title}");
         undoRedoManager.AddDoMethod(this, MethodName.AddAndEnableNode, newNode);
         undoRedoManager.AddUndoMethod(this, MethodName.DisableNode, newNode);

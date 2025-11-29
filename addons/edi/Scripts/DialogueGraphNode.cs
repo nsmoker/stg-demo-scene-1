@@ -19,5 +19,10 @@ public partial class DialogueGraphNode : Resource
     [Export]
     public DialogueCondition Condition;
 
+    [Export]
+    public Vector2 EditorPos = Vector2.Zero;
+    [Export]
+    public Vector2 EditorSize = Vector2.Zero;
+
     public DialogueGraphNode() { }
 }
