@@ -69,22 +69,22 @@ public partial class DialogueEditor : Control
         var removeConditionButton = _contextMenu.GetNode<Button>("VBoxContainer/RemoveConditionButton");
         dialogueButton.Pressed += () =>
         {
-            AddNode("res://addons/edi/Scenes/dialogue_node.tscn", _editor.ScrollOffset + GetLocalMousePosition());
+            AddNode("res://addons/edi/Scenes/dialogue_node.tscn", GetLocalMousePosition());
         };
 
         entryButton.Pressed += () =>
         {
-            AddNode("res://addons/edi/Scenes/entry_node.tscn", _editor.ScrollOffset + GetLocalMousePosition());
+            AddNode("res://addons/edi/Scenes/entry_node.tscn", GetLocalMousePosition());
         };
 
         responseButton.Pressed += () =>
         {
-            AddNode("res://addons/edi/Scenes/response_node.tscn", _editor.ScrollOffset + GetLocalMousePosition());
+            AddNode("res://addons/edi/Scenes/response_node.tscn", GetLocalMousePosition());
         };
 
         actionButton.Pressed += () =>
         {
-            AddNode("res://addons/edi/Scenes/action_node.tscn", _editor.ScrollOffset + GetLocalMousePosition());
+            AddNode("res://addons/edi/Scenes/action_node.tscn", GetLocalMousePosition());
         };
 
         conditionButton.Pressed += () =>
@@ -144,6 +144,7 @@ public partial class DialogueEditor : Control
                 editorNode.Addressee = node.Addressee;
                 editorNode.Content = node.Content;
                 editorNode.Condition = node.Condition;
+                editorNode.Action = node.Action;
                 _editor.AddChild(editorNode);
                 editorNode.PositionOffset = node.EditorPos;
                 if (node.EditorSize != Vector2.Zero)

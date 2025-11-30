@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="HostilityOverride" load_steps=2 format=3 uid="uid://bqa20ytuok437"]
+
+[ext_resource type="Script" uid="uid://rwlxgbnachp6" path="res://Scripts/DialogueNodes/HostilityOverride.cs" id="1_qpmat"]
+
+[resource]
+script = ExtResource("1_qpmat")
+metadata/_custom_type_script = "uid://rwlxgbnachp6"

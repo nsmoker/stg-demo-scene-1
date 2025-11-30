@@ -27,11 +27,14 @@ public partial class DialogueNode : GraphNode
     public ulong DNodeId = 0;
     [Export]
     public DialogueCondition Condition;
+    [Export]
+    public DialogueAction Action;
 
     private LineEdit _speakerEdit;
     private LineEdit _addresseeEdit;
     private TextEdit _contentEdit;
-    private EditorResourcePicker _editorResourcePicker;
+    private EditorResourcePicker _editorConditionPicker;
+    private EditorResourcePicker _editorActionPicker;
 
     public override void _Ready()
     {
@@ -45,39 +48,61 @@ public partial class DialogueNode : GraphNode
             _contentEdit.Text = Content;
         }
 
-        _editorResourcePicker = new EditorResourcePicker();
-        _editorResourcePicker.CustomMinimumSize = new Vector2(400, 30);
-        _editorResourcePicker.BaseType = "DialogueCondition";
-        _editorResourcePicker.ResourceChanged += (Resource resource) =>
+        _editorConditionPicker = new EditorResourcePicker();
+        _editorConditionPicker.CustomMinimumSize = new Vector2(400, 30);
+        _editorConditionPicker.BaseType = "DialogueCondition";
+        _editorConditionPicker.ResourceChanged += (Resource resource) =>
         {
-            GD.Print("HIT");
-            if (_editorResourcePicker.EditedResource != null && _editorResourcePicker.EditedResource is DialogueCondition condition)
+            if (_editorConditionPicker.EditedResource != null && _editorConditionPicker.EditedResource is DialogueCondition condition)
             {
-                GD.Print("HIT 2");
                 Condition = condition;
             };
         };
 
-        _editorResourcePicker.Visible = false;
+        _editorConditionPicker.Visible = false;
 
         if (Condition != null)
         {
-            _editorResourcePicker.EditedResource = Condition;
-            _editorResourcePicker.Visible = true;
+            _editorConditionPicker.EditedResource = Condition;
+            _editorConditionPicker.Visible = true;
         }
 
-        AddChild(_editorResourcePicker);
+        if (NodeType == DialogueNodeType.ScriptAction)
+        {
+            _editorActionPicker = new EditorResourcePicker();
+            _editorActionPicker.CustomMinimumSize = new Vector2(400, 30);
+            _editorActionPicker.BaseType = "DialogueAction";
+            _editorActionPicker.ResourceChanged += (Resource resource) =>
+            {
+                GD.Print("Hi");
+                if (_editorActionPicker.EditedResource != null && _editorActionPicker.EditedResource is DialogueAction action)
+                {
+                    GD.Print("Hi 2");
+                    Action = action;
+                };
+            };
+
+            if (Action != null)
+            {
+                _editorActionPicker.EditedResource = Condition;
+                _editorActionPicker.Visible = true;
+            }
+
+            AddChild(_editorActionPicker);
+        }
+
+        AddChild(_editorConditionPicker);
     }
 
     public void AddCondition()
     {
-        _editorResourcePicker.Visible = true;
+        _editorConditionPicker.Visible = true;
     }
 
     public void RemoveCondition()
     {
-        _editorResourcePicker.Visible = false;
-        _editorResourcePicker.EditedResource = null;
+        _editorConditionPicker.Visible = false;
+        _editorConditionPicker.EditedResource = null;
         Condition = null;
     }
 
@@ -107,7 +132,8 @@ public partial class DialogueNode : GraphNode
             DNodeId = DNodeId,
             Condition = Condition,
             EditorPos = PositionOffset,
-            EditorSize = Size
+            EditorSize = Size,
+            Action = Action,
         };
     }
 }

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="FactionRelationChange" load_steps=2 format=3 uid="uid://dau0bfd6utf05"]
+
+[ext_resource type="Script" uid="uid://c5tx7nsl8sij8" path="res://Scripts/DialogueNodes/FactionRelationChange.cs" id="1_c5787"]
+
+[resource]
+script = ExtResource("1_c5787")
+Hater = 1
+metadata/_custom_type_script = "uid://c5tx7nsl8sij8"

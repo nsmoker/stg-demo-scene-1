@@ -3,6 +3,7 @@ using Godot;
 
 namespace ArkhamHunters.Scripts;
 
+[Tool]
 public partial class SkillSet: Resource
 {
     [Export] public int Stealth;

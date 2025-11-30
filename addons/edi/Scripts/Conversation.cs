@@ -49,7 +49,7 @@ public partial class Conversation : Resource
         return -1;
     }
 
-    public List<DialogueGraphNode> GetResponsesForNode(DialogueGraphNode node)
+    public List<DialogueGraphNode> GetContinuationsForNode(DialogueGraphNode node)
     {
         var loc = GetIndexOfNode(node);
         var conns = GetNodeConnections(loc);
