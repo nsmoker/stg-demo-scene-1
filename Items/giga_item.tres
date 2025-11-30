@@ -27,6 +27,7 @@ AttributeBonuses = SubResource("Resource_rfs7h")
 
 [sub_resource type="Resource" id="Resource_v1lbd"]
 script = ExtResource("4_he5wo")
+MinimumStrength = 500
 
 [sub_resource type="Resource" id="Resource_ab5w0"]
 script = ExtResource("5_jevp6")

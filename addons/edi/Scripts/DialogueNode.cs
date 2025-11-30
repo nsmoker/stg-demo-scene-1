@@ -82,7 +82,7 @@ public partial class DialogueNode : GraphNode
 
             if (Action != null)
             {
-                _editorActionPicker.EditedResource = Condition;
+                _editorActionPicker.EditedResource = Action;
                 _editorActionPicker.Visible = true;
             }
 
