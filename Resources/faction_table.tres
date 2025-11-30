@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FactionTable" load_steps=2 format=3 uid="uid://vbjq48kype7r"]
+
+[ext_resource type="Script" uid="uid://cxd8m4vuh6y3o" path="res://Scripts/FactionTable.cs" id="1_enkjk"]
+
+[resource]
+script = ExtResource("1_enkjk")
+Factions = Dictionary[int, Dictionary]({
+1: {
+0: true,
+2: true
+},
+2: {
+1: true
+}
+})
+metadata/_custom_type_script = "uid://cxd8m4vuh6y3o"

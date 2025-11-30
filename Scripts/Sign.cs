@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ArkhamHunters.Scripts;
 
-public partial class Sign : StaticBody2D, IDialogueInteractable, IInteractable
+public partial class Sign : Character, IDialogueInteractable, IInteractable
 {
 	[Export] 
 	public Conversation Dialogue;
@@ -13,9 +13,15 @@ public partial class Sign : StaticBody2D, IDialogueInteractable, IInteractable
 	public int EntryPoint;
 
 	private Sprite2D _badgeSprite;
-	
-	public override void _Ready()
+
+    public override void _EnterTree()
+    {
+        base._EnterTree();
+    }
+
+    public override void _Ready()
 	{
+		base._Ready();
 		SetCollisionLayer(1 | (1 << 20));
 		_badgeSprite = GetNode<Sprite2D>("BadgeSprite");
 	}
@@ -27,17 +33,7 @@ public partial class Sign : StaticBody2D, IDialogueInteractable, IInteractable
 
 	public DialogueGraphNode GetEntryPoint()
 	{
-		var entryNode = Dialogue.EntryPoints[EntryPoint];
-		// This is a hack that only works because we don't have conditions. 
-		var conns = Dialogue.GetNodeConnections(Dialogue.GetIndexOfNode(entryNode));
-		foreach ( var connsNode in conns)
-		{
-			if (connsNode.Condition == null || connsNode.Condition.Evaluate())
-			{
-				return connsNode;
-			}
-		}
-        return conns[0];
+		return Dialogue.EntryPoints[EntryPoint];
 	}
 
 	public void SetShowBadge(bool showBadge)

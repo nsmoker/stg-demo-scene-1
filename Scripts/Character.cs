@@ -7,7 +7,8 @@ using Godot;
 
 namespace ArkhamHunters.Scripts;
 
-public abstract partial class Character : CharacterBody2D
+[GlobalClass]
+public partial class Character : CharacterBody2D
 {
     public CollisionShape2D collider;
     protected AnimatedSprite2D SpriteAnim;
@@ -52,6 +53,94 @@ public abstract partial class Character : CharacterBody2D
     [Export]
     public int CurrentHitpoints = 100;
 
+    [Export]
+    protected Faction _faction;
+
+    [Export] public float Speed = 300.0f;
+
+    [Export] public Godot.Collections.Array<PatrolLeg> PatrolLegs = [];
+
+    private int _patrolLegIndex;
+    private double _patrolLegProgress = 0;
+
+    private Area2D _senseArea;
+
+    private AbilityMenu _combatInteractionMenu;
+
+    private class CombatState : ICharacterState
+    {
+        public void Process(double delta, Character character)
+        {
+
+        }
+
+        public void PhysicsProcess(double delta, Character character)
+        {
+        }
+    }
+
+    private class PatrolState : ICharacterState
+    {
+        public void Process(double delta, Character character)
+        {
+            if (character.PatrolLegs.Count > 0)
+            {
+                var currentPatrolLeg = character.PatrolLegs[character._patrolLegIndex];
+                if (currentPatrolLeg.Direction.X < 0)
+                {
+                    character.SpriteAnim.Play("walk_west");
+                }
+
+                if (currentPatrolLeg.Direction.X > 0)
+                {
+                    character.SpriteAnim.Play("walk_east");
+                }
+
+                if (currentPatrolLeg.Direction.Y > 0)
+                {
+                    character.SpriteAnim.Play("walk_north");
+                }
+
+                if (currentPatrolLeg.Direction.Y < 0)
+                {
+                    character.SpriteAnim.Play("walk_south");
+                }
+            }
+
+            foreach (var body in character._senseArea.GetOverlappingBodies())
+            {
+                if (body is Character other && HostilitySystem.GetHostility(character.GetInstanceId(), other.GetInstanceId()))
+                {
+                    character.State = new CombatState();
+                    return;
+                }
+            }
+        }
+
+        public void PhysicsProcess(double delta, Character character)
+        {
+            if (character.PatrolLegs.Count > 0)
+            {
+                var currentPatrolLeg = character.PatrolLegs[character._patrolLegIndex];
+                if (character._patrolLegProgress >= currentPatrolLeg.Distance)
+                {
+                    character._patrolLegProgress = 0;
+                    character._patrolLegIndex = (character._patrolLegIndex + 1) % character.PatrolLegs.Count;
+                    currentPatrolLeg = character.PatrolLegs[character._patrolLegIndex];
+                }
+
+                character.Velocity = currentPatrolLeg.Direction * character.Speed;
+                character._patrolLegProgress += character.Velocity.Length();
+                character.MoveAndSlide();
+            }
+        }
+    }
+
+    public AbilityMenu GetCombatInteractionMenu()
+    {
+        return _combatInteractionMenu;
+    }
+
     public interface ICharacterState
     {
         void Process(double delta, Character character);
@@ -64,6 +153,11 @@ public abstract partial class Character : CharacterBody2D
     {
         SpriteAnim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         collider = GetNode<CollisionShape2D>("MainCollider");
+        FactionSystem.SetFaction(GetInstanceId(), _faction);
+        State = new PatrolState();
+        _senseArea = GetNode<Area2D>("SenseArea");
+        _combatInteractionMenu = GetNode<AbilityMenu>("CombatInteractionMenu");
+        _combatInteractionMenu.Visible = false;
     }
 
     public override void _Process(double delta)
@@ -73,6 +167,7 @@ public abstract partial class Character : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
+
         State.PhysicsProcess(delta, this);
     }
 

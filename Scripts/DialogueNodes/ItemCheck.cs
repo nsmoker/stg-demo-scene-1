@@ -10,8 +10,6 @@ public partial class ItemCheck : DialogueCondition
     {
         EquipmentSet playerEquipment = EquipmentSystem.GetPlayerEquipment();
 
-        GD.Print(playerEquipment.Armor.Name);
-
-        return playerEquipment.Armor.ItemType == ArkhamHunters.Scripts.Items.ItemType.None;
+        return playerEquipment.Armor.ItemType != ArkhamHunters.Scripts.Items.ItemType.None;
     }
 }

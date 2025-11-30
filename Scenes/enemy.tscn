@@ -1,27 +1,29 @@
 [gd_scene load_steps=22 format=3 uid="uid://d2taxt4eofj2h"]
 
-[ext_resource type="Script" uid="uid://dc53aqjjlt24b" path="res://Scripts/Enemy.cs" id="1_ghaa6"]
+[ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character.cs" id="1_ghaa6"]
 [ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/PatrolLeg.cs" id="2_1dp5w"]
 [ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/AttributeSet.cs" id="3_auwsv"]
 [ext_resource type="Script" uid="uid://cgng01q8ok4ba" path="res://Scripts/SkillSet.cs" id="4_8uf12"]
 [ext_resource type="Texture2D" uid="uid://dbj2eq5fnrohd" path="res://Sprites/Images/Characters/blue_slime.png" id="5_po0sg"]
 [ext_resource type="PackedScene" uid="uid://brdmuedpkp0jn" path="res://Scenes/ability_menu.tscn" id="6_haro7"]
 
-[sub_resource type="Resource" id="Resource_4wpu3"]
-script = ExtResource("2_1dp5w")
-Direction = Vector2(1, 0)
-Distance = 4000.0
-
-[sub_resource type="Resource" id="Resource_n52l7"]
-script = ExtResource("2_1dp5w")
-Direction = Vector2(-1, 0)
-Distance = 4000.0
-
 [sub_resource type="Resource" id="Resource_ncwib"]
 script = ExtResource("3_auwsv")
 
 [sub_resource type="Resource" id="Resource_lijot"]
 script = ExtResource("4_8uf12")
+
+[sub_resource type="Resource" id="Resource_1dp5w"]
+script = ExtResource("2_1dp5w")
+Direction = Vector2(1, 0)
+Distance = 1000.0
+metadata/_custom_type_script = "uid://bjgfioljdfdnx"
+
+[sub_resource type="Resource" id="Resource_auwsv"]
+script = ExtResource("2_1dp5w")
+Direction = Vector2(-1, 0)
+Distance = 1000.0
+metadata/_custom_type_script = "uid://bjgfioljdfdnx"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ss715"]
 size = Vector2(16, 12)
@@ -110,10 +112,14 @@ radius = 80.0
 
 [node name="Enemy" type="CharacterBody2D"]
 script = ExtResource("1_ghaa6")
-Speed = 50.0
-PatrolLegs = Array[Resource]([SubResource("Resource_4wpu3"), SubResource("Resource_n52l7")])
 BaseAttributes = SubResource("Resource_ncwib")
 BaseSkills = SubResource("Resource_lijot")
+MaxHitpoints = 10
+CurrentHitpoints = 10
+_faction = 1
+Speed = 50.0
+PatrolLegs = Array[ExtResource("2_1dp5w")]([SubResource("Resource_1dp5w"), SubResource("Resource_auwsv")])
+metadata/_custom_type_script = "uid://bsrhat3n35udl"
 
 [node name="MainCollider" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ss715")

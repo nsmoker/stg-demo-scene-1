@@ -2,6 +2,7 @@ using Godot;
 
 namespace ArkhamHunters.Scripts;
 
+[Tool]
 public partial class AttributeSet: Resource
 {
     [Export] public int Strength;

@@ -12,29 +12,13 @@ public partial class Player : Character
 {
 	private class DialogueState : ICharacterState
 	{
-		private IDialogueInteractable _dialogueSource;
-		private DialogueDisplay _dialogueDisplay;
-
-		public DialogueState(IDialogueInteractable dialogueSource, DialogueDisplay display)
+		public DialogueState(IDialogueInteractable dialogueSource, DialogueController display)
 		{
-			_dialogueSource = dialogueSource;
-			_dialogueDisplay = display;
-			_dialogueDisplay.Conversation = dialogueSource.GetDialogue();
-            _dialogueDisplay.SetActiveNode(dialogueSource.GetEntryPoint());
-			_dialogueDisplay.Visible = true;
-			_dialogueDisplay.ProcessMode = ProcessModeEnum.Always;
+            display.BeginConversation(dialogueSource.GetDialogue(), dialogueSource.GetEntryPoint());
 		}
 
 		public void Process(double delta, Character character)
 		{
-			var player = (Player)character;
-
-			if (Input.IsActionJustPressed("Interact") && !_dialogueDisplay.Advance())
-			{
-                _dialogueDisplay.ProcessMode = ProcessModeEnum.Disabled;
-                _dialogueDisplay.Visible = false;
-                player.SetState(new NavigationState());
-			}
 		}
 
 		public void PhysicsProcess(double delta, Character player) { }
@@ -336,10 +320,7 @@ public partial class Player : Character
         }
     }
 
-	[Export]
-	public float Speed = 300.0f;
-
-	private DialogueDisplay _dialogueDisplay;
+	private DialogueController _dialogueDisplay;
 	private Area2D _interactableRange;
 	private ContainerDisplay _containerDisplay;
 	private InventoryDisplay _inventoryDisplay;
@@ -351,7 +332,7 @@ public partial class Player : Character
 	[Export]
 	private Godot.Collections.Array<Ability> _abilities = new();
 
-	private Dictionary<Enemy, Action> _combatInteractions = new();
+	private Dictionary<Character, Action> _combatInteractions = new();
 
 	private NavigationAgent2D _navigationAgent;
 
@@ -380,12 +361,17 @@ public partial class Player : Character
 		return closestInteractable;
 	}
 
-	public override void _Ready()
+	[Export]
+	private FactionTable _factionTable;
+
+    public override void _Ready()
 	{
 		base._Ready();
 		CombatLog.Initialize();
+		FactionSystem.Initialize(_factionTable);
+		HostilitySystem.HostilityChangeHandlers += OnHostilityChanged;
 		SpriteAnim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-		_dialogueDisplay = GetNode<DialogueDisplay>("DialogueDisplay");
+		_dialogueDisplay = GetNode<DialogueController>("DialogueDisplay");
 		_interactableRange = GetNode<Area2D>("InteractableRange");
 		_containerDisplay = GetNode<ContainerDisplay>("ContainerDisplay");
 		_inventoryDisplay = GetNode<InventoryDisplay>("InventoryDisplay");
@@ -401,8 +387,9 @@ public partial class Player : Character
 		_navigationAgent = GetNode<NavigationAgent2D>("NavigationAgent2D");
 
 		State = new NavigationState();
-		_senseArea.BodyEntered += OnEnemyEnteredSenseArea;
-		_senseArea.BodyExited += OnEnemyExitedSenseArea;
+		_senseArea.BodyEntered += OnBodyEnteredSenseArea;
+		_senseArea.BodyExited += OnBodyExitedSenseArea;
+		_dialogueDisplay.ConversationEnded += OnConversationEnded;
 	}
 
 	private void OnInventorySelection(Item item)
@@ -440,45 +427,82 @@ public partial class Player : Character
 		}
 	}
 
-	private void OnEnemyEnteredSenseArea(Node2D body)
+	private void OnHostilityChanged(ulong entity1, ulong entity2, bool hostility)
 	{
-		if (body is Enemy enemy)
+		GD.Print(((Node) InstanceFromId(entity1)).Name);
+		if (entity2 == GetInstanceId() && _senseArea.GetOverlappingBodies().Count(n => n.GetInstanceId() == entity1) > 0)
+		{
+			GD.Print("hi");
+			if (hostility)
+			{
+				var enemy = (Character) InstanceFromId(entity1);
+                var combatMenu = enemy.GetCombatInteractionMenu();
+                if (combatMenu != null)
+                {
+                    combatMenu.Visible = true;
+                    combatMenu.SetAbilities(_abilities);
+                    combatMenu.ProcessMode = ProcessModeEnum.Always;
+                    _combatInteractions[enemy] = () =>
+                    {
+                        var ability = combatMenu.GetCurrentAbility();
+                        if (ability != null)
+                        {
+                            GD.Print($"Entering attack state");
+                            GetTree().Paused = false;
+                            SetState(new AttackState(enemy, ability));
+                        }
+                    };
+
+                    combatMenu._activationButton.Pressed += _combatInteractions[enemy];
+                }
+            }
+		}
+	}
+
+	private void OnBodyEnteredSenseArea(Node2D body)
+	{
+		if (body is Character character && HostilitySystem.GetHostility(character.GetInstanceId(), GetInstanceId()))
 		{
 			GD.Print($"Enemy entered sense area: {body.Name}");
-			var combatMenu = enemy.GetCombatInteractionMenu();
+			var combatMenu = character.GetCombatInteractionMenu();
 			if (combatMenu != null)
 			{
 				combatMenu.Visible = true;
 				combatMenu.SetAbilities(_abilities);
 				combatMenu.ProcessMode = ProcessModeEnum.Always;
-				_combatInteractions[enemy] = () =>
+				_combatInteractions[character] = () =>
 				{
 					var ability = combatMenu.GetCurrentAbility();
 					if (ability != null)
 					{
 						GD.Print($"Entering attack state");
 						GetTree().Paused = false;
-						SetState(new AttackState(enemy, ability));
+						SetState(new AttackState(character, ability));
 					}
 				};
 
-				combatMenu._activationButton.Pressed += _combatInteractions[enemy];
+				combatMenu._activationButton.Pressed += _combatInteractions[character];
 			}
 		}
 	}
 	
-	private void OnEnemyExitedSenseArea(Node2D body)
+	private void OnBodyExitedSenseArea(Node2D body)
 	{
-		if (body is Enemy enemy)
+		if (body is Character character && HostilitySystem.GetHostility(character.GetInstanceId(), GetInstanceId()))
 		{
-			var combatMenu = enemy.GetCombatInteractionMenu();
+			var combatMenu = character.GetCombatInteractionMenu();
 			if (combatMenu != null)
 			{
 				combatMenu.Visible = false;
 				combatMenu.SetAbilities([]);
-				combatMenu._activationButton.Pressed -= _combatInteractions[enemy];
-				_combatInteractions.Remove(enemy);
+				combatMenu._activationButton.Pressed -= _combatInteractions[character];
+				_combatInteractions.Remove(character);
 			}
 		}
+	}
+
+	private void OnConversationEnded(Conversation conversation)
+	{
+		State = new NavigationState();
 	}
 }

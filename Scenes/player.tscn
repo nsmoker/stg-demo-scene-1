@@ -1,12 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://gedp1qirf71n"]
+[gd_scene load_steps=16 format=3 uid="uid://gedp1qirf71n"]
 
 [ext_resource type="Script" uid="uid://04a5i0tk15gy" path="res://Scripts/Player.cs" id="1_co212"]
 [ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/AttributeSet.cs" id="2_hpt87"]
 [ext_resource type="PackedScene" uid="uid://ctgni16h8tre6" path="res://Scenes/container_display.tscn" id="3_bcg5f"]
 [ext_resource type="Script" uid="uid://cgng01q8ok4ba" path="res://Scripts/SkillSet.cs" id="3_xub83"]
-[ext_resource type="Script" uid="uid://4wgqj3gknq04" path="res://Scripts/DialogueDisplay.cs" id="4_3smsa"]
+[ext_resource type="Script" uid="uid://4wgqj3gknq04" path="res://Scripts/DialogueController.cs" id="4_3smsa"]
 [ext_resource type="PackedScene" uid="uid://dheqe5k157l3j" path="res://Scenes/inventory_display.tscn" id="4_ntcgu"]
 [ext_resource type="PackedScene" uid="uid://c87rbgv3boios" path="res://Scenes/CharacterSprite.tscn" id="6_dxres"]
+[ext_resource type="PackedScene" uid="uid://brdmuedpkp0jn" path="res://Scenes/ability_menu.tscn" id="8_8erm5"]
 
 [sub_resource type="Resource" id="Resource_hu0ow"]
 script = ExtResource("2_hpt87")
@@ -47,11 +48,10 @@ shape = SubResource("RectangleShape2D_7efl3")
 zoom = Vector2(5.88, 5.88)
 
 [node name="DialogueDisplay" type="PanelContainer" parent="."]
-process_mode = 4
-visible = false
+process_mode = 3
 z_index = 1
-offset_left = -164.0
-offset_top = 37.0
+offset_left = -163.0
+offset_top = 3.0
 offset_right = 166.0
 offset_bottom = 92.0
 script = ExtResource("4_3smsa")
@@ -99,3 +99,11 @@ shape = SubResource("CircleShape2D_irwaj")
 avoidance_enabled = true
 radius = 16.0
 debug_enabled = true
+
+[node name="CombatInteractionMenu" parent="." instance=ExtResource("8_8erm5")]
+visible = false
+offset_left = 10.0
+offset_top = -7.0
+offset_right = 42.0
+offset_bottom = 43.0
+scale = Vector2(0.5, 0.5)
