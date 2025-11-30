@@ -16,6 +16,7 @@ public partial class Container: StaticBody2D, IInteractable, IContainerInteracta
 
     public override void _Ready()
     {
+        InventorySystem.Register(GetInstanceId(), [.. _items]);
         SetCollisionLayer(1 | (1 << 20));
         _badgeSprite = GetNode<Sprite2D>("BadgeSprite");
         _closedSprite = GetNode<Sprite2D>("ClosedSprite");

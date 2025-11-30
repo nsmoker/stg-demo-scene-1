@@ -14,14 +14,14 @@ public partial class InventoryDisplay: Panel
 
     public ulong EquipmentId;
 
-    private List<Item> _currentInventory = new();
-    public List<Item> CurrentInventory 
+    private ulong _currentEntity = 0;
+    public ulong CurrentEntity 
     {
-        get => _currentInventory;
+        get => _currentEntity;
         set
         {
-            _currentInventory = value;
-            _itemListDisplay.DisplayItemList(_currentInventory);
+            _currentEntity = value;
+            _itemListDisplay.DisplayItemList(_currentEntity);
         }
     }
 
@@ -99,16 +99,11 @@ public partial class InventoryDisplay: Panel
         _skillModLabel = GetNode<Label>("StatDisplayBox/SkillMods");
 
         EquipmentSystem.EquipmentChangeHandlers += OnEquipSetChanged;
+        InventorySystem.InventoryChangeHandlers += OnInventoryChanged;
     }
 
     public override void _Process(double delta)
     {
-        if (GetPressedCategory() != ItemType.None)
-        {
-            _itemListDisplay.DisplayItemList(
-                CurrentInventory.Where(i => i.ItemType == GetPressedCategory()).ToList()
-            );
-        }
     }
 
     private ItemType GetPressedCategory()
@@ -139,6 +134,14 @@ public partial class InventoryDisplay: Panel
 
             _attModLabel.Text = BuildAttModDesc(equipmentSet.ComputeAttributeBonus());
             _skillModLabel.Text = BuildSkillModDesc(equipmentSet.ComputeSkillBonus());
+        }
+    }
+
+    private void OnInventoryChanged(ulong entity, Item item, bool added)
+    {
+        if (entity == CurrentEntity)
+        {
+            _itemListDisplay?.DisplayItemList(CurrentEntity);
         }
     }
 }

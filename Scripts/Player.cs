@@ -28,7 +28,7 @@ public partial class Player : Character
 	{
 		public InventoryState(Player player)
 		{
-			player._inventoryDisplay.CurrentInventory = player.Inventory;
+			player._inventoryDisplay.CurrentEntity = player.GetInstanceId();
 			player._inventoryDisplay.Visible = true;
 			player._inventoryDisplay.EquipmentId = player.GetInstanceId();
 		}
@@ -146,16 +146,14 @@ public partial class Player : Character
 
 		private void OnContainerItemSelect(Item item)
 		{
-			_player.Inventory.Add(item);
-			_container.RemoveItem(item);
-			_player._containerDisplay.DisplayItemList(_container.GetItems());
+			InventorySystem.Transfer(_container.GetInstanceId(), _player.GetInstanceId(), item);
 		}
 
 		public ContainerSearchState(Character character)
 		{
 			_player = (Player)character;
 			_container = (Container)_player.GetClosestInteractable();
-			_player._containerDisplay.DisplayItemList(_container.GetItems());
+			_player._containerDisplay.ContainerEntity = _container.GetInstanceId();
 			_player._containerDisplay.OnItemSelected += OnContainerItemSelect;
 		}
 
@@ -167,12 +165,16 @@ public partial class Player : Character
 			{
 				if (_player._containerDisplay.GetAllPressed())
 				{
-					_player.Inventory.AddRange(_container.GetItems());
-					_container.ClearItems();
+					var containerItems = InventorySystem.RetrieveInventory(_container.GetInstanceId());
+					foreach (var item in containerItems)
+					{
+						InventorySystem.Transfer(_container.GetInstanceId(), _player.GetInstanceId(), item);
+					}
 				}
 
 				_player._containerDisplay.Visible = false;
 				_player._containerDisplay.OnItemSelected -= OnContainerItemSelect;
+				_player._containerDisplay.ContainerEntity = 0;
 				_player.State = new NavigationState();
 			}
 		}
@@ -423,7 +425,7 @@ public partial class Player : Character
 			}
 
 			EquipmentSystem.SetEquipment(GetInstanceId(), eq, true);
-			_inventoryDisplay.CurrentInventory = Inventory;
+			_inventoryDisplay.CurrentEntity = GetInstanceId();
 		}
 	}
 
@@ -447,7 +449,6 @@ public partial class Player : Character
                         var ability = combatMenu.GetCurrentAbility();
                         if (ability != null)
                         {
-                            GD.Print($"Entering attack state");
                             GetTree().Paused = false;
                             SetState(new AttackState(enemy, ability));
                         }
@@ -463,7 +464,6 @@ public partial class Player : Character
 	{
 		if (body is Character character && HostilitySystem.GetHostility(character.GetInstanceId(), GetInstanceId()))
 		{
-			GD.Print($"Enemy entered sense area: {body.Name}");
 			var combatMenu = character.GetCombatInteractionMenu();
 			if (combatMenu != null)
 			{
@@ -475,7 +475,6 @@ public partial class Player : Character
 					var ability = combatMenu.GetCurrentAbility();
 					if (ability != null)
 					{
-						GD.Print($"Entering attack state");
 						GetTree().Paused = false;
 						SetState(new AttackState(character, ability));
 					}

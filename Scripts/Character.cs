@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using ArkhamHunters.Scripts.Abilities;
 using Godot;
 
 namespace ArkhamHunters.Scripts;
@@ -12,7 +9,8 @@ public partial class Character : CharacterBody2D
 {
     public CollisionShape2D collider;
     protected AnimatedSprite2D SpriteAnim;
-    protected readonly List<Item> Inventory = new();
+    [Export]
+    private Godot.Collections.Array<Item> InitialInventory = new();
 
     [Export] protected AttributeSet BaseAttributes = new();
     [Export] protected SkillSet BaseSkills = new();
@@ -154,6 +152,7 @@ public partial class Character : CharacterBody2D
         SpriteAnim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         collider = GetNode<CollisionShape2D>("MainCollider");
         FactionSystem.SetFaction(GetInstanceId(), _faction);
+        InventorySystem.Register(GetInstanceId(), [.. InitialInventory]);
         State = new PatrolState();
         _senseArea = GetNode<Area2D>("SenseArea");
         _combatInteractionMenu = GetNode<AbilityMenu>("CombatInteractionMenu");

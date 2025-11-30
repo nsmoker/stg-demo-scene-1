@@ -30,7 +30,7 @@ public partial class ItemListDisplay : PanelContainer
         }
     }
     
-    public void DisplayItemList(List<Item> items)
+    public void DisplayItemList(ulong entity)
     {
         Visible = true;
         foreach (var display in _displayedItems)
@@ -39,6 +39,8 @@ public partial class ItemListDisplay : PanelContainer
         }
         
         _displayedItems.Clear();
+
+        var items = InventorySystem.RetrieveInventory(entity);
 
         foreach (var item in items)
         {
