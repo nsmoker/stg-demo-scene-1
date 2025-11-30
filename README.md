@@ -30,6 +30,7 @@ If Visual Studio gives you trouble, run Project -> Tools -> C# -> Create C# Solu
 * Combat system with ability menu UI.
 * Pathfinding and range handling during combat.
 * Pause function
+* Faction system and per-character hostility overrides.
 
 ## Missing Features
 
