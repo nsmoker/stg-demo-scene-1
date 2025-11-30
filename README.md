@@ -13,6 +13,7 @@ This is a project I wrote in the summer of 2025 to implement a top-down, 2D tile
 2. Import in Godot project browser.
 3. Open the project.
 4. In the top right, press build. If the build is successful, you may run the project.
+5. Project -> Settings -> Plugins -> Enable EDI.
 
 If Visual Studio gives you trouble, run Project -> Tools -> C# -> Create C# Solution from the Godot editor.
 
@@ -21,6 +22,7 @@ If Visual Studio gives you trouble, run Project -> Tools -> C# -> Create C# Solu
 * Movement and collision on a sprite-based tilemap.
 * Branching dialogue with typewriter dialogue boxes and a node-based editor.
 * Arbitrary condition checks in dialogue, addable and visible in node editor.
+* Arbitrary action invocations in dialogue, addable and visible in node editor.
 * Data-driven items linked to the Godot editor.
 * Player inventory with equipment slots and stat bonuses from equipped items.
 * Containers with contents customizable in the Godot editor.
