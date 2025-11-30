@@ -43,8 +43,13 @@ This was pretty much a "for-fun" project when I did it, and some features we wou
 
 ## Other Technical Considerations
 
-A lot of the code handling dialogue, for example, is written to make use of Godot's object hierarchy in passing data between objects. This approach can work, but when multiple objects need access to the same data for any reason, it gets tedious. 
-This is why the combat system is written with events instead of passing data around at the object level. Refactoring the dialogue system and probably some other parts of the code to use events would be a good thing to do once we start needing to extend these systems. 
+Almost all of the demo's systems are written with events; in general, all of the classes in the "Scripts/Systems" directory are static classes that manage some mapping between instance ids and object state, and send updates to event channels.
+This approach is nice because it makes reacting to changes in e.g. dialogue state or faction relationships very easy for any object to do. It also means that there's a single authoritative record of what, e.g., the inventory of a container being searched is, and the various displays and entities don't need to worry about keeping their records synchronized since Godot's processing is single threaded. The problem with the way it's currently implemented, however, is that Godot doesn't provide any sort of identifier that is persistent between in-game and editor states. All our event systems currently use instance IDs, which are invalidated the moment the game starts running and don't even exist in the editor. This is fine for now, but it poses two problems:
+1. Saving data out from the systems such that we can reconstruct a scene state from disk is going to be a challenge.
+2. If you do need to reference an entity from the editor, you have to use the scene path to do so, which is unstable.
+
+We have to reckon with these eventually, though they're not pressing currently.
+
 
 ## Art Credit
 
