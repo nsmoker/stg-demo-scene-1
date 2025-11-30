@@ -431,10 +431,8 @@ public partial class Player : Character
 
 	private void OnHostilityChanged(ulong entity1, ulong entity2, bool hostility)
 	{
-		GD.Print(((Node) InstanceFromId(entity1)).Name);
 		if (entity2 == GetInstanceId() && _senseArea.GetOverlappingBodies().Count(n => n.GetInstanceId() == entity1) > 0)
 		{
-			GD.Print("hi");
 			if (hostility)
 			{
 				var enemy = (Character) InstanceFromId(entity1);

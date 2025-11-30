@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dolf38tlsle5r" path="res://Scripts/Sign.cs" id="1_55kfr"]
 [ext_resource type="Texture2D" uid="uid://b54j5wdw56gj0" path="res://Sprites/Images/ts_outerworld.png" id="2_a1n6o"]
-[ext_resource type="Resource" uid="uid://qsemmguo0a3w" path="res://Conversations/dupe.tres" id="2_qwoug"]
+[ext_resource type="Resource" uid="uid://bluyyel844gnx" path="res://Conversations/tutorial_conversation.tres" id="2_qwoug"]
 [ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/AttributeSet.cs" id="3_u6bny"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://Sprites/Images/spr_itemsncolectables.png" id="3_xo15y"]
 [ext_resource type="Script" uid="uid://cgng01q8ok4ba" path="res://Scripts/SkillSet.cs" id="4_qwoug"]

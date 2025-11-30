@@ -74,10 +74,8 @@ public partial class DialogueNode : GraphNode
             _editorActionPicker.BaseType = "DialogueAction";
             _editorActionPicker.ResourceChanged += (Resource resource) =>
             {
-                GD.Print("Hi");
                 if (_editorActionPicker.EditedResource != null && _editorActionPicker.EditedResource is DialogueAction action)
                 {
-                    GD.Print("Hi 2");
                     Action = action;
                 };
             };
