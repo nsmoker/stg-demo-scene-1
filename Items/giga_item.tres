@@ -13,32 +13,25 @@
 [ext_resource type="Script" uid="uid://bpuijyxf410pp" path="res://Scripts/Items/WearableStats.cs" id="10_w3cqs"]
 [ext_resource type="Script" uid="uid://bu40wng0pu1b6" path="res://Scripts/Items/Item.cs" id="11_pl7b0"]
 
-[sub_resource type="Resource" id="Resource_k248y"]
+[sub_resource type="Resource" id="Resource_rfs7h"]
 script = ExtResource("1_tdf5l")
 
-[sub_resource type="Resource" id="Resource_xyxv0"]
+[sub_resource type="Resource" id="Resource_vb3mk"]
 script = ExtResource("2_e4vmd")
-BonusProficiencies = null
+BonusProficiencies = []
 
-[sub_resource type="Resource" id="Resource_y1brm"]
+[sub_resource type="Resource" id="Resource_eonfo"]
 script = ExtResource("3_vbwnk")
-SkillBonuses = SubResource("Resource_xyxv0")
-AttributeBonuses = SubResource("Resource_k248y")
+SkillBonuses = SubResource("Resource_vb3mk")
+AttributeBonuses = SubResource("Resource_rfs7h")
 
-[sub_resource type="Resource" id="Resource_31qge"]
+[sub_resource type="Resource" id="Resource_v1lbd"]
 script = ExtResource("4_he5wo")
-MinimumStrength = 500
-MinimumDexterity = 500
-MinimumEndurance = 500
-MinimumIntelligence = 500
-MinimumWisdom = 500
-MinimumCharisma = 500
-MinimumWillpower = 500
 
-[sub_resource type="Resource" id="Resource_y40vd"]
+[sub_resource type="Resource" id="Resource_ab5w0"]
 script = ExtResource("5_jevp6")
-DamageRolls = null
-HealRolls = null
+DamageRolls = []
+HealRolls = []
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ej1s"]
 atlas = ExtResource("6_nnguv")
@@ -48,50 +41,45 @@ region = Rect2(48, 16, 16, 16)
 atlas = ExtResource("7_5o1h1")
 region = Rect2(48, 16, 16, 16)
 
-[sub_resource type="Resource" id="Resource_wgcb0"]
+[sub_resource type="Resource" id="Resource_22jth"]
 script = ExtResource("8_l67oy")
-Proficiencies = Array[int]([2])
 
-[sub_resource type="Resource" id="Resource_5a5jb"]
+[sub_resource type="Resource" id="Resource_re2p0"]
 script = ExtResource("1_tdf5l")
 
-[sub_resource type="Resource" id="Resource_iokjr"]
+[sub_resource type="Resource" id="Resource_gw4w1"]
 script = ExtResource("9_hi3ru")
-Rolls = Array[int]([6])
-Mod = 1
-Melee = true
 
-[sub_resource type="Resource" id="Resource_thl1a"]
+[sub_resource type="Resource" id="Resource_p731h"]
 script = ExtResource("2_e4vmd")
-BonusProficiencies = null
+BonusProficiencies = []
 
-[sub_resource type="Resource" id="Resource_c4wqk"]
+[sub_resource type="Resource" id="Resource_u1eco"]
 script = ExtResource("9_1vyfw")
-DamageRolls = SubResource("Resource_iokjr")
-ToHitMod = 5
-SkillBonuses = SubResource("Resource_thl1a")
-AttributeBonuses = SubResource("Resource_5a5jb")
+DamageRolls = SubResource("Resource_gw4w1")
+SkillBonuses = SubResource("Resource_p731h")
+AttributeBonuses = SubResource("Resource_re2p0")
 
-[sub_resource type="Resource" id="Resource_3xdml"]
+[sub_resource type="Resource" id="Resource_3vnh5"]
 script = ExtResource("1_tdf5l")
 
-[sub_resource type="Resource" id="Resource_gwxkh"]
+[sub_resource type="Resource" id="Resource_jtc74"]
 script = ExtResource("2_e4vmd")
-BonusProficiencies = null
+BonusProficiencies = []
 
-[sub_resource type="Resource" id="Resource_w2bgh"]
+[sub_resource type="Resource" id="Resource_sds7d"]
 script = ExtResource("10_w3cqs")
-SkillBonuses = SubResource("Resource_gwxkh")
-AttributeBonuses = SubResource("Resource_3xdml")
+SkillBonuses = SubResource("Resource_jtc74")
+AttributeBonuses = SubResource("Resource_3vnh5")
 
 [resource]
 script = ExtResource("11_pl7b0")
-AttributeRequirements = SubResource("Resource_31qge")
-SkillRequirements = SubResource("Resource_wgcb0")
-ConsumableStats = SubResource("Resource_y40vd")
-WearableStats = SubResource("Resource_w2bgh")
-ArmorStats = SubResource("Resource_y1brm")
-WeaponStats = SubResource("Resource_c4wqk")
+AttributeRequirements = SubResource("Resource_v1lbd")
+SkillRequirements = SubResource("Resource_22jth")
+ConsumableStats = SubResource("Resource_ab5w0")
+WearableStats = SubResource("Resource_sds7d")
+ArmorStats = SubResource("Resource_eonfo")
+WeaponStats = SubResource("Resource_u1eco")
 Name = "GIGA ITEM"
 Description = "WEEWOO WEEWOO ENDGAME ITEM WEEWOO"
 Icon = SubResource("AtlasTexture_0ej1s")

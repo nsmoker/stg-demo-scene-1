@@ -13,25 +13,25 @@
 [ext_resource type="Script" uid="uid://mxrfbr2ffrey" path="res://Scripts/DamageRoll.cs" id="9_mvlf1"]
 [ext_resource type="Script" uid="uid://bpuijyxf410pp" path="res://Scripts/Items/WearableStats.cs" id="10_crv0c"]
 
-[sub_resource type="Resource" id="Resource_wye0r"]
+[sub_resource type="Resource" id="Resource_357i3"]
 script = ExtResource("1_7s7sv")
 
-[sub_resource type="Resource" id="Resource_66xis"]
+[sub_resource type="Resource" id="Resource_7gs51"]
 script = ExtResource("3_f8cyh")
-BonusProficiencies = null
+BonusProficiencies = []
 
-[sub_resource type="Resource" id="Resource_3vkkr"]
+[sub_resource type="Resource" id="Resource_1mjg1"]
 script = ExtResource("5_mks7i")
-SkillBonuses = SubResource("Resource_66xis")
-AttributeBonuses = SubResource("Resource_wye0r")
+SkillBonuses = SubResource("Resource_7gs51")
+AttributeBonuses = SubResource("Resource_357i3")
 
-[sub_resource type="Resource" id="Resource_g7vgw"]
+[sub_resource type="Resource" id="Resource_hven1"]
 script = ExtResource("1_fr8e0")
 
-[sub_resource type="Resource" id="Resource_qndxm"]
+[sub_resource type="Resource" id="Resource_adko8"]
 script = ExtResource("6_dhrot")
-DamageRolls = null
-HealRolls = null
+DamageRolls = []
+HealRolls = []
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cjghb"]
 atlas = ExtResource("1_182yy")
@@ -41,52 +41,45 @@ region = Rect2(0, 16, 16, 16)
 atlas = ExtResource("2_dapqe")
 region = Rect2(0, 16, 16, 16)
 
-[sub_resource type="Resource" id="Resource_p0yxd"]
+[sub_resource type="Resource" id="Resource_k8lu7"]
 script = ExtResource("3_2rubl")
 
-[sub_resource type="Resource" id="Resource_h1lf1"]
+[sub_resource type="Resource" id="Resource_g2u0q"]
 script = ExtResource("1_7s7sv")
-StrengthBonus = 2
 
-[sub_resource type="Resource" id="Resource_negrd"]
+[sub_resource type="Resource" id="Resource_3ljo6"]
 script = ExtResource("9_mvlf1")
-Rolls = Array[int]([6])
-Mod = 1
-Melee = true
 
-[sub_resource type="Resource" id="Resource_40n5t"]
+[sub_resource type="Resource" id="Resource_5ewpq"]
 script = ExtResource("3_f8cyh")
-BonusProficiencies = null
+BonusProficiencies = []
 
-[sub_resource type="Resource" id="Resource_4hmfh"]
+[sub_resource type="Resource" id="Resource_22srv"]
 script = ExtResource("4_sflb1")
-DamageRolls = SubResource("Resource_negrd")
-ToHitMod = 1
-SkillBonuses = SubResource("Resource_40n5t")
-AttributeBonuses = SubResource("Resource_h1lf1")
-Melee = true
-Range = 15.0
+DamageRolls = SubResource("Resource_3ljo6")
+SkillBonuses = SubResource("Resource_5ewpq")
+AttributeBonuses = SubResource("Resource_g2u0q")
 
-[sub_resource type="Resource" id="Resource_fh62t"]
+[sub_resource type="Resource" id="Resource_gcmdq"]
 script = ExtResource("1_7s7sv")
 
-[sub_resource type="Resource" id="Resource_ycmvw"]
+[sub_resource type="Resource" id="Resource_6yrqy"]
 script = ExtResource("3_f8cyh")
-BonusProficiencies = null
+BonusProficiencies = []
 
-[sub_resource type="Resource" id="Resource_ldnlv"]
+[sub_resource type="Resource" id="Resource_fnmvv"]
 script = ExtResource("10_crv0c")
-SkillBonuses = SubResource("Resource_ycmvw")
-AttributeBonuses = SubResource("Resource_fh62t")
+SkillBonuses = SubResource("Resource_6yrqy")
+AttributeBonuses = SubResource("Resource_gcmdq")
 
 [resource]
 script = ExtResource("5_u8v6n")
-AttributeRequirements = SubResource("Resource_g7vgw")
-SkillRequirements = SubResource("Resource_p0yxd")
-ConsumableStats = SubResource("Resource_qndxm")
-WearableStats = SubResource("Resource_ldnlv")
-ArmorStats = SubResource("Resource_3vkkr")
-WeaponStats = SubResource("Resource_4hmfh")
+AttributeRequirements = SubResource("Resource_hven1")
+SkillRequirements = SubResource("Resource_k8lu7")
+ConsumableStats = SubResource("Resource_adko8")
+WearableStats = SubResource("Resource_fnmvv")
+ArmorStats = SubResource("Resource_1mjg1")
+WeaponStats = SubResource("Resource_22srv")
 Name = "Short Sword"
 Description = "A simple weapon. Easy to wield, but of limited effectiveness against larger opponents."
 Icon = SubResource("AtlasTexture_cjghb")

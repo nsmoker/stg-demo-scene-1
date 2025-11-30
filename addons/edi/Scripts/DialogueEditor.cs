@@ -371,7 +371,7 @@ public partial class DialogueEditor : Control
     {
         Godot.Collections.Array<DialogueGraphNode> entrysRet = [];
         Godot.Collections.Array<DialogueGraphNode> ret = [];
-        Godot.Collections.Array<DialogueConnection> connsRet = [];
+        Godot.Collections.Array<DialogueConnection> conns = [];
         
         foreach (var entryPoint in _entryPoints)
         {
@@ -379,9 +379,16 @@ public partial class DialogueEditor : Control
             {
                 entrysRet.Add(entryPoint.Save());
 
-                TraverseNodesDFS(entryPoint, ret, connsRet, []);
+                TraverseNodesDFS(entryPoint, ret, conns, []);
             }
         }
+
+        // Sort connections by to-node y-position.
+        Godot.Collections.Array<DialogueConnection> connsRet = new(conns.OrderBy(x =>
+        {
+            var toNode = ret[x.toNode];
+            return toNode.EditorPos.Y;
+        }));
 
         var conv = new Conversation
         {

@@ -13,27 +13,25 @@
 [ext_resource type="Script" uid="uid://cs3jsnbfssvyu" path="res://Scripts/Items/WeaponStats.cs" id="9_tsr6y"]
 [ext_resource type="Script" uid="uid://bpuijyxf410pp" path="res://Scripts/Items/WearableStats.cs" id="10_55ihs"]
 
-[sub_resource type="Resource" id="Resource_mfj0y"]
+[sub_resource type="Resource" id="Resource_gsdq5"]
 script = ExtResource("1_m5pl2")
-DexterityBonus = 2
 
-[sub_resource type="Resource" id="Resource_0hvf5"]
+[sub_resource type="Resource" id="Resource_jasn7"]
 script = ExtResource("3_l283y")
-BonusProficiencies = null
+BonusProficiencies = []
 
-[sub_resource type="Resource" id="Resource_4hknw"]
+[sub_resource type="Resource" id="Resource_kd2ri"]
 script = ExtResource("5_v5syg")
-Ac = 2
-SkillBonuses = SubResource("Resource_0hvf5")
-AttributeBonuses = SubResource("Resource_mfj0y")
+SkillBonuses = SubResource("Resource_jasn7")
+AttributeBonuses = SubResource("Resource_gsdq5")
 
-[sub_resource type="Resource" id="Resource_g7vgw"]
+[sub_resource type="Resource" id="Resource_pkhsv"]
 script = ExtResource("2_4g2ll")
 
-[sub_resource type="Resource" id="Resource_higmh"]
+[sub_resource type="Resource" id="Resource_ptb2m"]
 script = ExtResource("6_dqvmo")
-DamageRolls = null
-HealRolls = null
+DamageRolls = []
+HealRolls = []
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rfvk1"]
 atlas = ExtResource("6_3odwt")
@@ -43,45 +41,46 @@ region = Rect2(16, 0, 16, 16)
 atlas = ExtResource("7_qsw5y")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="Resource" id="Resource_p0yxd"]
+[sub_resource type="Resource" id="Resource_d2b6j"]
 script = ExtResource("4_0dfef")
 
-[sub_resource type="Resource" id="Resource_745s3"]
+[sub_resource type="Resource" id="Resource_ld611"]
 script = ExtResource("1_m5pl2")
 
-[sub_resource type="Resource" id="Resource_gsdq5"]
+[sub_resource type="Resource" id="Resource_2b8ps"]
 script = ExtResource("9_gsdq5")
 
-[sub_resource type="Resource" id="Resource_m3poj"]
+[sub_resource type="Resource" id="Resource_q40kx"]
 script = ExtResource("3_l283y")
-BonusProficiencies = null
+BonusProficiencies = []
 
-[sub_resource type="Resource" id="Resource_biqb6"]
+[sub_resource type="Resource" id="Resource_k48fq"]
 script = ExtResource("9_tsr6y")
-SkillBonuses = SubResource("Resource_m3poj")
-AttributeBonuses = SubResource("Resource_745s3")
+DamageRolls = SubResource("Resource_2b8ps")
+SkillBonuses = SubResource("Resource_q40kx")
+AttributeBonuses = SubResource("Resource_ld611")
 
-[sub_resource type="Resource" id="Resource_fhut6"]
+[sub_resource type="Resource" id="Resource_2btfo"]
 script = ExtResource("1_m5pl2")
 
-[sub_resource type="Resource" id="Resource_2ae28"]
+[sub_resource type="Resource" id="Resource_1ln0c"]
 script = ExtResource("3_l283y")
-BonusProficiencies = null
+BonusProficiencies = []
 
-[sub_resource type="Resource" id="Resource_ajr17"]
+[sub_resource type="Resource" id="Resource_8uteg"]
 script = ExtResource("10_55ihs")
-SkillBonuses = SubResource("Resource_2ae28")
-AttributeBonuses = SubResource("Resource_fhut6")
+SkillBonuses = SubResource("Resource_1ln0c")
+AttributeBonuses = SubResource("Resource_2btfo")
 
 [resource]
 script = ExtResource("6_hy805")
 ItemType = 1
-AttributeRequirements = SubResource("Resource_g7vgw")
-SkillRequirements = SubResource("Resource_p0yxd")
-ConsumableStats = SubResource("Resource_higmh")
-WearableStats = SubResource("Resource_ajr17")
-ArmorStats = SubResource("Resource_4hknw")
-WeaponStats = SubResource("Resource_biqb6")
+AttributeRequirements = SubResource("Resource_pkhsv")
+SkillRequirements = SubResource("Resource_d2b6j")
+ConsumableStats = SubResource("Resource_ptb2m")
+WearableStats = SubResource("Resource_8uteg")
+ArmorStats = SubResource("Resource_kd2ri")
+WeaponStats = SubResource("Resource_k48fq")
 Name = "Clothing"
 Description = "Plain garments made for everyday usage. Comfortable, though not sturdy."
 Icon = SubResource("AtlasTexture_rfvk1")
