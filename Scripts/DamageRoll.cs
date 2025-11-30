@@ -4,6 +4,8 @@ using Godot;
 
 namespace ArkhamHunters.Scripts;
 
+[Tool]
+[GlobalClass]
 public partial class DamageRoll : Resource
 {
     [Export]

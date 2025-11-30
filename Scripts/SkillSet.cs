@@ -4,6 +4,7 @@ using Godot;
 namespace ArkhamHunters.Scripts;
 
 [Tool]
+[GlobalClass]
 public partial class SkillSet: Resource
 {
     [Export] public int Stealth;

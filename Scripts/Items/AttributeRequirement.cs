@@ -2,6 +2,7 @@ using Godot;
 
 namespace ArkhamHunters.Scripts.Items;
 
+[Tool]
 [GlobalClass]
 public partial class AttributeRequirement: Resource
 {
