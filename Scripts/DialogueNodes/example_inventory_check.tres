@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="InventoryCheck" load_steps=3 format=3 uid="uid://l60gaotyov72"]
+
+[ext_resource type="Resource" uid="uid://vuejdeymb45b" path="res://Items/giga_item.tres" id="1_c1h74"]
+[ext_resource type="Script" uid="uid://bn3l4fb8n3qno" path="res://Scripts/DialogueNodes/InventoryCheck.cs" id="1_mumhs"]
+
+[resource]
+script = ExtResource("1_mumhs")
+CheckItem = ExtResource("1_c1h74")
+metadata/_custom_type_script = "uid://bn3l4fb8n3qno"

@@ -38,6 +38,7 @@ namespace ArkhamHunters.Scripts.Items
 }
 
 [GlobalClass]
+[Tool]
 public partial class Item : Resource
 {
     [Export]
