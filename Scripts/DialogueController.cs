@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
 
-public partial class DialogueController : PanelContainer
+public partial class DialogueController : ScrollContainer
 {
 
     private Conversation _conversation;
@@ -246,7 +246,7 @@ public partial class DialogueController : PanelContainer
 
     public override void _Ready()
     {
-        _container = GetNode<VBoxContainer>("VBoxContainer");
+        _container = GetNode<VBoxContainer>("PanelContainer/VBoxContainer");
         _dialogueLabel = _container.GetNode<Label>("DialogueLabel");
         State = new IdleState(this);
     }

@@ -18,7 +18,7 @@ script = ExtResource("1_7s7sv")
 
 [sub_resource type="Resource" id="Resource_7gs51"]
 script = ExtResource("3_f8cyh")
-BonusProficiencies = []
+BonusProficiencies = null
 
 [sub_resource type="Resource" id="Resource_1mjg1"]
 script = ExtResource("5_mks7i")
@@ -30,8 +30,8 @@ script = ExtResource("1_fr8e0")
 
 [sub_resource type="Resource" id="Resource_adko8"]
 script = ExtResource("6_dhrot")
-DamageRolls = []
-HealRolls = []
+DamageRolls = null
+HealRolls = null
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cjghb"]
 atlas = ExtResource("1_182yy")
@@ -52,7 +52,7 @@ script = ExtResource("9_mvlf1")
 
 [sub_resource type="Resource" id="Resource_5ewpq"]
 script = ExtResource("3_f8cyh")
-BonusProficiencies = []
+BonusProficiencies = null
 
 [sub_resource type="Resource" id="Resource_22srv"]
 script = ExtResource("4_sflb1")
@@ -65,7 +65,7 @@ script = ExtResource("1_7s7sv")
 
 [sub_resource type="Resource" id="Resource_6yrqy"]
 script = ExtResource("3_f8cyh")
-BonusProficiencies = []
+BonusProficiencies = null
 
 [sub_resource type="Resource" id="Resource_fnmvv"]
 script = ExtResource("10_crv0c")
