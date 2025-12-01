@@ -40,6 +40,6 @@ public static class InventorySystem
 
     public static List<Item> RetrieveInventory(ulong entity)
     {
-        return _invMap[entity];
+        return [ .._invMap[entity]];
     }
 }
