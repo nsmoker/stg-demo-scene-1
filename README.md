@@ -17,6 +17,9 @@ This is a project I wrote in the summer of 2025 to implement a top-down, 2D tile
 
 If Visual Studio gives you trouble, run Project -> Tools -> C# -> Create C# Solution from the Godot editor.
 
+Finally, if you're using VSCode and are annoyed by the .uid files that Godot leaves everywhere, I added the following to my `files.exclude` setting: 
+`**/*.uid`.
+
 ## Current Features
 
 * Movement and collision on a sprite-based tilemap.
