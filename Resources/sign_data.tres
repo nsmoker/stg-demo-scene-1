@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=7 format=3 uid="uid://v3egqjlvelo"]
+
+[ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/AttributeSet.cs" id="1_t0hky"]
+[ext_resource type="Script" uid="uid://cgng01q8ok4ba" path="res://Scripts/SkillSet.cs" id="2_n4let"]
+[ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/PatrolLeg.cs" id="3_oahbq"]
+[ext_resource type="Script" uid="uid://cng8hqptg2rbu" path="res://Scripts/CharacterData.cs" id="4_0w4qu"]
+
+[sub_resource type="Resource" id="Resource_g0c67"]
+script = ExtResource("1_t0hky")
+
+[sub_resource type="Resource" id="Resource_rljro"]
+script = ExtResource("2_n4let")
+
+[resource]
+script = ExtResource("4_0w4qu")
+CharacterName = "Sign"
+BaseAttributes = SubResource("Resource_g0c67")
+BaseSkills = SubResource("Resource_rljro")
+MaxHitpoints = 5
+CurrentHitpoints = 5
+InitialFaction = 2
+metadata/_custom_type_script = "uid://cng8hqptg2rbu"

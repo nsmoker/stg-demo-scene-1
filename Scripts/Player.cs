@@ -429,13 +429,14 @@ public partial class Player : Character
 		}
 	}
 
-	private void OnHostilityChanged(ulong entity1, ulong entity2, bool hostility)
+	private void OnHostilityChanged(string entity1, string entity2, bool hostility)
 	{
-		if (entity2 == GetInstanceId() && _senseArea.GetOverlappingBodies().Count(n => n.GetInstanceId() == entity1) > 0)
+		var entity2Match = _senseArea.GetOverlappingBodies().FirstOrDefault(n => n is Character c && c.CharacterData.ResourcePath == entity1);
+		if (entity2 == CharacterData.ResourcePath && entity2Match != null)
 		{
 			if (hostility)
 			{
-				var enemy = (Character) InstanceFromId(entity1);
+				var enemy = (Character) entity2Match;
                 var combatMenu = enemy.GetCombatInteractionMenu();
                 if (combatMenu != null)
                 {
@@ -460,7 +461,7 @@ public partial class Player : Character
 
 	private void OnBodyEnteredSenseArea(Node2D body)
 	{
-		if (body is Character character && HostilitySystem.GetHostility(character.GetInstanceId(), GetInstanceId()))
+		if (body is Character character && HostilitySystem.GetHostility(character.CharacterData.ResourcePath, CharacterData.ResourcePath))
 		{
 			var combatMenu = character.GetCombatInteractionMenu();
 			if (combatMenu != null)
@@ -485,7 +486,7 @@ public partial class Player : Character
 	
 	private void OnBodyExitedSenseArea(Node2D body)
 	{
-		if (body is Character character && HostilitySystem.GetHostility(character.GetInstanceId(), GetInstanceId()))
+		if (body is Character character && HostilitySystem.GetHostility(character.CharacterData.ResourcePath, CharacterData.ResourcePath))
 		{
 			var combatMenu = character.GetCombatInteractionMenu();
 			if (combatMenu != null)

@@ -96,7 +96,7 @@ public partial class Character : CharacterBody2D
 
             foreach (var body in character._senseArea.GetOverlappingBodies())
             {
-                if (body is Character other && HostilitySystem.GetHostility(character.GetInstanceId(), other.GetInstanceId()))
+                if (body is Character other && HostilitySystem.GetHostility(character.CharacterData.ResourcePath, other.CharacterData.ResourcePath))
                 {
                     character.State = new CombatState();
                     return;
@@ -140,7 +140,7 @@ public partial class Character : CharacterBody2D
     {
         SpriteAnim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         collider = GetNode<CollisionShape2D>("MainCollider");
-        FactionSystem.SetFaction(GetInstanceId(), CharacterData.InitialFaction);
+        FactionSystem.SetFaction(CharacterData.ResourcePath, CharacterData.InitialFaction);
         InventorySystem.Register(GetInstanceId(), [.. InitialInventory]);
         State = new PatrolState();
         _senseArea = GetNode<Area2D>("SenseArea");

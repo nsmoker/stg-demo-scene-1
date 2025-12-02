@@ -11,11 +11,11 @@ public enum Faction
 
 public static class FactionSystem
 {
-    private static Dictionary<ulong, Faction> _factionMap = [];
+    private static Dictionary<string, Faction> _factionMap = [];
 
     private static FactionTable _relationTable;
 
-    public delegate void FactionChangeEvent(ulong instance, Faction faction);
+    public delegate void FactionChangeEvent(string instance, Faction faction);
 
     public static FactionChangeEvent FactionChangeHandlers;
 
@@ -28,13 +28,13 @@ public static class FactionSystem
         _relationTable = relations;
     }
 
-    public static void SetFaction(ulong instance, Faction faction)
+    public static void SetFaction(string instance, Faction faction)
     {
         _factionMap[instance] = faction;
         FactionChangeHandlers?.Invoke(instance, faction);
     }
 
-    public static bool TryGetFaction(ulong instance, out Faction faction)
+    public static bool TryGetFaction(string instance, out Faction faction)
     {
         return _factionMap.TryGetValue(instance, out faction);
     }

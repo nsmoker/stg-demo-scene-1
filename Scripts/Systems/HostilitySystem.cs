@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 public static class HostilitySystem
 {
-    private static Dictionary<ulong, HashSet<ulong>> _hostilityOverrides = [];
+    private static Dictionary<string, HashSet<string>> _hostilityOverrides = [];
 
-    public delegate void HostilityChangedEvent(ulong entity1, ulong entity2, bool newHostility);
+    public delegate void HostilityChangedEvent(string entity1, string entity2, bool newHostility);
 
     public static HostilityChangedEvent HostilityChangeHandlers;
 
-    public static void SetHostilityOverride(ulong entity1,  ulong entity2, bool hostile)
+    public static void SetHostilityOverride(string entity1,  string entity2, bool hostile)
     {
         if (_hostilityOverrides.TryGetValue(entity1, out var overrides))
         {
@@ -36,7 +36,7 @@ public static class HostilitySystem
         HostilityChangeHandlers?.Invoke(entity1, entity2, hostile);
     }
 
-    public static bool GetHostility(ulong entity1, ulong entity2)
+    public static bool GetHostility(string entity1, string entity2)
     {
         if (_hostilityOverrides.TryGetValue(entity1, out var value))
         {

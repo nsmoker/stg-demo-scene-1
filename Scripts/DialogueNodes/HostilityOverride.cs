@@ -6,12 +6,17 @@ using System;
 [GlobalClass]
 public partial class HostilityOverride : DialogueAction
 {
+    [Export]
+    public CharacterData Hater;
+
+    [Export]
+    public CharacterData Hatee;
+
+    [Export]
+    public bool IsHostile;
+
     public override void Execute()
     {
-        GD.Print("exec");
-        Node root = ((SceneTree) Godot.Engine.GetMainLoop()).CurrentScene;
-        var player = root.GetNode<Character>("Player");
-        var sign = root.GetNode<Character>("NavigationRegion2D/Sign");
-        HostilitySystem.SetHostilityOverride(sign.GetInstanceId(), player.GetInstanceId(), true);
+        HostilitySystem.SetHostilityOverride(Hater.ResourcePath, Hatee.ResourcePath, IsHostile);
     }
 }
