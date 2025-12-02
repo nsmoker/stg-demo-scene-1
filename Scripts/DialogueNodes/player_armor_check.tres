@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PlayerEquipmentCheck" load_steps=2 format=3 uid="uid://di1l6685b7p6l"]
+
+[ext_resource type="Script" uid="uid://c3ofd66ji5yj3" path="res://Scripts/DialogueNodes/PlayerEquipmentCheck.cs" id="1_ypf2v"]
+
+[resource]
+script = ExtResource("1_ypf2v")
+SlotToCheck = 1
+metadata/_custom_type_script = "uid://c3ofd66ji5yj3"

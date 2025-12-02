@@ -399,12 +399,31 @@ public partial class DialogueEditor : Control
 
         if (_editorResourcePicker.EditedResource != null)
         {
+            GD.Print("hi");
             var edit = (Conversation) _editorResourcePicker.EditedResource;
             edit.Nodes = conv.Nodes;
             edit.Connections = conv.Connections;
             edit.EntryPoints = conv.EntryPoints;
 
             ResourceSaver.Save(edit);
+        }
+        else
+        {
+            var dialog = new FileDialog
+            {
+                FileMode = FileDialog.FileModeEnum.SaveFile,
+                Access = FileDialog.AccessEnum.Filesystem,
+                Filters = [ "*.tres;TRES Resource", "*.res;RES Resource" ],
+            };
+            dialog.FileSelected += path =>
+            {
+                ResourceSaver.Save(conv, path);
+                _editorResourcePicker.EditedResource = ResourceLoader.Load<Conversation>(path);
+                dialog.Hide();
+                dialog.QueueFree();
+            };
+            AddChild(dialog);
+            dialog.Show();
         }
     }
 }

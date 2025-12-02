@@ -1,7 +1,8 @@
-[gd_scene load_steps=17 format=4 uid="uid://l1bcdmrxgp74"]
+[gd_scene load_steps=18 format=4 uid="uid://l1bcdmrxgp74"]
 
 [ext_resource type="TileSet" uid="uid://cem5hy2763dx" path="res://Sprites/Tilesets/placeholder_tile_set.tres" id="1_dw8ip"]
 [ext_resource type="PackedScene" uid="uid://c0t4mgxxnb428" path="res://Scenes/sign.tscn" id="2_akivm"]
+[ext_resource type="Resource" uid="uid://co0lb7i6ju12i" path="res://Conversations/new.tres" id="3_4hrb5"]
 [ext_resource type="PackedScene" uid="uid://dvydi4qxrxfyp" path="res://Scenes/container.tscn" id="3_slqck"]
 [ext_resource type="Resource" uid="uid://bg48w042cr6xu" path="res://Items/clothing.tres" id="4_nqcrx"]
 [ext_resource type="Resource" uid="uid://kftvfg1stwmt" path="res://Items/sword.tres" id="5_kqxyy"]
@@ -46,6 +47,7 @@ navigation_enabled = false
 
 [node name="Sign" parent="NavigationRegion2D" instance=ExtResource("2_akivm")]
 position = Vector2(33, 92)
+Dialogue = ExtResource("3_4hrb5")
 
 [node name="Container" parent="NavigationRegion2D" instance=ExtResource("3_slqck")]
 position = Vector2(67, 53)

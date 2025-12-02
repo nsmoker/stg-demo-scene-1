@@ -1,0 +1,93 @@
+[gd_resource type="Resource" script_class="Conversation" load_steps=17 format=3 uid="uid://co0lb7i6ju12i"]
+
+[ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="1_ighd5"]
+[ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="2_ciir5"]
+[ext_resource type="Resource" uid="uid://di1l6685b7p6l" path="res://Scripts/DialogueNodes/player_armor_check.tres" id="3_hq6nn"]
+[ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/edi/Scripts/Conversation.cs" id="3_piri6"]
+
+[sub_resource type="Resource" id="Resource_hq6nn"]
+script = ExtResource("1_ighd5")
+toNode = 5
+
+[sub_resource type="Resource" id="Resource_m885x"]
+script = ExtResource("1_ighd5")
+fromNode = 1
+toNode = 2
+
+[sub_resource type="Resource" id="Resource_mll3n"]
+script = ExtResource("1_ighd5")
+toNode = 1
+
+[sub_resource type="Resource" id="Resource_d4shf"]
+script = ExtResource("1_ighd5")
+fromNode = 3
+toNode = 4
+
+[sub_resource type="Resource" id="Resource_pjqnk"]
+script = ExtResource("1_ighd5")
+fromNode = 1
+toNode = 3
+
+[sub_resource type="Resource" id="Resource_j7sed"]
+script = ExtResource("2_ciir5")
+NodeType = 2
+DNodeId = 281474976710656
+EditorPos = Vector2(-340, 740)
+EditorSize = Vector2(222, 170.99951)
+
+[sub_resource type="Resource" id="Resource_o0imy"]
+script = ExtResource("2_ciir5")
+NodeType = 2
+DNodeId = 281474976710656
+EditorPos = Vector2(-340, 740)
+EditorSize = Vector2(222, 170.99951)
+
+[sub_resource type="Resource" id="Resource_05lih"]
+script = ExtResource("2_ciir5")
+Content = "Hi"
+Speaker = "Sign"
+Addressee = "Player"
+DNodeId = 281474976710657
+EditorPos = Vector2(200, 740)
+EditorSize = Vector2(420, 339.99902)
+
+[sub_resource type="Resource" id="Resource_d7idm"]
+script = ExtResource("2_ciir5")
+NodeType = 3
+Content = "Hey."
+DNodeId = 281479271677953
+EditorPos = Vector2(1020, 520)
+EditorSize = Vector2(380.0014, 340.00024)
+
+[sub_resource type="Resource" id="Resource_usw61"]
+script = ExtResource("2_ciir5")
+NodeType = 3
+Content = "You can talk?"
+DNodeId = 281483566645249
+EditorPos = Vector2(1020, 1060)
+EditorSize = Vector2(400.00153, 339.99976)
+
+[sub_resource type="Resource" id="Resource_n2sjm"]
+script = ExtResource("2_ciir5")
+Content = "Clearly."
+Speaker = "Sign"
+Addressee = "Player"
+DNodeId = 281483566645250
+EditorPos = Vector2(1580, 940)
+EditorSize = Vector2(400.00095, 399.99988)
+
+[sub_resource type="Resource" id="Resource_ubcmh"]
+script = ExtResource("2_ciir5")
+Content = "Clothes are in the chest over there."
+Speaker = "Sign"
+Addressee = "Player"
+DNodeId = 281483566645251
+Condition = ExtResource("3_hq6nn")
+EditorPos = Vector2(240, -40)
+EditorSize = Vector2(579.9994, 360.0005)
+
+[resource]
+script = ExtResource("3_piri6")
+Nodes = Array[ExtResource("2_ciir5")]([SubResource("Resource_o0imy"), SubResource("Resource_05lih"), SubResource("Resource_d7idm"), SubResource("Resource_usw61"), SubResource("Resource_n2sjm"), SubResource("Resource_ubcmh")])
+EntryPoints = Array[ExtResource("2_ciir5")]([SubResource("Resource_j7sed")])
+Connections = Array[ExtResource("1_ighd5")]([SubResource("Resource_hq6nn"), SubResource("Resource_m885x"), SubResource("Resource_mll3n"), SubResource("Resource_d4shf"), SubResource("Resource_pjqnk")])

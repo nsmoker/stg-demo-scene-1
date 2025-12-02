@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="1_br7p4"]
 [ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="2_3af4n"]
-[ext_resource type="Script" uid="uid://c3ofd66ji5yj3" path="res://Scripts/DialogueNodes/ItemCheck.cs" id="3_br7p4"]
+[ext_resource type="Script" uid="uid://c3ofd66ji5yj3" path="res://Scripts/DialogueNodes/PlayerEquipmentCheck.cs" id="3_br7p4"]
 [ext_resource type="Resource" uid="uid://dau0bfd6utf05" path="res://Scripts/DialogueNodes/tutorial_change.tres" id="4_5hirs"]
 [ext_resource type="Resource" uid="uid://bqa20ytuok437" path="res://Scripts/DialogueNodes/override.tres" id="5_7id2j"]
 [ext_resource type="Resource" uid="uid://l60gaotyov72" path="res://Scripts/DialogueNodes/example_inventory_check.tres" id="6_3af4n"]
