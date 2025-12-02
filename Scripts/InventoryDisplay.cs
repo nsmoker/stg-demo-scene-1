@@ -12,7 +12,7 @@ public partial class InventoryDisplay: Panel
     
     private ItemListDisplay _itemListDisplay;
 
-    public ulong EquipmentId;
+    public string EquipmentId;
 
     private ulong _currentEntity = 0;
     public ulong CurrentEntity 
@@ -124,7 +124,7 @@ public partial class InventoryDisplay: Panel
         OnItemSelected?.Invoke(item);
     }
 
-    private void OnEquipSetChanged(ulong id, EquipmentSet equipmentSet)
+    private void OnEquipSetChanged(string id, EquipmentSet equipmentSet)
     {
         if (id == EquipmentId)
         {

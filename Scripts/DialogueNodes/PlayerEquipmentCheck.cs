@@ -8,6 +8,9 @@ using System;
 public partial class PlayerEquipmentCheck : DialogueCondition
 {
     [Export]
+    public CharacterData CharacterToCheck;
+
+    [Export]
     public ItemType SlotToCheck;
 
     [Export]
@@ -15,16 +18,20 @@ public partial class PlayerEquipmentCheck : DialogueCondition
 
     public override bool Evaluate()
     {
-        EquipmentSet playerEquipment = EquipmentSystem.GetPlayerEquipment();
+        EquipmentSystem.RetrieveEquipment(CharacterToCheck.ResourcePath, out EquipmentSet characterEquipment);
 
+        if (characterEquipment == null)
+        {
+            return ShouldBeEmpty;
+        }
         return SlotToCheck switch
         {
-            ItemType.Weapon => ShouldBeEmpty ? playerEquipment.Weapon.ItemType == ArkhamHunters.Scripts.Items.ItemType.None
-                                                 : playerEquipment.Weapon.ItemType != ArkhamHunters.Scripts.Items.ItemType.None,
-            ItemType.Wearable => ShouldBeEmpty ? playerEquipment.Helmet.ItemType == ArkhamHunters.Scripts.Items.ItemType.None
-                                                 : playerEquipment.Helmet.ItemType != ArkhamHunters.Scripts.Items.ItemType.None,
-            ItemType.Armor => ShouldBeEmpty ? playerEquipment.Armor.ItemType == ArkhamHunters.Scripts.Items.ItemType.None
-                                                 : playerEquipment.Armor.ItemType != ArkhamHunters.Scripts.Items.ItemType.None,
+            ItemType.Weapon => ShouldBeEmpty ? characterEquipment.Weapon.ItemType == ItemType.None
+                                                 : characterEquipment.Weapon.ItemType != ItemType.None,
+            ItemType.Wearable => ShouldBeEmpty ? characterEquipment.Helmet.ItemType == ItemType.None
+                                                 : characterEquipment.Helmet.ItemType != ItemType.None,
+            ItemType.Armor => ShouldBeEmpty ? characterEquipment.Armor.ItemType == ItemType.None
+                                                 : characterEquipment.Armor.ItemType != ItemType.None,
             _ => false,
         };
     }

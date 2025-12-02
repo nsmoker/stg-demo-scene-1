@@ -48,7 +48,7 @@ This approach is nice because it makes reacting to changes in e.g. dialogue stat
 1. Saving data out from the systems such that we can reconstruct a scene state from disk is going to be a challenge.
 2. If you do need to reference an entity from the editor, you have to use the scene path to do so, which is unstable.
 
-We have to reckon with these eventually, though they're not pressing currently.
+We have to reckon with these eventually, though they're not pressing currently. One way I've found to address it that I used to make the dialogue scripting a bit less painless is by using resources to store character attributes, exploiting the persistence of resource IDs. This approach has worked thus far and shows promise.
 
 
 ## Art Credit

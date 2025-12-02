@@ -30,7 +30,7 @@ public partial class Player : Character
 		{
 			player._inventoryDisplay.CurrentEntity = player.GetInstanceId();
 			player._inventoryDisplay.Visible = true;
-			player._inventoryDisplay.EquipmentId = player.GetInstanceId();
+			player._inventoryDisplay.EquipmentId = player.CharacterData.ResourcePath;
 		}
 		public void Process(double delta, Character character)
 		{
@@ -39,7 +39,7 @@ public partial class Player : Character
 			{
 				player._inventoryDisplay.Visible = false;
 				player.State = new NavigationState();
-                EquipmentSystem.RetrieveEquipment(player.GetInstanceId(), out EquipmentSet eq);
+                EquipmentSystem.RetrieveEquipment(player.CharacterData.ResourcePath, out EquipmentSet eq);
 			}
 		}
 
@@ -133,7 +133,7 @@ public partial class Player : Character
 
 			// Get the input direction and handle the movement.
 			Vector2 direction = Input.GetVector("Move West", "Move East", "Move North", "Move South");
-			player.Velocity = direction * player.Speed;
+			player.Velocity = direction * player.CharacterData.Speed;
 
 			player.MoveAndSlide();
 		}
@@ -220,7 +220,7 @@ public partial class Player : Character
 
             agent.VelocityComputed += (safeVelocity) =>
 			{
-				OnVelocityComputed(player, safeVelocity.LimitLength(player.Speed));
+				OnVelocityComputed(player, safeVelocity.LimitLength(player.CharacterData.Speed));
 			};
 
 			agent.TargetPosition = target.GetClosestOnCollSurface(player.Position);
@@ -250,7 +250,7 @@ public partial class Player : Character
 			}
 
 			Vector2 nextPathPosition = player._navigationAgent.GetNextPathPosition();
-			Vector2 newVelocity = player.GlobalPosition.DirectionTo(nextPathPosition) * player.Speed;
+			Vector2 newVelocity = player.GlobalPosition.DirectionTo(nextPathPosition) * player.CharacterData.Speed;
 			if (player._navigationAgent.AvoidanceEnabled)
 			{
 				player._navigationAgent.Velocity = newVelocity;
@@ -424,7 +424,7 @@ public partial class Player : Character
 					}
 			}
 
-			EquipmentSystem.SetEquipment(GetInstanceId(), eq, true);
+			EquipmentSystem.SetEquipment(CharacterData.ResourcePath, eq);
 			_inventoryDisplay.CurrentEntity = GetInstanceId();
 		}
 	}

@@ -5,46 +5,26 @@ using System.Collections.Generic;
 
 public static class EquipmentSystem
 {
-    private static ulong _playerId = 0;
+    private static Dictionary<string, EquipmentSet> _equipmentMap = [];
 
-    private static Dictionary<ulong, EquipmentSet> _equipmentMap = [];
-
-    public delegate void EquipmentChangeEvent(ulong id, EquipmentSet equipmentSet);
+    public delegate void EquipmentChangeEvent(string id, EquipmentSet equipmentSet);
 
     public static EquipmentChangeEvent EquipmentChangeHandlers;
 
-    public static void SetEquipment(ulong id, EquipmentSet equipmentSet, bool isPlayer = false)
+    public static void SetEquipment(string id, EquipmentSet equipmentSet)
     {
         _equipmentMap[id] = equipmentSet;
-
-        if (isPlayer)
-        {
-            _playerId = id;
-        }
 
         EquipmentChangeHandlers(id, equipmentSet);
     }
 
-    public static bool RetrieveEquipment(ulong id, out EquipmentSet equipmentSet)
+    public static bool RetrieveEquipment(string id, out EquipmentSet equipmentSet)
     {
         return _equipmentMap.TryGetValue(id, out equipmentSet);
     }
 
-    public static void RemoveEquipment(ulong id)
+    public static void RemoveEquipment(string id)
     {
         _equipmentMap.Remove(id);
-    }
-
-    public static EquipmentSet GetPlayerEquipment()
-    {
-        
-        if (_equipmentMap.TryGetValue(_playerId, out EquipmentSet equipmentSet))
-        {
-            return equipmentSet;
-        }
-        else
-        {
-            return new EquipmentSet();
-        }
     }
 }

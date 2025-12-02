@@ -7,76 +7,42 @@
 
 [sub_resource type="Resource" id="Resource_hq6nn"]
 script = ExtResource("1_ighd5")
-toNode = 5
+toNode = 1
 
 [sub_resource type="Resource" id="Resource_m885x"]
 script = ExtResource("1_ighd5")
-fromNode = 1
-toNode = 2
+fromNode = 2
+toNode = 3
 
 [sub_resource type="Resource" id="Resource_mll3n"]
 script = ExtResource("1_ighd5")
-toNode = 1
+toNode = 2
 
 [sub_resource type="Resource" id="Resource_d4shf"]
 script = ExtResource("1_ighd5")
-fromNode = 3
-toNode = 4
+fromNode = 4
+toNode = 5
 
 [sub_resource type="Resource" id="Resource_pjqnk"]
 script = ExtResource("1_ighd5")
-fromNode = 1
-toNode = 3
+fromNode = 2
+toNode = 4
 
 [sub_resource type="Resource" id="Resource_j7sed"]
 script = ExtResource("2_ciir5")
 NodeType = 2
 DNodeId = 281474976710656
 EditorPos = Vector2(-340, 740)
-EditorSize = Vector2(222, 170.99951)
+EditorSize = Vector2(222, 170.99878)
 
 [sub_resource type="Resource" id="Resource_o0imy"]
 script = ExtResource("2_ciir5")
 NodeType = 2
 DNodeId = 281474976710656
 EditorPos = Vector2(-340, 740)
-EditorSize = Vector2(222, 170.99951)
+EditorSize = Vector2(222, 170.99878)
 
 [sub_resource type="Resource" id="Resource_05lih"]
-script = ExtResource("2_ciir5")
-Content = "Hi"
-Speaker = "Sign"
-Addressee = "Player"
-DNodeId = 281474976710657
-EditorPos = Vector2(200, 740)
-EditorSize = Vector2(420, 339.99902)
-
-[sub_resource type="Resource" id="Resource_d7idm"]
-script = ExtResource("2_ciir5")
-NodeType = 3
-Content = "Hey."
-DNodeId = 281479271677953
-EditorPos = Vector2(1020, 520)
-EditorSize = Vector2(380.0014, 340.00024)
-
-[sub_resource type="Resource" id="Resource_usw61"]
-script = ExtResource("2_ciir5")
-NodeType = 3
-Content = "You can talk?"
-DNodeId = 281483566645249
-EditorPos = Vector2(1020, 1060)
-EditorSize = Vector2(400.00153, 339.99976)
-
-[sub_resource type="Resource" id="Resource_n2sjm"]
-script = ExtResource("2_ciir5")
-Content = "Clearly."
-Speaker = "Sign"
-Addressee = "Player"
-DNodeId = 281483566645250
-EditorPos = Vector2(1580, 940)
-EditorSize = Vector2(400.00095, 399.99988)
-
-[sub_resource type="Resource" id="Resource_ubcmh"]
 script = ExtResource("2_ciir5")
 Content = "Clothes are in the chest over there."
 Speaker = "Sign"
@@ -84,7 +50,41 @@ Addressee = "Player"
 DNodeId = 281483566645251
 Condition = ExtResource("3_hq6nn")
 EditorPos = Vector2(240, -40)
-EditorSize = Vector2(579.9994, 360.0005)
+EditorSize = Vector2(579.9995, 359.99933)
+
+[sub_resource type="Resource" id="Resource_d7idm"]
+script = ExtResource("2_ciir5")
+Content = "Hi"
+Speaker = "Sign"
+Addressee = "Player"
+DNodeId = 281474976710657
+EditorPos = Vector2(200, 740)
+EditorSize = Vector2(420.0005, 339.99927)
+
+[sub_resource type="Resource" id="Resource_usw61"]
+script = ExtResource("2_ciir5")
+NodeType = 3
+Content = "Hey."
+DNodeId = 281479271677953
+EditorPos = Vector2(1020, 520)
+EditorSize = Vector2(380.0026, 340.00134)
+
+[sub_resource type="Resource" id="Resource_n2sjm"]
+script = ExtResource("2_ciir5")
+NodeType = 3
+Content = "You can talk?"
+DNodeId = 281483566645249
+EditorPos = Vector2(1020, 1060)
+EditorSize = Vector2(400.0026, 339.99963)
+
+[sub_resource type="Resource" id="Resource_ubcmh"]
+script = ExtResource("2_ciir5")
+Content = "Clearly."
+Speaker = "Sign"
+Addressee = "Player"
+DNodeId = 281483566645250
+EditorPos = Vector2(1580, 940)
+EditorSize = Vector2(400.00073, 400.00134)
 
 [resource]
 script = ExtResource("3_piri6")

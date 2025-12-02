@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=7 format=3 uid="uid://bsymeb5yuv4bp"]
+
+[ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/AttributeSet.cs" id="1_2brja"]
+[ext_resource type="Script" uid="uid://cgng01q8ok4ba" path="res://Scripts/SkillSet.cs" id="2_t3gvy"]
+[ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/PatrolLeg.cs" id="3_te1y3"]
+[ext_resource type="Script" uid="uid://cng8hqptg2rbu" path="res://Scripts/CharacterData.cs" id="4_rgtfi"]
+
+[sub_resource type="Resource" id="Resource_1lm1u"]
+script = ExtResource("1_2brja")
+
+[sub_resource type="Resource" id="Resource_jhnre"]
+script = ExtResource("2_t3gvy")
+
+[resource]
+script = ExtResource("4_rgtfi")
+CharacterName = "Player"
+BaseAttributes = SubResource("Resource_1lm1u")
+BaseSkills = SubResource("Resource_jhnre")
+Speed = 50.0
+metadata/_custom_type_script = "uid://cng8hqptg2rbu"

@@ -12,16 +12,16 @@ public partial class Character : CharacterBody2D
     [Export]
     private Godot.Collections.Array<Item> InitialInventory = new();
 
-    [Export] protected AttributeSet BaseAttributes = new();
-    [Export] protected SkillSet BaseSkills = new();
+    [Export]
+    public CharacterData CharacterData;
 
-    public int Strength => BaseAttributes.Strength + GetEquipmentSet().ComputeAttributeBonus().StrengthBonus;
-    public int Endurance => BaseAttributes.Endurance + GetEquipmentSet().ComputeAttributeBonus().EnduranceBonus;
-    public int Dexterity => BaseAttributes.Dexterity + GetEquipmentSet().ComputeAttributeBonus().DexterityBonus;
-    public int Intelligence => BaseAttributes.Intelligence + GetEquipmentSet().ComputeAttributeBonus().IntelligenceBonus;
-    public int Wisdom => BaseAttributes.Wisdom + GetEquipmentSet().ComputeAttributeBonus().WisdomBonus;
-    public int Charisma => BaseAttributes.Charisma + GetEquipmentSet().ComputeAttributeBonus().CharismaBonus;
-    public int Willpower => BaseAttributes.Willpower + GetEquipmentSet().ComputeAttributeBonus().WillpowerBonus;
+    public int Strength => CharacterData.BaseAttributes.Strength + GetEquipmentSet().ComputeAttributeBonus().StrengthBonus;
+    public int Endurance => CharacterData.BaseAttributes.Endurance + GetEquipmentSet().ComputeAttributeBonus().EnduranceBonus;
+    public int Dexterity => CharacterData.BaseAttributes.Dexterity + GetEquipmentSet().ComputeAttributeBonus().DexterityBonus;
+    public int Intelligence => CharacterData.BaseAttributes.Intelligence + GetEquipmentSet().ComputeAttributeBonus().IntelligenceBonus;
+    public int Wisdom => CharacterData.BaseAttributes.Wisdom + GetEquipmentSet().ComputeAttributeBonus().WisdomBonus;
+    public int Charisma => CharacterData.BaseAttributes.Charisma + GetEquipmentSet().ComputeAttributeBonus().CharismaBonus;
+    public int Willpower => CharacterData.BaseAttributes.Willpower + GetEquipmentSet().ComputeAttributeBonus().WillpowerBonus;
 
     public AttributeSet FinalAttributes => new AttributeSet()
     {
@@ -46,17 +46,6 @@ public partial class Character : CharacterBody2D
     public int WisdomMod => ComputeAttributeMod(Wisdom);
     public int CharismaMod => ComputeAttributeMod(Charisma);
     public int WillpowerMod => ComputeAttributeMod(Willpower);
-    [Export]
-    public int MaxHitpoints = 100;
-    [Export]
-    public int CurrentHitpoints = 100;
-
-    [Export]
-    protected Faction _faction;
-
-    [Export] public float Speed = 300.0f;
-
-    [Export] public Godot.Collections.Array<PatrolLeg> PatrolLegs = [];
 
     private int _patrolLegIndex;
     private double _patrolLegProgress = 0;
@@ -81,9 +70,9 @@ public partial class Character : CharacterBody2D
     {
         public void Process(double delta, Character character)
         {
-            if (character.PatrolLegs.Count > 0)
+            if (character.CharacterData.PatrolLegs.Count > 0)
             {
-                var currentPatrolLeg = character.PatrolLegs[character._patrolLegIndex];
+                var currentPatrolLeg = character.CharacterData.PatrolLegs[character._patrolLegIndex];
                 if (currentPatrolLeg.Direction.X < 0)
                 {
                     character.SpriteAnim.Play("walk_west");
@@ -117,17 +106,17 @@ public partial class Character : CharacterBody2D
 
         public void PhysicsProcess(double delta, Character character)
         {
-            if (character.PatrolLegs.Count > 0)
+            if (character.CharacterData.PatrolLegs.Count > 0)
             {
-                var currentPatrolLeg = character.PatrolLegs[character._patrolLegIndex];
+                var currentPatrolLeg = character.CharacterData.PatrolLegs[character._patrolLegIndex];
                 if (character._patrolLegProgress >= currentPatrolLeg.Distance)
                 {
                     character._patrolLegProgress = 0;
-                    character._patrolLegIndex = (character._patrolLegIndex + 1) % character.PatrolLegs.Count;
-                    currentPatrolLeg = character.PatrolLegs[character._patrolLegIndex];
+                    character._patrolLegIndex = (character._patrolLegIndex + 1) % character.CharacterData.PatrolLegs.Count;
+                    currentPatrolLeg = character.CharacterData.PatrolLegs[character._patrolLegIndex];
                 }
 
-                character.Velocity = currentPatrolLeg.Direction * character.Speed;
+                character.Velocity = currentPatrolLeg.Direction * character.CharacterData.Speed;
                 character._patrolLegProgress += character.Velocity.Length();
                 character.MoveAndSlide();
             }
@@ -151,7 +140,7 @@ public partial class Character : CharacterBody2D
     {
         SpriteAnim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         collider = GetNode<CollisionShape2D>("MainCollider");
-        FactionSystem.SetFaction(GetInstanceId(), _faction);
+        FactionSystem.SetFaction(GetInstanceId(), CharacterData.InitialFaction);
         InventorySystem.Register(GetInstanceId(), [.. InitialInventory]);
         State = new PatrolState();
         _senseArea = GetNode<Area2D>("SenseArea");
@@ -172,8 +161,7 @@ public partial class Character : CharacterBody2D
 
     protected EquipmentSet GetEquipmentSet()
     {
-        EquipmentSet eq;
-        if (EquipmentSystem.RetrieveEquipment(GetInstanceId(), out eq))
+        if (EquipmentSystem.RetrieveEquipment(CharacterData.ResourcePath, out EquipmentSet eq))
         {
             return eq;
         }
@@ -204,7 +192,7 @@ public partial class Character : CharacterBody2D
     public bool MeetsEquipRequirements(Item item)
     {
         return item.AttributeRequirements.MeetsRequirements(FinalAttributes) &&
-               item.SkillRequirements.Proficiencies.All(x => BaseSkills.Proficiencies.Contains(x));
+               item.SkillRequirements.Proficiencies.All(CharacterData.BaseSkills.Proficiencies.Contains);
     }
 
     public Vector2 GetClosestOnCollSurface(Vector2 SourcePoint)

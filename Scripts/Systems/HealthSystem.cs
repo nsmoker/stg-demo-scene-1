@@ -25,7 +25,7 @@ public static class HealthSystem
 
     public static void PostDamageEvent(Character inflicter, Character recipient, int damage, Ability ability)
     {
-        recipient.CurrentHitpoints -= damage;
+        recipient.CharacterData.CurrentHitpoints -= damage;
         var ret = new DamageEvent
         {
             inflicter = inflicter,
@@ -35,7 +35,7 @@ public static class HealthSystem
         };
         DamageEventHandlers?.Invoke(ret);
 
-        if (recipient.CurrentHitpoints <= 0)
+        if (recipient.CharacterData.CurrentHitpoints <= 0)
         {
             PostDeathEvent(recipient, inflicter);
         }

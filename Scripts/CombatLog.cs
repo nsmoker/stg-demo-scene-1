@@ -12,7 +12,7 @@ public static class CombatLog
 
     public static void OnDamageEvent(DamageEvent e)
     {
-        GD.Print($"{e.inflicter.Name} dealt {e.damage} damage to {e.recipient.Name} with {e.ability.Name}. {e.recipient.Name} has {e.recipient.CurrentHitpoints} HP remaining out of {e.recipient.MaxHitpoints}.");
+        GD.Print($"{e.inflicter.Name} dealt {e.damage} damage to {e.recipient.Name} with {e.ability.Name}. {e.recipient.Name} has {e.recipient.CharacterData.CurrentHitpoints} HP remaining out of {e.recipient.CharacterData.MaxHitpoints}.");
     }
 
     public static void OnAbilityUse(AbilityUseEvent e) 
