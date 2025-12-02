@@ -369,6 +369,11 @@ public partial class DialogueEditor : Control
 
     public void Save()
     {
+        if (!_editor.HasFocus())
+        {
+            return;
+        }
+
         Godot.Collections.Array<DialogueGraphNode> entrysRet = [];
         Godot.Collections.Array<DialogueGraphNode> ret = [];
         Godot.Collections.Array<DialogueConnection> conns = [];
