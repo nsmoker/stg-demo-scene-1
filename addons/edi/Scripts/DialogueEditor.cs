@@ -118,6 +118,12 @@ public partial class DialogueEditor : Control
             }
         }
 
+        _nodeCounter = 0;
+        _responseCounter = 0;
+        _actionCounter = 0;
+        _entryCounter = 0;
+        _entryPoints.Clear();
+
         if (conversation == null)
         {
             _statusLabel.Text = "Dialogue Editor - No conversation loaded.";
