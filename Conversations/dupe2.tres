@@ -7,120 +7,120 @@
 [ext_resource type="Resource" uid="uid://bqa20ytuok437" path="res://Scripts/DialogueNodes/override.tres" id="5_sa5mi"]
 [ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/edi/Scripts/Conversation.cs" id="6_du4wt"]
 
-[sub_resource type="Resource" id="Resource_ygft4"]
+[sub_resource type="Resource" id="Resource_g4c2d"]
 script = ExtResource("1_g4c2d")
-toNode = 1
-
-[sub_resource type="Resource" id="Resource_6cbt5"]
-script = ExtResource("1_g4c2d")
-fromNode = 1
-toNode = 2
-
-[sub_resource type="Resource" id="Resource_nfbxk"]
-script = ExtResource("1_g4c2d")
-fromNode = 2
-toNode = 3
-
-[sub_resource type="Resource" id="Resource_3ynid"]
-script = ExtResource("1_g4c2d")
-fromNode = 3
-toNode = 4
-
-[sub_resource type="Resource" id="Resource_dn4y3"]
-script = ExtResource("1_g4c2d")
-fromNode = 2
 toNode = 5
 
-[sub_resource type="Resource" id="Resource_lnc8t"]
+[sub_resource type="Resource" id="Resource_3wuwt"]
+script = ExtResource("1_g4c2d")
+fromNode = 6
+toNode = 3
+
+[sub_resource type="Resource" id="Resource_yb246"]
+script = ExtResource("1_g4c2d")
+fromNode = 3
+toNode = 1
+
+[sub_resource type="Resource" id="Resource_b5k08"]
 script = ExtResource("1_g4c2d")
 fromNode = 5
 toNode = 6
 
-[sub_resource type="Resource" id="Resource_kpxlu"]
+[sub_resource type="Resource" id="Resource_sa5mi"]
+script = ExtResource("1_g4c2d")
+fromNode = 6
+toNode = 2
+
+[sub_resource type="Resource" id="Resource_du4wt"]
 script = ExtResource("1_g4c2d")
 fromNode = 2
+toNode = 4
+
+[sub_resource type="Resource" id="Resource_p1sii"]
+script = ExtResource("1_g4c2d")
+fromNode = 6
 toNode = 7
 
-[sub_resource type="Resource" id="Resource_8a1y7"]
+[sub_resource type="Resource" id="Resource_mj1q5"]
 script = ExtResource("2_3wuwt")
 NodeType = 2
-DNodeId = 1125990101942284
+DNodeId = 281474976710656
 EditorPos = Vector2(-260, 720)
-EditorSize = Vector2(222, 171)
+EditorSize = Vector2(222.00017, 170.99988)
 
-[sub_resource type="Resource" id="Resource_2g60y"]
+[sub_resource type="Resource" id="Resource_fc10b"]
 script = ExtResource("2_3wuwt")
 NodeType = 2
-DNodeId = 1125990101942284
+DNodeId = 281474976710656
 EditorPos = Vector2(-260, 720)
-EditorSize = Vector2(222, 171)
+EditorSize = Vector2(222.00017, 170.99988)
 
-[sub_resource type="Resource" id="Resource_lrrai"]
+[sub_resource type="Resource" id="Resource_rplxy"]
+script = ExtResource("2_3wuwt")
+NodeType = 1
+DNodeId = 281479271743490
+Action = ExtResource("4_b5k08")
+EditorPos = Vector2(3760, -100)
+EditorSize = Vector2(456.0006, 194.0004)
+
+[sub_resource type="Resource" id="Resource_xotau"]
+script = ExtResource("2_3wuwt")
+NodeType = 3
+Content = "Override sign hostility."
+DNodeId = 281483566710786
+EditorPos = Vector2(2840, 980)
+EditorSize = Vector2(499.99872, 319.9995)
+
+[sub_resource type="Resource" id="Resource_esb6m"]
+script = ExtResource("2_3wuwt")
+NodeType = 3
+Content = "Make enemies friendly."
+DNodeId = 281479271677954
+EditorPos = Vector2(3140, -160)
+EditorSize = Vector2(479.9984, 340.0006)
+
+[sub_resource type="Resource" id="Resource_bosuw"]
+script = ExtResource("2_3wuwt")
+NodeType = 1
+DNodeId = 281483566776322
+Action = ExtResource("5_sa5mi")
+EditorPos = Vector2(3740, 1280)
+EditorSize = Vector2(456.0006, 194.00183)
+
+[sub_resource type="Resource" id="Resource_u5gi0"]
 script = ExtResource("2_3wuwt")
 Content = "This is a demo for the dialogue editor."
 Speaker = "Sign"
 Addressee = "Player"
-DNodeId = 844497945231371
-EditorPos = Vector2(780, 380)
-EditorSize = Vector2(659.9995, 360.00018)
+DNodeId = 281474976710657
+EditorPos = Vector2(340, -480)
+EditorSize = Vector2(659.9983, 360.00024)
 
 [sub_resource type="Resource" id="Resource_0bit8"]
 script = ExtResource("3_yb246")
 metadata/_custom_type_script = "uid://c3ofd66ji5yj3"
 
-[sub_resource type="Resource" id="Resource_0tuv5"]
+[sub_resource type="Resource" id="Resource_k7hlf"]
 script = ExtResource("2_3wuwt")
 Content = "In this example, we detect equipped armor."
 Speaker = "Sign"
 Addressee = "Player"
-DNodeId = 844497945231372
+DNodeId = 281474976710658
 Condition = SubResource("Resource_0bit8")
-EditorPos = Vector2(1900, -40)
-EditorSize = Vector2(700.00037, 320.0003)
+EditorPos = Vector2(1440, 440)
+EditorSize = Vector2(699.9967, 320.00037)
 
-[sub_resource type="Resource" id="Resource_ldvex"]
-script = ExtResource("2_3wuwt")
-NodeType = 3
-Content = "Make enemies friendly."
-DNodeId = 844502240198668
-EditorPos = Vector2(3040, 580)
-EditorSize = Vector2(480.00024, 340)
-
-[sub_resource type="Resource" id="Resource_xprpo"]
-script = ExtResource("2_3wuwt")
-NodeType = 1
-DNodeId = 844502240264204
-Action = ExtResource("4_b5k08")
-EditorPos = Vector2(3660, 640)
-EditorSize = Vector2(456.00037, 194.00006)
-
-[sub_resource type="Resource" id="Resource_5j5ky"]
-script = ExtResource("2_3wuwt")
-NodeType = 3
-Content = "Override sign hostility."
-DNodeId = 844506535231500
-EditorPos = Vector2(2920, 1160)
-EditorSize = Vector2(500.00012, 320.00037)
-
-[sub_resource type="Resource" id="Resource_d5tal"]
-script = ExtResource("2_3wuwt")
-NodeType = 1
-DNodeId = 844506535297036
-Action = ExtResource("5_sa5mi")
-EditorPos = Vector2(3700, 1060)
-EditorSize = Vector2(456.00012, 194.00012)
-
-[sub_resource type="Resource" id="Resource_8dkci"]
+[sub_resource type="Resource" id="Resource_xr1mr"]
 script = ExtResource("2_3wuwt")
 NodeType = 3
 Content = "Exit"
-DNodeId = 844515125231628
-EditorPos = Vector2(3040, 1540)
-EditorSize = Vector2(380.00024, 340)
+DNodeId = 281487861743618
+EditorPos = Vector2(2900, 1840)
+EditorSize = Vector2(380.00006, 340.00122)
 
 [resource]
 script = ExtResource("6_du4wt")
-Nodes = Array[ExtResource("2_3wuwt")]([SubResource("Resource_2g60y"), SubResource("Resource_lrrai"), SubResource("Resource_0tuv5"), SubResource("Resource_ldvex"), SubResource("Resource_xprpo"), SubResource("Resource_5j5ky"), SubResource("Resource_d5tal"), SubResource("Resource_8dkci")])
-EntryPoints = Array[ExtResource("2_3wuwt")]([SubResource("Resource_8a1y7")])
-Connections = Array[ExtResource("1_g4c2d")]([SubResource("Resource_ygft4"), SubResource("Resource_6cbt5"), SubResource("Resource_nfbxk"), SubResource("Resource_3ynid"), SubResource("Resource_dn4y3"), SubResource("Resource_lnc8t"), SubResource("Resource_kpxlu")])
+Nodes = Array[ExtResource("2_3wuwt")]([SubResource("Resource_fc10b"), SubResource("Resource_rplxy"), SubResource("Resource_xotau"), SubResource("Resource_esb6m"), SubResource("Resource_bosuw"), SubResource("Resource_u5gi0"), SubResource("Resource_k7hlf"), SubResource("Resource_xr1mr")])
+EntryPoints = Array[ExtResource("2_3wuwt")]([SubResource("Resource_mj1q5")])
+Connections = Array[ExtResource("1_g4c2d")]([SubResource("Resource_g4c2d"), SubResource("Resource_3wuwt"), SubResource("Resource_yb246"), SubResource("Resource_b5k08"), SubResource("Resource_sa5mi"), SubResource("Resource_du4wt"), SubResource("Resource_p1sii")])
 metadata/_custom_type_script = "uid://cmw85ukaae1eh"

@@ -66,3 +66,4 @@ custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_vertical = 3
 placeholder_text = "Placeholder"
+wrap_mode = 1

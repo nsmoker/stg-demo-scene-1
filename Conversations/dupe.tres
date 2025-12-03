@@ -20,17 +20,17 @@ toNode = 2
 
 [sub_resource type="Resource" id="Resource_5hirs"]
 script = ExtResource("1_br7p4")
-fromNode = 2
+fromNode = 1
 toNode = 3
 
 [sub_resource type="Resource" id="Resource_7id2j"]
 script = ExtResource("1_br7p4")
-fromNode = 8
+fromNode = 2
 toNode = 3
 
 [sub_resource type="Resource" id="Resource_p0csy"]
 script = ExtResource("1_br7p4")
-fromNode = 1
+fromNode = 8
 toNode = 3
 
 [sub_resource type="Resource" id="Resource_wrtag"]
@@ -44,37 +44,37 @@ toNode = 4
 
 [sub_resource type="Resource" id="Resource_ljbn8"]
 script = ExtResource("1_br7p4")
-fromNode = 2
+fromNode = 1
 toNode = 5
 
 [sub_resource type="Resource" id="Resource_43jlr"]
 script = ExtResource("1_br7p4")
-fromNode = 5
-toNode = 6
+fromNode = 2
+toNode = 5
 
 [sub_resource type="Resource" id="Resource_dfnxr"]
 script = ExtResource("1_br7p4")
-fromNode = 8
-toNode = 5
+fromNode = 5
+toNode = 6
 
 [sub_resource type="Resource" id="Resource_5spxh"]
 script = ExtResource("1_br7p4")
-fromNode = 1
+fromNode = 8
 toNode = 5
 
 [sub_resource type="Resource" id="Resource_7u07a"]
 script = ExtResource("1_br7p4")
-fromNode = 2
+fromNode = 1
 toNode = 7
 
 [sub_resource type="Resource" id="Resource_e81q4"]
 script = ExtResource("1_br7p4")
-fromNode = 8
+fromNode = 2
 toNode = 7
 
 [sub_resource type="Resource" id="Resource_sbcj4"]
 script = ExtResource("1_br7p4")
-fromNode = 1
+fromNode = 8
 toNode = 7
 
 [sub_resource type="Resource" id="Resource_s7c0i"]
@@ -112,7 +112,7 @@ Addressee = "Player"
 DNodeId = 281474976710658
 Condition = SubResource("Resource_0bit8")
 EditorPos = Vector2(1560, -80)
-EditorSize = Vector2(699.9995, 320.00043)
+EditorSize = Vector2(699.9995, 320.00046)
 
 [sub_resource type="Resource" id="Resource_nkg52"]
 script = ExtResource("2_3af4n")
@@ -120,7 +120,7 @@ NodeType = 3
 Content = "Make enemies friendly."
 DNodeId = 281479271677954
 EditorPos = Vector2(2980, 320)
-EditorSize = Vector2(480, 339.99963)
+EditorSize = Vector2(480.00018, 339.99963)
 
 [sub_resource type="Resource" id="Resource_012ho"]
 script = ExtResource("2_3af4n")
@@ -136,7 +136,7 @@ NodeType = 3
 Content = "Override sign hostility."
 DNodeId = 281483566710786
 EditorPos = Vector2(3040, 1060)
-EditorSize = Vector2(500, 319.99988)
+EditorSize = Vector2(500.00018, 319.99988)
 
 [sub_resource type="Resource" id="Resource_dpfmd"]
 script = ExtResource("2_3af4n")
@@ -144,7 +144,7 @@ NodeType = 1
 DNodeId = 281483566776322
 Action = ExtResource("5_7id2j")
 EditorPos = Vector2(3700, 1060)
-EditorSize = Vector2(456.00024, 194.00012)
+EditorSize = Vector2(456, 194.00012)
 
 [sub_resource type="Resource" id="Resource_blcjn"]
 script = ExtResource("2_3af4n")
@@ -152,7 +152,7 @@ NodeType = 3
 Content = "Exit"
 DNodeId = 281487861743618
 EditorPos = Vector2(3080, 1600)
-EditorSize = Vector2(380.00085, 340.00012)
+EditorSize = Vector2(380.0008, 340.00012)
 
 [sub_resource type="Resource" id="Resource_60pam"]
 script = ExtResource("2_3af4n")
@@ -162,7 +162,7 @@ Addressee = "Player"
 DNodeId = 281487861743619
 Condition = ExtResource("6_3af4n")
 EditorPos = Vector2(1460, -940)
-EditorSize = Vector2(879.9996, 499.99933)
+EditorSize = Vector2(879.99945, 499.99933)
 
 [resource]
 script = ExtResource("6_p0csy")

@@ -509,7 +509,7 @@ public partial class DialogueEditor : Control
 
         foreach (var child in EditorNode.GetChildren())
         {
-            if (child is DialogueNode dialogueNode)
+            if (child is DialogueNode dialogueNode && dialogueNode.Visible)
             {
                 ret.Add(dialogueNode.Save());
             }

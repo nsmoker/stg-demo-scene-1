@@ -20,12 +20,21 @@ slot/0/right_type = 1
 slot/0/right_color = Color(1, 1, 1, 1)
 slot/0/right_icon = null
 slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
 script = ExtResource("1_ghn3w")
 NodeType = 2
-metadata/_custom_type_script = "uid://chq2r48v12rkm"
 
 [node name="Description" type="TextEdit" parent="."]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_vertical = 3
 placeholder_text = "Placeholder"
+wrap_mode = 1
