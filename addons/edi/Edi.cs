@@ -39,11 +39,6 @@ public partial class Edi : EditorPlugin
         }
     }
 
-    public override void _ApplyChanges()
-    {
-        _editor.Save();
-    }
-
     public override void _Edit(GodotObject @object)
     {
         if (@object is Conversation conversation)
