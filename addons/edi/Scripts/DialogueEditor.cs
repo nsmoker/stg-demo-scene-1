@@ -121,7 +121,7 @@ public partial class DialogueEditor : Control
         {
             if (node is DialogueNode)
             {
-                node.QueueFree();
+                node.Free();
             }
         }
 
@@ -167,6 +167,7 @@ public partial class DialogueEditor : Control
             editorNode.Action = node.Action;
             EditorNode.AddChild(editorNode);
             editorNode.PositionOffset = node.EditorPos;
+            editorNode.LinkDNodeId = node.LinkDNodeId;
             if (node.EditorSize != Vector2.Zero)
             {
                 editorNode.Size = node.EditorSize;
@@ -180,6 +181,8 @@ public partial class DialogueEditor : Control
         }
 
         _editedConversation = conversation;
+
+        UpdateLinkOptions();
     }
 
     public override bool _CanDropData(Vector2 atPosition, Variant data)
@@ -332,6 +335,8 @@ public partial class DialogueEditor : Control
         undoRedoManager.AddUndoMethod(this, MethodName.DisableNode, newNode);
         undoRedoManager.AddDoReference(newNode);
         undoRedoManager.CommitAction();
+
+        UpdateLinkOptions(); // Refresh options after adding a node
         return newNode;
     }
 
@@ -344,13 +349,14 @@ public partial class DialogueEditor : Control
 
         node.Visible = true;
         node.ProcessMode = ProcessModeEnum.Always;
-
+        UpdateLinkOptions(); // Refresh options after adding and enabling a node
     }
 
     public void DisableNode(DialogueNode node)
     {
         node.Visible = false;
         node.ProcessMode = ProcessModeEnum.Disabled;
+        UpdateLinkOptions(); // Refresh options after disabling a node
     }
 
     public void DisableNodes(Godot.Collections.Array<StringName> names)
@@ -372,6 +378,8 @@ public partial class DialogueEditor : Control
                 EditorNode.DisconnectNode((StringName) conn["from_node"], (int) conn["from_port"], (StringName) conn["to_node"], (int) conn["to_port"]);
             }
         }
+
+        UpdateLinkOptions(); // Refresh options after disabling nodes
     }
 
     public void ReenableNodes(Godot.Collections.Array<StringName> names, Godot.Collections.Array<Godot.Collections.Array<Godot.Collections.Dictionary>> connectionLists)
@@ -394,6 +402,8 @@ public partial class DialogueEditor : Control
                 EditorNode.ConnectNode((StringName) conn["from_node"], (int) conn["from_port"], (StringName) conn["to_node"], (int) conn["to_port"]);
             }
         }
+
+        UpdateLinkOptions(); // Refresh options after reenabling nodes
     }
 
     public void RemoveNodes(Godot.Collections.Array<StringName> names)
@@ -411,6 +421,8 @@ public partial class DialogueEditor : Control
             undoRedoManager.AddUndoReference(EditorNode.GetNode(name.ToString()));
         }
         undoRedoManager.CommitAction();
+
+        UpdateLinkOptions(); // Refresh options after removing nodes
     }
 
     public void OnConnectionRequest(StringName from, long fromPort, StringName to, long toPort)
@@ -494,6 +506,18 @@ public partial class DialogueEditor : Control
             }
         }
         undoRedoManager.CommitAction();
+    }
+
+    private void UpdateLinkOptions()
+    {
+        var nodes = EditorNode.GetChildren().Where(x => x is DialogueNode).Select(x => (DialogueNode) x).ToList();
+        foreach (var node in nodes)
+        {
+            if (node.Visible && !node.IsQueuedForDeletion())
+            {
+                node.SetLinkOptions(nodes);
+            }
+        }
     }
 
     public void Save()

@@ -56,6 +56,18 @@ public partial class DialogueController : ScrollContainer
         var possibleContinuationCount = 0;
         nodeOut = null;
 
+        if (nodeIn.LinkDNodeId != 0)
+        {
+            if (TryGetNodeById(conversation, nodeIn.LinkDNodeId, out var linkedNode))
+            {
+                if (linkedNode.Condition == null || linkedNode.Condition.Evaluate())
+                {
+                    nodeOut = linkedNode;
+                    return 1;
+                }
+            }
+        } 
+
         if (continuations.Count > 0)
         {
             foreach (var continuation in continuations)
@@ -72,7 +84,6 @@ public partial class DialogueController : ScrollContainer
                     break;
                 }
             }
-
         }
         
         return possibleContinuationCount;

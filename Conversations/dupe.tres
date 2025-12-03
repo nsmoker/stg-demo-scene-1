@@ -10,101 +10,92 @@
 
 [sub_resource type="Resource" id="Resource_3af4n"]
 script = ExtResource("1_br7p4")
-fromNode = 1
-toNode = 8
+fromNode = 8
+toNode = 7
 
 [sub_resource type="Resource" id="Resource_3bgdq"]
 script = ExtResource("1_br7p4")
-fromNode = 1
-toNode = 2
+fromNode = 8
+toNode = 1
 
 [sub_resource type="Resource" id="Resource_5hirs"]
 script = ExtResource("1_br7p4")
 fromNode = 1
-toNode = 3
+toNode = 2
 
 [sub_resource type="Resource" id="Resource_7id2j"]
 script = ExtResource("1_br7p4")
-fromNode = 2
-toNode = 3
+fromNode = 7
+toNode = 2
 
 [sub_resource type="Resource" id="Resource_p0csy"]
 script = ExtResource("1_br7p4")
 fromNode = 8
-toNode = 3
+toNode = 2
 
 [sub_resource type="Resource" id="Resource_wrtag"]
 script = ExtResource("1_br7p4")
-toNode = 1
+toNode = 8
 
 [sub_resource type="Resource" id="Resource_brta4"]
 script = ExtResource("1_br7p4")
-fromNode = 3
-toNode = 4
+fromNode = 2
+toNode = 3
 
 [sub_resource type="Resource" id="Resource_ljbn8"]
 script = ExtResource("1_br7p4")
 fromNode = 1
-toNode = 5
+toNode = 4
 
 [sub_resource type="Resource" id="Resource_43jlr"]
 script = ExtResource("1_br7p4")
-fromNode = 2
+fromNode = 4
 toNode = 5
 
 [sub_resource type="Resource" id="Resource_dfnxr"]
 script = ExtResource("1_br7p4")
-fromNode = 5
-toNode = 6
+fromNode = 7
+toNode = 4
 
 [sub_resource type="Resource" id="Resource_5spxh"]
 script = ExtResource("1_br7p4")
 fromNode = 8
-toNode = 5
+toNode = 4
 
 [sub_resource type="Resource" id="Resource_7u07a"]
 script = ExtResource("1_br7p4")
 fromNode = 1
-toNode = 7
+toNode = 6
 
 [sub_resource type="Resource" id="Resource_e81q4"]
 script = ExtResource("1_br7p4")
-fromNode = 2
-toNode = 7
+fromNode = 7
+toNode = 6
 
 [sub_resource type="Resource" id="Resource_sbcj4"]
 script = ExtResource("1_br7p4")
 fromNode = 8
-toNode = 7
+toNode = 6
 
 [sub_resource type="Resource" id="Resource_s7c0i"]
 script = ExtResource("2_3af4n")
 NodeType = 2
 DNodeId = 281474976710656
 EditorPos = Vector2(-260, 720)
-EditorSize = Vector2(222, 171.00049)
+EditorSize = Vector2(352, 194.00018)
 
 [sub_resource type="Resource" id="Resource_lrd7n"]
 script = ExtResource("2_3af4n")
 NodeType = 2
 DNodeId = 281474976710656
 EditorPos = Vector2(-260, 720)
-EditorSize = Vector2(222, 171.00049)
-
-[sub_resource type="Resource" id="Resource_3sqfu"]
-script = ExtResource("2_3af4n")
-Content = "This is a demo for the dialogue editor."
-Speaker = "Sign"
-Addressee = "Player"
-DNodeId = 281474976710657
-EditorPos = Vector2(400, 620)
-EditorSize = Vector2(659.9999, 360.00073)
+EditorSize = Vector2(352, 194.00018)
 
 [sub_resource type="Resource" id="Resource_0bit8"]
 script = ExtResource("3_br7p4")
 metadata/_custom_type_script = "uid://c3ofd66ji5yj3"
 
-[sub_resource type="Resource" id="Resource_a5pc5"]
+[sub_resource type="Resource" id="Resource_3sqfu"]
 script = ExtResource("2_3af4n")
 Content = "In this example, we detect equipped armor."
 Speaker = "Sign"
@@ -112,49 +103,49 @@ Addressee = "Player"
 DNodeId = 281474976710658
 Condition = SubResource("Resource_0bit8")
 EditorPos = Vector2(1560, -80)
-EditorSize = Vector2(699.9995, 320.00046)
+EditorSize = Vector2(699.9997, 383.00003)
 
-[sub_resource type="Resource" id="Resource_nkg52"]
+[sub_resource type="Resource" id="Resource_a5pc5"]
 script = ExtResource("2_3af4n")
 NodeType = 3
 Content = "Make enemies friendly."
 DNodeId = 281479271677954
 EditorPos = Vector2(2980, 320)
-EditorSize = Vector2(480.00018, 339.99963)
+EditorSize = Vector2(480.0005, 339.99957)
 
-[sub_resource type="Resource" id="Resource_012ho"]
+[sub_resource type="Resource" id="Resource_nkg52"]
 script = ExtResource("2_3af4n")
 NodeType = 1
 DNodeId = 281479271743490
 Action = ExtResource("4_5hirs")
 EditorPos = Vector2(3660, 640)
-EditorSize = Vector2(456, 194)
+EditorSize = Vector2(456.00073, 257.00012)
 
-[sub_resource type="Resource" id="Resource_bn8v4"]
+[sub_resource type="Resource" id="Resource_012ho"]
 script = ExtResource("2_3af4n")
 NodeType = 3
 Content = "Override sign hostility."
 DNodeId = 281483566710786
 EditorPos = Vector2(3040, 1060)
-EditorSize = Vector2(500.00018, 319.99988)
+EditorSize = Vector2(500.00024, 320.00012)
 
-[sub_resource type="Resource" id="Resource_dpfmd"]
+[sub_resource type="Resource" id="Resource_bn8v4"]
 script = ExtResource("2_3af4n")
 NodeType = 1
 DNodeId = 281483566776322
 Action = ExtResource("5_7id2j")
 EditorPos = Vector2(3700, 1060)
-EditorSize = Vector2(456, 194.00012)
+EditorSize = Vector2(456, 257.00012)
 
-[sub_resource type="Resource" id="Resource_blcjn"]
+[sub_resource type="Resource" id="Resource_dpfmd"]
 script = ExtResource("2_3af4n")
 NodeType = 3
 Content = "Exit"
 DNodeId = 281487861743618
 EditorPos = Vector2(3080, 1600)
-EditorSize = Vector2(380.0008, 340.00012)
+EditorSize = Vector2(380.00122, 340.00012)
 
-[sub_resource type="Resource" id="Resource_60pam"]
+[sub_resource type="Resource" id="Resource_blcjn"]
 script = ExtResource("2_3af4n")
 Content = "We can also check to see if a given item is in your inventory."
 Speaker = "Sign"
@@ -162,7 +153,16 @@ Addressee = "Player"
 DNodeId = 281487861743619
 Condition = ExtResource("6_3af4n")
 EditorPos = Vector2(1460, -940)
-EditorSize = Vector2(879.99945, 499.99933)
+EditorSize = Vector2(879.9991, 499.99945)
+
+[sub_resource type="Resource" id="Resource_60pam"]
+script = ExtResource("2_3af4n")
+Content = "This is a demo for the dialogue editor."
+Speaker = "Sign"
+Addressee = "Player"
+DNodeId = 281474976710657
+EditorPos = Vector2(400, 620)
+EditorSize = Vector2(659.999, 360.00073)
 
 [resource]
 script = ExtResource("6_p0csy")

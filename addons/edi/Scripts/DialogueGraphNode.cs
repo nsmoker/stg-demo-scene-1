@@ -21,6 +21,9 @@ public partial class DialogueGraphNode : Resource
     public DialogueAction Action;
 
     [Export]
+    public ulong LinkDNodeId = 0;
+
+    [Export]
     public Vector2 EditorPos = Vector2.Zero;
     [Export]
     public Vector2 EditorSize = Vector2.Zero;

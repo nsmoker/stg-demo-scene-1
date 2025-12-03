@@ -29,12 +29,15 @@ public partial class DialogueNode : GraphNode
     public DialogueCondition Condition;
     [Export]
     public DialogueAction Action;
+    [Export]
+    public ulong LinkDNodeId = 0;
 
     private LineEdit _speakerEdit;
     private LineEdit _addresseeEdit;
     private TextEdit _contentEdit;
     private EditorResourcePicker _editorConditionPicker;
     private EditorResourcePicker _editorActionPicker;
+    private OptionButton _linkButton;
 
     public override void _Ready()
     {
@@ -89,6 +92,10 @@ public partial class DialogueNode : GraphNode
             AddChild(_editorActionPicker);
         }
 
+        _linkButton = GetNode<OptionButton>("LinkOptionButton");
+        _linkButton.GetPopup().MinSize = new Vector2I(_linkButton.GetPopup().MinSize.X, 300);
+        _linkButton.GetPopup().MaxSize = new Vector2I(_linkButton.GetPopup().MaxSize.X, 300);
+
         AddChild(_editorConditionPicker);
     }
 
@@ -132,6 +139,37 @@ public partial class DialogueNode : GraphNode
             EditorPos = PositionOffset,
             EditorSize = Size,
             Action = Action,
+            LinkDNodeId = _linkButton.Selected >= 0 ? (ulong)_linkButton.GetItemMetadata(_linkButton.Selected) : 0
         };
+    }
+
+    public void SetLinkOptions(System.Collections.Generic.List<DialogueNode> nodes)
+    {
+
+        GD.Print(nodes.Count);
+        var selection = _linkButton.Selected;
+        var selectionId = selection >= 0 ? (ulong) _linkButton.GetItemMetadata(_linkButton.Selected) : 0;
+        _linkButton.Clear();
+        foreach (var node in nodes)
+        {
+            _linkButton.AddItem($"{node.Title}");
+            _linkButton.SetItemMetadata(_linkButton.GetItemCount() - 1, node.DNodeId);
+        }
+
+        if (selection >= 0)
+        {
+            var currentSelectionIndex = nodes.FindIndex(node => node.DNodeId == selectionId);
+            _linkButton.Selected = currentSelectionIndex;
+        }
+        else if (LinkDNodeId != 0)
+        {
+            var linkIndex = nodes.FindIndex(node => node.DNodeId == LinkDNodeId);
+            _linkButton.Selected = linkIndex;
+            LinkDNodeId = linkIndex >= 0 ? nodes[linkIndex].DNodeId : 0;
+        }
+        else
+        {
+            _linkButton.Selected = -1;
+        }
     }
 }
