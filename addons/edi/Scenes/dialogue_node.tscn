@@ -52,18 +52,19 @@ script = ExtResource("1_ixcfi")
 [node name="Speaker" type="LineEdit" parent="."]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
 placeholder_text = "Speaker"
 
 [node name="Addressee" type="LineEdit" parent="."]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
 placeholder_text = "Addressee"
 
 [node name="Content" type="TextEdit" parent="."]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
 placeholder_text = "Placeholder"
 wrap_mode = 1

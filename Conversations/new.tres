@@ -9,46 +9,47 @@
 
 [sub_resource type="Resource" id="Resource_mll3n"]
 script = ExtResource("1_ighd5")
-fromNode = 11
-toNode = 13
+fromNode = 9
+toNode = 10
 
 [sub_resource type="Resource" id="Resource_d4shf"]
 script = ExtResource("1_ighd5")
-toNode = 11
+toNode = 1
 
 [sub_resource type="Resource" id="Resource_pjqnk"]
 script = ExtResource("1_ighd5")
-fromNode = 2
-toNode = 3
+fromNode = 1
+toNode = 9
 
 [sub_resource type="Resource" id="Resource_j7sed"]
-script = ExtResource("1_ighd5")
-fromNode = 1
-toNode = 12
-
-[sub_resource type="Resource" id="Resource_o0imy"]
 script = ExtResource("1_ighd5")
 fromNode = 2
 toNode = 4
 
-[sub_resource type="Resource" id="Resource_05lih"]
-script = ExtResource("1_ighd5")
-fromNode = 4
-toNode = 5
-
-[sub_resource type="Resource" id="Resource_d7idm"]
+[sub_resource type="Resource" id="Resource_o0imy"]
 script = ExtResource("1_ighd5")
 fromNode = 10
 toNode = 2
 
-[sub_resource type="Resource" id="Resource_usw61"]
+[sub_resource type="Resource" id="Resource_05lih"]
 script = ExtResource("1_ighd5")
 fromNode = 12
 toNode = 2
 
+[sub_resource type="Resource" id="Resource_d7idm"]
+script = ExtResource("1_ighd5")
+fromNode = 4
+toNode = 5
+
+[sub_resource type="Resource" id="Resource_usw61"]
+script = ExtResource("1_ighd5")
+fromNode = 1
+toNode = 12
+
 [sub_resource type="Resource" id="Resource_n2sjm"]
 script = ExtResource("1_ighd5")
-toNode = 1
+fromNode = 2
+toNode = 6
 
 [sub_resource type="Resource" id="Resource_ubcmh"]
 script = ExtResource("1_ighd5")
@@ -57,37 +58,36 @@ toNode = 7
 
 [sub_resource type="Resource" id="Resource_il4ng"]
 script = ExtResource("1_ighd5")
-fromNode = 2
-toNode = 6
+toNode = 11
 
 [sub_resource type="Resource" id="Resource_n6sye"]
 script = ExtResource("1_ighd5")
-fromNode = 9
-toNode = 10
+fromNode = 11
+toNode = 13
 
 [sub_resource type="Resource" id="Resource_xdwrh"]
 script = ExtResource("1_ighd5")
-fromNode = 1
-toNode = 9
+fromNode = 6
+toNode = 8
 
 [sub_resource type="Resource" id="Resource_3j06m"]
 script = ExtResource("1_ighd5")
-fromNode = 6
-toNode = 8
+fromNode = 2
+toNode = 3
 
 [sub_resource type="Resource" id="Resource_iyefr"]
 script = ExtResource("2_ciir5")
 NodeType = 2
 DNodeId = 281474976710656
 EditorPos = Vector2(-340, 740)
-EditorSize = Vector2(222.00012, 171.00037)
+EditorSize = Vector2(222.00006, 171.00085)
 
 [sub_resource type="Resource" id="Resource_3xlk2"]
 script = ExtResource("2_ciir5")
 NodeType = 2
 DNodeId = 281474976710656
 EditorPos = Vector2(-340, 740)
-EditorSize = Vector2(222.00012, 171.00037)
+EditorSize = Vector2(222.00006, 171.00085)
 
 [sub_resource type="Resource" id="Resource_cipyo"]
 script = ExtResource("2_ciir5")
@@ -95,8 +95,8 @@ Content = "Hi"
 Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281474976710657
-EditorPos = Vector2(200, 740)
-EditorSize = Vector2(420.00128, 340.0005)
+EditorPos = Vector2(-20, 740)
+EditorSize = Vector2(420.00064, 340.00134)
 
 [sub_resource type="Resource" id="Resource_8o7ke"]
 script = ExtResource("2_ciir5")
@@ -104,40 +104,40 @@ Content = "Demo Options"
 Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281474976710658
-EditorPos = Vector2(1720, 660)
-EditorSize = Vector2(499.99887, 320.0013)
+EditorPos = Vector2(2020, 740)
+EditorSize = Vector2(499.9973, 320.0022)
 
 [sub_resource type="Resource" id="Resource_mph8s"]
 script = ExtResource("2_ciir5")
 NodeType = 3
 Content = "Exit."
 DNodeId = 281479271677954
-EditorPos = Vector2(2640, 20)
-EditorSize = Vector2(288.0055, 257.0014)
+EditorPos = Vector2(2620, 1780)
+EditorSize = Vector2(288.0044, 257.0011)
 
 [sub_resource type="Resource" id="Resource_kwpln"]
 script = ExtResource("2_ciir5")
 NodeType = 3
 Content = "Override hostility."
 DNodeId = 281483566645250
-EditorPos = Vector2(2660, 520)
-EditorSize = Vector2(480.00574, 360.0015)
+EditorPos = Vector2(2620, 740)
+EditorSize = Vector2(480.0039, 360.00244)
 
 [sub_resource type="Resource" id="Resource_q3kan"]
 script = ExtResource("2_ciir5")
 NodeType = 1
 DNodeId = 281483566710786
 Action = ExtResource("4_m885x")
-EditorPos = Vector2(3540, 560)
-EditorSize = Vector2(456.00073, 194.00171)
+EditorPos = Vector2(3240, 760)
+EditorSize = Vector2(456, 194.0025)
 
 [sub_resource type="Resource" id="Resource_t0a07"]
 script = ExtResource("2_ciir5")
 NodeType = 3
 Content = "Check if player has the giga item."
 DNodeId = 281487861678082
-EditorPos = Vector2(2660, 1080)
-EditorSize = Vector2(520.0051, 480.00024)
+EditorPos = Vector2(2620, 1200)
+EditorSize = Vector2(520.0039, 480.00146)
 
 [sub_resource type="Resource" id="Resource_jg620"]
 script = ExtResource("2_ciir5")
@@ -146,8 +146,8 @@ Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281487861678083
 Condition = ExtResource("5_mll3n")
-EditorPos = Vector2(3480, 1000)
-EditorSize = Vector2(456.0014, 339.9992)
+EditorPos = Vector2(3240, 1240)
+EditorSize = Vector2(456.00146, 340.0006)
 
 [sub_resource type="Resource" id="Resource_e4nf5"]
 script = ExtResource("2_ciir5")
@@ -155,25 +155,25 @@ Content = "Player doesn't have it."
 Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281487861678084
-EditorPos = Vector2(3480, 1440)
-EditorSize = Vector2(420.00116, 379.9994)
+EditorPos = Vector2(3240, 1680)
+EditorSize = Vector2(420.00024, 379.9989)
 
 [sub_resource type="Resource" id="Resource_lmfsp"]
 script = ExtResource("2_ciir5")
 NodeType = 3
 Content = "You can talk?"
 DNodeId = 281492156645380
-EditorPos = Vector2(780, 1160)
-EditorSize = Vector2(400.00195, 339.99536)
+EditorPos = Vector2(660, 740)
+EditorSize = Vector2(400.00146, 339.99622)
 
 [sub_resource type="Resource" id="Resource_y5kkr"]
 script = ExtResource("2_ciir5")
-Content = "Clearly."
+Content = "Clearly. Signs can't all talk, of course, but those of us who can are very eloquent when we need to be. "
 Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281492156645381
-EditorPos = Vector2(1280, 1100)
-EditorSize = Vector2(399.9977, 400.00146)
+EditorPos = Vector2(1160, 700)
+EditorSize = Vector2(759.9983, 600.00073)
 
 [sub_resource type="Resource" id="Resource_bmbfp"]
 script = ExtResource("2_ciir5")
@@ -182,24 +182,24 @@ Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281492156645382
 Condition = ExtResource("3_hq6nn")
-EditorPos = Vector2(240, -40)
-EditorSize = Vector2(579.9995, 359.99954)
+EditorPos = Vector2(-20, 1620)
+EditorSize = Vector2(579.99963, 360.00006)
 
 [sub_resource type="Resource" id="Resource_tq5ea"]
 script = ExtResource("2_ciir5")
 NodeType = 3
 Content = "Hey."
 DNodeId = 281496451612678
-EditorPos = Vector2(840, 480)
-EditorSize = Vector2(380.00183, 340.00146)
+EditorPos = Vector2(660, 1180)
+EditorSize = Vector2(380.0017, 340.002)
 
 [sub_resource type="Resource" id="Resource_0tiiw"]
 script = ExtResource("2_ciir5")
 NodeType = 3
 Content = "Thanks!"
 DNodeId = 281500746579974
-EditorPos = Vector2(960, -60)
-EditorSize = Vector2(380.00195, 340.0021)
+EditorPos = Vector2(660, 1620)
+EditorSize = Vector2(380.0027, 340.00275)
 
 [resource]
 script = ExtResource("3_piri6")
