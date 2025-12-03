@@ -6,12 +6,6 @@ using Godot;
 
 public partial class DialogueCondition : Resource
 {
-    protected static Player GetPlayerNode()
-    {
-        Node root = ((SceneTree) Godot.Engine.GetMainLoop()).CurrentScene;
-        return root.GetNode<Player>("Player");
-    }
-
     public virtual bool Evaluate()
     {
         return true;
