@@ -1,19 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://gedp1qirf71n"]
+[gd_scene load_steps=13 format=3 uid="uid://gedp1qirf71n"]
 
 [ext_resource type="Script" uid="uid://04a5i0tk15gy" path="res://Scripts/Player.cs" id="1_co212"]
-[ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/AttributeSet.cs" id="2_hpt87"]
 [ext_resource type="PackedScene" uid="uid://ctgni16h8tre6" path="res://Scenes/container_display.tscn" id="3_bcg5f"]
-[ext_resource type="Script" uid="uid://cgng01q8ok4ba" path="res://Scripts/SkillSet.cs" id="3_xub83"]
 [ext_resource type="Script" uid="uid://4wgqj3gknq04" path="res://Scripts/DialogueController.cs" id="4_3smsa"]
 [ext_resource type="PackedScene" uid="uid://dheqe5k157l3j" path="res://Scenes/inventory_display.tscn" id="4_ntcgu"]
 [ext_resource type="PackedScene" uid="uid://c87rbgv3boios" path="res://Scenes/CharacterSprite.tscn" id="6_dxres"]
 [ext_resource type="PackedScene" uid="uid://brdmuedpkp0jn" path="res://Scenes/ability_menu.tscn" id="8_8erm5"]
-
-[sub_resource type="Resource" id="Resource_hu0ow"]
-script = ExtResource("2_hpt87")
-
-[sub_resource type="Resource" id="Resource_hviba"]
-script = ExtResource("3_xub83")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7efl3"]
 size = Vector2(12, 16)
@@ -29,6 +21,11 @@ oversampling = 10.0
 [sub_resource type="LabelSettings" id="LabelSettings_e2uky"]
 font = SubResource("SystemFont_8fl2o")
 font_size = 10
+font_color = Color(0.16470589, 0.29411766, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_x3wgy"]
+font = SubResource("SystemFont_8fl2o")
+font_size = 10
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_o8msw"]
 radius = 25.0
@@ -38,8 +35,6 @@ radius = 120.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_co212")
-BaseAttributes = SubResource("Resource_hu0ow")
-BaseSkills = SubResource("Resource_hviba")
 
 [node name="MainCollider" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_7efl3")
@@ -49,7 +44,6 @@ zoom = Vector2(5.88, 5.88)
 
 [node name="DialogueDisplay" type="ScrollContainer" parent="."]
 process_mode = 3
-visible = false
 z_index = 1
 offset_left = -163.0
 offset_top = 3.0
@@ -66,11 +60,21 @@ size_flags_vertical = 3
 [node name="VBoxContainer" type="VBoxContainer" parent="DialogueDisplay/PanelContainer"]
 layout_mode = 2
 
-[node name="DialogueLabel" type="Label" parent="DialogueDisplay/PanelContainer/VBoxContainer"]
+[node name="SpeakerLabel" type="Label" parent="DialogueDisplay/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 mouse_filter = 0
 label_settings = SubResource("LabelSettings_e2uky")
+autowrap_mode = 3
+justification_flags = 131
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="DialogueLabel" type="Label" parent="DialogueDisplay/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+mouse_filter = 0
+label_settings = SubResource("LabelSettings_x3wgy")
 autowrap_mode = 3
 justification_flags = 131
 clip_text = true

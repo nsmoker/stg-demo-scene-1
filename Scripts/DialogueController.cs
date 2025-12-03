@@ -13,6 +13,7 @@ public partial class DialogueController : ScrollContainer
     private DialogueGraphNode _runningGraph;
 
     private Label _dialogueLabel;
+    private Label _speakerLabel;
     private VBoxContainer _container;
     private List<Label> _choiceLabels = [];
 
@@ -148,6 +149,9 @@ public partial class DialogueController : ScrollContainer
             controller._dialogueLabel.Text = "";
             controller._choiceLabels.ForEach(x => x.QueueFree());
             controller._choiceLabels.Clear();
+
+            // Update the speaker label
+            controller._speakerLabel.Text = node.Speaker;
         }
 
         public void Process(double delta, DialogueController controller)
@@ -250,6 +254,7 @@ public partial class DialogueController : ScrollContainer
     {
         _container = GetNode<VBoxContainer>("PanelContainer/VBoxContainer");
         _dialogueLabel = _container.GetNode<Label>("DialogueLabel");
+        _speakerLabel = _container.GetNode<Label>("SpeakerLabel");
         State = new IdleState(this);
     }
 
