@@ -78,8 +78,6 @@ mouse_filter = 0
 label_settings = SubResource("LabelSettings_x3wgy")
 autowrap_mode = 3
 justification_flags = 131
-clip_text = true
-text_overrun_behavior = 3
 
 [node name="ContainerDisplay" parent="." instance=ExtResource("3_bcg5f")]
 visible = false
