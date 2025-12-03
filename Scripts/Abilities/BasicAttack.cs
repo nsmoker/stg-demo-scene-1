@@ -17,7 +17,6 @@ namespace ArkhamHunters.Scripts.Abilities
             {
                 if (value == null || value.WeaponStats == null)
                 {
-                    GD.PrintErr("Invalid weapon item.");
                     return;
                 }
                 SetWeapon(value);
