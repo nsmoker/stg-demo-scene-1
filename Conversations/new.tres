@@ -105,7 +105,7 @@ Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281474976710658
 EditorPos = Vector2(1720, 660)
-EditorSize = Vector2(499.99884, 320.00134)
+EditorSize = Vector2(499.99887, 320.0013)
 
 [sub_resource type="Resource" id="Resource_mph8s"]
 script = ExtResource("2_ciir5")
@@ -113,7 +113,7 @@ NodeType = 3
 Content = "Exit."
 DNodeId = 281479271677954
 EditorPos = Vector2(2640, 20)
-EditorSize = Vector2(288.00543, 257.00137)
+EditorSize = Vector2(288.0055, 257.0014)
 
 [sub_resource type="Resource" id="Resource_kwpln"]
 script = ExtResource("2_ciir5")
@@ -121,7 +121,7 @@ NodeType = 3
 Content = "Override hostility."
 DNodeId = 281483566645250
 EditorPos = Vector2(2660, 520)
-EditorSize = Vector2(480.00568, 360.00153)
+EditorSize = Vector2(480.00574, 360.0015)
 
 [sub_resource type="Resource" id="Resource_q3kan"]
 script = ExtResource("2_ciir5")
@@ -129,7 +129,7 @@ NodeType = 1
 DNodeId = 281483566710786
 Action = ExtResource("4_m885x")
 EditorPos = Vector2(3540, 560)
-EditorSize = Vector2(456.0006, 194.00171)
+EditorSize = Vector2(456.00073, 194.00171)
 
 [sub_resource type="Resource" id="Resource_t0a07"]
 script = ExtResource("2_ciir5")
@@ -137,7 +137,7 @@ NodeType = 3
 Content = "Check if player has the giga item."
 DNodeId = 281487861678082
 EditorPos = Vector2(2660, 1080)
-EditorSize = Vector2(520.0052, 480.00037)
+EditorSize = Vector2(520.0051, 480.00024)
 
 [sub_resource type="Resource" id="Resource_jg620"]
 script = ExtResource("2_ciir5")
@@ -147,7 +147,7 @@ Addressee = "Player"
 DNodeId = 281487861678083
 Condition = ExtResource("5_mll3n")
 EditorPos = Vector2(3480, 1000)
-EditorSize = Vector2(456.00134, 339.9992)
+EditorSize = Vector2(456.0014, 339.9992)
 
 [sub_resource type="Resource" id="Resource_e4nf5"]
 script = ExtResource("2_ciir5")
@@ -156,7 +156,7 @@ Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281487861678084
 EditorPos = Vector2(3480, 1440)
-EditorSize = Vector2(420.0011, 379.9994)
+EditorSize = Vector2(420.00116, 379.9994)
 
 [sub_resource type="Resource" id="Resource_lmfsp"]
 script = ExtResource("2_ciir5")
@@ -173,7 +173,7 @@ Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281492156645381
 EditorPos = Vector2(1280, 1100)
-EditorSize = Vector2(399.99768, 400.00146)
+EditorSize = Vector2(399.9977, 400.00146)
 
 [sub_resource type="Resource" id="Resource_bmbfp"]
 script = ExtResource("2_ciir5")
@@ -183,7 +183,7 @@ Addressee = "Player"
 DNodeId = 281492156645382
 Condition = ExtResource("3_hq6nn")
 EditorPos = Vector2(240, -40)
-EditorSize = Vector2(579.9995, 359.99957)
+EditorSize = Vector2(579.9995, 359.99954)
 
 [sub_resource type="Resource" id="Resource_tq5ea"]
 script = ExtResource("2_ciir5")
@@ -199,7 +199,7 @@ NodeType = 3
 Content = "Thanks!"
 DNodeId = 281500746579974
 EditorPos = Vector2(960, -60)
-EditorSize = Vector2(380.00195, 340.00214)
+EditorSize = Vector2(380.00195, 340.0021)
 
 [resource]
 script = ExtResource("3_piri6")
