@@ -7,14 +7,14 @@ public partial class ContainerDisplay: ItemListDisplay
 {
     private Button _getAllButton;
 
-    private ulong _containerEntity = 0;
-    public ulong ContainerEntity
+    private string _containerEntity = "";
+    public string ContainerEntity
     {
         get { return _containerEntity; }
         set
         {
             _containerEntity = value;
-            if (_containerEntity != 0)
+            if (_containerEntity != "")
             {
                 DisplayItemList(ContainerEntity);
             }
@@ -42,7 +42,7 @@ public partial class ContainerDisplay: ItemListDisplay
         return _getAllButton.IsPressed();
     }
 
-    public void OnInventoryChangeEvent(ulong entity, Item item, bool added)
+    public void OnInventoryChangeEvent(string entity, Item item, bool added)
     {
         if (entity == ContainerEntity)
         {

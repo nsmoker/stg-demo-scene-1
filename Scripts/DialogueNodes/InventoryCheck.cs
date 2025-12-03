@@ -1,3 +1,4 @@
+using ArkhamHunters.Scripts;
 using Godot;
 using System;
 using System.Linq;
@@ -9,12 +10,13 @@ public partial class InventoryCheck : DialogueCondition
     [Export]
     public Item CheckItem;
 
+    [Export]
+    public CharacterData TargetCharacter;
+
     public override bool Evaluate()
     {
-        var player = GetPlayerNode();
+        var inventory = InventorySystem.RetrieveInventory(TargetCharacter.ResourcePath);
 
-        var playerInv = InventorySystem.RetrieveInventory(player.GetInstanceId());
-
-        return playerInv.Any(item => item.Name.Equals(CheckItem.Name));
+        return inventory.Any(item => item.ResourcePath.Equals(CheckItem.ResourcePath));
     }
 }

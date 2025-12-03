@@ -28,7 +28,7 @@ public partial class Player : Character
 	{
 		public InventoryState(Player player)
 		{
-			player._inventoryDisplay.CurrentEntity = player.GetInstanceId();
+			player._inventoryDisplay.CurrentEntity = player.CharacterData.ResourcePath;
 			player._inventoryDisplay.Visible = true;
 			player._inventoryDisplay.EquipmentId = player.CharacterData.ResourcePath;
 		}
@@ -146,14 +146,14 @@ public partial class Player : Character
 
 		private void OnContainerItemSelect(Item item)
 		{
-			InventorySystem.Transfer(_container.GetInstanceId(), _player.GetInstanceId(), item);
+			InventorySystem.Transfer(_container.ContainerData.ResourcePath, _player.CharacterData.ResourcePath, item);
 		}
 
 		public ContainerSearchState(Character character)
 		{
 			_player = (Player)character;
 			_container = (Container)_player.GetClosestInteractable();
-			_player._containerDisplay.ContainerEntity = _container.GetInstanceId();
+			_player._containerDisplay.ContainerEntity = _container.ContainerData.ResourcePath;
 			_player._containerDisplay.OnItemSelected += OnContainerItemSelect;
 		}
 
@@ -165,16 +165,16 @@ public partial class Player : Character
 			{
 				if (_player._containerDisplay.GetAllPressed())
 				{
-					var containerItems = InventorySystem.RetrieveInventory(_container.GetInstanceId());
+					var containerItems = InventorySystem.RetrieveInventory(_container.ContainerData.ResourcePath);
 					foreach (var item in containerItems)
 					{
-						InventorySystem.Transfer(_container.GetInstanceId(), _player.GetInstanceId(), item);
+						InventorySystem.Transfer(_container.ContainerData.ResourcePath, _player.CharacterData.ResourcePath, item);
 					}
 				}
 
 				_player._containerDisplay.Visible = false;
 				_player._containerDisplay.OnItemSelected -= OnContainerItemSelect;
-				_player._containerDisplay.ContainerEntity = 0;
+				_player._containerDisplay.ContainerEntity = "";
 				_player.State = new NavigationState();
 			}
 		}
@@ -425,7 +425,7 @@ public partial class Player : Character
 			}
 
 			EquipmentSystem.SetEquipment(CharacterData.ResourcePath, eq);
-			_inventoryDisplay.CurrentEntity = GetInstanceId();
+			_inventoryDisplay.CurrentEntity = CharacterData.ResourcePath;
 		}
 	}
 

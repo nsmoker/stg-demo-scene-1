@@ -14,8 +14,8 @@ public partial class InventoryDisplay: Panel
 
     public string EquipmentId;
 
-    private ulong _currentEntity = 0;
-    public ulong CurrentEntity 
+    private string _currentEntity = "";
+    public string CurrentEntity 
     {
         get => _currentEntity;
         set
@@ -137,7 +137,7 @@ public partial class InventoryDisplay: Panel
         }
     }
 
-    private void OnInventoryChanged(ulong entity, Item item, bool added)
+    private void OnInventoryChanged(string entity, Item item, bool added)
     {
         if (entity == CurrentEntity)
         {

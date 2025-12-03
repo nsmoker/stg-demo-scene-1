@@ -30,7 +30,7 @@ public partial class ItemListDisplay : PanelContainer
         }
     }
     
-    public void DisplayItemList(ulong entity)
+    public void DisplayItemList(string entity)
     {
         Visible = true;
         foreach (var display in _displayedItems)

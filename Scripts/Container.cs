@@ -7,7 +7,7 @@ namespace ArkhamHunters.Scripts;
 public partial class Container: StaticBody2D, IInteractable, IContainerInteractable
 {
     [Export]
-    private Godot.Collections.Array<Item> _items;
+    public ContainerData ContainerData;
 
     private Sprite2D _badgeSprite;
     private Sprite2D _closedSprite;
@@ -16,7 +16,7 @@ public partial class Container: StaticBody2D, IInteractable, IContainerInteracta
 
     public override void _Ready()
     {
-        InventorySystem.Register(GetInstanceId(), [.. _items]);
+        InventorySystem.SetInventory(ContainerData.ResourcePath, [.. ContainerData.StartingItems]);
         SetCollisionLayer(1 | (1 << 20));
         _badgeSprite = GetNode<Sprite2D>("BadgeSprite");
         _closedSprite = GetNode<Sprite2D>("ClosedSprite");
@@ -37,16 +37,16 @@ public partial class Container: StaticBody2D, IInteractable, IContainerInteracta
     {
         _closedSprite.Visible = false;
         _openedSprite.Visible = true;
-        return _items.ToList();
+        return InventorySystem.RetrieveInventory(ContainerData.ResourcePath);
     }
 
     public void RemoveItem(Item item)
     {
-        _items.Remove(item);
+        InventorySystem.RemoveItem(ContainerData.ResourcePath, item);
     }
 
     public void ClearItems()
     {
-        _items.Clear();
+        InventorySystem.Remove(ContainerData.ResourcePath);
     }
 }

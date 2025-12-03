@@ -141,7 +141,7 @@ public partial class Character : CharacterBody2D
         SpriteAnim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         collider = GetNode<CollisionShape2D>("MainCollider");
         FactionSystem.SetFaction(CharacterData.ResourcePath, CharacterData.InitialFaction);
-        InventorySystem.Register(GetInstanceId(), [.. InitialInventory]);
+        InventorySystem.SetInventory(CharacterData.ResourcePath, [.. InitialInventory]);
         State = new PatrolState();
         _senseArea = GetNode<Area2D>("SenseArea");
         _combatInteractionMenu = GetNode<AbilityMenu>("CombatInteractionMenu");
