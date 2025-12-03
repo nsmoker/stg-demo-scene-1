@@ -74,7 +74,7 @@ script = ExtResource("2_ciir5")
 NodeType = 2
 DNodeId = 281487861678084
 EditorPos = Vector2(-680, 680)
-EditorSize = Vector2(352.00046, 194.0026)
+EditorSize = Vector2(352.0005, 194.00256)
 
 [sub_resource type="Resource" id="Resource_iyefr"]
 script = ExtResource("2_ciir5")
@@ -83,7 +83,7 @@ Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 1
 EditorPos = Vector2(-20, 740)
-EditorSize = Vector2(420.00024, 340.00018)
+EditorSize = Vector2(420.00024, 340.00024)
 
 [sub_resource type="Resource" id="Resource_3xlk2"]
 script = ExtResource("2_ciir5")
@@ -91,7 +91,7 @@ NodeType = 3
 Content = "Exit."
 DNodeId = 4294967297
 EditorPos = Vector2(3280, 1520)
-EditorSize = Vector2(352.00317, 320.00336)
+EditorSize = Vector2(352.00317, 320.0033)
 
 [sub_resource type="Resource" id="Resource_cipyo"]
 script = ExtResource("2_ciir5")
@@ -134,7 +134,7 @@ NodeType = 3
 Content = "Hey."
 DNodeId = 12884967427
 EditorPos = Vector2(560, 1180)
-EditorSize = Vector2(379.9967, 340.00494)
+EditorSize = Vector2(379.9967, 340.005)
 
 [sub_resource type="Resource" id="Resource_t0a07"]
 script = ExtResource("2_ciir5")
@@ -145,14 +145,14 @@ DNodeId = 12884967428
 Condition = ExtResource("3_hq6nn")
 LinkDNodeId = 281487861678085
 EditorPos = Vector2(-60, 180)
-EditorSize = Vector2(580.0002, 383.00055)
+EditorSize = Vector2(580.0001, 383.00055)
 
 [sub_resource type="Resource" id="Resource_jg620"]
 script = ExtResource("2_ciir5")
 NodeType = 2
 DNodeId = 281487861678084
 EditorPos = Vector2(-680, 680)
-EditorSize = Vector2(352.00046, 194.0026)
+EditorSize = Vector2(352.0005, 194.00256)
 
 [sub_resource type="Resource" id="Resource_e4nf5"]
 script = ExtResource("2_ciir5")
@@ -161,7 +161,7 @@ Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281487861678085
 EditorPos = Vector2(2020, 780)
-EditorSize = Vector2(499.99146, 320.00253)
+EditorSize = Vector2(499.99146, 320.00256)
 
 [sub_resource type="Resource" id="Resource_lmfsp"]
 script = ExtResource("2_ciir5")
@@ -178,7 +178,7 @@ Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281492156645382
 EditorPos = Vector2(1120, 440)
-EditorSize = Vector2(779.996, 419.99884)
+EditorSize = Vector2(779.99603, 419.99884)
 
 [sub_resource type="Resource" id="Resource_bmbfp"]
 script = ExtResource("2_ciir5")
@@ -186,7 +186,7 @@ NodeType = 3
 Content = "You can talk?"
 DNodeId = 281496451612678
 EditorPos = Vector2(560, 740)
-EditorSize = Vector2(399.99573, 339.9953)
+EditorSize = Vector2(399.99573, 339.99536)
 
 [resource]
 script = ExtResource("3_piri6")

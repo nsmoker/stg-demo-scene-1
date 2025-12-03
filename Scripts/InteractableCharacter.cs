@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ArkhamHunters.Scripts;
 
-public partial class Sign : Character, IDialogueInteractable, IInteractable
+public partial class InteractableCharacter : Character, IDialogueInteractable, IInteractable
 {
 	[Export] 
 	public Conversation Dialogue;

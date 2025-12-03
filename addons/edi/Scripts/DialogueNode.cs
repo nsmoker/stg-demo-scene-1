@@ -146,7 +146,6 @@ public partial class DialogueNode : GraphNode
     public void SetLinkOptions(System.Collections.Generic.List<DialogueNode> nodes)
     {
 
-        GD.Print(nodes.Count);
         var selection = _linkButton.Selected;
         var selectionId = selection >= 0 ? (ulong) _linkButton.GetItemMetadata(_linkButton.Selected) : 0;
         _linkButton.Clear();
