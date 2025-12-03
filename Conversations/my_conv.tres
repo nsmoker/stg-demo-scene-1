@@ -4,25 +4,25 @@
 [ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="2_oa5pc"]
 [ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/edi/Scripts/Conversation.cs" id="3_nrxl5"]
 
-[sub_resource type="Resource" id="Resource_31a1c"]
+[sub_resource type="Resource" id="Resource_a741f"]
 script = ExtResource("1_3fqfa")
 toNode = 1
 
-[sub_resource type="Resource" id="Resource_u54iv"]
+[sub_resource type="Resource" id="Resource_hweyg"]
 script = ExtResource("2_oa5pc")
 NodeType = 2
 DNodeId = 281474976710656
 EditorPos = Vector2(574, 1074)
 EditorSize = Vector2(222, 171)
 
-[sub_resource type="Resource" id="Resource_s4iyn"]
+[sub_resource type="Resource" id="Resource_c51te"]
 script = ExtResource("2_oa5pc")
 NodeType = 2
 DNodeId = 281474976710656
 EditorPos = Vector2(574, 1074)
 EditorSize = Vector2(222, 171)
 
-[sub_resource type="Resource" id="Resource_ajdbm"]
+[sub_resource type="Resource" id="Resource_u8cgf"]
 script = ExtResource("2_oa5pc")
 DNodeId = 281474976710657
 EditorPos = Vector2(820, 1020)
@@ -31,6 +31,6 @@ EditorSize = Vector2(184, 257)
 [resource]
 resource_name = "my_conv"
 script = ExtResource("3_nrxl5")
-Nodes = Array[ExtResource("2_oa5pc")]([SubResource("Resource_s4iyn"), SubResource("Resource_ajdbm")])
-EntryPoints = Array[ExtResource("2_oa5pc")]([SubResource("Resource_u54iv")])
-Connections = Array[ExtResource("1_3fqfa")]([SubResource("Resource_31a1c")])
+Nodes = Array[ExtResource("2_oa5pc")]([SubResource("Resource_c51te"), SubResource("Resource_u8cgf")])
+EntryPoints = Array[ExtResource("2_oa5pc")]([SubResource("Resource_hweyg")])
+Connections = Array[ExtResource("1_3fqfa")]([SubResource("Resource_a741f")])

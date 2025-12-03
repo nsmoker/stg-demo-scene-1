@@ -11,8 +11,9 @@ public partial class DialogueEditor : Control
 {
     private Panel _contextMenu;
     public GraphEdit EditorNode;
-    private List<DialogueNode> _entryPoints = [];
-    private List<DialogueNode> _selection = [];
+    private readonly List<DialogueNode> _entryPoints = [];
+    private readonly List<DialogueNode> _selection = [];
+    private readonly List<DialogueNode> _clipboard = [];
     private ushort _entryCounter = 0;
     private ushort _nodeCounter = 0;
     private ushort _responseCounter = 0;
@@ -27,16 +28,18 @@ public partial class DialogueEditor : Control
     {
         _contextMenu = GetNode<Panel>("ContextMenu");
 
-        _statusLabel = new Label();
-        _statusLabel.CustomMinimumSize = new Vector2(400, 30);
-        _statusLabel.Text = "Dialogue Editor - Unsaved.";
+        _statusLabel = new Label
+        {
+            CustomMinimumSize = new Vector2(400, 30),
+            Text = "Dialogue Editor - Unsaved."
+        };
 
         EditorNode = GetNode<GraphEdit>("GraphEdit");
 
         EditorNode.GuiInput += OnInputEvent;
         EditorNode.GetMenuHBox().AddChild(_statusLabel);
 
-        EditorNode.NodeSelected += (Node node) =>
+        EditorNode.NodeSelected += node =>
         {
             if (node is DialogueNode dnode)
             {
@@ -44,7 +47,7 @@ public partial class DialogueEditor : Control
             }
         };
 
-        EditorNode.NodeDeselected += (Node node) =>
+        EditorNode.NodeDeselected += node =>
         {
             if (node is DialogueNode dnode)
             {
@@ -96,6 +99,10 @@ public partial class DialogueEditor : Control
         EditorNode.RemoveValidConnectionType(1, 1);
 
         EditorNode.AddValidConnectionType(1, 0);
+
+        EditorNode.CopyNodesRequest += OnCopyRequest;
+        EditorNode.CutNodesRequest += OnCutRequest;
+        EditorNode.PasteNodesRequest += OnPasteRequest;
     }
 
     public void SetConversationResource(Conversation conversation, bool saveCurrent = true)
@@ -422,74 +429,133 @@ public partial class DialogueEditor : Control
         undoRedoManager.CommitAction();
     }
 
-    private void TraverseNodesDFS(DialogueNode dialogueNode,
-        Godot.Collections.Array<DialogueGraphNode> ret,
-        Godot.Collections.Array<DialogueConnection> retConnections,
-        Dictionary<ulong, int> visitedSet
-        )
+    private void OnCopyRequest()
     {
-        var resourceForm = dialogueNode.Save();
-        var loc = ret.Count;
-        ret.Add(resourceForm);
-        visitedSet.Add(dialogueNode.GetInstanceId(), loc);
-        var connList = EditorNode.GetConnectionListFromNode(dialogueNode.Name);
-
-        foreach (var conn in connList)
+        _clipboard.Clear();
+        foreach (var node in _selection)
         {
-            var from = EditorNode.GetNode<DialogueNode>(((StringName) conn["from_node"]).ToString());
-            var child = EditorNode.GetNode<DialogueNode>(((StringName) conn["to_node"]).ToString());
-            if (from.GetInstanceId() == dialogueNode.GetInstanceId() && !visitedSet.ContainsKey(child.GetInstanceId()))
+            if (node.Duplicate() is DialogueNode copy)
             {
-                retConnections.Add(new DialogueConnection
-                {
-                    fromNode = loc,
-                    toNode = ret.Count
-                });
-                TraverseNodesDFS(child, ret, retConnections, visitedSet);
-            }
-            else if (from.GetInstanceId() == dialogueNode.GetInstanceId())
-            {
-                retConnections.Add(new DialogueConnection
-                {
-                    fromNode = loc,
-                    toNode = visitedSet[child.GetInstanceId()]
-                });
+                _clipboard.Add(copy);
             }
         }
     }
 
+    private void OnCutRequest()
+    {
+        OnCopyRequest(); // Copy the selected nodes first
+        RemoveNodes([.. _selection.Select(n => n.Name)]);
+    }
+
+    private void OnPasteRequest()
+    {
+        if (_clipboard.Count == 0) return;
+
+        undoRedoManager.CreateAction("Paste Nodes");
+        foreach (var node in _clipboard)
+        {
+            if (node.Duplicate() is DialogueNode pastedNode)
+            {
+                switch (pastedNode.NodeType)
+                {
+                    case DialogueNodeType.Node:
+                        {
+                            pastedNode.Title = $"Node {_nodeCounter}";
+                            _nodeCounter++;
+                            break;
+                        }
+                    case DialogueNodeType.PlayerResponse:
+                        {
+                            pastedNode.Title = $"Player Response {_responseCounter}";
+                            _responseCounter++;
+                            break;
+                        }
+                    case DialogueNodeType.ScriptAction:
+                        {
+                            pastedNode.Title = $"Script Action {_actionCounter}";
+                            _actionCounter++;
+                            break;
+                        }
+                    case DialogueNodeType.ScriptEntry:
+                        {
+                            pastedNode.Title += $"Script Entry {_entryCounter}";
+                            _entryCounter++;
+                            break;
+                        }
+                }
+                pastedNode.Name = pastedNode.Title;
+                pastedNode.DNodeId |= _nodeCounter;
+                pastedNode.DNodeId |= ((ulong) _actionCounter) << 16;
+                pastedNode.DNodeId |= ((ulong) _responseCounter) << 32;
+                pastedNode.DNodeId |= ((ulong) _entryCounter) << 48;
+                pastedNode.PositionOffset += new Vector2(50, 50); // Offset to avoid overlap
+                undoRedoManager.AddDoMethod(this, MethodName.AddAndEnableNode, pastedNode);
+                undoRedoManager.AddUndoMethod(this, MethodName.DisableNode, pastedNode);
+            }
+        }
+        undoRedoManager.CommitAction();
+    }
+
     public void Save()
     {
-        Godot.Collections.Array<DialogueGraphNode> entrysRet = [];
-        Godot.Collections.Array<DialogueGraphNode> ret = [];
-        Godot.Collections.Array<DialogueConnection> conns = [];
+        List<DialogueGraphNode> entrysRet = [];
+        List<DialogueGraphNode> ret = [];
+        HashSet<DialogueConnection> conns = [];
         
         foreach (var entryPoint in _entryPoints)
         {
-            if (IsInstanceValid(entryPoint) && entryPoint.Visible)
-            {
-                entrysRet.Add(entryPoint.Save());
+            entrysRet.Add(entryPoint.Save());
+        }
 
-                TraverseNodesDFS(entryPoint, ret, conns, []);
+        foreach (var child in EditorNode.GetChildren())
+        {
+            if (child is DialogueNode dialogueNode)
+            {
+                ret.Add(dialogueNode.Save());
+            }
+        }
+
+        foreach (var dialogueGraphNode in ret)
+        {
+            var dialogueNode = EditorNode.GetChildren().First(x => x is DialogueNode n && n.DNodeId == dialogueGraphNode.DNodeId) as DialogueNode;
+            var connList = EditorNode.GetConnectionListFromNode(dialogueNode.Name);
+            foreach (var conn in connList)
+            {
+                var from = EditorNode.GetNode<DialogueNode>(((StringName) conn["from_node"]).ToString());
+                var child = EditorNode.GetNode<DialogueNode>(((StringName) conn["to_node"]).ToString());
+
+                var fromLoc = ret.IndexOf(dialogueGraphNode);
+                var toLoc = ret.FindIndex(x => x.DNodeId == child.DNodeId);
+                if (dialogueGraphNode.DNodeId == from.DNodeId)
+                {
+                    conns.Add(new DialogueConnection
+                    {
+                        fromNode = fromLoc,
+                        toNode = toLoc
+                    });
+                }
             }
         }
 
         // Sort connections by to-node y-position.
-        Godot.Collections.Array<DialogueConnection> connsRet = new(conns.OrderBy(x =>
+        Godot.Collections.Array<DialogueConnection> connsRet = [.. conns.OrderBy(x =>
         {
             var toNode = ret[x.toNode];
             return toNode.EditorPos.Y;
-        }));
+        })];
 
         var conv = new Conversation
         {
-            Nodes = ret,
+            Nodes = [..ret],
             Connections = connsRet,
-            EntryPoints = entrysRet,
+            EntryPoints = [..entrysRet],
         };
 
         if (_editedConversation != null && _editedConversation.ResourcePath != null)
         {
+            _editedConversation.Nodes = conv.Nodes;
+            _editedConversation.Connections = conv.Connections;
+            _editedConversation.EntryPoints = conv.EntryPoints;
             ResourceSaver.Save(_editedConversation);
         }
         else

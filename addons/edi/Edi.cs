@@ -33,7 +33,7 @@ public partial class Edi : EditorPlugin
 
     public override void _SaveExternalData()
     {
-        if (_editor.EditorNode.HasFocus())
+        if (_editor.EditorNode.HasFocus() || _editor.HasFocus())
         {
             _editor.Save();
         }

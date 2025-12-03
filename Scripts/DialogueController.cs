@@ -61,17 +61,19 @@ public partial class DialogueController : ScrollContainer
             {
                 if (continuation.NodeType == EverydayDialogueEditor.DialogueNodeType.PlayerResponse && (continuation.Condition == null || continuation.Condition.Evaluate()))
                 {
+                    nodeOut = continuation;
                     possibleContinuationCount += 1;
                 }
                 else if (possibleContinuationCount == 0 && (continuation.Condition == null || continuation.Condition.Evaluate()))
                 {
-                    possibleContinuationCount = 1;
                     nodeOut = continuation;
+                    possibleContinuationCount = 1;
                     break;
                 }
             }
 
         }
+        
         return possibleContinuationCount;
     }
 
