@@ -54,7 +54,7 @@ public partial class Edi : EditorPlugin
 
     public override void _Clear()
     {
-        _editor.SetConversationResource(null);
+        _editor.SetConversationResource(null, false);
     }
 }
 #endif

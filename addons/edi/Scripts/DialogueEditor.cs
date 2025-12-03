@@ -98,14 +98,14 @@ public partial class DialogueEditor : Control
         EditorNode.AddValidConnectionType(1, 0);
     }
 
-    public void SetConversationResource(Conversation conversation)
+    public void SetConversationResource(Conversation conversation, bool saveCurrent = true)
     {
-        LoadConversation(conversation);
+        LoadConversation(conversation, saveCurrent);
     }
 
-    private void LoadConversation(Conversation conversation)
+    private void LoadConversation(Conversation conversation, bool saveCurrent = true)
     {
-        if (EditorNode.GetChildren().Any(x => x is DialogueNode))
+        if (EditorNode.GetChildren().Any(x => x is DialogueNode) && saveCurrent)
         {
             Save();
         }
