@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://02j1x8f0h41u"]
 
-[ext_resource type="Script" uid="uid://blmekfs5p7s6i" path="res://Scripts/QuestStageDisplay.cs" id="1_ycjti"]
+[ext_resource type="Script" uid="uid://blmekfs5p7s6i" path="res://Scripts/Controls/QuestStageDisplay.cs" id="1_ycjti"]
 
 [sub_resource type="SystemFont" id="SystemFont_f1ek2"]
 subpixel_positioning = 0

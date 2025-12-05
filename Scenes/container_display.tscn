@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://ctgni16h8tre6"]
 
-[ext_resource type="Script" path="res://Scripts/ContainerDisplay.cs" id="1_iodxy"]
+[ext_resource type="Script" uid="uid://djnfp3xb53873" path="res://Scripts/Controls/ContainerDisplay.cs" id="1_iodxy"]
 [ext_resource type="PackedScene" uid="uid://ce04r4c7q8n5i" path="res://Scenes/item_display.tscn" id="2_x5ufq"]
 
 [sub_resource type="Theme" id="Theme_dxbun"]

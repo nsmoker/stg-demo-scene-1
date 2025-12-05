@@ -1,9 +1,5 @@
-using ArkhamHunters.Scripts;
-using EverydayDialogueEditor;
 using Godot;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 [Tool]
 [GlobalClass]

@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://cn548gp046jaa" path="res://Scripts/Items/ConsumableStats.cs" id="6_dqvmo"]
 [ext_resource type="Script" uid="uid://bu40wng0pu1b6" path="res://Scripts/Items/Item.cs" id="6_hy805"]
 [ext_resource type="Texture2D" uid="uid://clru4be0tsesu" path="res://Sprites/Images/spr_itemsncolectables-outlined.png" id="7_qsw5y"]
-[ext_resource type="Script" uid="uid://mxrfbr2ffrey" path="res://Scripts/DamageRoll.cs" id="9_gsdq5"]
+[ext_resource type="Script" uid="uid://mxrfbr2ffrey" path="res://Scripts/Resources/DamageRoll.cs" id="9_gsdq5"]
 [ext_resource type="Script" uid="uid://cs3jsnbfssvyu" path="res://Scripts/Items/WeaponStats.cs" id="9_tsr6y"]
 [ext_resource type="Script" uid="uid://bpuijyxf410pp" path="res://Scripts/Items/WearableStats.cs" id="10_55ihs"]
 

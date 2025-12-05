@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Quest" load_steps=7 format=3 uid="uid://cv5y4sfyl8lrm"]
 
-[ext_resource type="Script" uid="uid://ho5p3miawhuu" path="res://Scripts/QuestStage.cs" id="1_5ormn"]
-[ext_resource type="Script" uid="uid://be0fsg3lmta4c" path="res://Scripts/Quest.cs" id="1_6hocc"]
+[ext_resource type="Script" uid="uid://ho5p3miawhuu" path="res://Scripts/Resources/QuestStage.cs" id="1_5ormn"]
+[ext_resource type="Script" uid="uid://be0fsg3lmta4c" path="res://Scripts/Resources/Quest.cs" id="1_6hocc"]
 
 [sub_resource type="Resource" id="Resource_5xfjq"]
 script = ExtResource("1_5ormn")
@@ -35,5 +35,5 @@ metadata/_custom_type_script = "uid://ho5p3miawhuu"
 script = ExtResource("1_6hocc")
 Title = "Contract: Davos Thorn"
 Description = " You have a contract from the Order of the Dark Word, and a description of Davos Thorn: 34 years old, hybrid, fair skin, short dark hair. This is your chance; don't mess it up."
-Stages = [SubResource("Resource_5xfjq"), SubResource("Resource_5ormn"), SubResource("Resource_4w1co"), SubResource("Resource_tupyy")]
+Stages = Array[ExtResource("1_5ormn")]([SubResource("Resource_5xfjq"), SubResource("Resource_5ormn"), SubResource("Resource_4w1co"), SubResource("Resource_tupyy")])
 metadata/_custom_type_script = "uid://be0fsg3lmta4c"

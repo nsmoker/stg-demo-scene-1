@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://dgvr4h6v7mkj5" path="res://Scripts/Items/ArmorStats.cs" id="5_mks7i"]
 [ext_resource type="Script" uid="uid://bu40wng0pu1b6" path="res://Scripts/Items/Item.cs" id="5_u8v6n"]
 [ext_resource type="Script" uid="uid://cn548gp046jaa" path="res://Scripts/Items/ConsumableStats.cs" id="6_dhrot"]
-[ext_resource type="Script" uid="uid://mxrfbr2ffrey" path="res://Scripts/DamageRoll.cs" id="9_mvlf1"]
+[ext_resource type="Script" uid="uid://mxrfbr2ffrey" path="res://Scripts/Resources/DamageRoll.cs" id="9_mvlf1"]
 [ext_resource type="Script" uid="uid://bpuijyxf410pp" path="res://Scripts/Items/WearableStats.cs" id="10_crv0c"]
 
 [sub_resource type="Resource" id="Resource_357i3"]

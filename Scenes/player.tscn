@@ -1,8 +1,8 @@
 [gd_scene load_steps=16 format=3 uid="uid://gedp1qirf71n"]
 
-[ext_resource type="Script" uid="uid://04a5i0tk15gy" path="res://Scripts/Player.cs" id="1_co212"]
+[ext_resource type="Script" uid="uid://04a5i0tk15gy" path="res://Scripts/Character/Player.cs" id="1_co212"]
 [ext_resource type="PackedScene" uid="uid://ctgni16h8tre6" path="res://Scenes/container_display.tscn" id="3_bcg5f"]
-[ext_resource type="Script" uid="uid://4wgqj3gknq04" path="res://Scripts/DialogueController.cs" id="4_3smsa"]
+[ext_resource type="Script" uid="uid://4wgqj3gknq04" path="res://Scripts/Controls/DialogueController.cs" id="4_3smsa"]
 [ext_resource type="PackedScene" uid="uid://dheqe5k157l3j" path="res://Scenes/inventory_display.tscn" id="4_ntcgu"]
 [ext_resource type="PackedScene" uid="uid://c87rbgv3boios" path="res://Scenes/CharacterSprite.tscn" id="6_dxres"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://Sprites/Images/spr_itemsncolectables.png" id="7_3smsa"]

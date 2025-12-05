@@ -11,7 +11,6 @@ public partial class DialogueEditor : Control
 {
     private Panel _contextMenu;
     public GraphEdit EditorNode;
-    private readonly List<DialogueNode> _entryPoints = [];
     private readonly List<DialogueNode> _selection = [];
     private readonly List<DialogueNode> _clipboard = [];
     private ushort _entryCounter = 0;
@@ -117,6 +116,8 @@ public partial class DialogueEditor : Control
             Save();
         }
 
+        EditorNode.ClearConnections();
+
         foreach (var node in EditorNode.GetChildren())
         {
             if (node is DialogueNode)
@@ -129,7 +130,6 @@ public partial class DialogueEditor : Control
         _responseCounter = 0;
         _actionCounter = 0;
         _entryCounter = 0;
-        _entryPoints.Clear();
 
         if (conversation == null)
         {
@@ -318,11 +318,6 @@ public partial class DialogueEditor : Control
         newNode.DNodeId |= ((ulong) _responseCounter) << 32;
         newNode.DNodeId |= ((ulong) _entryCounter) << 48;
 
-        if (newNode.NodeType == DialogueNodeType.ScriptEntry)
-        {
-            _entryPoints.Add(newNode);
-        }
-
         return newNode;
     }
 
@@ -365,10 +360,6 @@ public partial class DialogueEditor : Control
         {
             var node = EditorNode.GetNode<GraphNode>(name.ToString());
             var dnode = (DialogueNode) node;
-            if (dnode.NodeType == DialogueNodeType.ScriptEntry)
-            {
-                _entryPoints.Remove(dnode);
-            }
             node.ProcessMode = ProcessModeEnum.Disabled;
             node.Visible = false;
 
@@ -387,11 +378,6 @@ public partial class DialogueEditor : Control
         foreach (var name in names)
         {
             var node = EditorNode.GetNode(name.ToString());
-            var dnode = (DialogueNode) node;
-            if (dnode.NodeType == DialogueNodeType.ScriptEntry)
-            {
-                _entryPoints.Add(dnode);
-            }
             node.ProcessMode = ProcessModeEnum.Inherit;
             ((GraphNode) node).Visible = true;
         }
@@ -522,20 +508,19 @@ public partial class DialogueEditor : Control
 
     public void Save()
     {
-        List<DialogueGraphNode> entrysRet = [];
         List<DialogueGraphNode> ret = [];
         HashSet<DialogueConnection> conns = [];
-        
-        foreach (var entryPoint in _entryPoints)
-        {
-            entrysRet.Add(entryPoint.Save());
-        }
+        List<DialogueGraphNode> entrysRet = [];
 
         foreach (var child in EditorNode.GetChildren())
         {
             if (child is DialogueNode dialogueNode && dialogueNode.Visible)
             {
                 ret.Add(dialogueNode.Save());
+                if (dialogueNode.NodeType == DialogueNodeType.ScriptEntry)
+                {
+                    entrysRet.Add(dialogueNode.Save());
+                }
             }
         }
 

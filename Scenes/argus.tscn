@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://c7xooyytkhw6g"]
 
-[ext_resource type="Script" uid="uid://dolf38tlsle5r" path="res://Scripts/InteractableCharacter.cs" id="1_6k4le"]
+[ext_resource type="Script" uid="uid://dolf38tlsle5r" path="res://Scripts/Character/InteractableCharacter.cs" id="1_6k4le"]
 [ext_resource type="Resource" uid="uid://bewehuhajler" path="res://Conversations/argus_1.tres" id="2_uyqtx"]
 [ext_resource type="Texture2D" uid="uid://dvrg245q3n4kg" path="res://Sprites/Images/Characters/char_06.png" id="3_81qwi"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://Sprites/Images/spr_itemsncolectables.png" id="4_tjpj8"]
