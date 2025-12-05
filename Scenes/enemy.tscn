@@ -1,73 +1,290 @@
-[gd_scene load_steps=22 format=3 uid="uid://d2taxt4eofj2h"]
+[gd_scene load_steps=79 format=3 uid="uid://d2taxt4eofj2h"]
 
 [ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character.cs" id="1_ghaa6"]
 [ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/PatrolLeg.cs" id="2_1dp5w"]
+[ext_resource type="Texture2D" uid="uid://op7us3k7d500" path="res://Sprites/Images/Characters/char_knight_02.png" id="2_287tu"]
+[ext_resource type="Script" uid="uid://bhf3rn2sin4i2" path="res://Scripts/Abilities/Ability.cs" id="2_dhkrs"]
 [ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/AttributeSet.cs" id="3_auwsv"]
 [ext_resource type="Script" uid="uid://cgng01q8ok4ba" path="res://Scripts/SkillSet.cs" id="4_8uf12"]
-[ext_resource type="Texture2D" uid="uid://dbj2eq5fnrohd" path="res://Sprites/Images/Characters/blue_slime.png" id="5_po0sg"]
+[ext_resource type="Script" uid="uid://cng8hqptg2rbu" path="res://Scripts/CharacterData.cs" id="5_1dp5w"]
+[ext_resource type="Script" uid="uid://5hcjkamye5ns" path="res://Scripts/Items/AttributeBonus.cs" id="6_5xdhn"]
 [ext_resource type="PackedScene" uid="uid://brdmuedpkp0jn" path="res://Scenes/ability_menu.tscn" id="6_haro7"]
-
-[sub_resource type="Resource" id="Resource_ncwib"]
-script = ExtResource("3_auwsv")
-
-[sub_resource type="Resource" id="Resource_lijot"]
-script = ExtResource("4_8uf12")
-
-[sub_resource type="Resource" id="Resource_1dp5w"]
-script = ExtResource("2_1dp5w")
-Direction = Vector2(1, 0)
-Distance = 1000.0
-metadata/_custom_type_script = "uid://bjgfioljdfdnx"
+[ext_resource type="Script" uid="uid://c54dlxcx6qrkd" path="res://Scripts/Items/SkillBonus.cs" id="7_4jyny"]
+[ext_resource type="Script" uid="uid://dgvr4h6v7mkj5" path="res://Scripts/Items/ArmorStats.cs" id="8_vh8xy"]
+[ext_resource type="Script" uid="uid://bg3xbg8f0cawp" path="res://Scripts/Items/AttributeRequirement.cs" id="9_qjcj6"]
+[ext_resource type="Script" uid="uid://cn548gp046jaa" path="res://Scripts/Items/ConsumableStats.cs" id="10_4ycey"]
+[ext_resource type="Script" uid="uid://bjq8iqwdrtj6w" path="res://Scripts/Items/SkillRequirement.cs" id="11_8cim4"]
+[ext_resource type="Script" uid="uid://mxrfbr2ffrey" path="res://Scripts/DamageRoll.cs" id="12_7x82w"]
+[ext_resource type="Script" uid="uid://cs3jsnbfssvyu" path="res://Scripts/Items/WeaponStats.cs" id="13_iatxd"]
+[ext_resource type="Script" uid="uid://bpuijyxf410pp" path="res://Scripts/Items/WearableStats.cs" id="14_qqxsh"]
+[ext_resource type="Script" uid="uid://bu40wng0pu1b6" path="res://Scripts/Items/Item.cs" id="15_0whn2"]
+[ext_resource type="Script" uid="uid://cuq2diuirpwbs" path="res://Scripts/EquipmentSet.cs" id="16_bx1xr"]
 
 [sub_resource type="Resource" id="Resource_auwsv"]
+script = ExtResource("3_auwsv")
+
+[sub_resource type="Resource" id="Resource_8uf12"]
+script = ExtResource("4_8uf12")
+
+[sub_resource type="Resource" id="Resource_po0sg"]
 script = ExtResource("2_1dp5w")
 Direction = Vector2(-1, 0)
 Distance = 1000.0
 metadata/_custom_type_script = "uid://bjgfioljdfdnx"
 
+[sub_resource type="Resource" id="Resource_haro7"]
+script = ExtResource("2_1dp5w")
+Direction = Vector2(1, 0)
+Distance = 1000.0
+metadata/_custom_type_script = "uid://bjgfioljdfdnx"
+
+[sub_resource type="Resource" id="Resource_n85mp"]
+script = ExtResource("6_5xdhn")
+
+[sub_resource type="Resource" id="Resource_nxecp"]
+script = ExtResource("7_4jyny")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_6jaer"]
+script = ExtResource("8_vh8xy")
+SkillBonuses = SubResource("Resource_nxecp")
+AttributeBonuses = SubResource("Resource_n85mp")
+
+[sub_resource type="Resource" id="Resource_ve8xs"]
+script = ExtResource("9_qjcj6")
+
+[sub_resource type="Resource" id="Resource_q0iv8"]
+script = ExtResource("10_4ycey")
+DamageRolls = []
+HealRolls = []
+
+[sub_resource type="Resource" id="Resource_c1gwg"]
+script = ExtResource("11_8cim4")
+
+[sub_resource type="Resource" id="Resource_3mxp7"]
+script = ExtResource("6_5xdhn")
+
+[sub_resource type="Resource" id="Resource_5a56t"]
+script = ExtResource("12_7x82w")
+
+[sub_resource type="Resource" id="Resource_a6sir"]
+script = ExtResource("7_4jyny")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_8ej4m"]
+script = ExtResource("13_iatxd")
+DamageRolls = SubResource("Resource_5a56t")
+SkillBonuses = SubResource("Resource_a6sir")
+AttributeBonuses = SubResource("Resource_3mxp7")
+
+[sub_resource type="Resource" id="Resource_bwheg"]
+script = ExtResource("6_5xdhn")
+
+[sub_resource type="Resource" id="Resource_iol0x"]
+script = ExtResource("7_4jyny")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_ofqcr"]
+script = ExtResource("14_qqxsh")
+SkillBonuses = SubResource("Resource_iol0x")
+AttributeBonuses = SubResource("Resource_bwheg")
+
+[sub_resource type="Resource" id="Resource_nus6a"]
+script = ExtResource("15_0whn2")
+ItemType = 4
+AttributeRequirements = SubResource("Resource_ve8xs")
+SkillRequirements = SubResource("Resource_c1gwg")
+ConsumableStats = SubResource("Resource_q0iv8")
+WearableStats = SubResource("Resource_ofqcr")
+ArmorStats = SubResource("Resource_6jaer")
+WeaponStats = SubResource("Resource_8ej4m")
+Name = " (Equipped)"
+
+[sub_resource type="Resource" id="Resource_imgxb"]
+script = ExtResource("6_5xdhn")
+
+[sub_resource type="Resource" id="Resource_pyrvc"]
+script = ExtResource("7_4jyny")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_pja2t"]
+script = ExtResource("8_vh8xy")
+SkillBonuses = SubResource("Resource_pyrvc")
+AttributeBonuses = SubResource("Resource_imgxb")
+
+[sub_resource type="Resource" id="Resource_jx5vc"]
+script = ExtResource("9_qjcj6")
+
+[sub_resource type="Resource" id="Resource_7vco5"]
+script = ExtResource("10_4ycey")
+DamageRolls = []
+HealRolls = []
+
+[sub_resource type="Resource" id="Resource_7xmqa"]
+script = ExtResource("11_8cim4")
+
+[sub_resource type="Resource" id="Resource_8w0mm"]
+script = ExtResource("6_5xdhn")
+
+[sub_resource type="Resource" id="Resource_ebugx"]
+script = ExtResource("12_7x82w")
+
+[sub_resource type="Resource" id="Resource_mpt27"]
+script = ExtResource("7_4jyny")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_0dyvk"]
+script = ExtResource("13_iatxd")
+DamageRolls = SubResource("Resource_ebugx")
+SkillBonuses = SubResource("Resource_mpt27")
+AttributeBonuses = SubResource("Resource_8w0mm")
+
+[sub_resource type="Resource" id="Resource_anrbk"]
+script = ExtResource("6_5xdhn")
+
+[sub_resource type="Resource" id="Resource_rcolj"]
+script = ExtResource("7_4jyny")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_mhcg5"]
+script = ExtResource("14_qqxsh")
+SkillBonuses = SubResource("Resource_rcolj")
+AttributeBonuses = SubResource("Resource_anrbk")
+
+[sub_resource type="Resource" id="Resource_twqvw"]
+script = ExtResource("15_0whn2")
+ItemType = 4
+AttributeRequirements = SubResource("Resource_jx5vc")
+SkillRequirements = SubResource("Resource_7xmqa")
+ConsumableStats = SubResource("Resource_7vco5")
+WearableStats = SubResource("Resource_mhcg5")
+ArmorStats = SubResource("Resource_pja2t")
+WeaponStats = SubResource("Resource_0dyvk")
+Name = " (Equipped)"
+
+[sub_resource type="Resource" id="Resource_1twfy"]
+script = ExtResource("6_5xdhn")
+
+[sub_resource type="Resource" id="Resource_qhwq3"]
+script = ExtResource("7_4jyny")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_fv6oi"]
+script = ExtResource("8_vh8xy")
+SkillBonuses = SubResource("Resource_qhwq3")
+AttributeBonuses = SubResource("Resource_1twfy")
+
+[sub_resource type="Resource" id="Resource_wf4eh"]
+script = ExtResource("9_qjcj6")
+
+[sub_resource type="Resource" id="Resource_hvksc"]
+script = ExtResource("10_4ycey")
+DamageRolls = []
+HealRolls = []
+
+[sub_resource type="Resource" id="Resource_j0vx4"]
+script = ExtResource("11_8cim4")
+
+[sub_resource type="Resource" id="Resource_wad7k"]
+script = ExtResource("6_5xdhn")
+
+[sub_resource type="Resource" id="Resource_2ytd7"]
+script = ExtResource("12_7x82w")
+
+[sub_resource type="Resource" id="Resource_3pfub"]
+script = ExtResource("7_4jyny")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_oque4"]
+script = ExtResource("13_iatxd")
+DamageRolls = SubResource("Resource_2ytd7")
+SkillBonuses = SubResource("Resource_3pfub")
+AttributeBonuses = SubResource("Resource_wad7k")
+
+[sub_resource type="Resource" id="Resource_l8wrx"]
+script = ExtResource("6_5xdhn")
+
+[sub_resource type="Resource" id="Resource_mqrwb"]
+script = ExtResource("7_4jyny")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_ghhmq"]
+script = ExtResource("14_qqxsh")
+SkillBonuses = SubResource("Resource_mqrwb")
+AttributeBonuses = SubResource("Resource_l8wrx")
+
+[sub_resource type="Resource" id="Resource_i4rlt"]
+script = ExtResource("15_0whn2")
+ItemType = 4
+AttributeRequirements = SubResource("Resource_wf4eh")
+SkillRequirements = SubResource("Resource_j0vx4")
+ConsumableStats = SubResource("Resource_hvksc")
+WearableStats = SubResource("Resource_ghhmq")
+ArmorStats = SubResource("Resource_fv6oi")
+WeaponStats = SubResource("Resource_oque4")
+Name = " (Equipped)"
+
+[sub_resource type="Resource" id="Resource_fmsty"]
+script = ExtResource("16_bx1xr")
+Armor = SubResource("Resource_nus6a")
+Weapon = SubResource("Resource_i4rlt")
+Helmet = SubResource("Resource_twqvw")
+
+[sub_resource type="Resource" id="Resource_56vhr"]
+script = ExtResource("5_1dp5w")
+CharacterName = "Brigand"
+BaseAttributes = SubResource("Resource_auwsv")
+BaseSkills = SubResource("Resource_8uf12")
+MaxHitpoints = 10
+CurrentHitpoints = 10
+InitialFaction = 1
+PatrolLegs = Array[ExtResource("2_1dp5w")]([SubResource("Resource_po0sg"), SubResource("Resource_haro7")])
+StartingEquipment = SubResource("Resource_fmsty")
+metadata/_custom_type_script = "uid://cng8hqptg2rbu"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ss715"]
 size = Vector2(16, 12)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tpx4m"]
-atlas = ExtResource("5_po0sg")
+[sub_resource type="AtlasTexture" id="AtlasTexture_0830c"]
+atlas = ExtResource("2_287tu")
 region = Rect2(0, 32, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gjhgd"]
-atlas = ExtResource("5_po0sg")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ghaa6"]
+atlas = ExtResource("2_287tu")
 region = Rect2(16, 32, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_60o76"]
-atlas = ExtResource("5_po0sg")
+[sub_resource type="AtlasTexture" id="AtlasTexture_287tu"]
+atlas = ExtResource("2_287tu")
 region = Rect2(0, 48, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gva4v"]
-atlas = ExtResource("5_po0sg")
+[sub_resource type="AtlasTexture" id="AtlasTexture_1dp5w"]
+atlas = ExtResource("2_287tu")
 region = Rect2(16, 48, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_43vpy"]
-atlas = ExtResource("5_po0sg")
+[sub_resource type="AtlasTexture" id="AtlasTexture_auwsv"]
+atlas = ExtResource("2_287tu")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_efrfm"]
-atlas = ExtResource("5_po0sg")
+[sub_resource type="AtlasTexture" id="AtlasTexture_8uf12"]
+atlas = ExtResource("2_287tu")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0ldh1"]
-atlas = ExtResource("5_po0sg")
+[sub_resource type="AtlasTexture" id="AtlasTexture_afpow"]
+atlas = ExtResource("2_287tu")
 region = Rect2(0, 16, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rj3s7"]
-atlas = ExtResource("5_po0sg")
+[sub_resource type="AtlasTexture" id="AtlasTexture_po0sg"]
+atlas = ExtResource("2_287tu")
 region = Rect2(16, 16, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_q3yqt"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_tpx4m")
+"texture": SubResource("AtlasTexture_0830c")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gjhgd")
+"texture": SubResource("AtlasTexture_ghaa6")
 }],
 "loop": true,
 "name": &"walk_east",
@@ -75,10 +292,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_60o76")
+"texture": SubResource("AtlasTexture_287tu")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gva4v")
+"texture": SubResource("AtlasTexture_1dp5w")
 }],
 "loop": true,
 "name": &"walk_north",
@@ -86,10 +303,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_43vpy")
+"texture": SubResource("AtlasTexture_auwsv")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_efrfm")
+"texture": SubResource("AtlasTexture_8uf12")
 }],
 "loop": true,
 "name": &"walk_south",
@@ -97,10 +314,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0ldh1")
+"texture": SubResource("AtlasTexture_afpow")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rj3s7")
+"texture": SubResource("AtlasTexture_po0sg")
 }],
 "loop": true,
 "name": &"walk_west",
@@ -112,13 +329,7 @@ radius = 80.0
 
 [node name="Enemy" type="CharacterBody2D"]
 script = ExtResource("1_ghaa6")
-BaseAttributes = SubResource("Resource_ncwib")
-BaseSkills = SubResource("Resource_lijot")
-MaxHitpoints = 10
-CurrentHitpoints = 10
-_faction = 1
-Speed = 50.0
-PatrolLegs = Array[ExtResource("2_1dp5w")]([SubResource("Resource_1dp5w"), SubResource("Resource_auwsv")])
+CharacterData = SubResource("Resource_56vhr")
 metadata/_custom_type_script = "uid://bsrhat3n35udl"
 
 [node name="MainCollider" type="CollisionShape2D" parent="."]
@@ -141,3 +352,6 @@ offset_top = -7.0
 offset_right = 42.0
 offset_bottom = 43.0
 scale = Vector2(0.5, 0.5)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+radius = 16.0

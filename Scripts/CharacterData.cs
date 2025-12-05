@@ -1,4 +1,5 @@
 using ArkhamHunters.Scripts;
+using ArkhamHunters.Scripts.Abilities;
 using Godot;
 
 [Tool]
@@ -24,6 +25,9 @@ public partial class CharacterData : Resource
     public int CurrentHitpoints = 100;
 
     [Export]
+	public Godot.Collections.Array<Ability> Abilities = [];
+
+    [Export]
     public Faction InitialFaction;
 
     [Export] 
@@ -31,4 +35,7 @@ public partial class CharacterData : Resource
 
     [Export] 
     public Godot.Collections.Array<PatrolLeg> PatrolLegs = [];
+
+    [Export]
+    public EquipmentSet StartingEquipment = new();
 }

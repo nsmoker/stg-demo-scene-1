@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="Conversation" load_steps=8 format=3 uid="uid://co0lb7i6ju12i"]
+
+[ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="1_xjjhc"]
+[ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="2_ltsmi"]
+[ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/edi/Scripts/Conversation.cs" id="6_bhast"]
+
+[sub_resource type="Resource" id="Resource_v3wrg"]
+script = ExtResource("1_xjjhc")
+toNode = 1
+
+[sub_resource type="Resource" id="Resource_ydhwp"]
+script = ExtResource("2_ltsmi")
+NodeType = 2
+DNodeId = 281474976710656
+EditorPos = Vector2(-680, 680)
+EditorSize = Vector2(352, 194.00305)
+
+[sub_resource type="Resource" id="Resource_vp0er"]
+script = ExtResource("2_ltsmi")
+NodeType = 2
+DNodeId = 281474976710656
+EditorPos = Vector2(-680, 680)
+EditorSize = Vector2(352, 194.00305)
+
+[sub_resource type="Resource" id="Resource_xjjhc"]
+script = ExtResource("2_ltsmi")
+Content = "Use E to interact with objects. You can open your inventory with I."
+Speaker = "Sign"
+Addressee = "Player"
+DNodeId = 281474976710657
+EditorPos = Vector2(-120, 680)
+EditorSize = Vector2(680.0005, 400.00085)
+
+[resource]
+script = ExtResource("6_bhast")
+Nodes = [SubResource("Resource_vp0er"), SubResource("Resource_xjjhc")]
+EntryPoints = [SubResource("Resource_ydhwp")]
+Connections = [SubResource("Resource_v3wrg")]

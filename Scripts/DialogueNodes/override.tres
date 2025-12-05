@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="HostilityOverride" load_steps=4 format=3 uid="uid://bqa20ytuok437"]
 
-[ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/player_data.tres" id="1_lqlx1"]
+[ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/Characters/player_data.tres" id="1_lqlx1"]
 [ext_resource type="Script" uid="uid://rwlxgbnachp6" path="res://Scripts/DialogueNodes/HostilityOverride.cs" id="1_qpmat"]
-[ext_resource type="Resource" uid="uid://v3egqjlvelo" path="res://Resources/sign_data.tres" id="2_v34av"]
+[ext_resource type="Resource" uid="uid://v3egqjlvelo" path="res://Resources/Characters/sign_data.tres" id="2_v34av"]
 
 [resource]
 script = ExtResource("1_qpmat")

@@ -5,8 +5,6 @@ using System.Linq;
 using ArkhamHunters.Scripts;
 using ArkhamHunters.Scripts.Items;
 using Container = ArkhamHunters.Scripts.Container;
-using ArkhamHunters.Scripts.Abilities;
-using System.Diagnostics;
 
 public partial class Player : Character
 {
@@ -125,6 +123,15 @@ public partial class Player : Character
 			{
 				player.SetState(new InventoryState(player));
 			}
+
+			if (Input.IsActionJustPressed("Journal"))
+			{
+				player._journalDisplay.Visible = !player._journalDisplay.Visible;
+				if (player._journalDisplay.Visible)
+				{
+					player._journalDisplay.SetQuestEntries(QuestSystem.GetAllQuests());
+				}
+			}
 		}
 
 		public void PhysicsProcess(double delta, Character character)
@@ -206,100 +213,7 @@ public partial class Player : Character
 			_substate.PhysicsProcess(delta, character);
 		}
 	}
-
-	private class PursuitState : ICharacterState
-	{
-		private Character _target;
-		private Ability _ability;
-
-		public PursuitState(NavigationAgent2D agent, Character target, Ability ability)
-		{
-			_target = target;
-			_ability = ability;
-			var player = agent.GetParent() as Player;
-
-            agent.VelocityComputed += (safeVelocity) =>
-			{
-				OnVelocityComputed(player, safeVelocity.LimitLength(player.CharacterData.Speed));
-			};
-
-			agent.TargetPosition = target.GetClosestOnCollSurface(player.Position);
-			agent.TargetDesiredDistance = ability.Range; 
-		}
-
-		public void Process(double delta, Character character)
-		{
-		}
-
-		public void PhysicsProcess(double delta, Character character)
-		{
-			var player = (Player)character;
-			// Do not query when the map has never synchronized and is empty.
-			if (NavigationServer2D.MapGetIterationId(player._navigationAgent.GetNavigationMap()) == 0)
-			{
-				return;
-			}
-
-			if (player._navigationAgent.IsNavigationFinished())
-			{
-				if (_ability != null)
-				{
-					player.State = new AttackState(_target, _ability);
-				}
-				return;
-			}
-
-			Vector2 nextPathPosition = player._navigationAgent.GetNextPathPosition();
-			Vector2 newVelocity = player.GlobalPosition.DirectionTo(nextPathPosition) * player.CharacterData.Speed;
-			if (player._navigationAgent.AvoidanceEnabled)
-			{
-				player._navigationAgent.Velocity = newVelocity;
-			}
-			else
-			{
-				OnVelocityComputed(player, newVelocity);
-			}
-		}
-
-		private void OnVelocityComputed(Player player, Vector2 safeVelocity)
-		{
-			player.Velocity = safeVelocity;
-			player.MoveAndSlide();
-		}
-    }
 		
-	private class AttackState : ICharacterState
-	{
-		private readonly Character _target;
-		private readonly Ability _ability;
-
-		public AttackState(Character target, Ability ability)
-		{
-			_target = target;
-			_ability = ability;
-		}
-
-		public void Process(double delta, Character character)
-		{
-
-		}
-
-		public void PhysicsProcess(double delta, Character character)
-		{
-			var player = (Player) character;
-			var distance = player.GlobalPosition.DistanceTo(_target.GetClosestOnCollSurface(player.Position));
-			if (distance > _ability.Range)
-			{
-				player.State = new PursuitState(player._navigationAgent, _target, _ability);
-			}
-			else
-			{
-				CombatSystem.UseAbility(_ability, player, _target);
-				player.State = new CombatState();
-			}
-		}
-	}
-
 	private class PauseState: ICharacterState
 	{
 		private ICharacterState _resumeState;
@@ -326,13 +240,9 @@ public partial class Player : Character
 	private Area2D _interactableRange;
 	private ContainerDisplay _containerDisplay;
 	private InventoryDisplay _inventoryDisplay;
+	private JournalDisplay _journalDisplay;
 	private IInteractable _lastBadgedInteractable;
 	private Area2D _senseArea;
-
-	private BasicAttack _basicAttack;
-
-	[Export]
-	private Godot.Collections.Array<Ability> _abilities = new();
 
 	private Dictionary<Character, Action> _combatInteractions = new();
 
@@ -366,25 +276,24 @@ public partial class Player : Character
 	[Export]
 	private FactionTable _factionTable;
 
+	[Export]
+	public Quest StartingQuest;
+
     public override void _Ready()
 	{
 		base._Ready();
 		CombatLog.Initialize();
 		FactionSystem.Initialize(_factionTable);
 		HostilitySystem.HostilityChangeHandlers += OnHostilityChanged;
+		QuestSystem.AddQuest(StartingQuest);
 		SpriteAnim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_dialogueDisplay = GetNode<DialogueController>("DialogueDisplay");
 		_interactableRange = GetNode<Area2D>("InteractableRange");
 		_containerDisplay = GetNode<ContainerDisplay>("ContainerDisplay");
 		_inventoryDisplay = GetNode<InventoryDisplay>("InventoryDisplay");
 		_inventoryDisplay.OnItemSelected += OnInventorySelection;
+		_journalDisplay = GetNode<JournalDisplay>("JournalDisplay");
 		_senseArea = GetNode<Area2D>("SenseArea");
-
-		_basicAttack = new BasicAttack();
-		_abilities = new Godot.Collections.Array<Ability>
-		{
-			_basicAttack
-		};
 
 		_navigationAgent = GetNode<NavigationAgent2D>("NavigationAgent2D");
 
@@ -441,7 +350,7 @@ public partial class Player : Character
                 if (combatMenu != null)
                 {
                     combatMenu.Visible = true;
-                    combatMenu.SetAbilities(_abilities);
+                    combatMenu.SetAbilities(CharacterData.Abilities);
                     combatMenu.ProcessMode = ProcessModeEnum.Always;
                     _combatInteractions[enemy] = () =>
                     {
@@ -467,7 +376,7 @@ public partial class Player : Character
 			if (combatMenu != null)
 			{
 				combatMenu.Visible = true;
-				combatMenu.SetAbilities(_abilities);
+				combatMenu.SetAbilities(CharacterData.Abilities);
 				combatMenu.ProcessMode = ProcessModeEnum.Always;
 				_combatInteractions[character] = () =>
 				{

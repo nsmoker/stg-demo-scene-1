@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://02j1x8f0h41u"]
+
+[ext_resource type="Script" uid="uid://blmekfs5p7s6i" path="res://Scripts/QuestStageDisplay.cs" id="1_ycjti"]
+
+[sub_resource type="SystemFont" id="SystemFont_f1ek2"]
+subpixel_positioning = 0
+
+[sub_resource type="Theme" id="Theme_tx1dd"]
+default_font = SubResource("SystemFont_f1ek2")
+default_font_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_3smsa"]
+font_size = 7
+
+[node name="Stage" type="FoldableContainer"]
+size_flags_vertical = 0
+theme = SubResource("Theme_tx1dd")
+title = "Stage Title"
+script = ExtResource("1_ycjti")
+
+[node name="Description" type="Label" parent="."]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a rhoncus ligula. Vivamus rutrum sit amet dolor eu cursus. Suspendisse potenti. Mauris sapien orci, placerat et rhoncus eu, convallis ut leo. Morbi vitae orci a mauris feugiat vehicula. Nulla auctor sagittis nibh at iaculis. Aliquam tempor sapien ac sapien finibus tristique. Nam sagittis velit a erat accumsan dapibus. "
+label_settings = SubResource("LabelSettings_3smsa")
+autowrap_mode = 3

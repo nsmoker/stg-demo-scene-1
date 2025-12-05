@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="VanishOutOfSight" load_steps=4 format=3 uid="uid://caxvm2rtrh3t5"]
+
+[ext_resource type="Resource" uid="uid://cjqtc7qyx61f6" path="res://Resources/Characters/argus.tres" id="1_hugr0"]
+[ext_resource type="Script" uid="uid://o2uc5vsp6vkq" path="res://Scripts/DialogueNodes/VanishOutOfSight.cs" id="1_ube0f"]
+[ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/Characters/player_data.tres" id="3_8gmxi"]
+
+[resource]
+script = ExtResource("1_ube0f")
+characterToVanish = ExtResource("1_hugr0")
+visionRangeOf = ExtResource("3_8gmxi")
+metadata/_custom_type_script = "uid://o2uc5vsp6vkq"

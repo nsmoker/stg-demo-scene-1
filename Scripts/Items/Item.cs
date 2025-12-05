@@ -61,25 +61,9 @@ public partial class Item : Resource
     [Export] 
     public WeaponStats WeaponStats { get; private set; } = new();
 
-    private string _name;
-
-    // TODO: EVIL. Should be a clearer way to set a particular instance of an Item as equipped instead of relying on the boxing.
     [Export]
-    public string Name
-    {
-        get
-        {
-            if (Equipped)
-            {
-                return _name + " (Equipped)";
-            }
-            else
-            {
-                return _name;
-            }
-        }
-        set => _name = value;
-    }
+    public string Name;
+
     [Export] 
     public string Description;
 
@@ -93,8 +77,9 @@ public partial class Item : Resource
 
     public static Item NoneItem()
     {
-        var ret = new Item();
-        ret.ItemType = ItemType.None;
-        return ret;
+        return new Item
+        {
+            ItemType = ItemType.None
+        };
     }
 }

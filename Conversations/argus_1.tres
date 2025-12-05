@@ -1,0 +1,244 @@
+[gd_resource type="Resource" script_class="Conversation" load_steps=39 format=3 uid="uid://bewehuhajler"]
+
+[ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="1_oxqrr"]
+[ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="2_dm36e"]
+[ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/edi/Scripts/Conversation.cs" id="3_7gpfp"]
+[ext_resource type="Resource" uid="uid://caxvm2rtrh3t5" path="res://Scripts/DialogueNodes/ArgusVanish.tres" id="3_dm36e"]
+
+[sub_resource type="Resource" id="Resource_dm36e"]
+script = ExtResource("1_oxqrr")
+toNode = 7
+
+[sub_resource type="Resource" id="Resource_7gpfp"]
+script = ExtResource("1_oxqrr")
+fromNode = 7
+toNode = 2
+
+[sub_resource type="Resource" id="Resource_tfaht"]
+script = ExtResource("1_oxqrr")
+fromNode = 10
+toNode = 12
+
+[sub_resource type="Resource" id="Resource_l8aqh"]
+script = ExtResource("1_oxqrr")
+fromNode = 12
+toNode = 11
+
+[sub_resource type="Resource" id="Resource_0smud"]
+script = ExtResource("1_oxqrr")
+toNode = 1
+
+[sub_resource type="Resource" id="Resource_11bn8"]
+script = ExtResource("1_oxqrr")
+fromNode = 1
+toNode = 5
+
+[sub_resource type="Resource" id="Resource_3da1e"]
+script = ExtResource("1_oxqrr")
+fromNode = 5
+toNode = 10
+
+[sub_resource type="Resource" id="Resource_udfk6"]
+script = ExtResource("1_oxqrr")
+fromNode = 6
+toNode = 13
+
+[sub_resource type="Resource" id="Resource_33w5l"]
+script = ExtResource("1_oxqrr")
+fromNode = 10
+toNode = 6
+
+[sub_resource type="Resource" id="Resource_6hua1"]
+script = ExtResource("1_oxqrr")
+fromNode = 13
+toNode = 15
+
+[sub_resource type="Resource" id="Resource_pxsiu"]
+script = ExtResource("1_oxqrr")
+fromNode = 15
+toNode = 16
+
+[sub_resource type="Resource" id="Resource_t1qrt"]
+script = ExtResource("1_oxqrr")
+fromNode = 4
+
+[sub_resource type="Resource" id="Resource_6v78y"]
+script = ExtResource("1_oxqrr")
+fromNode = 9
+toNode = 14
+
+[sub_resource type="Resource" id="Resource_bd2o5"]
+script = ExtResource("1_oxqrr")
+fromNode = 10
+toNode = 9
+
+[sub_resource type="Resource" id="Resource_kpx75"]
+script = ExtResource("1_oxqrr")
+toNode = 8
+
+[sub_resource type="Resource" id="Resource_8eksi"]
+script = ExtResource("1_oxqrr")
+fromNode = 8
+toNode = 3
+
+[sub_resource type="Resource" id="Resource_w2x2p"]
+script = ExtResource("2_dm36e")
+NodeType = 2
+DNodeId = 281479271677955
+EditorPos = Vector2(-300, 820)
+EditorSize = Vector2(352.00293, 259.99756)
+
+[sub_resource type="Resource" id="Resource_f26bc"]
+script = ExtResource("2_dm36e")
+Content = "Ho there, wanderer. Stay thy course a moment and indulge an old man."
+Speaker = "Argus"
+Addressee = "Player"
+DNodeId = 1
+EditorPos = Vector2(440, 820)
+EditorSize = Vector2(619.9955, 399.9961)
+
+[sub_resource type="Resource" id="Resource_pxjla"]
+script = ExtResource("2_dm36e")
+NodeType = 3
+Content = "Tired of life?"
+DNodeId = 4294967297
+EditorPos = Vector2(1800, 800)
+EditorSize = Vector2(539.999, 359.99927)
+
+[sub_resource type="Resource" id="Resource_usqqm"]
+script = ExtResource("2_dm36e")
+Content = "Perhaps. Perhaps not."
+Speaker = "Argus"
+Addressee = "Player"
+DNodeId = 4294967298
+LinkDNodeId = 281496451547141
+EditorPos = Vector2(2600, 140)
+EditorSize = Vector2(400.00098, 360.0012)
+
+[sub_resource type="Resource" id="Resource_y0ki2"]
+script = ExtResource("2_dm36e")
+Content = "I can't say that I do - I'm no native, I'm afraid."
+Speaker = "Argus"
+Addressee = "Player"
+DNodeId = 4294967299
+LinkDNodeId = 281496451547141
+EditorPos = Vector2(2600, 1460)
+EditorSize = Vector2(619.99414, 400.00317)
+
+[sub_resource type="Resource" id="Resource_7exsp"]
+script = ExtResource("2_dm36e")
+NodeType = 2
+DNodeId = 281479271677955
+EditorPos = Vector2(-300, 820)
+EditorSize = Vector2(352.00293, 259.99756)
+
+[sub_resource type="Resource" id="Resource_cs57e"]
+script = ExtResource("2_dm36e")
+Content = "Ha! I am rather weary, yes. This place has that effect."
+Speaker = "Argus"
+Addressee = "Player"
+DNodeId = 281479271677956
+EditorPos = Vector2(2580, 800)
+EditorSize = Vector2(619.99194, 399.9989)
+
+[sub_resource type="Resource" id="Resource_lgc6r"]
+script = ExtResource("2_dm36e")
+NodeType = 3
+Content = "(Lie) To an assassin of the Order, old man. Watch your tongue."
+DNodeId = 281483566645252
+EditorPos = Vector2(4840, 800)
+EditorSize = Vector2(660.00244, 439.9928)
+
+[sub_resource type="Resource" id="Resource_w8wmo"]
+script = ExtResource("2_dm36e")
+NodeType = 3
+Content = "Are you in need of assistance?"
+DNodeId = 281487861612548
+EditorPos = Vector2(1800, 140)
+EditorSize = Vector2(639.99854, 360.00143)
+
+[sub_resource type="Resource" id="Resource_n8ac3"]
+script = ExtResource("2_dm36e")
+NodeType = 3
+Content = "Do you know the way to Stolgarode?"
+DNodeId = 281492156579844
+EditorPos = Vector2(1780, 1460)
+EditorSize = Vector2(619.99976, 400.0022)
+
+[sub_resource type="Resource" id="Resource_mjyhw"]
+script = ExtResource("2_dm36e")
+NodeType = 3
+Content = "Well, not desperate, but... a doctor would be nice."
+DNodeId = 281496451547140
+EditorPos = Vector2(4820, 1440)
+EditorSize = Vector2(640, 399.99878)
+
+[sub_resource type="Resource" id="Resource_5v0ru"]
+script = ExtResource("2_dm36e")
+Content = "It seems to me that only the desperate or the deranged would travel here alone. May I ask to which I speak?"
+Speaker = "Argus"
+Addressee = "Player"
+DNodeId = 281496451547141
+EditorPos = Vector2(3780, 800)
+EditorSize = Vector2(619.9922, 459.99402)
+
+[sub_resource type="Resource" id="Resource_05niy"]
+script = ExtResource("2_dm36e")
+Content = "Hm. I thought I knew. Perhaps not yet."
+Speaker = "Argus"
+Addressee = "Player"
+DNodeId = 281496451547142
+LinkDNodeId = 281500746514441
+EditorPos = Vector2(5640, 200)
+EditorSize = Vector2(599.9995, 339.99963)
+
+[sub_resource type="Resource" id="Resource_aclli"]
+script = ExtResource("2_dm36e")
+NodeType = 3
+Content = "Just tell me what you want."
+DNodeId = 281500746514438
+EditorPos = Vector2(4940, 200)
+EditorSize = Vector2(479.9917, 359.99988)
+
+[sub_resource type="Resource" id="Resource_3jdyt"]
+script = ExtResource("2_dm36e")
+Content = "Ah! How frightening. An assassin who travels without a gun. You must be skilled indeed!"
+Speaker = "Argus"
+Addressee = "Player"
+DNodeId = 281500746514439
+EditorPos = Vector2(5640, 800)
+EditorSize = Vector2(599.9995, 439.995)
+
+[sub_resource type="Resource" id="Resource_eh7ra"]
+script = ExtResource("2_dm36e")
+Content = "Can't help you there, though I can provide you with a tonic... you look like you'll need it."
+Speaker = "Argus"
+Addressee = "Player"
+DNodeId = 281500746514440
+LinkDNodeId = 281500746514441
+EditorPos = Vector2(5620, 1440)
+EditorSize = Vector2(700.0083, 399.99927)
+
+[sub_resource type="Resource" id="Resource_dra02"]
+script = ExtResource("2_dm36e")
+Content = "Ah... well, then. I'm sure you'll do well enough in the end. Be on your way."
+Speaker = "Argus"
+Addressee = "Player"
+DNodeId = 281500746514441
+EditorPos = Vector2(6540, 800)
+EditorSize = Vector2(700.0029, 399.99524)
+
+[sub_resource type="Resource" id="Resource_qmwy4"]
+script = ExtResource("2_dm36e")
+NodeType = 1
+DNodeId = 281500746579977
+Action = ExtResource("3_dm36e")
+EditorPos = Vector2(7580, 800)
+EditorSize = Vector2(520, 319.99866)
+
+[resource]
+script = ExtResource("3_7gpfp")
+Nodes = [SubResource("Resource_f26bc"), SubResource("Resource_pxjla"), SubResource("Resource_usqqm"), SubResource("Resource_y0ki2"), SubResource("Resource_7exsp"), SubResource("Resource_cs57e"), SubResource("Resource_lgc6r"), SubResource("Resource_w8wmo"), SubResource("Resource_n8ac3"), SubResource("Resource_mjyhw"), SubResource("Resource_5v0ru"), SubResource("Resource_05niy"), SubResource("Resource_aclli"), SubResource("Resource_3jdyt"), SubResource("Resource_eh7ra"), SubResource("Resource_dra02"), SubResource("Resource_qmwy4")]
+EntryPoints = [SubResource("Resource_w2x2p")]
+Connections = [SubResource("Resource_dm36e"), SubResource("Resource_7gpfp"), SubResource("Resource_tfaht"), SubResource("Resource_l8aqh"), SubResource("Resource_0smud"), SubResource("Resource_11bn8"), SubResource("Resource_3da1e"), SubResource("Resource_udfk6"), SubResource("Resource_33w5l"), SubResource("Resource_6hua1"), SubResource("Resource_pxsiu"), SubResource("Resource_t1qrt"), SubResource("Resource_6v78y"), SubResource("Resource_bd2o5"), SubResource("Resource_kpx75"), SubResource("Resource_8eksi")]
+metadata/_custom_type_script = "uid://cmw85ukaae1eh"

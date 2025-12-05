@@ -35,7 +35,7 @@ namespace ArkhamHunters.Scripts.Abilities
             OutlineIcon = weapon.OutlineIcon;
             Name = "Attack";
             Description = weapon.Description;
-            Cooldown = 0;
+            Cooldown = 5;
             Cost = 0;
             IsPassive = false;
             RollsToHit = true;

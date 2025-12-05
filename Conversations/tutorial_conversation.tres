@@ -160,7 +160,7 @@ EditorSize = Vector2(879.9996, 499.99933)
 
 [resource]
 script = ExtResource("3_h7dhw")
-Nodes = Array[ExtResource("2_s18b8")]([SubResource("Resource_lrd7n"), SubResource("Resource_3sqfu"), SubResource("Resource_a5pc5"), SubResource("Resource_nkg52"), SubResource("Resource_012ho"), SubResource("Resource_bn8v4"), SubResource("Resource_dpfmd"), SubResource("Resource_blcjn"), SubResource("Resource_60pam")])
-EntryPoints = Array[ExtResource("2_s18b8")]([SubResource("Resource_s7c0i")])
-Connections = Array[ExtResource("1_6sd6r")]([SubResource("Resource_3af4n"), SubResource("Resource_3bgdq"), SubResource("Resource_5hirs"), SubResource("Resource_7id2j"), SubResource("Resource_p0csy"), SubResource("Resource_wrtag"), SubResource("Resource_brta4"), SubResource("Resource_ljbn8"), SubResource("Resource_43jlr"), SubResource("Resource_dfnxr"), SubResource("Resource_5spxh"), SubResource("Resource_7u07a"), SubResource("Resource_e81q4"), SubResource("Resource_sbcj4")])
+Nodes = [SubResource("Resource_lrd7n"), SubResource("Resource_3sqfu"), SubResource("Resource_a5pc5"), SubResource("Resource_nkg52"), SubResource("Resource_012ho"), SubResource("Resource_bn8v4"), SubResource("Resource_dpfmd"), SubResource("Resource_blcjn"), SubResource("Resource_60pam")]
+EntryPoints = [SubResource("Resource_s7c0i")]
+Connections = [SubResource("Resource_3af4n"), SubResource("Resource_3bgdq"), SubResource("Resource_5hirs"), SubResource("Resource_7id2j"), SubResource("Resource_p0csy"), SubResource("Resource_wrtag"), SubResource("Resource_brta4"), SubResource("Resource_ljbn8"), SubResource("Resource_43jlr"), SubResource("Resource_dfnxr"), SubResource("Resource_5spxh"), SubResource("Resource_7u07a"), SubResource("Resource_e81q4"), SubResource("Resource_sbcj4")]
 metadata/_custom_type_script = "uid://cmw85ukaae1eh"

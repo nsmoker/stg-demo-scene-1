@@ -40,7 +40,7 @@ public static class HostilitySystem
     {
         if (_hostilityOverrides.TryGetValue(entity1, out var value))
         {
-            return _hostilityOverrides.ContainsKey(entity1) && value.Contains(entity2);
+            return value.Contains(entity2);
         }
         else if (FactionSystem.TryGetFaction(entity1, out var faction1) && FactionSystem.TryGetFaction(entity2, out var faction2))
         {

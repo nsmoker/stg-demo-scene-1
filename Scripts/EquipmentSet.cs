@@ -7,6 +7,7 @@ using Godot;
 namespace ArkhamHunters.Scripts;
 
 [GlobalClass]
+[Tool]
 public partial class EquipmentSet: Resource
 {
     private Item _armor = Item.NoneItem();

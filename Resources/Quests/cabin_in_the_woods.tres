@@ -1,0 +1,75 @@
+[gd_resource type="Resource" script_class="Quest" load_steps=12 format=3 uid="uid://ddxjdl7kxk4xq"]
+
+[ext_resource type="Script" uid="uid://ho5p3miawhuu" path="res://Scripts/QuestStage.cs" id="1_1c8xw"]
+[ext_resource type="Script" uid="uid://be0fsg3lmta4c" path="res://Scripts/Quest.cs" id="2_6uyix"]
+
+[sub_resource type="Resource" id="Resource_1c8xw"]
+script = ExtResource("1_1c8xw")
+Title = "Enquire about the cabin."
+Description = "The cabin appeared ransacked, and there was no sign of any inhabitants. Locals might know more about it."
+metadata/_custom_type_script = "uid://ho5p3miawhuu"
+
+[sub_resource type="Resource" id="Resource_6uyix"]
+script = ExtResource("1_1c8xw")
+StageNumber = 1
+Title = "Enquire in Sandstone about the cabin."
+Description = "The old man suggested that you ask the locals in Sandstone, a nearby town, for help."
+metadata/_custom_type_script = "uid://ho5p3miawhuu"
+
+[sub_resource type="Resource" id="Resource_44ssh"]
+script = ExtResource("1_1c8xw")
+StageNumber = 2
+Title = "Find James Marle."
+Description = "James Marle, the man who lived in the cabin, is in Sandstone, not St. Paul. Find and interrogate him."
+metadata/_custom_type_script = "uid://ho5p3miawhuu"
+
+[sub_resource type="Resource" id="Resource_dgt8b"]
+script = ExtResource("1_1c8xw")
+StageNumber = 3
+Title = "Track the shapeshifter."
+Description = "The shapeshifter fled North."
+metadata/_custom_type_script = "uid://ho5p3miawhuu"
+
+[sub_resource type="Resource" id="Resource_iddhs"]
+script = ExtResource("1_1c8xw")
+StageNumber = 4
+Title = "Defeat the shapeshifter."
+Description = "You've found the shapeshifter in Stalgarode. Now, defeat him."
+metadata/_custom_type_script = "uid://ho5p3miawhuu"
+
+[sub_resource type="Resource" id="Resource_4s18n"]
+script = ExtResource("1_1c8xw")
+StageNumber = 5
+Title = "Report to the Order."
+Description = "The shapeshifter is dead, but he had a bounty on him. Check with the Order in St. Paul to see what the reward might be."
+metadata/_custom_type_script = "uid://ho5p3miawhuu"
+
+[sub_resource type="Resource" id="Resource_xfnmg"]
+script = ExtResource("1_1c8xw")
+StageNumber = 6
+Title = "Find Joseph in Minneapolis."
+Description = "Joseph told you he would be at the Parish of Light in Minneapolis."
+metadata/_custom_type_script = "uid://ho5p3miawhuu"
+
+[sub_resource type="Resource" id="Resource_uneot"]
+script = ExtResource("1_1c8xw")
+StageNumber = 7
+Title = "Completed"
+Description = "Joseph's affliction appears cured. "
+CompleteQuest = true
+metadata/_custom_type_script = "uid://ho5p3miawhuu"
+
+[sub_resource type="Resource" id="Resource_jrm6y"]
+script = ExtResource("1_1c8xw")
+StageNumber = 8
+Title = "Completed"
+Description = "You collected the bounty on Joseph in Minneapolis."
+CompleteQuest = true
+metadata/_custom_type_script = "uid://ho5p3miawhuu"
+
+[resource]
+script = ExtResource("2_6uyix")
+Title = "The Cabin in the Woods"
+Description = "You found an abandoned cabin in the middle of the woods near Sandstone."
+Stages = Array[ExtResource("1_1c8xw")]([SubResource("Resource_1c8xw"), SubResource("Resource_6uyix"), SubResource("Resource_44ssh"), SubResource("Resource_dgt8b"), SubResource("Resource_iddhs"), SubResource("Resource_4s18n"), SubResource("Resource_xfnmg"), SubResource("Resource_uneot"), SubResource("Resource_jrm6y")])
+metadata/_custom_type_script = "uid://be0fsg3lmta4c"

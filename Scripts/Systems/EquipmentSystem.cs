@@ -15,7 +15,7 @@ public static class EquipmentSystem
     {
         _equipmentMap[id] = equipmentSet;
 
-        EquipmentChangeHandlers(id, equipmentSet);
+        EquipmentChangeHandlers?.Invoke(id, equipmentSet);
     }
 
     public static bool RetrieveEquipment(string id, out EquipmentSet equipmentSet)

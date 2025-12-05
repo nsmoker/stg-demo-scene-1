@@ -2,7 +2,7 @@
 
 [ext_resource type="Resource" uid="uid://vuejdeymb45b" path="res://Items/giga_item.tres" id="1_c1h74"]
 [ext_resource type="Script" uid="uid://bn3l4fb8n3qno" path="res://Scripts/DialogueNodes/InventoryCheck.cs" id="1_mumhs"]
-[ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/player_data.tres" id="2_tg35i"]
+[ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/Characters/player_data.tres" id="2_tg35i"]
 
 [resource]
 script = ExtResource("1_mumhs")

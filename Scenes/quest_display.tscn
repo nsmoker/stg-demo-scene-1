@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://b5xivkohc45aw"]
+
+[ext_resource type="PackedScene" uid="uid://02j1x8f0h41u" path="res://Scenes/quest_stage_display.tscn" id="1_03hs2"]
+[ext_resource type="Script" uid="uid://b5gh50grg7167" path="res://Scripts/QuestDisplay.cs" id="1_yw2kk"]
+
+[sub_resource type="SystemFont" id="SystemFont_3smsa"]
+subpixel_positioning = 0
+
+[sub_resource type="Theme" id="Theme_8erm5"]
+default_font = SubResource("SystemFont_3smsa")
+default_font_size = 14
+
+[sub_resource type="LabelSettings" id="LabelSettings_yw2kk"]
+font_size = 7
+
+[node name="QuestDisplay" type="FoldableContainer"]
+size_flags_vertical = 0
+theme = SubResource("Theme_8erm5")
+title = "Quest"
+script = ExtResource("1_yw2kk")
+QuestStageDisplayScene = ExtResource("1_03hs2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="DescriptionLabel" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Quest Description"
+label_settings = SubResource("LabelSettings_yw2kk")
+autowrap_mode = 3

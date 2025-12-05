@@ -8,6 +8,7 @@ public static class CombatLog
         HealthSystem.DamageEventHandlers += OnDamageEvent;
         HealthSystem.DeathEventHandlers += OnDeathEvent;
         CombatSystem.abilityEventHandler += OnAbilityUse;
+        QuestSystem.OnQuestUpdated += OnQuestUpdate;
     }
 
     public static void OnDamageEvent(DamageEvent e)
@@ -23,5 +24,10 @@ public static class CombatLog
     public static void OnDeathEvent(DeathEvent e) 
     {
         GD.Print($"{e.deceased.Name} {(e.killer.Name != null ? $"was killed by {e.killer.Name}!" : "died!")}");
+    }
+
+    public static void OnQuestUpdate(Quest quest)
+    {
+        GD.Print($"New journal entry: {quest.Title}: {quest.GetCurrentStage().Title}");
     }
 }

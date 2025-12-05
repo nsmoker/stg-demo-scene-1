@@ -1,0 +1,225 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=62 format=3 uid="uid://bsymeb5yuv4bp"]
+
+[ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/AttributeSet.cs" id="1_2brja"]
+[ext_resource type="Script" uid="uid://bhf3rn2sin4i2" path="res://Scripts/Abilities/Ability.cs" id="1_gh5bw"]
+[ext_resource type="Script" uid="uid://cgng01q8ok4ba" path="res://Scripts/SkillSet.cs" id="2_t3gvy"]
+[ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/PatrolLeg.cs" id="3_te1y3"]
+[ext_resource type="Script" uid="uid://cng8hqptg2rbu" path="res://Scripts/CharacterData.cs" id="4_rgtfi"]
+[ext_resource type="Script" uid="uid://5hcjkamye5ns" path="res://Scripts/Items/AttributeBonus.cs" id="5_qqbd3"]
+[ext_resource type="Script" uid="uid://c54dlxcx6qrkd" path="res://Scripts/Items/SkillBonus.cs" id="6_07smw"]
+[ext_resource type="Script" uid="uid://dgvr4h6v7mkj5" path="res://Scripts/Items/ArmorStats.cs" id="7_4ictf"]
+[ext_resource type="Script" uid="uid://bg3xbg8f0cawp" path="res://Scripts/Items/AttributeRequirement.cs" id="8_5ptjh"]
+[ext_resource type="Script" uid="uid://cn548gp046jaa" path="res://Scripts/Items/ConsumableStats.cs" id="9_x6fvw"]
+[ext_resource type="Script" uid="uid://bjq8iqwdrtj6w" path="res://Scripts/Items/SkillRequirement.cs" id="10_xppme"]
+[ext_resource type="Script" uid="uid://mxrfbr2ffrey" path="res://Scripts/DamageRoll.cs" id="11_7h60v"]
+[ext_resource type="Script" uid="uid://cs3jsnbfssvyu" path="res://Scripts/Items/WeaponStats.cs" id="12_6uvki"]
+[ext_resource type="Script" uid="uid://bpuijyxf410pp" path="res://Scripts/Items/WearableStats.cs" id="13_d58v0"]
+[ext_resource type="Script" uid="uid://bu40wng0pu1b6" path="res://Scripts/Items/Item.cs" id="14_v4ntt"]
+[ext_resource type="Script" uid="uid://cuq2diuirpwbs" path="res://Scripts/EquipmentSet.cs" id="15_s4q4m"]
+
+[sub_resource type="Resource" id="Resource_1lm1u"]
+script = ExtResource("1_2brja")
+
+[sub_resource type="Resource" id="Resource_jhnre"]
+script = ExtResource("2_t3gvy")
+
+[sub_resource type="Resource" id="Resource_gh5bw"]
+script = ExtResource("5_qqbd3")
+
+[sub_resource type="Resource" id="Resource_qqbd3"]
+script = ExtResource("6_07smw")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_07smw"]
+script = ExtResource("7_4ictf")
+SkillBonuses = SubResource("Resource_qqbd3")
+AttributeBonuses = SubResource("Resource_gh5bw")
+
+[sub_resource type="Resource" id="Resource_4ictf"]
+script = ExtResource("8_5ptjh")
+
+[sub_resource type="Resource" id="Resource_5ptjh"]
+script = ExtResource("9_x6fvw")
+DamageRolls = []
+HealRolls = []
+
+[sub_resource type="Resource" id="Resource_x6fvw"]
+script = ExtResource("10_xppme")
+
+[sub_resource type="Resource" id="Resource_xppme"]
+script = ExtResource("5_qqbd3")
+
+[sub_resource type="Resource" id="Resource_7h60v"]
+script = ExtResource("11_7h60v")
+
+[sub_resource type="Resource" id="Resource_6uvki"]
+script = ExtResource("6_07smw")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_d58v0"]
+script = ExtResource("12_6uvki")
+DamageRolls = SubResource("Resource_7h60v")
+SkillBonuses = SubResource("Resource_6uvki")
+AttributeBonuses = SubResource("Resource_xppme")
+
+[sub_resource type="Resource" id="Resource_v4ntt"]
+script = ExtResource("5_qqbd3")
+
+[sub_resource type="Resource" id="Resource_s4q4m"]
+script = ExtResource("6_07smw")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_2k4gm"]
+script = ExtResource("13_d58v0")
+SkillBonuses = SubResource("Resource_s4q4m")
+AttributeBonuses = SubResource("Resource_v4ntt")
+
+[sub_resource type="Resource" id="Resource_6eu2o"]
+script = ExtResource("14_v4ntt")
+ItemType = 4
+AttributeRequirements = SubResource("Resource_4ictf")
+SkillRequirements = SubResource("Resource_x6fvw")
+ConsumableStats = SubResource("Resource_5ptjh")
+WearableStats = SubResource("Resource_2k4gm")
+ArmorStats = SubResource("Resource_07smw")
+WeaponStats = SubResource("Resource_d58v0")
+Name = " (Equipped)"
+
+[sub_resource type="Resource" id="Resource_0did8"]
+script = ExtResource("5_qqbd3")
+
+[sub_resource type="Resource" id="Resource_b85pj"]
+script = ExtResource("6_07smw")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_im8be"]
+script = ExtResource("7_4ictf")
+SkillBonuses = SubResource("Resource_b85pj")
+AttributeBonuses = SubResource("Resource_0did8")
+
+[sub_resource type="Resource" id="Resource_2uitr"]
+script = ExtResource("8_5ptjh")
+
+[sub_resource type="Resource" id="Resource_5nsgp"]
+script = ExtResource("9_x6fvw")
+DamageRolls = []
+HealRolls = []
+
+[sub_resource type="Resource" id="Resource_plfu5"]
+script = ExtResource("10_xppme")
+
+[sub_resource type="Resource" id="Resource_b7dgd"]
+script = ExtResource("5_qqbd3")
+
+[sub_resource type="Resource" id="Resource_0h0ws"]
+script = ExtResource("11_7h60v")
+
+[sub_resource type="Resource" id="Resource_rrutj"]
+script = ExtResource("6_07smw")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_3mems"]
+script = ExtResource("12_6uvki")
+DamageRolls = SubResource("Resource_0h0ws")
+SkillBonuses = SubResource("Resource_rrutj")
+AttributeBonuses = SubResource("Resource_b7dgd")
+
+[sub_resource type="Resource" id="Resource_mdrwy"]
+script = ExtResource("5_qqbd3")
+
+[sub_resource type="Resource" id="Resource_a0d2w"]
+script = ExtResource("6_07smw")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_jh5po"]
+script = ExtResource("13_d58v0")
+SkillBonuses = SubResource("Resource_a0d2w")
+AttributeBonuses = SubResource("Resource_mdrwy")
+
+[sub_resource type="Resource" id="Resource_prv5f"]
+script = ExtResource("14_v4ntt")
+ItemType = 4
+AttributeRequirements = SubResource("Resource_2uitr")
+SkillRequirements = SubResource("Resource_plfu5")
+ConsumableStats = SubResource("Resource_5nsgp")
+WearableStats = SubResource("Resource_jh5po")
+ArmorStats = SubResource("Resource_im8be")
+WeaponStats = SubResource("Resource_3mems")
+Name = " (Equipped)"
+
+[sub_resource type="Resource" id="Resource_aoy72"]
+script = ExtResource("5_qqbd3")
+
+[sub_resource type="Resource" id="Resource_om45t"]
+script = ExtResource("6_07smw")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_w542c"]
+script = ExtResource("7_4ictf")
+SkillBonuses = SubResource("Resource_om45t")
+AttributeBonuses = SubResource("Resource_aoy72")
+
+[sub_resource type="Resource" id="Resource_s1hmf"]
+script = ExtResource("8_5ptjh")
+
+[sub_resource type="Resource" id="Resource_5majq"]
+script = ExtResource("9_x6fvw")
+DamageRolls = []
+HealRolls = []
+
+[sub_resource type="Resource" id="Resource_0227e"]
+script = ExtResource("10_xppme")
+
+[sub_resource type="Resource" id="Resource_klgma"]
+script = ExtResource("5_qqbd3")
+
+[sub_resource type="Resource" id="Resource_hmmip"]
+script = ExtResource("11_7h60v")
+
+[sub_resource type="Resource" id="Resource_kojhs"]
+script = ExtResource("6_07smw")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_vd5ii"]
+script = ExtResource("12_6uvki")
+DamageRolls = SubResource("Resource_hmmip")
+SkillBonuses = SubResource("Resource_kojhs")
+AttributeBonuses = SubResource("Resource_klgma")
+
+[sub_resource type="Resource" id="Resource_0psnx"]
+script = ExtResource("5_qqbd3")
+
+[sub_resource type="Resource" id="Resource_hcg07"]
+script = ExtResource("6_07smw")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_ndo7y"]
+script = ExtResource("13_d58v0")
+SkillBonuses = SubResource("Resource_hcg07")
+AttributeBonuses = SubResource("Resource_0psnx")
+
+[sub_resource type="Resource" id="Resource_k851k"]
+script = ExtResource("14_v4ntt")
+ItemType = 4
+AttributeRequirements = SubResource("Resource_s1hmf")
+SkillRequirements = SubResource("Resource_0227e")
+ConsumableStats = SubResource("Resource_5majq")
+WearableStats = SubResource("Resource_ndo7y")
+ArmorStats = SubResource("Resource_w542c")
+WeaponStats = SubResource("Resource_vd5ii")
+Name = " (Equipped)"
+
+[sub_resource type="Resource" id="Resource_tvgtd"]
+script = ExtResource("15_s4q4m")
+Armor = SubResource("Resource_6eu2o")
+Weapon = SubResource("Resource_k851k")
+Helmet = SubResource("Resource_prv5f")
+
+[resource]
+script = ExtResource("4_rgtfi")
+CharacterName = "Player"
+BaseAttributes = SubResource("Resource_1lm1u")
+BaseSkills = SubResource("Resource_jhnre")
+Speed = 50.0
+StartingEquipment = SubResource("Resource_tvgtd")
+metadata/_custom_type_script = "uid://cng8hqptg2rbu"
