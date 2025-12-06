@@ -132,6 +132,11 @@ public partial class Player : Character
 					player._journalDisplay.SetQuestEntries(QuestSystem.GetAllQuests());
 				}
 			}
+
+			if (Input.IsActionJustPressed("Map"))
+            {
+                player._mapDisplay.Visible = !player._mapDisplay.Visible;
+            }
 		}
 
 		public void PhysicsProcess(double delta, Character character)
@@ -244,6 +249,8 @@ public partial class Player : Character
 	private IInteractable _lastBadgedInteractable;
 	private Area2D _senseArea;
 
+	private PanelContainer _mapDisplay;
+
 	private Dictionary<Character, Action> _combatInteractions = new();
 
 	private NavigationAgent2D _navigationAgent;
@@ -293,6 +300,7 @@ public partial class Player : Character
 		_inventoryDisplay = GetNode<InventoryDisplay>("InventoryDisplay");
 		_inventoryDisplay.OnItemSelected += OnInventorySelection;
 		_journalDisplay = GetNode<JournalDisplay>("JournalDisplay");
+		_mapDisplay = GetNode<PanelContainer>("MapDisplay");
 		_senseArea = GetNode<Area2D>("SenseArea");
 
 		_navigationAgent = GetNode<NavigationAgent2D>("NavigationAgent2D");

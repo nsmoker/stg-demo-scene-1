@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpclhkah8www8"]
+
+[ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://Sprites/Images/spr_itemsncolectables.png" id="1_qqn12"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1ek2"]
+atlas = ExtResource("1_qqn12")
+region = Rect2(16, 64, 16, 16)
+
+[node name="MapMarker" type="Sprite2D"]
+texture_filter = 1
+texture = SubResource("AtlasTexture_f1ek2")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://gedp1qirf71n"]
+[gd_scene load_steps=20 format=3 uid="uid://gedp1qirf71n"]
 
 [ext_resource type="Script" uid="uid://04a5i0tk15gy" path="res://Scripts/Character/Player.cs" id="1_co212"]
 [ext_resource type="PackedScene" uid="uid://ctgni16h8tre6" path="res://Scenes/container_display.tscn" id="3_bcg5f"]
@@ -8,6 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://Sprites/Images/spr_itemsncolectables.png" id="7_3smsa"]
 [ext_resource type="PackedScene" uid="uid://brdmuedpkp0jn" path="res://Scenes/ability_menu.tscn" id="8_8erm5"]
 [ext_resource type="PackedScene" uid="uid://bahvdxf74e24c" path="res://Scenes/journal_display.tscn" id="8_f1ek2"]
+[ext_resource type="Texture2D" uid="uid://cvmacpjalsveh" path="res://map_capture.png" id="9_f1ek2"]
+[ext_resource type="Script" uid="uid://dgamvmgoq2trt" path="res://Scripts/Controls/MapDisplay.cs" id="9_tx1dd"]
+[ext_resource type="Resource" uid="uid://bfnu0evsky1mc" path="res://map_capture.tres" id="10_gymyn"]
+[ext_resource type="PackedScene" uid="uid://bpclhkah8www8" path="res://Scenes/map_marker.tscn" id="10_pu2lt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7efl3"]
 size = Vector2(12, 16)
@@ -129,3 +133,31 @@ scale = Vector2(0.5, 0.5)
 texture = SubResource("AtlasTexture_8erm5")
 
 [node name="JournalDisplay" parent="." instance=ExtResource("8_f1ek2")]
+
+[node name="MapDisplay" type="PanelContainer" parent="."]
+offset_left = -140.0
+offset_top = -80.0
+offset_right = 140.0
+offset_bottom = 80.0
+script = ExtResource("9_tx1dd")
+MapMarkerScene = ExtResource("10_pu2lt")
+MapCaptureRes = ExtResource("10_gymyn")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MapDisplay"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MapDisplay/VBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+text = "Map"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MapDisplay/VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("9_f1ek2")
+expand_mode = 1
+stretch_mode = 4

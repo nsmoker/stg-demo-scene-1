@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="Quest" load_steps=12 format=3 uid="uid://ddxjdl7kxk4xq"]
+[gd_resource type="Resource" script_class="Quest" load_steps=13 format=3 uid="uid://ddxjdl7kxk4xq"]
 
 [ext_resource type="Script" uid="uid://ho5p3miawhuu" path="res://Scripts/Resources/QuestStage.cs" id="1_1c8xw"]
 [ext_resource type="Script" uid="uid://be0fsg3lmta4c" path="res://Scripts/Resources/Quest.cs" id="2_6uyix"]
+[ext_resource type="Resource" uid="uid://dqjykpnwjr5ig" path="res://Resources/Quests/cabin_objective.tres" id="2_44ssh"]
 
 [sub_resource type="Resource" id="Resource_1c8xw"]
 script = ExtResource("1_1c8xw")
@@ -14,6 +15,7 @@ script = ExtResource("1_1c8xw")
 StageNumber = 1
 Title = "Enquire in Sandstone about the cabin."
 Description = "The old man suggested that you ask the locals in Sandstone, a nearby town, for help."
+Objective = ExtResource("2_44ssh")
 metadata/_custom_type_script = "uid://ho5p3miawhuu"
 
 [sub_resource type="Resource" id="Resource_44ssh"]

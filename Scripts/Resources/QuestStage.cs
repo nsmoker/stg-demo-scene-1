@@ -12,4 +12,6 @@ public partial class QuestStage : Resource
     public string Description;
     [Export]
     public bool CompleteQuest = false;
+    [Export]
+    public QuestObjectiveData Objective;
 }

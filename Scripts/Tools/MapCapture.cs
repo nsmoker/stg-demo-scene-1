@@ -55,8 +55,12 @@ public partial class MapCapture : EditorScript
         sceneRect.Position = visibleRect.Position;
 
         await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw);
-        var img = mapCaptureViewport.GetTexture().GetImage();
-        img.SavePng("res://map_capture.png");
+        var mapCaptureResource = new MapCaptureResource
+        {
+            MapImage = mapCaptureViewport.GetTexture().GetImage(),
+            LocalTransform = sceneDup.Transform
+        };
+        ResourceSaver.Save(mapCaptureResource, "res://map_capture.tres");
 
         mapCaptureViewport.RemoveChild(sceneDup);
         GetScene().RemoveChild(mapCaptureViewport);

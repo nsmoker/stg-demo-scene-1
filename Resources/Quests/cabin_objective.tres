@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="QuestObjectiveData" load_steps=2 format=3 uid="uid://dqjykpnwjr5ig"]
+
+[ext_resource type="Script" uid="uid://h2oxb32h0inw" path="res://Scripts/Resources/QuestObjectiveData.cs" id="1_fprpu"]
+
+[resource]
+script = ExtResource("1_fprpu")
+Note = "Marker on Plinth."
+metadata/_custom_type_script = "uid://h2oxb32h0inw"
