@@ -1,8 +1,5 @@
-using ArkhamHunters.Scripts;
 using Godot;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
 
 public partial class DialogueController : ScrollContainer
