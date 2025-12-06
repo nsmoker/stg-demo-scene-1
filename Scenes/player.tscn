@@ -135,6 +135,7 @@ texture = SubResource("AtlasTexture_8erm5")
 [node name="JournalDisplay" parent="." instance=ExtResource("8_f1ek2")]
 
 [node name="MapDisplay" type="PanelContainer" parent="."]
+visible = false
 offset_left = -140.0
 offset_top = -80.0
 offset_right = 140.0
