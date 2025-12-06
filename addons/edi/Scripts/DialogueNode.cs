@@ -61,6 +61,7 @@ public partial class DialogueNode : GraphNode
                 Condition = condition;
             };
         };
+        _editorConditionPicker.ResourceSelected += OnResourceEditRequest;
 
         _editorConditionPicker.Visible = false;
 
@@ -82,6 +83,7 @@ public partial class DialogueNode : GraphNode
                     Action = action;
                 };
             };
+            _editorActionPicker.ResourceSelected += OnResourceEditRequest;
 
             if (Action != null)
             {
@@ -170,5 +172,10 @@ public partial class DialogueNode : GraphNode
         {
             _linkButton.Selected = -1;
         }
+    }
+
+    public static void OnResourceEditRequest(Resource resource, bool _)
+    {
+        EditorInterface.Singleton.GetInspector().Edit(resource);
     }
 }
