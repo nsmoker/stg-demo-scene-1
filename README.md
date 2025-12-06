@@ -36,6 +36,7 @@ Finally, if you're using VSCode and are annoyed by the .uid files that Godot lea
 * Pathfinding and range handling during combat.
 * Pause function
 * Faction system and per-character hostility overrides.
+* Quest system with journal display.
 
 ## Missing Features
 
