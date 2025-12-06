@@ -505,6 +505,7 @@ radius = 66.11
 process_mode = 1
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+position = Vector2(560, 1504)
 navigation_polygon = SubResource("NavigationPolygon_tpjvx")
 
 [node name="Background TileMapLayer" type="TileMapLayer" parent="NavigationRegion2D"]
@@ -527,7 +528,7 @@ tile_set = ExtResource("1_dw8ip")
 
 [node name="Player" parent="." instance=ExtResource("8_cyqer")]
 process_mode = 3
-position = Vector2(-21, 88)
+position = Vector2(539, 1592)
 _factionTable = ExtResource("9_3wsrn")
 StartingQuest = ExtResource("8_wpkci")
 InitialInventory = Array[ExtResource("6_1m1l6")]([ExtResource("5_kqxyy"), ExtResource("4_nqcrx"), ExtResource("6_v35qn")])
@@ -535,14 +536,14 @@ CharacterData = ExtResource("15_1lm1u")
 
 [node name="Enemy" parent="." instance=ExtResource("9_0e4jb")]
 process_mode = 1
-position = Vector2(-19, -181)
+position = Vector2(541, 1323)
 CharacterData = SubResource("Resource_n0hv0")
 
 [node name="Argus" parent="." instance=ExtResource("20_n0hv0")]
-position = Vector2(378, -23)
+position = Vector2(938, 1481)
 
 [node name="Journal" type="CharacterBody2D" parent="."]
-position = Vector2(-311, 31)
+position = Vector2(249, 1535)
 scale = Vector2(0.4971919, 0.5)
 script = ExtResource("15_6xr56")
 Dialogue = ExtResource("16_n0hv0")
@@ -576,11 +577,5 @@ offset_right = 38.0
 offset_bottom = 43.0
 scale = Vector2(0.5, 0.5)
 
-[node name="MapImageCamera" type="Camera2D" parent="."]
-position = Vector2(-35, -585)
-rotation = 1.5707964
-ignore_rotation = false
-enabled = false
-
 [node name="Plinth" parent="." instance=ExtResource("33_8j37u")]
-position = Vector2(200, -1432)
+position = Vector2(760, 72)
