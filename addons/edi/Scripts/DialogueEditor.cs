@@ -13,10 +13,10 @@ public partial class DialogueEditor : Control
     public GraphEdit EditorNode;
     private readonly List<DialogueNode> _selection = [];
     private readonly List<DialogueNode> _clipboard = [];
-    private ushort _entryCounter = 0;
-    private ushort _nodeCounter = 0;
-    private ushort _responseCounter = 0;
-    private ushort _actionCounter = 0;
+    private ulong _entryCounter = 0;
+    private ulong _nodeCounter = 0;
+    private ulong _responseCounter = 0;
+    private ulong _actionCounter = 0;
 
     private Conversation _editedConversation;
     private Label _statusLabel;
@@ -168,6 +168,7 @@ public partial class DialogueEditor : Control
             EditorNode.AddChild(editorNode);
             editorNode.PositionOffset = node.EditorPos;
             editorNode.LinkDNodeId = node.LinkDNodeId;
+            editorNode.DNodeId = node.DNodeId;
             if (node.EditorSize != Vector2.Zero)
             {
                 editorNode.Size = node.EditorSize;
@@ -313,10 +314,7 @@ public partial class DialogueEditor : Control
                 }
         }
 
-        newNode.DNodeId |= _nodeCounter;
-        newNode.DNodeId |= ((ulong) _actionCounter) << 16;
-        newNode.DNodeId |= ((ulong) _responseCounter) << 32;
-        newNode.DNodeId |= ((ulong) _entryCounter) << 48;
+        newNode.DNodeId = _nodeCounter + _actionCounter + _responseCounter + _entryCounter;
 
         return newNode;
     }

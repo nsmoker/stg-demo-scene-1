@@ -1,0 +1,635 @@
+[gd_resource type="Resource" script_class="Conversation" load_steps=100 format=3 uid="uid://dlk4dagyikfmo"]
+
+[ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="1_wkstk"]
+[ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="2_u08tk"]
+[ext_resource type="Resource" uid="uid://bmbx34awiao7n" path="res://Scripts/DialogueNodes/AdvanceCabin2.tres" id="3_wf48n"]
+[ext_resource type="Resource" uid="uid://c8fgn0cc87fhy" path="res://Resources/Characters/plinth.tres" id="4_bcwpc"]
+[ext_resource type="Script" uid="uid://bjwvo7im4h87m" path="res://Scripts/DialogueNodes/SetDialogueEntry.cs" id="5_nb7df"]
+[ext_resource type="Resource" uid="uid://uqbvgoe2s4uc" path="res://Scripts/DialogueNodes/CheckHasCabin.tres" id="6_daedd"]
+[ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/edi/Scripts/Conversation.cs" id="7_j2ybp"]
+[ext_resource type="Resource" uid="uid://2r66ab1kbyl4" path="res://Resources/Quests/bandits.tres" id="7_wf48n"]
+[ext_resource type="Script" uid="uid://bd4vsuxwqux7c" path="res://Scripts/DialogueNodes/TriggerQuest.cs" id="8_bcwpc"]
+
+[sub_resource type="Resource" id="Resource_wf48n"]
+script = ExtResource("1_wkstk")
+fromNode = 5
+toNode = 7
+
+[sub_resource type="Resource" id="Resource_bcwpc"]
+script = ExtResource("1_wkstk")
+fromNode = 23
+toNode = 5
+
+[sub_resource type="Resource" id="Resource_nb7df"]
+script = ExtResource("1_wkstk")
+fromNode = 4
+toNode = 2
+
+[sub_resource type="Resource" id="Resource_daedd"]
+script = ExtResource("1_wkstk")
+fromNode = 22
+toNode = 4
+
+[sub_resource type="Resource" id="Resource_j2ybp"]
+script = ExtResource("1_wkstk")
+toNode = 22
+
+[sub_resource type="Resource" id="Resource_3ff0v"]
+script = ExtResource("1_wkstk")
+fromNode = 1
+toNode = 3
+
+[sub_resource type="Resource" id="Resource_h6ce4"]
+script = ExtResource("1_wkstk")
+fromNode = 3
+toNode = 23
+
+[sub_resource type="Resource" id="Resource_icu7p"]
+script = ExtResource("1_wkstk")
+fromNode = 8
+toNode = 11
+
+[sub_resource type="Resource" id="Resource_qp044"]
+script = ExtResource("1_wkstk")
+fromNode = 13
+
+[sub_resource type="Resource" id="Resource_c24nt"]
+script = ExtResource("1_wkstk")
+fromNode = 17
+toNode = 13
+
+[sub_resource type="Resource" id="Resource_xh0ur"]
+script = ExtResource("1_wkstk")
+fromNode = 22
+toNode = 1
+
+[sub_resource type="Resource" id="Resource_v8wjs"]
+script = ExtResource("1_wkstk")
+fromNode = 23
+toNode = 24
+
+[sub_resource type="Resource" id="Resource_uwx0p"]
+script = ExtResource("1_wkstk")
+fromNode = 24
+toNode = 8
+
+[sub_resource type="Resource" id="Resource_kdp02"]
+script = ExtResource("1_wkstk")
+fromNode = 6
+toNode = 9
+
+[sub_resource type="Resource" id="Resource_un1ax"]
+script = ExtResource("1_wkstk")
+fromNode = 23
+toNode = 6
+
+[sub_resource type="Resource" id="Resource_nrmi1"]
+script = ExtResource("1_wkstk")
+fromNode = 14
+toNode = 15
+
+[sub_resource type="Resource" id="Resource_603y5"]
+script = ExtResource("1_wkstk")
+fromNode = 21
+toNode = 29
+
+[sub_resource type="Resource" id="Resource_aylwu"]
+script = ExtResource("1_wkstk")
+fromNode = 29
+toNode = 14
+
+[sub_resource type="Resource" id="Resource_h5tt6"]
+script = ExtResource("1_wkstk")
+fromNode = 12
+toNode = 27
+
+[sub_resource type="Resource" id="Resource_44xke"]
+script = ExtResource("1_wkstk")
+fromNode = 17
+toNode = 25
+
+[sub_resource type="Resource" id="Resource_o71r1"]
+script = ExtResource("1_wkstk")
+fromNode = 21
+toNode = 12
+
+[sub_resource type="Resource" id="Resource_sqnfg"]
+script = ExtResource("1_wkstk")
+fromNode = 25
+toNode = 10
+
+[sub_resource type="Resource" id="Resource_y8dfb"]
+script = ExtResource("1_wkstk")
+fromNode = 16
+toNode = 28
+
+[sub_resource type="Resource" id="Resource_ttu2u"]
+script = ExtResource("1_wkstk")
+fromNode = 28
+toNode = 17
+
+[sub_resource type="Resource" id="Resource_li2uf"]
+script = ExtResource("1_wkstk")
+fromNode = 17
+toNode = 18
+
+[sub_resource type="Resource" id="Resource_7m8hb"]
+script = ExtResource("1_wkstk")
+fromNode = 18
+toNode = 19
+
+[sub_resource type="Resource" id="Resource_5j0t1"]
+script = ExtResource("1_wkstk")
+fromNode = 19
+toNode = 20
+
+[sub_resource type="Resource" id="Resource_17r5t"]
+script = ExtResource("1_wkstk")
+fromNode = 20
+toNode = 21
+
+[sub_resource type="Resource" id="Resource_ttey4"]
+script = ExtResource("1_wkstk")
+fromNode = 30
+toNode = 33
+
+[sub_resource type="Resource" id="Resource_gq108"]
+script = ExtResource("1_wkstk")
+fromNode = 32
+toNode = 30
+
+[sub_resource type="Resource" id="Resource_6gv1f"]
+script = ExtResource("1_wkstk")
+fromNode = 21
+toNode = 26
+
+[sub_resource type="Resource" id="Resource_xnukw"]
+script = ExtResource("1_wkstk")
+fromNode = 26
+toNode = 32
+
+[sub_resource type="Resource" id="Resource_wpvxi"]
+script = ExtResource("1_wkstk")
+fromNode = 31
+toNode = 36
+
+[sub_resource type="Resource" id="Resource_7hxhu"]
+script = ExtResource("1_wkstk")
+fromNode = 32
+toNode = 31
+
+[sub_resource type="Resource" id="Resource_45232"]
+script = ExtResource("1_wkstk")
+fromNode = 36
+toNode = 39
+
+[sub_resource type="Resource" id="Resource_iltum"]
+script = ExtResource("1_wkstk")
+fromNode = 34
+toNode = 41
+
+[sub_resource type="Resource" id="Resource_ydnrp"]
+script = ExtResource("1_wkstk")
+fromNode = 41
+toNode = 40
+
+[sub_resource type="Resource" id="Resource_lfbho"]
+script = ExtResource("1_wkstk")
+fromNode = 43
+toNode = 34
+
+[sub_resource type="Resource" id="Resource_nl0e8"]
+script = ExtResource("1_wkstk")
+fromNode = 32
+toNode = 42
+
+[sub_resource type="Resource" id="Resource_7ycyk"]
+script = ExtResource("1_wkstk")
+fromNode = 42
+toNode = 43
+
+[sub_resource type="Resource" id="Resource_268jk"]
+script = ExtResource("1_wkstk")
+fromNode = 35
+toNode = 38
+
+[sub_resource type="Resource" id="Resource_praxq"]
+script = ExtResource("1_wkstk")
+fromNode = 43
+toNode = 35
+
+[sub_resource type="Resource" id="Resource_lt26h"]
+script = ExtResource("2_u08tk")
+NodeType = 2
+DNodeId = 17
+EditorPos = Vector2(-140, 920)
+EditorSize = Vector2(368, 220.00104)
+
+[sub_resource type="Resource" id="Resource_i6hw7"]
+script = ExtResource("2_u08tk")
+NodeType = 2
+DNodeId = 38
+LinkDNodeId = 40
+EditorPos = Vector2(11640, 1280)
+EditorSize = Vector2(368.02722, 220.00308)
+
+[sub_resource type="Resource" id="Resource_2kaua"]
+script = ExtResource("2_u08tk")
+Content = "Well, I can tell you the folk here don't want any trouble with the order. I don't know a man named Thorn; I'd tell you if I did. "
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 1
+EditorPos = Vector2(3400, -2100)
+EditorSize = Vector2(659.9971, 440)
+
+[sub_resource type="Resource" id="Resource_sqw8j"]
+script = ExtResource("2_u08tk")
+NodeType = 3
+Content = "Not exactly."
+DNodeId = 2
+EditorPos = Vector2(5200, -2100)
+EditorSize = Vector2(640.011, 440.00098)
+
+[sub_resource type="Resource" id="Resource_1gr2w"]
+script = ExtResource("2_u08tk")
+Content = "Just don't go bothering any of the residents around here. They're honest folk, you hear?"
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 3
+LinkDNodeId = 24
+EditorPos = Vector2(6100, -2640)
+EditorSize = Vector2(659.978, 439.99792)
+
+[sub_resource type="Resource" id="Resource_s6ecb"]
+script = ExtResource("2_u08tk")
+Content = "Good. Nobody here would trust you if you were. "
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 4
+EditorPos = Vector2(6080, -2100)
+EditorSize = Vector2(780.0039, 380.00024)
+
+[sub_resource type="Resource" id="Resource_hghpu"]
+script = ExtResource("2_u08tk")
+NodeType = 3
+Content = "(Lie) Couldn't tell from the uniform?"
+DNodeId = 5
+EditorPos = Vector2(5200, -2640)
+EditorSize = Vector2(640.011, 439.99597)
+
+[sub_resource type="Resource" id="Resource_msq8q"]
+script = ExtResource("2_u08tk")
+NodeType = 3
+Content = "None of your business."
+DNodeId = 6
+EditorPos = Vector2(8140, -2760)
+EditorSize = Vector2(640.0089, 440.0011)
+
+[sub_resource type="Resource" id="Resource_jurh2"]
+script = ExtResource("2_u08tk")
+NodeType = 3
+Content = "I'm not in love with them. Just need the work."
+DNodeId = 7
+EditorPos = Vector2(8140, -1460)
+EditorSize = Vector2(640.0226, 399.9983)
+
+[sub_resource type="Resource" id="Resource_v44os"]
+script = ExtResource("2_u08tk")
+Content = "And I hope to keep it that way."
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 8
+LinkDNodeId = 12
+EditorPos = Vector2(9000, -2760)
+EditorSize = Vector2(519.9977, 359.99988)
+
+[sub_resource type="Resource" id="Resource_l0wd4"]
+script = ExtResource("2_u08tk")
+Content = "Good work is building things, getting something people need. Helping people. Last I checked, that's about the opposite of what the order did."
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 9
+EditorPos = Vector2(8980, -2100)
+EditorSize = Vector2(779.95935, 440.00098)
+
+[sub_resource type="Resource" id="Resource_2uge7"]
+script = ExtResource("2_u08tk")
+Content = "That I understand, though I can't promise everyone here will."
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 10
+LinkDNodeId = 12
+EditorPos = Vector2(8960, -1460)
+EditorSize = Vector2(799.9745, 399.9978)
+
+[sub_resource type="Resource" id="Resource_knr6q"]
+script = ExtResource("2_u08tk")
+Content = "Can't say I do. He might be one of the miners; you could ask around at the quarry office."
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 11
+LinkDNodeId = 21
+EditorPos = Vector2(3380, 320)
+EditorSize = Vector2(659.99634, 440.00366)
+
+[sub_resource type="Resource" id="Resource_nbbi2"]
+script = ExtResource("2_u08tk")
+Content = "You talk to me if you want some work that's a bit more grounded."
+DNodeId = 12
+LinkDNodeId = 44
+EditorPos = Vector2(10260, -2100)
+EditorSize = Vector2(839.9955, 419.99902)
+
+[sub_resource type="Resource" id="Resource_vfsva"]
+script = ExtResource("2_u08tk")
+NodeType = 3
+Content = "How do you get to Stalgarode?"
+DNodeId = 13
+EditorPos = Vector2(6580, 320)
+EditorSize = Vector2(639.98096, 440.01147)
+
+[sub_resource type="Resource" id="Resource_opjd3"]
+script = ExtResource("2_u08tk")
+NodeType = 3
+Content = "I'm looking for a man named Davos Thorn; he has some business with the Order of the Dark Word."
+DNodeId = 14
+EditorPos = Vector2(2460, -2100)
+EditorSize = Vector2(640.00073, 439.99902)
+
+[sub_resource type="Resource" id="Resource_2pcdj"]
+script = ExtResource("2_u08tk")
+Content = "Really, now? That'd be James Marle's cabin, but I saw him in town just today. Real sorry to hear he's fleeing; I wonder what happened out there."
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 15
+EditorPos = Vector2(7440, -320)
+EditorSize = Vector2(699.9933, 499.9906)
+
+[sub_resource type="Resource" id="Resource_6gvp6"]
+script = ExtResource("2_u08tk")
+NodeType = 1
+DNodeId = 16
+Action = ExtResource("3_wf48n")
+LinkDNodeId = 33
+EditorPos = Vector2(8340, -320)
+EditorSize = Vector2(456.01257, 257.00146)
+
+[sub_resource type="Resource" id="Resource_fwo3a"]
+script = ExtResource("2_u08tk")
+NodeType = 2
+DNodeId = 17
+EditorPos = Vector2(-140, 920)
+EditorSize = Vector2(368, 220.00104)
+
+[sub_resource type="Resource" id="Resource_sih08"]
+script = ExtResource("2_u08tk")
+Content = "Greetings, traveler. Welcome to Fortuna. Forgive me if I sound unfriendly, but it's rare that we see visitors here, except for the miners, and you don't look much like a miner. What brings you here?"
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 18
+EditorPos = Vector2(1500, 920)
+EditorSize = Vector2(679.99316, 579.9929)
+
+[sub_resource type="Resource" id="Resource_xbc5v"]
+script = ExtResource("2_u08tk")
+NodeType = 3
+Content = "I'm seeking rest on the way to Stalgarode. It's been a difficult road so far."
+DNodeId = 19
+EditorPos = Vector2(2540, 1020)
+EditorSize = Vector2(639.98535, 439.98798)
+
+[sub_resource type="Resource" id="Resource_nxoy2"]
+script = ExtResource("2_u08tk")
+Content = "Unfortunately, that's not surprising. It's rare for travelers to take the roads this far North, these days. The quarry mostly sends its miners directly on the railroad."
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 20
+EditorPos = Vector2(3380, 1020)
+EditorSize = Vector2(699.9978, 499.99884)
+
+[sub_resource type="Resource" id="Resource_sb3of"]
+script = ExtResource("2_u08tk")
+Content = "They're the only folk who would have the resources to keep the roads clear. So here we are."
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 21
+EditorPos = Vector2(4400, 1020)
+EditorSize = Vector2(699.99927, 499.99884)
+
+[sub_resource type="Resource" id="Resource_foww5"]
+script = ExtResource("2_u08tk")
+Content = "A lot of folk who used to live here have left on the railroad, or gone to Stalgarode."
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 22
+EditorPos = Vector2(5360, 1020)
+EditorSize = Vector2(700.0283, 499.99884)
+
+[sub_resource type="Resource" id="Resource_t11v2"]
+script = ExtResource("2_u08tk")
+Content = "Not one of them, are you?"
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 23
+EditorPos = Vector2(4260, -2100)
+EditorSize = Vector2(659.99756, 440)
+
+[sub_resource type="Resource" id="Resource_jr2wa"]
+script = ExtResource("2_u08tk")
+Content = "Can't fathom why any self-respecting man would be working with those fanatics, but that's your perogative."
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 24
+EditorPos = Vector2(7060, -2100)
+EditorSize = Vector2(839.98926, 399.99976)
+
+[sub_resource type="Resource" id="Resource_c0wfm"]
+script = ExtResource("2_u08tk")
+NodeType = 3
+Content = "The order does good work."
+DNodeId = 25
+EditorPos = Vector2(8140, -2100)
+EditorSize = Vector2(640.0089, 440.00195)
+
+[sub_resource type="Resource" id="Resource_tfxcd"]
+script = ExtResource("2_u08tk")
+NodeType = 3
+Content = "Do you know a man named Davos Thorn?"
+DNodeId = 26
+EditorPos = Vector2(2560, 320)
+EditorSize = Vector2(639.9878, 440.00366)
+
+[sub_resource type="Resource" id="Resource_dk1e4"]
+script = ExtResource("2_u08tk")
+NodeType = 3
+Content = "What is this place? "
+DNodeId = 27
+EditorPos = Vector2(6560, 1780)
+EditorSize = Vector2(368.00415, 360.01917)
+
+[sub_resource type="Resource" id="Resource_3qnal"]
+script = ExtResource("2_u08tk")
+Content = "Just up the road to the North, across the river. It's a larger town, you can't miss it."
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 28
+LinkDNodeId = 33
+EditorPos = Vector2(7440, 320)
+EditorSize = Vector2(699.9933, 500.00684)
+
+[sub_resource type="Resource" id="Resource_ki2qi"]
+script = ExtResource("5_nb7df")
+InteractableCharacterData = ExtResource("4_bcwpc")
+EntryIndex = 1
+metadata/_custom_type_script = "uid://bjwvo7im4h87m"
+
+[sub_resource type="Resource" id="Resource_bgwna"]
+script = ExtResource("2_u08tk")
+NodeType = 1
+DNodeId = 29
+Action = SubResource("Resource_ki2qi")
+EditorPos = Vector2(560, 920)
+EditorSize = Vector2(456, 257.00934)
+
+[sub_resource type="Resource" id="Resource_lsx02"]
+script = ExtResource("2_u08tk")
+NodeType = 3
+Content = "I noticed. I found an abandoned cabin south of here, and a note saying the owner was fleeing to St. Paul."
+DNodeId = 30
+Condition = ExtResource("6_daedd")
+EditorPos = Vector2(6600, -320)
+EditorSize = Vector2(599.9907, 519.9973)
+
+[sub_resource type="Resource" id="Resource_p67s7"]
+script = ExtResource("2_u08tk")
+NodeType = 3
+Content = "Darian. Good to meet a friendly face."
+DNodeId = 31
+EditorPos = Vector2(8320, 1140)
+EditorSize = Vector2(540.0122, 399.99374)
+
+[sub_resource type="Resource" id="Resource_4dqqc"]
+script = ExtResource("2_u08tk")
+NodeType = 3
+Content = "Nice office."
+DNodeId = 32
+EditorPos = Vector2(8300, 1780)
+EditorSize = Vector2(540.01404, 400.02014)
+
+[sub_resource type="Resource" id="Resource_jrg0b"]
+script = ExtResource("2_u08tk")
+Content = "This is the mayor's office. And I'm the Mayor, Plinth, though there's not much left to be mayor of, these days. Pleased to meet you."
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 33
+EditorPos = Vector2(7320, 1780)
+EditorSize = Vector2(699.98474, 500.01233)
+
+[sub_resource type="Resource" id="Resource_4od8b"]
+script = ExtResource("2_u08tk")
+Content = "Likewise."
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 34
+LinkDNodeId = 40
+EditorPos = Vector2(9200, 1140)
+EditorSize = Vector2(368.00073, 379.99667)
+
+[sub_resource type="Resource" id="Resource_sbclb"]
+script = ExtResource("2_u08tk")
+NodeType = 3
+Content = "I'll do it, as long as the pay's good."
+DNodeId = 35
+EditorPos = Vector2(10200, 2560)
+EditorSize = Vector2(540.0155, 400.0047)
+
+[sub_resource type="Resource" id="Resource_4t4n5"]
+script = ExtResource("2_u08tk")
+NodeType = 3
+Content = "Don't know if I've got that in me."
+DNodeId = 36
+EditorPos = Vector2(10200, 3480)
+EditorSize = Vector2(540.0155, 399.99225)
+
+[sub_resource type="Resource" id="Resource_fhmjc"]
+script = ExtResource("2_u08tk")
+Content = "Thanks. Used to be the local bank. Used to be plenty here, before it was just a stop on the way to the quarry."
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 37
+EditorPos = Vector2(9200, 1780)
+EditorSize = Vector2(699.9784, 500.01233)
+
+[sub_resource type="Resource" id="Resource_hu6b8"]
+script = ExtResource("2_u08tk")
+NodeType = 2
+DNodeId = 38
+LinkDNodeId = 40
+EditorPos = Vector2(11640, 1280)
+EditorSize = Vector2(368.02722, 220.00308)
+
+[sub_resource type="Resource" id="Resource_lrhx5"]
+script = ExtResource("2_u08tk")
+Content = "I understand. Just let me know if you change your mind."
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 39
+LinkDNodeId = 40
+EditorPos = Vector2(11000, 3480)
+EditorSize = Vector2(840.01575, 439.99225)
+
+[sub_resource type="Resource" id="Resource_hfyx6"]
+script = ExtResource("2_u08tk")
+Content = "Anything else I can help with?"
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 40
+EditorPos = Vector2(12100, 1800)
+EditorSize = Vector2(699.9811, 500.01685)
+
+[sub_resource type="Resource" id="Resource_g6kfw"]
+script = ExtResource("2_u08tk")
+Content = "You can have anything that's left in the vault if you clear them out. It'd mean a lot to me. I grew up here; I don't want to live out the rest of my days in a war zone."
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 41
+LinkDNodeId = 40
+EditorPos = Vector2(11600, 2560)
+EditorSize = Vector2(840.0204, 440.00885)
+
+[sub_resource type="Resource" id="Resource_qi08q"]
+script = ExtResource("8_bcwpc")
+QuestToTrigger = ExtResource("7_wf48n")
+metadata/_custom_type_script = "uid://bd4vsuxwqux7c"
+
+[sub_resource type="Resource" id="Resource_alyks"]
+script = ExtResource("2_u08tk")
+NodeType = 1
+DNodeId = 42
+Action = SubResource("Resource_qi08q")
+EditorPos = Vector2(10960, 2560)
+EditorSize = Vector2(456.0083, 257.01117)
+
+[sub_resource type="Resource" id="Resource_xm13u"]
+script = ExtResource("2_u08tk")
+NodeType = 3
+Content = "Have any work around here?"
+DNodeId = 43
+EditorPos = Vector2(8300, 2580)
+EditorSize = Vector2(540.01404, 399.99994)
+
+[sub_resource type="Resource" id="Resource_21vsw"]
+script = ExtResource("2_u08tk")
+Content = "As a matter of fact, I have a job you could take. If you're bold, that is. I think I have an inkling of where those highwaymen have set up camp, I was hoping you'd take a look."
+Speaker = "Mayor Plinth"
+Addressee = "Player"
+DNodeId = 44
+EditorPos = Vector2(9160, 2580)
+EditorSize = Vector2(699.9779, 499.99408)
+
+[resource]
+script = ExtResource("7_j2ybp")
+Nodes = Array[ExtResource("2_u08tk")]([SubResource("Resource_2kaua"), SubResource("Resource_sqw8j"), SubResource("Resource_1gr2w"), SubResource("Resource_s6ecb"), SubResource("Resource_hghpu"), SubResource("Resource_msq8q"), SubResource("Resource_jurh2"), SubResource("Resource_v44os"), SubResource("Resource_l0wd4"), SubResource("Resource_2uge7"), SubResource("Resource_knr6q"), SubResource("Resource_nbbi2"), SubResource("Resource_vfsva"), SubResource("Resource_opjd3"), SubResource("Resource_2pcdj"), SubResource("Resource_6gvp6"), SubResource("Resource_fwo3a"), SubResource("Resource_sih08"), SubResource("Resource_xbc5v"), SubResource("Resource_nxoy2"), SubResource("Resource_sb3of"), SubResource("Resource_foww5"), SubResource("Resource_t11v2"), SubResource("Resource_jr2wa"), SubResource("Resource_c0wfm"), SubResource("Resource_tfxcd"), SubResource("Resource_dk1e4"), SubResource("Resource_3qnal"), SubResource("Resource_bgwna"), SubResource("Resource_lsx02"), SubResource("Resource_p67s7"), SubResource("Resource_4dqqc"), SubResource("Resource_jrg0b"), SubResource("Resource_4od8b"), SubResource("Resource_sbclb"), SubResource("Resource_4t4n5"), SubResource("Resource_fhmjc"), SubResource("Resource_hu6b8"), SubResource("Resource_lrhx5"), SubResource("Resource_hfyx6"), SubResource("Resource_g6kfw"), SubResource("Resource_alyks"), SubResource("Resource_xm13u"), SubResource("Resource_21vsw")])
+EntryPoints = Array[ExtResource("2_u08tk")]([SubResource("Resource_lt26h"), SubResource("Resource_i6hw7")])
+Connections = Array[ExtResource("1_wkstk")]([SubResource("Resource_wf48n"), SubResource("Resource_bcwpc"), SubResource("Resource_nb7df"), SubResource("Resource_daedd"), SubResource("Resource_j2ybp"), SubResource("Resource_3ff0v"), SubResource("Resource_h6ce4"), SubResource("Resource_icu7p"), SubResource("Resource_qp044"), SubResource("Resource_c24nt"), SubResource("Resource_xh0ur"), SubResource("Resource_v8wjs"), SubResource("Resource_uwx0p"), SubResource("Resource_kdp02"), SubResource("Resource_un1ax"), SubResource("Resource_nrmi1"), SubResource("Resource_603y5"), SubResource("Resource_aylwu"), SubResource("Resource_h5tt6"), SubResource("Resource_44xke"), SubResource("Resource_o71r1"), SubResource("Resource_sqnfg"), SubResource("Resource_y8dfb"), SubResource("Resource_ttu2u"), SubResource("Resource_li2uf"), SubResource("Resource_7m8hb"), SubResource("Resource_5j0t1"), SubResource("Resource_17r5t"), SubResource("Resource_ttey4"), SubResource("Resource_gq108"), SubResource("Resource_6gv1f"), SubResource("Resource_xnukw"), SubResource("Resource_wpvxi"), SubResource("Resource_7hxhu"), SubResource("Resource_45232"), SubResource("Resource_iltum"), SubResource("Resource_ydnrp"), SubResource("Resource_lfbho"), SubResource("Resource_nl0e8"), SubResource("Resource_7ycyk"), SubResource("Resource_268jk"), SubResource("Resource_praxq")])
+metadata/_custom_type_script = "uid://cmw85ukaae1eh"

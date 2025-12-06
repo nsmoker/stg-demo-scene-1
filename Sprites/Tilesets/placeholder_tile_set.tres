@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=31 format=3 uid="uid://cem5hy2763dx"]
+[gd_resource type="TileSet" load_steps=32 format=3 uid="uid://cem5hy2763dx"]
 
 [ext_resource type="Texture2D" uid="uid://b54j5wdw56gj0" path="res://Sprites/Images/ts_outerworld.png" id="1_n2xnu"]
 [ext_resource type="Texture2D" uid="uid://catc1nkmnv3xq" path="res://Sprites/Images/ts_extras.png" id="2_d3eek"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://cghkewvx1aglm" path="res://Sprites/Images/ts_castle.png" id="4_tn2bh"]
 [ext_resource type="Texture2D" uid="uid://drfjfexp0haqi" path="res://Sprites/Images/ts_interiorDecorations.png" id="5_6k8bj"]
 [ext_resource type="Texture2D" uid="uid://bl8x7mpj2btvh" path="res://Sprites/Images/ts_constructions.png" id="6_kj5cv"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_fq6vb"]
+tile_data = PackedInt32Array(0, 1, 1, 1, 131073, 1)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ojbgx"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -1189,3 +1192,4 @@ sources/2 = SubResource("TileSetAtlasSource_25dlr")
 sources/3 = SubResource("TileSetAtlasSource_nr3am")
 sources/4 = SubResource("TileSetAtlasSource_kokde")
 sources/5 = SubResource("TileSetAtlasSource_x5lpc")
+pattern_0 = SubResource("TileMapPattern_fq6vb")

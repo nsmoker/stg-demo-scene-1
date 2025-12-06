@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="Quest" load_steps=6 format=3 uid="uid://2r66ab1kbyl4"]
+
+[ext_resource type="Script" uid="uid://ho5p3miawhuu" path="res://Scripts/Resources/QuestStage.cs" id="1_wo48a"]
+[ext_resource type="Script" uid="uid://be0fsg3lmta4c" path="res://Scripts/Resources/Quest.cs" id="2_kwlp5"]
+
+[sub_resource type="Resource" id="Resource_wo48a"]
+script = ExtResource("1_wo48a")
+Title = "Clear the encampment"
+Description = "He pointed you towards camp to the northeast."
+metadata/_custom_type_script = "uid://ho5p3miawhuu"
+
+[sub_resource type="Resource" id="Resource_kwlp5"]
+script = ExtResource("1_wo48a")
+StageNumber = 1
+Title = "Return to Plinth"
+Description = "You've cleared the encampment, now return to Plinth for your reward."
+metadata/_custom_type_script = "uid://ho5p3miawhuu"
+
+[sub_resource type="Resource" id="Resource_ij0rl"]
+script = ExtResource("1_wo48a")
+StageNumber = 2
+Title = "Completed"
+Description = "Plinth gave you access to the old bank's vault."
+CompleteQuest = true
+metadata/_custom_type_script = "uid://ho5p3miawhuu"
+
+[resource]
+script = ExtResource("2_kwlp5")
+Title = "Fortuna Highwaymen"
+Description = "The Mayor of Fortuna has enlisted your help to clear the highwaymen menacing his town."
+Stages = Array[ExtResource("1_wo48a")]([SubResource("Resource_wo48a"), SubResource("Resource_kwlp5"), SubResource("Resource_ij0rl")])
+metadata/_custom_type_script = "uid://be0fsg3lmta4c"

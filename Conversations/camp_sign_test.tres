@@ -13,14 +13,14 @@ script = ExtResource("2_ltsmi")
 NodeType = 2
 DNodeId = 281474976710656
 EditorPos = Vector2(-680, 680)
-EditorSize = Vector2(352, 194.00305)
+EditorSize = Vector2(351.99997, 194.00305)
 
 [sub_resource type="Resource" id="Resource_vp0er"]
 script = ExtResource("2_ltsmi")
 NodeType = 2
 DNodeId = 281474976710656
 EditorPos = Vector2(-680, 680)
-EditorSize = Vector2(352, 194.00305)
+EditorSize = Vector2(351.99997, 194.00305)
 
 [sub_resource type="Resource" id="Resource_xjjhc"]
 script = ExtResource("2_ltsmi")
@@ -29,7 +29,7 @@ Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281474976710657
 EditorPos = Vector2(-120, 680)
-EditorSize = Vector2(680.0005, 400.00085)
+EditorSize = Vector2(680.0006, 400.00085)
 
 [resource]
 script = ExtResource("6_bhast")

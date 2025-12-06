@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AdvanceQuest" load_steps=3 format=3 uid="uid://bmbx34awiao7n"]
+
+[ext_resource type="Resource" uid="uid://ddxjdl7kxk4xq" path="res://Resources/Quests/cabin_in_the_woods.tres" id="1_hsxn8"]
+[ext_resource type="Script" uid="uid://dvhepfo5lqupr" path="res://Scripts/DialogueNodes/AdvanceQuest.cs" id="2_dqr85"]
+
+[resource]
+script = ExtResource("2_dqr85")
+QuestToAdvance = ExtResource("1_hsxn8")
+StageToAdvanceTo = 2
+metadata/_custom_type_script = "uid://dvhepfo5lqupr"

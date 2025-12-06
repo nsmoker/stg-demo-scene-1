@@ -7,90 +7,90 @@
 [ext_resource type="Resource" uid="uid://bqa20ytuok437" path="res://Scripts/DialogueNodes/override.tres" id="5_nfbxk"]
 [ext_resource type="Resource" uid="uid://l60gaotyov72" path="res://Scripts/DialogueNodes/example_inventory_check.tres" id="6_3ynid"]
 
-[sub_resource type="Resource" id="Resource_3af4n"]
+[sub_resource type="Resource" id="Resource_ygft4"]
 script = ExtResource("1_6sd6r")
 fromNode = 1
 toNode = 8
 
-[sub_resource type="Resource" id="Resource_3bgdq"]
+[sub_resource type="Resource" id="Resource_0bit8"]
 script = ExtResource("1_6sd6r")
 fromNode = 1
 toNode = 2
 
-[sub_resource type="Resource" id="Resource_5hirs"]
-script = ExtResource("1_6sd6r")
-fromNode = 2
-toNode = 3
-
-[sub_resource type="Resource" id="Resource_7id2j"]
-script = ExtResource("1_6sd6r")
-fromNode = 8
-toNode = 3
-
-[sub_resource type="Resource" id="Resource_p0csy"]
+[sub_resource type="Resource" id="Resource_6cbt5"]
 script = ExtResource("1_6sd6r")
 fromNode = 1
 toNode = 3
 
-[sub_resource type="Resource" id="Resource_wrtag"]
+[sub_resource type="Resource" id="Resource_nfbxk"]
+script = ExtResource("1_6sd6r")
+fromNode = 2
+toNode = 3
+
+[sub_resource type="Resource" id="Resource_3ynid"]
+script = ExtResource("1_6sd6r")
+fromNode = 8
+toNode = 3
+
+[sub_resource type="Resource" id="Resource_dn4y3"]
 script = ExtResource("1_6sd6r")
 toNode = 1
 
-[sub_resource type="Resource" id="Resource_brta4"]
+[sub_resource type="Resource" id="Resource_lnc8t"]
 script = ExtResource("1_6sd6r")
 fromNode = 3
 toNode = 4
 
-[sub_resource type="Resource" id="Resource_ljbn8"]
+[sub_resource type="Resource" id="Resource_kpxlu"]
+script = ExtResource("1_6sd6r")
+fromNode = 1
+toNode = 5
+
+[sub_resource type="Resource" id="Resource_8a1y7"]
 script = ExtResource("1_6sd6r")
 fromNode = 2
 toNode = 5
 
-[sub_resource type="Resource" id="Resource_43jlr"]
+[sub_resource type="Resource" id="Resource_2g60y"]
 script = ExtResource("1_6sd6r")
 fromNode = 5
 toNode = 6
 
-[sub_resource type="Resource" id="Resource_dfnxr"]
+[sub_resource type="Resource" id="Resource_lrrai"]
 script = ExtResource("1_6sd6r")
 fromNode = 8
 toNode = 5
 
-[sub_resource type="Resource" id="Resource_5spxh"]
+[sub_resource type="Resource" id="Resource_0tuv5"]
 script = ExtResource("1_6sd6r")
 fromNode = 1
-toNode = 5
+toNode = 7
 
-[sub_resource type="Resource" id="Resource_7u07a"]
+[sub_resource type="Resource" id="Resource_ldvex"]
 script = ExtResource("1_6sd6r")
 fromNode = 2
 toNode = 7
 
-[sub_resource type="Resource" id="Resource_e81q4"]
+[sub_resource type="Resource" id="Resource_xprpo"]
 script = ExtResource("1_6sd6r")
 fromNode = 8
 toNode = 7
 
-[sub_resource type="Resource" id="Resource_sbcj4"]
-script = ExtResource("1_6sd6r")
-fromNode = 1
-toNode = 7
-
-[sub_resource type="Resource" id="Resource_s7c0i"]
+[sub_resource type="Resource" id="Resource_5j5ky"]
 script = ExtResource("2_s18b8")
 NodeType = 2
 DNodeId = 281474976710656
 EditorPos = Vector2(-260, 720)
-EditorSize = Vector2(222, 171.00049)
+EditorSize = Vector2(352, 194.00006)
 
-[sub_resource type="Resource" id="Resource_lrd7n"]
+[sub_resource type="Resource" id="Resource_d5tal"]
 script = ExtResource("2_s18b8")
 NodeType = 2
 DNodeId = 281474976710656
 EditorPos = Vector2(-260, 720)
-EditorSize = Vector2(222, 171.00049)
+EditorSize = Vector2(352, 194.00006)
 
-[sub_resource type="Resource" id="Resource_3sqfu"]
+[sub_resource type="Resource" id="Resource_8dkci"]
 script = ExtResource("2_s18b8")
 Content = "This is a demo for the dialogue editor."
 Speaker = "Sign"
@@ -99,7 +99,7 @@ DNodeId = 281474976710657
 EditorPos = Vector2(400, 620)
 EditorSize = Vector2(659.9999, 360.00073)
 
-[sub_resource type="Resource" id="Resource_a5pc5"]
+[sub_resource type="Resource" id="Resource_2afuy"]
 script = ExtResource("2_s18b8")
 Content = "In this example, we detect equipped armor."
 Speaker = "Sign"
@@ -108,7 +108,7 @@ DNodeId = 281474976710658
 EditorPos = Vector2(1560, -80)
 EditorSize = Vector2(699.9995, 320.00043)
 
-[sub_resource type="Resource" id="Resource_nkg52"]
+[sub_resource type="Resource" id="Resource_75xkh"]
 script = ExtResource("2_s18b8")
 NodeType = 3
 Content = "Make enemies friendly."
@@ -116,39 +116,39 @@ DNodeId = 281479271677954
 EditorPos = Vector2(2980, 320)
 EditorSize = Vector2(480, 339.99963)
 
-[sub_resource type="Resource" id="Resource_012ho"]
+[sub_resource type="Resource" id="Resource_f2m6o"]
 script = ExtResource("2_s18b8")
 NodeType = 1
 DNodeId = 281479271743490
 Action = ExtResource("4_6cbt5")
 EditorPos = Vector2(3660, 640)
-EditorSize = Vector2(456, 194)
+EditorSize = Vector2(456.00024, 257)
 
-[sub_resource type="Resource" id="Resource_bn8v4"]
+[sub_resource type="Resource" id="Resource_xcja8"]
 script = ExtResource("2_s18b8")
 NodeType = 3
 Content = "Override sign hostility."
 DNodeId = 281483566710786
 EditorPos = Vector2(3040, 1060)
-EditorSize = Vector2(500, 319.99988)
+EditorSize = Vector2(500, 320)
 
-[sub_resource type="Resource" id="Resource_dpfmd"]
+[sub_resource type="Resource" id="Resource_5r2cy"]
 script = ExtResource("2_s18b8")
 NodeType = 1
 DNodeId = 281483566776322
 Action = ExtResource("5_nfbxk")
 EditorPos = Vector2(3700, 1060)
-EditorSize = Vector2(456.00024, 194.00012)
+EditorSize = Vector2(456.00024, 257)
 
-[sub_resource type="Resource" id="Resource_blcjn"]
+[sub_resource type="Resource" id="Resource_5p0oh"]
 script = ExtResource("2_s18b8")
 NodeType = 3
 Content = "Exit"
 DNodeId = 281487861743618
 EditorPos = Vector2(3080, 1600)
-EditorSize = Vector2(380.00085, 340.00012)
+EditorSize = Vector2(380.00067, 340.00012)
 
-[sub_resource type="Resource" id="Resource_60pam"]
+[sub_resource type="Resource" id="Resource_0quph"]
 script = ExtResource("2_s18b8")
 Content = "We can also check to see if a given item is in your inventory."
 Speaker = "Sign"
@@ -156,11 +156,11 @@ Addressee = "Player"
 DNodeId = 281487861743619
 Condition = ExtResource("6_3ynid")
 EditorPos = Vector2(1460, -940)
-EditorSize = Vector2(879.9996, 499.99933)
+EditorSize = Vector2(879.99963, 499.9994)
 
 [resource]
 script = ExtResource("3_h7dhw")
-Nodes = [SubResource("Resource_lrd7n"), SubResource("Resource_3sqfu"), SubResource("Resource_a5pc5"), SubResource("Resource_nkg52"), SubResource("Resource_012ho"), SubResource("Resource_bn8v4"), SubResource("Resource_dpfmd"), SubResource("Resource_blcjn"), SubResource("Resource_60pam")]
-EntryPoints = [SubResource("Resource_s7c0i")]
-Connections = [SubResource("Resource_3af4n"), SubResource("Resource_3bgdq"), SubResource("Resource_5hirs"), SubResource("Resource_7id2j"), SubResource("Resource_p0csy"), SubResource("Resource_wrtag"), SubResource("Resource_brta4"), SubResource("Resource_ljbn8"), SubResource("Resource_43jlr"), SubResource("Resource_dfnxr"), SubResource("Resource_5spxh"), SubResource("Resource_7u07a"), SubResource("Resource_e81q4"), SubResource("Resource_sbcj4")]
+Nodes = Array[ExtResource("2_s18b8")]([SubResource("Resource_d5tal"), SubResource("Resource_8dkci"), SubResource("Resource_2afuy"), SubResource("Resource_75xkh"), SubResource("Resource_f2m6o"), SubResource("Resource_xcja8"), SubResource("Resource_5r2cy"), SubResource("Resource_5p0oh"), SubResource("Resource_0quph")])
+EntryPoints = Array[ExtResource("2_s18b8")]([SubResource("Resource_5j5ky")])
+Connections = Array[ExtResource("1_6sd6r")]([SubResource("Resource_ygft4"), SubResource("Resource_0bit8"), SubResource("Resource_6cbt5"), SubResource("Resource_nfbxk"), SubResource("Resource_3ynid"), SubResource("Resource_dn4y3"), SubResource("Resource_lnc8t"), SubResource("Resource_kpxlu"), SubResource("Resource_8a1y7"), SubResource("Resource_2g60y"), SubResource("Resource_lrrai"), SubResource("Resource_0tuv5"), SubResource("Resource_ldvex"), SubResource("Resource_xprpo")])
 metadata/_custom_type_script = "uid://cmw85ukaae1eh"

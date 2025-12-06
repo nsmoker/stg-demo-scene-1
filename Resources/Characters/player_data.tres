@@ -220,6 +220,5 @@ script = ExtResource("4_rgtfi")
 CharacterName = "Player"
 BaseAttributes = SubResource("Resource_1lm1u")
 BaseSkills = SubResource("Resource_jhnre")
-Speed = 50.0
 StartingEquipment = SubResource("Resource_tvgtd")
 metadata/_custom_type_script = "uid://cng8hqptg2rbu"
