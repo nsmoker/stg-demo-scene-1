@@ -211,8 +211,8 @@ public partial class DialogueController : ScrollContainer
                 AutowrapMode = TextServer.AutowrapMode.WordSmart,
                 JustificationFlags = TextServer.JustificationFlag.Kashida | TextServer.JustificationFlag.WordBound,
                 AutowrapTrimFlags = TextServer.LineBreakFlag.TrimStartEdgeSpaces | TextServer.LineBreakFlag.TrimEndEdgeSpaces,
-                ClipText = true,
-                TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis,
+                ClipText = false,
+                TextOverrunBehavior = TextServer.OverrunBehavior.NoTrimming,
                 MouseFilter = MouseFilterEnum.Stop
             };
             choiceLabel.MouseEntered += () =>

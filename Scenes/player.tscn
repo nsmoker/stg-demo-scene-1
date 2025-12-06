@@ -50,7 +50,6 @@ zoom = Vector2(5.88, 5.88)
 
 [node name="DialogueDisplay" type="ScrollContainer" parent="."]
 process_mode = 3
-visible = false
 z_index = 1
 offset_left = -163.0
 offset_top = 3.0
