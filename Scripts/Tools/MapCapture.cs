@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using ArkhamHunters.Scripts;
 using Godot;
 
 [Tool]
@@ -8,7 +9,6 @@ public partial class MapCapture : EditorScript
 {
     public override async void _Run()
     {
-        Dictionary<ulong, bool> WasVisible = [];
         var mapCaptureViewport = new SubViewport
         {
             Size = new Vector2I(800, 800),
@@ -22,7 +22,14 @@ public partial class MapCapture : EditorScript
         var sceneRect = new Rect2();
         sceneDup.FindChildren("*", recursive: true).OfType<CollisionShape2D>().ToList().ForEach(n =>
         {
-            WasVisible[n.GetInstanceId()] = n.Visible;
+            n.Visible = false;
+        });
+        sceneDup.FindChildren("*", recursive: true).OfType<Camera2D>().ToList().ForEach(n =>
+        {
+            n.Visible = false;
+        });
+        sceneDup.FindChildren("*", recursive: true).OfType<CharacterBody2D>().ToList().ForEach(n =>
+        {
             n.Visible = false;
         });
         sceneDup.FindChildren("*", recursive: true).ToList().ForEach(n =>
