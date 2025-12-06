@@ -240,7 +240,10 @@ public partial class DialogueController : ScrollContainer
             _controller = controller;
             _node = node;
 
-            var choices = controller._conversation.GetContinuationsForNode(node).Where(x => x.NodeType == EverydayDialogueEditor.DialogueNodeType.PlayerResponse).ToList();
+            var choices = controller._conversation.GetContinuationsForNode(node).Where(x => 
+                {   
+                    return x.NodeType == EverydayDialogueEditor.DialogueNodeType.PlayerResponse && (x.Condition == null || x.Condition.Evaluate());
+                }).ToList();
             for (int i = 0; i < choices.Count; ++i)
             {
                 AddChoiceLabel(controller, choices[i], i);
