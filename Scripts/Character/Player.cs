@@ -282,16 +282,12 @@ public partial class Player : Character
 	[Export]
 	private FactionTable _factionTable;
 
-	[Export]
-	public Quest StartingQuest;
-
     public override void _Ready()
 	{
 		base._Ready();
 		CombatLog.Initialize();
 		FactionSystem.Initialize(_factionTable);
 		HostilitySystem.HostilityChangeHandlers += OnHostilityChanged;
-		QuestSystem.AddQuest(StartingQuest);
 		SpriteAnim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_dialogueDisplay = GetNode<DialogueController>("DialogueDisplay");
 		_interactableRange = GetNode<Area2D>("InteractableRange");
