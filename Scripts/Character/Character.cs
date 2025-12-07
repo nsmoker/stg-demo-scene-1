@@ -52,7 +52,7 @@ public partial class Character : CharacterBody2D
     private int _patrolLegIndex;
     private double _patrolLegProgress = 0;
 
-    private Area2D _senseArea;
+    protected Area2D _senseArea;
 
     private AbilityMenu _combatInteractionMenu;
 
@@ -311,6 +311,7 @@ public partial class Character : CharacterBody2D
         CharacterSystem.SetInstance(CharacterData.ResourcePath, this);
         State = new PatrolState();
         _senseArea = GetNode<Area2D>("SenseArea");
+        
         _combatInteractionMenu = GetNode<AbilityMenu>("CombatInteractionMenu");
         _combatInteractionMenu.Visible = false;
         _basicAttack = new BasicAttack();

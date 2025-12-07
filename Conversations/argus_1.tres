@@ -113,7 +113,7 @@ Addressee = "Player"
 DNodeId = 2
 LinkDNodeId = 4294967300
 EditorPos = Vector2(2520, 140)
-EditorSize = Vector2(400.00342, 360.00183)
+EditorSize = Vector2(400.00342, 360.0018)
 
 [sub_resource type="Resource" id="Resource_cs57e"]
 script = ExtResource("2_dm36e")
@@ -130,7 +130,7 @@ NodeType = 3
 Content = "Are you in need of assistance?"
 DNodeId = 4294967299
 EditorPos = Vector2(1720, 140)
-EditorSize = Vector2(639.9978, 360.00232)
+EditorSize = Vector2(639.9978, 360.0023)
 
 [sub_resource type="Resource" id="Resource_w8wmo"]
 script = ExtResource("2_dm36e")
@@ -149,7 +149,7 @@ Addressee = "Player"
 DNodeId = 4294967301
 LinkDNodeId = 8589934599
 EditorPos = Vector2(5740, -140)
-EditorSize = Vector2(600.00195, 340)
+EditorSize = Vector2(600.00195, 340.00003)
 
 [sub_resource type="Resource" id="Resource_mjyhw"]
 script = ExtResource("2_dm36e")
@@ -157,7 +157,7 @@ NodeType = 3
 Content = "Just tell me what you want."
 DNodeId = 8589934597
 EditorPos = Vector2(5040, -140)
-EditorSize = Vector2(479.98633, 359.99878)
+EditorSize = Vector2(479.98633, 359.9988)
 
 [sub_resource type="Resource" id="Resource_5v0ru"]
 script = ExtResource("2_dm36e")
@@ -241,7 +241,7 @@ NodeType = 1
 DNodeId = 281500746645512
 Action = ExtResource("4_tfaht")
 EditorPos = Vector2(5680, 1740)
-EditorSize = Vector2(456.00415, 257.00244)
+EditorSize = Vector2(456.00415, 257.0025)
 
 [sub_resource type="Resource" id="Resource_mkpte"]
 script = ExtResource("2_dm36e")
@@ -251,7 +251,7 @@ Addressee = "Player"
 DNodeId = 281500746645513
 LinkDNodeId = 8589934599
 EditorPos = Vector2(6240, 1740)
-EditorSize = Vector2(700.0033, 400.00366)
+EditorSize = Vector2(700.0033, 400.00372)
 
 [resource]
 script = ExtResource("3_7gpfp")

@@ -47,6 +47,6 @@ EditorSize = Vector2(456.0041, 257.00104)
 
 [resource]
 script = ExtResource("3_g52o5")
-Nodes = Array[ExtResource("2_ra1qc")]([SubResource("Resource_01832"), SubResource("Resource_ba4j5"), SubResource("Resource_tsc2i")])
-EntryPoints = Array[ExtResource("2_ra1qc")]([SubResource("Resource_pv6v2")])
-Connections = Array[ExtResource("1_cay0w")]([SubResource("Resource_ra1qc"), SubResource("Resource_g52o5")])
+Nodes = [SubResource("Resource_01832"), SubResource("Resource_ba4j5"), SubResource("Resource_tsc2i")]
+EntryPoints = [SubResource("Resource_pv6v2")]
+Connections = [SubResource("Resource_ra1qc"), SubResource("Resource_g52o5")]

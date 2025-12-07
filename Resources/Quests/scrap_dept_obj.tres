@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="QuestObjectiveData" load_steps=2 format=3 uid="uid://blaxgtyca6lk4"]
+
+[ext_resource type="Script" uid="uid://h2oxb32h0inw" path="res://Scripts/Resources/QuestObjectiveData.cs" id="1_obys7"]
+
+[resource]
+script = ExtResource("1_obys7")
+metadata/_custom_type_script = "uid://h2oxb32h0inw"

@@ -247,7 +247,6 @@ public partial class Player : Character
 	private InventoryDisplay _inventoryDisplay;
 	private JournalDisplay _journalDisplay;
 	private IInteractable _lastBadgedInteractable;
-	private Area2D _senseArea;
 
 	private PanelContainer _mapDisplay;
 
@@ -419,5 +418,10 @@ public partial class Player : Character
 	private void OnConversationEnded(Conversation conversation)
 	{
 		State = new NavigationState();
+	}
+
+	public DialogueController GetDialogueController()
+	{
+		return _dialogueDisplay;
 	}
 }
