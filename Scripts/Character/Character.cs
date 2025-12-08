@@ -58,180 +58,6 @@ public partial class Character : CharacterBody2D
 
     protected BasicAttack _basicAttack;
 
-    private float _timeSinceLastAttack = 0.0f;
-
-    private class CombatState : ICharacterState
-    {
-        private HashSet<string> _hostiles = [];
-        private Character _self;
-
-        public CombatState(Character character)
-        {
-            _self = character;
-            foreach (var body in character._senseArea.GetOverlappingBodies())
-            {
-                if (body is Character other && HostilitySystem.GetHostility(character.CharacterData.ResourcePath, other.CharacterData.ResourcePath))
-                {
-                    _hostiles.Add(other.CharacterData.ResourcePath);
-                }
-            }
-            character._senseArea.BodyEntered += CharacterSensed;
-            character._senseArea.BodyExited += CharacterLeftSense;
-        }
-
-        public void Process(double delta, Character character)
-        {
-            if (_hostiles.Count == 0)
-            {
-                character.SetState(new PatrolState());
-            }
-            else
-            {
-                var target = _hostiles
-                    .Select(id => CharacterSystem.GetInstance(id))
-                    .OrderBy(t => GetTargetPriority(character, t))
-                    .FirstOrDefault();
-                
-                if (target != null)
-                {
-                    character.State = new AttackState(target, _self.CharacterData.Abilities.OrderByDescending(x => x.TargetDamage).FirstOrDefault());
-                }
-            }
-        }
-
-        public void PhysicsProcess(double delta, Character character)
-        {
-            
-        }
-
-        public static float GetTargetPriority(Character character, Character target)
-        {
-            var weaponRange = character.GetEquipmentSet().Weapon.WeaponStats.Range;
-            var toTarget = target.Position - character.Position;
-            var rangePerc = toTarget.Length() / weaponRange;
-            var hpPercent = (float)target.CharacterData.CurrentHitpoints / target.CharacterData.MaxHitpoints;
-
-            return hpPercent + rangePerc * 1.5f;
-        }
-
-        public void CharacterSensed(Node2D body)
-        {
-            if (body is Character sensedCharacter)
-            {
-                var sensedId = sensedCharacter.CharacterData.ResourcePath;
-                if (HostilitySystem.GetHostility(_self.CharacterData.ResourcePath, sensedId))
-                {
-                    _hostiles.Add(sensedId);
-                }
-            }
-        }
-
-        public void CharacterLeftSense(Node2D body)
-        {
-            if (body is Character sensedCharacter)
-            {
-                var sensedId = sensedCharacter.CharacterData.ResourcePath;
-                _hostiles.Remove(sensedId);
-            }
-        }
-    }
-
-    private class PursuitState : ICharacterState
-	{
-		private Character _target;
-		private Ability _ability;
-
-		public PursuitState(Character character, Character target, Ability ability)
-		{
-			_target = target;
-			_ability = ability;
-            var agent = character.GetNode<NavigationAgent2D>("NavigationAgent2D");
-
-            agent.VelocityComputed += (safeVelocity) =>
-			{
-				OnVelocityComputed(character, safeVelocity.LimitLength(character.CharacterData.Speed));
-			};
-
-			agent.TargetPosition = target.GetClosestOnCollSurface(character.Position);
-			agent.TargetDesiredDistance = _ability.Range; 
-		}
-
-		public void Process(double delta, Character character)
-		{
-		}
-
-		public void PhysicsProcess(double delta, Character character)
-		{
-			var navAgent = character.GetNode<NavigationAgent2D>("NavigationAgent2D");
-			// Do not query when the map has never synchronized and is empty.
-			if (NavigationServer2D.MapGetIterationId(navAgent.GetNavigationMap()) == 0)
-			{
-				return;
-			}
-
-			if (navAgent.IsNavigationFinished())
-			{
-				if (_ability != null)
-				{
-					character.State = new AttackState(_target, _ability);
-				}
-				return;
-			}
-
-            navAgent.TargetPosition = _target.GetClosestOnCollSurface(character.Position);
-
-			Vector2 nextPathPosition = navAgent.GetNextPathPosition();
-			Vector2 newVelocity = character.GlobalPosition.DirectionTo(nextPathPosition) * character.CharacterData.Speed;
-			if (navAgent.AvoidanceEnabled)
-			{
-				navAgent.Velocity = newVelocity;
-			}
-			else
-			{
-				OnVelocityComputed(character, newVelocity);
-			}
-		}
-
-		private void OnVelocityComputed(Character character, Vector2 safeVelocity)
-		{
-			character.Velocity = safeVelocity;
-			character.MoveAndSlide();
-		}
-    }
-
-    public class AttackState : ICharacterState
-	{
-		private readonly Character _target;
-		private readonly Ability _ability;
-
-		public AttackState(Character target, Ability ability)
-		{
-			_target = target;
-			_ability = ability;
-		}
-
-		public void Process(double delta, Character character)
-		{
-
-		}
-
-		public void PhysicsProcess(double delta, Character character)
-		{
-			var distance = character.GlobalPosition.DistanceTo(_target.GetClosestOnCollSurface(character.Position));
-			if (distance > _ability.Range)
-			{
-				character.State = new PursuitState(character, _target, _ability);
-			}
-			else if (character._timeSinceLastAttack >= _ability.Cooldown)
-			{
-                character._timeSinceLastAttack = 0.0f;
-				CombatSystem.UseAbility(_ability, character, _target);
-				character.State = new CombatState(character);
-			}
-		}
-	}
-
-
     private class PatrolState : ICharacterState
     {
         public void Process(double delta, Character character)
@@ -257,15 +83,6 @@ public partial class Character : CharacterBody2D
                 if (currentPatrolLeg.Direction.Y < 0)
                 {
                     character.SpriteAnim.Play("walk_south");
-                }
-            }
-
-            foreach (var body in character._senseArea.GetOverlappingBodies())
-            {
-                if (body is Character other && HostilitySystem.GetHostility(character.CharacterData.ResourcePath, other.CharacterData.ResourcePath))
-                {
-                    character.State = new CombatState(character);
-                    return;
                 }
             }
         }
@@ -322,7 +139,6 @@ public partial class Character : CharacterBody2D
 
     public override void _Process(double delta)
     {
-        _timeSinceLastAttack += (float)delta;
         State.Process(delta, this);
     }
 

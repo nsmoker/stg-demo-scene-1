@@ -356,7 +356,6 @@ public partial class Player : Character
                         if (ability != null)
                         {
                             GetTree().Paused = false;
-                            SetState(new AttackState(enemy, ability));
                         }
                     };
 
@@ -382,7 +381,6 @@ public partial class Player : Character
 					if (ability != null)
 					{
 						GetTree().Paused = false;
-						SetState(new AttackState(character, ability));
 					}
 				};
 
