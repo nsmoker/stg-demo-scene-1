@@ -35,8 +35,8 @@ font_size = 10
 [sub_resource type="CircleShape2D" id="CircleShape2D_o8msw"]
 radius = 25.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_irwaj"]
-radius = 190.1
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gymyn"]
+size = Vector2(306, 163)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8erm5"]
 atlas = ExtResource("7_3smsa")
@@ -111,9 +111,11 @@ visible = false
 shape = SubResource("CircleShape2D_o8msw")
 
 [node name="SenseArea" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea"]
-shape = SubResource("CircleShape2D_irwaj")
+position = Vector2(-2, -1.5)
+shape = SubResource("RectangleShape2D_gymyn")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 radius = 16.0

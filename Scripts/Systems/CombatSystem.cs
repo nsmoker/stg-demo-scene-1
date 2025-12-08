@@ -2,6 +2,8 @@ using ArkhamHunters.Scripts;
 using ArkhamHunters.Scripts.Abilities;
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public struct AbilityUseEvent
 {
@@ -14,11 +16,45 @@ public struct AbilityUseEvent
     public int areaDamage;
 }
 
+public struct CombatStartEvent
+{
+    public HashSet<string> participants;
+    public CharacterData initiator;
+}
+
 public static class CombatSystem
 {
+    private static HashSet<string> _currentCombatants = [];
+
     public delegate void AbilityEventHandler(AbilityUseEvent e);
+    public delegate void CombatStartHandler(CombatStartEvent e);
+    public delegate void CharacterJoinedCombatHandler(CharacterData c);
 
     public static AbilityEventHandler abilityEventHandler;
+    public static CombatStartHandler combatStartHandler;
+    public static CharacterJoinedCombatHandler characterJoinedCombatHandler;
+
+    public static void BeginCombat(CharacterData initiator, List<CharacterData> opponents)
+    {
+        if (_currentCombatants.Count == 0)
+        {
+            _currentCombatants.UnionWith(opponents.Select(opp => opp.ResourcePath));
+            _currentCombatants.Add(initiator.ResourcePath);
+
+            CombatStartEvent e = new()
+            {
+                initiator = initiator,
+                participants = _currentCombatants
+            };
+            combatStartHandler?.Invoke(e);
+        }
+    }
+
+    public static void JoinCombat(CharacterData toJoin)
+    {
+        _currentCombatants.Add(toJoin.ResourcePath);
+        characterJoinedCombatHandler?.Invoke(toJoin);
+    }
 
     // Attempt to use an ability. Only call this function from PhysicsProcess.
     public static void UseAbility(Ability ability, Character attacker, Character target)

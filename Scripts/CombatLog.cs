@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 
 public static class CombatLog
 {
@@ -8,6 +9,8 @@ public static class CombatLog
         HealthSystem.DamageEventHandlers += OnDamageEvent;
         HealthSystem.DeathEventHandlers += OnDeathEvent;
         CombatSystem.abilityEventHandler += OnAbilityUse;
+        CombatSystem.characterJoinedCombatHandler += OnCombatJoined;
+        CombatSystem.combatStartHandler += OnCombatStarted;
         QuestSystem.OnQuestUpdated += OnQuestUpdate;
     }
 
@@ -29,5 +32,15 @@ public static class CombatLog
     public static void OnQuestUpdate(Quest quest)
     {
         GD.Print($"New journal entry: {quest.Title}: {quest.GetCurrentStage().Title}");
+    }
+
+    public static void OnCombatStarted(CombatStartEvent e)
+    {
+        GD.Print($"Combat started by {e.initiator.CharacterName}.");
+    }
+
+    public static void OnCombatJoined(CharacterData joiner)
+    {
+        GD.Print($"{joiner.CharacterName} joined combat.");
     }
 }

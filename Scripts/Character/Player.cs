@@ -5,6 +5,7 @@ using System.Linq;
 using ArkhamHunters.Scripts;
 using ArkhamHunters.Scripts.Items;
 using Container = ArkhamHunters.Scripts.Container;
+using System.IO;
 
 public partial class Player : Character
 {
@@ -235,7 +236,99 @@ public partial class Player : Character
         }
     }
 
-	private DialogueController _dialogueDisplay;
+    private class PlayerCombatState : ICharacterState
+    {
+		private Player _player;
+		public PlayerCombatState(Player player)
+        {
+			_player = player;
+            player.Draw += OnPlayerDraw;
+			player.QueueRedraw();
+        }
+
+		private float ComputePathLength(Vector2[] path, Vector2 origin)
+        {
+            Vector2 start = origin;
+			float len = 0;
+			foreach (var vertex in path)
+            {
+                len += vertex.DistanceTo(start);
+				start = vertex;
+            }
+
+			return len;
+        }
+
+        public void PhysicsProcess(double delta, Character character)
+        {
+            if (Input.IsActionJustPressed("Combat Interact"))
+            {
+				var path = NavigationServer2D.MapGetPath(_player._navRegion.GetNavigationMap(), _player.Position, _player.GetGlobalMousePosition(), true, 0x1u);
+				var len = ComputePathLength(path, character.GlobalPosition);
+				if (len <= _player.CharacterData.MovementRange)
+				{
+                	_player.State = new PlayerCombatNavState(_player, path);
+					_player.Draw -= OnPlayerDraw;
+				}
+            }
+			_player.QueueRedraw();
+        }
+
+        public void Process(double delta, Character character) { }
+
+		public void OnPlayerDraw()
+        {
+			_player.DrawCircle(new Vector2(0.0f, 2.0f), 8.0f, new Color(0.0f, 0.0f, 1.0f), filled: false);			
+
+			// Draw the path to the player's hovered location.
+			var path = NavigationServer2D.MapGetPath(_player._navRegion.GetNavigationMap(), _player.GlobalPosition, _player.GetGlobalMousePosition(), true, 0x1u);
+			var len = ComputePathLength(path, _player.GlobalPosition);
+			var inRange = len <= _player.CharacterData.MovementRange;
+			var pathTransformed = path.Select(_player.ToLocal).ToArray();
+			_player.DrawPolyline(pathTransformed, inRange ? new Color(1.0f, 1.0f, 1.0f) : new Color(1.0f, 0.0f, 0.0f));
+        }
+    }
+
+    private class PlayerCombatNavState : ICharacterState
+    {
+		private Vector2[] _path;
+		private int _currentPoint = 0;
+		private Player _player;
+
+		public PlayerCombatNavState(Player player, Vector2[] path)
+        {
+			_player = player;
+			_path = path;
+        }
+
+        public void PhysicsProcess(double delta, Character character)
+        {
+			var targetPoint = _path[_currentPoint];
+			if (_player.Position.DistanceTo(targetPoint) <= 1.0f)
+            {
+				_player.Position = targetPoint;
+                if (_currentPoint + 1 < _path.Length)
+                {
+                    _currentPoint += 1;
+                }
+				else
+                {
+                    _player.SetState(new PlayerCombatState(_player));
+                }
+            }
+			else
+			{
+				var targetVector = targetPoint - _player.Position;
+				var vel = targetVector.Normalized() * _player.CharacterData.Speed;
+				_player.Velocity = vel;
+				_player.MoveAndSlide();
+			}
+        }
+
+        public void Process(double delta, Character character) { }
+    }
+
+    private DialogueController _dialogueDisplay;
 	private Area2D _interactableRange;
 	private ContainerDisplay _containerDisplay;
 	private InventoryDisplay _inventoryDisplay;
@@ -246,7 +339,7 @@ public partial class Player : Character
 
 	private Dictionary<Character, Action> _combatInteractions = new();
 
-	private NavigationAgent2D _navigationAgent;
+	public NavigationAgent2D NavigationAgent;
 
 	private List<IInteractable> GetInteractablesInRange()
 	{
@@ -276,6 +369,9 @@ public partial class Player : Character
 	[Export]
 	private FactionTable _factionTable;
 
+	[Export]
+	private NavigationRegion2D _navRegion;
+
     public override void _Ready()
 	{
 		base._Ready();
@@ -292,7 +388,7 @@ public partial class Player : Character
 		_mapDisplay = GetNode<PanelContainer>("MapDisplay");
 		_senseArea = GetNode<Area2D>("SenseArea");
 
-		_navigationAgent = GetNode<NavigationAgent2D>("NavigationAgent2D");
+		NavigationAgent = GetNode<NavigationAgent2D>("NavigationAgent2D");
 
 		State = new NavigationState();
 		_senseArea.BodyEntered += OnBodyEnteredSenseArea;
@@ -369,39 +465,12 @@ public partial class Player : Character
 	{
 		if (body is Character character && HostilitySystem.GetHostility(character.CharacterData.ResourcePath, CharacterData.ResourcePath))
 		{
-			var combatMenu = character.GetCombatInteractionMenu();
-			if (combatMenu != null)
-			{
-				combatMenu.Visible = true;
-				combatMenu.SetAbilities(CharacterData.Abilities);
-				combatMenu.ProcessMode = ProcessModeEnum.Always;
-				_combatInteractions[character] = () =>
-				{
-					var ability = combatMenu.GetCurrentAbility();
-					if (ability != null)
-					{
-						GetTree().Paused = false;
-					}
-				};
-
-				combatMenu._activationButton.Pressed += _combatInteractions[character];
-			}
+			CombatSystem.BeginCombat(CharacterData, [character.CharacterData]);
 		}
 	}
 	
 	private void OnBodyExitedSenseArea(Node2D body)
 	{
-		if (body is Character character && HostilitySystem.GetHostility(character.CharacterData.ResourcePath, CharacterData.ResourcePath))
-		{
-			var combatMenu = character.GetCombatInteractionMenu();
-			if (combatMenu != null)
-			{
-				combatMenu.Visible = false;
-				combatMenu.SetAbilities([]);
-				combatMenu._activationButton.Pressed -= _combatInteractions[character];
-				_combatInteractions.Remove(character);
-			}
-		}
 	}
 
 	private void OnConversationEnded(Conversation conversation)
@@ -418,4 +487,20 @@ public partial class Player : Character
 	{
 		return _dialogueDisplay;
 	}
+
+	public override void OnCombatStarted(CombatStartEvent e)
+    {
+        if (e.participants.Contains(CharacterData.ResourcePath))
+        {
+            State = new PlayerCombatState(this);
+        }
+    }
+
+	public override void OnCombatJoined(CharacterData joiner)
+    {
+        if (joiner.ResourcePath.Equals(CharacterData.ResourcePath))
+        {
+            State = new PlayerCombatState(this);
+        }
+    }
 }

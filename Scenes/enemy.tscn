@@ -341,6 +341,7 @@ sprite_frames = SubResource("SpriteFrames_q3yqt")
 animation = &"walk_west"
 
 [node name="SenseArea" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea"]
 shape = SubResource("CircleShape2D_wxkh7")

@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=42 format=3 uid="uid://cem5hy2763dx"]
+[gd_resource type="TileSet" load_steps=43 format=3 uid="uid://cem5hy2763dx"]
 
 [ext_resource type="Texture2D" uid="uid://b54j5wdw56gj0" path="res://Sprites/Images/ts_outerworld.png" id="1_n2xnu"]
 [ext_resource type="Texture2D" uid="uid://catc1nkmnv3xq" path="res://Sprites/Images/ts_extras.png" id="2_d3eek"]
@@ -23,6 +23,12 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8
 agent_radius = 0.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_kpksa"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_h183h"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
@@ -161,6 +167,7 @@ texture = ExtResource("1_n2xnu")
 8:0/0 = 0
 0:1/0 = 0
 1:1/0 = 0
+1:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_h183h")
 2:1/0 = 0
 3:1/0 = 0
 4:1/0 = 0

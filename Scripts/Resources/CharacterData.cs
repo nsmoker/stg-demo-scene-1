@@ -38,4 +38,7 @@ public partial class CharacterData : Resource
 
     [Export]
     public EquipmentSet StartingEquipment = new();
+
+    [Export]
+    public float MovementRange = 20.0f;
 }

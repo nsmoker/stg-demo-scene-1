@@ -106,6 +106,32 @@ public partial class Character : CharacterBody2D
         }
     }
 
+    private class CombatState : ICharacterState
+    {
+        Character _c;
+        public CombatState(Character character)
+        {
+            _c = character;
+            _c.Draw += OnCharacterDraw;
+            _c.QueueRedraw();
+        }
+
+        public void PhysicsProcess(double delta, Character character)
+        {
+            
+        }
+
+        public void Process(double delta, Character character)
+        {
+            
+        }
+
+        public void OnCharacterDraw()
+        {
+            _c.DrawCircle(new Vector2(0.0f, 2.0f), 8.0f, new Color(1.0f, 0.0f, 0.0f), filled: false);
+        }
+    }
+
     public AbilityMenu GetCombatInteractionMenu()
     {
         return _combatInteractionMenu;
@@ -126,6 +152,8 @@ public partial class Character : CharacterBody2D
         FactionSystem.SetFaction(CharacterData.ResourcePath, CharacterData.InitialFaction);
         InventorySystem.SetInventory(CharacterData.ResourcePath, [.. InitialInventory]);
         CharacterSystem.SetInstance(CharacterData.ResourcePath, this);
+        CombatSystem.combatStartHandler += OnCombatStarted;
+		CombatSystem.characterJoinedCombatHandler += OnCombatJoined;
         State = new PatrolState();
         _senseArea = GetNode<Area2D>("SenseArea");
         
@@ -198,5 +226,21 @@ public partial class Character : CharacterBody2D
     public Area2D GetSenseArea()
     {
         return _senseArea;
+    }
+
+    public virtual void OnCombatStarted(CombatStartEvent e)
+    {
+        if (e.participants.Contains(CharacterData.ResourcePath))
+        {
+            State = new CombatState(this);
+        }
+    }
+
+    public virtual void OnCombatJoined(CharacterData c)
+    {
+        if (c.ResourcePath.Equals(CharacterData.ResourcePath))
+        {
+            State = new CombatState(this);
+        } 
     }
 }
