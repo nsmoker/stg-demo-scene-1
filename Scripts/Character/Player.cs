@@ -391,7 +391,6 @@ public partial class Player : Character
 		NavigationAgent = GetNode<NavigationAgent2D>("NavigationAgent2D");
 
 		State = new NavigationState();
-		_senseArea.BodyEntered += OnBodyEnteredSenseArea;
 		_senseArea.BodyExited += OnBodyExitedSenseArea;
 		_dialogueDisplay.ConversationEnded += OnConversationEnded;
 		_dialogueDisplay.ConversationBegan += OnConversationStarted;
@@ -458,14 +457,6 @@ public partial class Player : Character
                     combatMenu._activationButton.Pressed += _combatInteractions[enemy];
                 }
             }
-		}
-	}
-
-	private void OnBodyEnteredSenseArea(Node2D body)
-	{
-		if (body is Character character && HostilitySystem.GetHostility(character.CharacterData.ResourcePath, CharacterData.ResourcePath))
-		{
-			CombatSystem.BeginCombat(CharacterData, [character.CharacterData]);
 		}
 	}
 	

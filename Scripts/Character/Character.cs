@@ -156,6 +156,8 @@ public partial class Character : CharacterBody2D
 		CombatSystem.characterJoinedCombatHandler += OnCombatJoined;
         State = new PatrolState();
         _senseArea = GetNode<Area2D>("SenseArea");
+
+        _senseArea.BodyEntered += OnBodyEnteredSenseArea;
         
         _combatInteractionMenu = GetNode<AbilityMenu>("CombatInteractionMenu");
         _combatInteractionMenu.Visible = false;
@@ -226,6 +228,21 @@ public partial class Character : CharacterBody2D
     public Area2D GetSenseArea()
     {
         return _senseArea;
+    }
+
+    public virtual void OnBodyEnteredSenseArea(Node2D body)
+    {
+        if (body is Character character && HostilitySystem.GetHostility(character.CharacterData.ResourcePath, CharacterData.ResourcePath))
+		{
+			if (CombatSystem.IsInCombat(CharacterData))
+			{
+				CombatSystem.JoinCombat(character.CharacterData);
+			}
+			else
+			{
+				CombatSystem.BeginCombat(CharacterData, [character.CharacterData]);
+			}
+		}
     }
 
     public virtual void OnCombatStarted(CombatStartEvent e)

@@ -52,8 +52,20 @@ public static class CombatSystem
 
     public static void JoinCombat(CharacterData toJoin)
     {
-        _currentCombatants.Add(toJoin.ResourcePath);
-        characterJoinedCombatHandler?.Invoke(toJoin);
+        if (_currentCombatants.Add(toJoin.ResourcePath))
+        {
+            characterJoinedCombatHandler?.Invoke(toJoin);
+        }
+    }
+
+    public static HashSet<string> GetCombatants()
+    {
+        return [ .._currentCombatants];
+    }
+
+    public static bool IsInCombat(CharacterData c)
+    {
+        return _currentCombatants.Contains(c.ResourcePath);
     }
 
     // Attempt to use an ability. Only call this function from PhysicsProcess.
