@@ -10,14 +10,7 @@ public partial class Player : Character
 {
 	private class DialogueState : ICharacterState
 	{
-		public DialogueState(IDialogueInteractable dialogueSource, DialogueController display)
-		{
-            display.BeginConversation(dialogueSource.GetDialogue(), dialogueSource.GetEntryPoint());
-		}
-
-		public void Process(double delta, Character character)
-		{
-		}
+		public void Process(double delta, Character character) { }
 
 		public void PhysicsProcess(double delta, Character player) { }
 	}
@@ -95,7 +88,8 @@ public partial class Player : Character
 					{
 						case InteractionType.Dialogue:
 							{
-								player.State = new DialogueState((IDialogueInteractable)closestInteractable, player._dialogueDisplay);
+								var dialogueInteractable = (IDialogueInteractable)closestInteractable;
+								player._dialogueDisplay.BeginConversation(dialogueInteractable.GetDialogue(), dialogueInteractable.GetEntryPoint());
 								break;
 							}
 						case InteractionType.Container:
@@ -282,16 +276,12 @@ public partial class Player : Character
 	[Export]
 	private FactionTable _factionTable;
 
-	[Export]
-	public Quest StartingQuest;
-
     public override void _Ready()
 	{
 		base._Ready();
 		CombatLog.Initialize();
 		FactionSystem.Initialize(_factionTable);
 		HostilitySystem.HostilityChangeHandlers += OnHostilityChanged;
-		QuestSystem.AddQuest(StartingQuest);
 		SpriteAnim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_dialogueDisplay = GetNode<DialogueController>("DialogueDisplay");
 		_interactableRange = GetNode<Area2D>("InteractableRange");
@@ -308,6 +298,7 @@ public partial class Player : Character
 		_senseArea.BodyEntered += OnBodyEnteredSenseArea;
 		_senseArea.BodyExited += OnBodyExitedSenseArea;
 		_dialogueDisplay.ConversationEnded += OnConversationEnded;
+		_dialogueDisplay.ConversationBegan += OnConversationStarted;
 	}
 
 	private void OnInventorySelection(Item item)
@@ -419,6 +410,11 @@ public partial class Player : Character
 	{
 		State = new NavigationState();
 	}
+
+	private void OnConversationStarted(Conversation conversation)
+    {
+        State = new DialogueState();
+    }
 
 	public DialogueController GetDialogueController()
 	{
