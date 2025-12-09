@@ -9,8 +9,23 @@ namespace ArkhamHunters.Scripts;
 [GlobalClass]
 public partial class Character : CharacterBody2D
 {
+    public static float ComputePathLength(Vector2[] path, Vector2 origin)
+    {
+        Vector2 start = origin;
+        float len = 0;
+        foreach (var vertex in path)
+        {
+            len += vertex.DistanceTo(start);
+            start = vertex;
+        }
+
+        return len;
+    }
+
     public CollisionShape2D collider;
     protected AnimatedSprite2D SpriteAnim;
+    public NavigationObstacle2D NavObstacle;
+
     [Export]
     private Godot.Collections.Array<Item> InitialInventory = new();
 
@@ -109,16 +124,29 @@ public partial class Character : CharacterBody2D
     private class CombatState : ICharacterState
     {
         Character _c;
+        bool _isOurTurn = false;
         public CombatState(Character character)
         {
             _c = character;
             _c.Draw += OnCharacterDraw;
+            CombatSystem.TurnHandlers += OnTurnBegin;
             _c.QueueRedraw();
         }
 
         public void PhysicsProcess(double delta, Character character)
         {
-            
+            if (_isOurTurn && CombatSystem.NavReady())
+            {
+                var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), character.GlobalPosition, character.GlobalPosition + new Vector2(32.0f, 0.0f), true, 0x1u);
+				var len = ComputePathLength(path, character.GlobalPosition);
+				if (len <= _c.CharacterData.MovementRange)
+				{
+                	character.State = new CombatNavState(_c, path);
+					CombatSystem.TurnHandlers -= OnTurnBegin;
+					character.Draw -= OnCharacterDraw;
+				}
+            }
+            character.QueueRedraw();
         }
 
         public void Process(double delta, Character character)
@@ -130,6 +158,52 @@ public partial class Character : CharacterBody2D
         {
             _c.DrawCircle(new Vector2(0.0f, 2.0f), 8.0f, new Color(1.0f, 0.0f, 0.0f), filled: false);
         }
+
+        public void OnTurnBegin(CharacterData c)
+        {
+            _isOurTurn = c.ResourcePath.Equals(_c.CharacterData.ResourcePath);
+        }
+    }
+
+    protected class CombatNavState : ICharacterState
+    {
+        Character _character;
+
+        private Vector2[] _path;
+		private int _currentPoint = 0;
+
+		public CombatNavState(Character character, Vector2[] path)
+        {
+			_character = character;
+			_path = path;
+        }
+
+        public void PhysicsProcess(double delta, Character character)
+        {
+			var targetPoint = _path[_currentPoint];
+			if (_character.Position.DistanceTo(targetPoint) <= 1.0f)
+            {
+				_character.Position = targetPoint;
+                if (_currentPoint + 1 < _path.Length)
+                {
+                    _currentPoint += 1;
+                }
+				else
+                {
+                    _character.SetState(_character.GetCombatState());
+					CombatSystem.EndTurn(_character.CharacterData);
+                }
+            }
+			else
+			{
+				var targetVector = targetPoint - _character.Position;
+				var vel = targetVector.Normalized() * _character.CharacterData.Speed;
+				_character.Velocity = vel;
+				_character.MoveAndSlide();
+			}
+        }
+
+        public void Process(double delta, Character character) { }
     }
 
     public AbilityMenu GetCombatInteractionMenu()
@@ -152,8 +226,8 @@ public partial class Character : CharacterBody2D
         FactionSystem.SetFaction(CharacterData.ResourcePath, CharacterData.InitialFaction);
         InventorySystem.SetInventory(CharacterData.ResourcePath, [.. InitialInventory]);
         CharacterSystem.SetInstance(CharacterData.ResourcePath, this);
-        CombatSystem.combatStartHandler += OnCombatStarted;
-		CombatSystem.characterJoinedCombatHandler += OnCombatJoined;
+        CombatSystem.CombatStartHandlers += OnCombatStarted;
+		CombatSystem.CharacterJoinedCombatHandlers += OnCombatJoined;
         State = new PatrolState();
         _senseArea = GetNode<Area2D>("SenseArea");
 
@@ -165,6 +239,7 @@ public partial class Character : CharacterBody2D
 		CharacterData.Abilities.Add(_basicAttack);
         EquipmentSystem.SetEquipment(CharacterData.ResourcePath, CharacterData.StartingEquipment);
         _basicAttack.SetWeapon(CharacterData.StartingEquipment.Weapon);
+        NavObstacle = GetNode<NavigationObstacle2D>("NavigationObstacle2D");
     }
 
     public override void _Process(double delta)
@@ -249,7 +324,7 @@ public partial class Character : CharacterBody2D
     {
         if (e.participants.Contains(CharacterData.ResourcePath))
         {
-            State = new CombatState(this);
+            State = GetCombatState();
         }
     }
 
@@ -257,7 +332,12 @@ public partial class Character : CharacterBody2D
     {
         if (c.ResourcePath.Equals(CharacterData.ResourcePath))
         {
-            State = new CombatState(this);
+            State = GetCombatState();
         } 
+    }
+
+    public virtual ICharacterState GetCombatState()
+    {
+        return new CombatState(this);
     }
 }

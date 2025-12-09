@@ -354,5 +354,6 @@ offset_right = 42.0
 offset_bottom = 43.0
 scale = Vector2(0.5, 0.5)
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-radius = 16.0
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+radius = 8.39
+affect_navigation_mesh = true

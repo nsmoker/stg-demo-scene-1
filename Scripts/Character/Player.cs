@@ -239,35 +239,26 @@ public partial class Player : Character
     private class PlayerCombatState : ICharacterState
     {
 		private Player _player;
+		private bool _isOurTurn;
 		public PlayerCombatState(Player player)
         {
 			_player = player;
             player.Draw += OnPlayerDraw;
+			CombatSystem.TurnHandlers += OnTurnBegin;
+			_isOurTurn = false;
 			player.QueueRedraw();
-        }
-
-		private float ComputePathLength(Vector2[] path, Vector2 origin)
-        {
-            Vector2 start = origin;
-			float len = 0;
-			foreach (var vertex in path)
-            {
-                len += vertex.DistanceTo(start);
-				start = vertex;
-            }
-
-			return len;
         }
 
         public void PhysicsProcess(double delta, Character character)
         {
-            if (Input.IsActionJustPressed("Combat Interact"))
+            if (Input.IsActionJustPressed("Combat Interact") && CombatSystem.NavReady() && _isOurTurn)
             {
-				var path = NavigationServer2D.MapGetPath(_player._navRegion.GetNavigationMap(), _player.Position, _player.GetGlobalMousePosition(), true, 0x1u);
+				var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), _player.GlobalPosition, _player.GetGlobalMousePosition(), true, 0x1u);
 				var len = ComputePathLength(path, character.GlobalPosition);
 				if (len <= _player.CharacterData.MovementRange)
 				{
-                	_player.State = new PlayerCombatNavState(_player, path);
+                	_player.State = new CombatNavState(_player, path);
+					CombatSystem.TurnHandlers -= OnTurnBegin;
 					_player.Draw -= OnPlayerDraw;
 				}
             }
@@ -278,54 +269,27 @@ public partial class Player : Character
 
 		public void OnPlayerDraw()
         {
-			_player.DrawCircle(new Vector2(0.0f, 2.0f), 8.0f, new Color(0.0f, 0.0f, 1.0f), filled: false);			
-
-			// Draw the path to the player's hovered location.
-			var path = NavigationServer2D.MapGetPath(_player._navRegion.GetNavigationMap(), _player.GlobalPosition, _player.GetGlobalMousePosition(), true, 0x1u);
-			var len = ComputePathLength(path, _player.GlobalPosition);
-			var inRange = len <= _player.CharacterData.MovementRange;
-			var pathTransformed = path.Select(_player.ToLocal).ToArray();
-			_player.DrawPolyline(pathTransformed, inRange ? new Color(1.0f, 1.0f, 1.0f) : new Color(1.0f, 0.0f, 0.0f));
-        }
-    }
-
-    private class PlayerCombatNavState : ICharacterState
-    {
-		private Vector2[] _path;
-		private int _currentPoint = 0;
-		private Player _player;
-
-		public PlayerCombatNavState(Player player, Vector2[] path)
-        {
-			_player = player;
-			_path = path;
-        }
-
-        public void PhysicsProcess(double delta, Character character)
-        {
-			var targetPoint = _path[_currentPoint];
-			if (_player.Position.DistanceTo(targetPoint) <= 1.0f)
-            {
-				_player.Position = targetPoint;
-                if (_currentPoint + 1 < _path.Length)
-                {
-                    _currentPoint += 1;
-                }
-				else
-                {
-                    _player.SetState(new PlayerCombatState(_player));
-                }
-            }
-			else
+			if (_isOurTurn)
 			{
-				var targetVector = targetPoint - _player.Position;
-				var vel = targetVector.Normalized() * _player.CharacterData.Speed;
-				_player.Velocity = vel;
-				_player.MoveAndSlide();
+				_player.DrawCircle(new Vector2(0.0f, 2.0f), 8.0f, new Color(0.0f, 0.0f, 1.0f), filled: false);			
+				// Draw the path to the player's hovered location.
+				if (CombatSystem.NavReady())
+				{
+					var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), _player.GlobalPosition, _player.GetGlobalMousePosition(), true, 0x1u);
+					var len = ComputePathLength(path, _player.GlobalPosition);
+					var inRange = len <= _player.CharacterData.MovementRange;
+					var pathTransformed = path.Select(_player.ToLocal).ToArray();
+					float dist = len / 16.0f;
+					_player.DrawPolyline(pathTransformed, inRange ? new Color(1.0f, 1.0f, 1.0f) : new Color(1.0f, 0.0f, 0.0f));
+					_player.DrawString(_player._pathFont, pathTransformed[pathTransformed.Length - 1], $"{dist.ToString("0.00")}m", fontSize: 8);
+				}
 			}
         }
 
-        public void Process(double delta, Character character) { }
+		public void OnTurnBegin(CharacterData taker)
+        {
+            _isOurTurn = taker.ResourcePath.Equals(_player.CharacterData.ResourcePath);
+        }
     }
 
     private DialogueController _dialogueDisplay;
@@ -338,8 +302,6 @@ public partial class Player : Character
 	private PanelContainer _mapDisplay;
 
 	private Dictionary<Character, Action> _combatInteractions = new();
-
-	public NavigationAgent2D NavigationAgent;
 
 	private List<IInteractable> GetInteractablesInRange()
 	{
@@ -370,7 +332,7 @@ public partial class Player : Character
 	private FactionTable _factionTable;
 
 	[Export]
-	private NavigationRegion2D _navRegion;
+	private Font _pathFont;
 
     public override void _Ready()
 	{
@@ -387,8 +349,6 @@ public partial class Player : Character
 		_journalDisplay = GetNode<JournalDisplay>("JournalDisplay");
 		_mapDisplay = GetNode<PanelContainer>("MapDisplay");
 		_senseArea = GetNode<Area2D>("SenseArea");
-
-		NavigationAgent = GetNode<NavigationAgent2D>("NavigationAgent2D");
 
 		State = new NavigationState();
 		_senseArea.BodyExited += OnBodyExitedSenseArea;
@@ -493,5 +453,10 @@ public partial class Player : Character
         {
             State = new PlayerCombatState(this);
         }
+    }
+
+    public override ICharacterState GetCombatState()
+    {
+        return new PlayerCombatState(this);
     }
 }

@@ -117,8 +117,9 @@ visible = false
 position = Vector2(-2, -1.5)
 shape = SubResource("RectangleShape2D_gymyn")
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-radius = 16.0
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+radius = 8.39
+affect_navigation_mesh = true
 
 [node name="CombatInteractionMenu" parent="." instance=ExtResource("8_8erm5")]
 visible = false

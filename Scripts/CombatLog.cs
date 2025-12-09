@@ -8,9 +8,9 @@ public static class CombatLog
     {
         HealthSystem.DamageEventHandlers += OnDamageEvent;
         HealthSystem.DeathEventHandlers += OnDeathEvent;
-        CombatSystem.abilityEventHandler += OnAbilityUse;
-        CombatSystem.characterJoinedCombatHandler += OnCombatJoined;
-        CombatSystem.combatStartHandler += OnCombatStarted;
+        CombatSystem.AbilityEventHandlers += OnAbilityUse;
+        CombatSystem.CharacterJoinedCombatHandlers += OnCombatJoined;
+        CombatSystem.CombatStartHandlers += OnCombatStarted;
         QuestSystem.OnQuestUpdated += OnQuestUpdate;
     }
 

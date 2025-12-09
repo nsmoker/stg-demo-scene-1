@@ -1,6 +1,7 @@
-[gd_scene load_steps=72 format=4 uid="uid://bgk5v73hj7cv0"]
+[gd_scene load_steps=74 format=4 uid="uid://bgk5v73hj7cv0"]
 
 [ext_resource type="TileSet" uid="uid://cem5hy2763dx" path="res://Sprites/Tilesets/placeholder_tile_set.tres" id="1_hpq63"]
+[ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="1_ndsb5"]
 [ext_resource type="PackedScene" uid="uid://gedp1qirf71n" path="res://Scenes/player.tscn" id="2_lkpyc"]
 [ext_resource type="Script" uid="uid://d2xb733mnodrw" path="res://Scripts/InspTileMapLayer.cs" id="2_wbbaj"]
 [ext_resource type="Resource" uid="uid://vbjq48kype7r" path="res://Resources/Constants/faction_table.tres" id="3_vc5ip"]
@@ -24,8 +25,9 @@
 [ext_resource type="Script" uid="uid://cng8hqptg2rbu" path="res://Scripts/Resources/CharacterData.cs" id="21_324pm"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_02uyx"]
-vertices = PackedVector2Array(422, 326, 422, 506, 410, 458, 410, 422, 470, 474, 506, 474, 458, 506, 458, 326, 470, 438, 522, 442, 790, 10, 790, 822, 522, 406, 486, 406, 486, 438, 506, 442, 10, 822, 374, 422, 10, 10, 374, 458)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6), PackedInt32Array(4, 6, 7, 8), PackedInt32Array(9, 10, 11, 5), PackedInt32Array(10, 9, 12), PackedInt32Array(13, 14, 8, 7), PackedInt32Array(5, 15, 9), PackedInt32Array(5, 11, 16, 6), PackedInt32Array(1, 6, 16), PackedInt32Array(0, 3, 17, 18), PackedInt32Array(19, 2, 1, 16), PackedInt32Array(19, 16, 18, 17), PackedInt32Array(0, 18, 10, 7), PackedInt32Array(7, 10, 12, 13)])
+agent_radius = 8.5
+
+[sub_resource type="SystemFont" id="SystemFont_wbbaj"]
 
 [sub_resource type="Resource" id="Resource_auwsv"]
 script = ExtResource("7_wbbaj")
@@ -235,6 +237,7 @@ CurrentHitpoints = 10
 InitialFaction = 1
 Speed = 50.0
 StartingEquipment = SubResource("Resource_fmsty")
+MovementRange = 100.0
 metadata/_custom_type_script = "uid://cng8hqptg2rbu"
 
 [sub_resource type="Resource" id="Resource_wbbaj"]
@@ -254,6 +257,7 @@ InitialFaction = 1
 Speed = 50.0
 PatrolLegs = Array[ExtResource("9_b5i2i")]([SubResource("Resource_wbbaj")])
 StartingEquipment = SubResource("Resource_fmsty")
+MovementRange = 100.0
 metadata/_custom_type_script = "uid://cng8hqptg2rbu"
 
 [node name="CombatGym" type="Node2D"]
@@ -261,6 +265,7 @@ texture_filter = 1
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_02uyx")
+script = ExtResource("1_ndsb5")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="NavigationRegion2D"]
 modulate = Color(0.4955091, 0.4955091, 0.4955091, 1)
@@ -278,16 +283,16 @@ texture_filter = 1
 tile_map_data = PackedByteArray("AAAYABsABQAAAAwAAAAbABUABQAAAAwAAAAbABYABQAAAAwAAAAbABcABQAAAAwAAAAbABgABQAAAAwAAAAbABkABQAAAAwAAAAbABoABQAAAAwAAAAbABsABQAAAAwAAAAbABwABQAAAAwAAAAbAB0ABQAAAAwAAAAbAB4ABQAAAAwAAAAeABwABQAAAAwAAAAfABoABQAAAAwAAAA=")
 tile_set = ExtResource("1_hpq63")
 
-[node name="Player" parent="." node_paths=PackedStringArray("_navRegion") instance=ExtResource("2_lkpyc")]
+[node name="Player" parent="NavigationRegion2D" instance=ExtResource("2_lkpyc")]
 position = Vector2(283, 437)
 _factionTable = ExtResource("3_vc5ip")
-_navRegion = NodePath("../NavigationRegion2D")
+_pathFont = SubResource("SystemFont_wbbaj")
 CharacterData = ExtResource("4_hbowc")
 
-[node name="Enemy" parent="." instance=ExtResource("5_wnxun")]
+[node name="Enemy" parent="NavigationRegion2D" instance=ExtResource("5_wnxun")]
 position = Vector2(527, 447)
 CharacterData = SubResource("Resource_svi83")
 
-[node name="LateArriveEnemy" parent="." instance=ExtResource("5_wnxun")]
+[node name="LateArriveEnemy" parent="NavigationRegion2D" instance=ExtResource("5_wnxun")]
 position = Vector2(376, 118)
 CharacterData = SubResource("Resource_ndsb5")
