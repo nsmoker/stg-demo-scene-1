@@ -246,6 +246,7 @@ public partial class Character : CharacterBody2D
         CharacterSystem.SetInstance(CharacterData.ResourcePath, this);
         CombatSystem.CombatStartHandlers += OnCombatStarted;
 		CombatSystem.CharacterJoinedCombatHandlers += OnCombatJoined;
+        CombatSystem.CombatEnded += OnCombatEnded;
         State = new PatrolState();
         _senseArea = GetNode<Area2D>("SenseArea");
 
@@ -352,5 +353,13 @@ public partial class Character : CharacterBody2D
     public virtual ICharacterState GetCombatState()
     {
         return new CombatState(this);
+    }
+
+    public virtual void OnCombatEnded()
+    {
+        if (State is CombatState || State is CombatNavState)
+        {
+            State = new PatrolState();
+        }
     }
 }

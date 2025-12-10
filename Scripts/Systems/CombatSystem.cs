@@ -53,6 +53,9 @@ public static class CombatSystem
     public static CharacterJoinedCombatHandler CharacterJoinedCombatHandlers { get => characterJoinedCombatHandler1; set => characterJoinedCombatHandler1 = value; }
     public static TurnHandler TurnHandlers { get => turnHandler; set => turnHandler = value; }
     public static Character TakingTurn { get => takingTurn; set => takingTurn = value; }
+    public static Action CombatEnded { get => combatEnded; set => combatEnded = value; }
+
+    private static System.Action combatEnded;
 
     private static void OnNavRebakeFinished(Rid rid)
     {
@@ -65,6 +68,10 @@ public static class CombatSystem
     private static void OnCharacterDeath(DeathEvent e)
     {
         _currentCombatants.Remove(e.deceased.CharacterData.ResourcePath);
+        if (_currentCombatants.Count == 1)
+        {
+            CombatEnded?.Invoke();
+        }
     }
 
     public static bool NavReady()

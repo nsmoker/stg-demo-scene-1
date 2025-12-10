@@ -436,4 +436,12 @@ public partial class Player : Character
     {
         return new PlayerCombatState(this);
     }
+
+    public override void OnCombatEnded()
+    {
+        if (State is PlayerCombatState || State is CombatNavState)
+		{
+			State = new NavigationState();
+		}
+    }
 }
