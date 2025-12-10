@@ -1,6 +1,5 @@
-[gd_resource type="Resource" script_class="CharacterData" load_steps=62 format=3 uid="uid://c8fgn0cc87fhy"]
+[gd_resource type="Resource" script_class="CharacterData" load_steps=61 format=3 uid="uid://c8fgn0cc87fhy"]
 
-[ext_resource type="Script" uid="uid://bhf3rn2sin4i2" path="res://Scripts/Abilities/Ability.cs" id="1_5vkku"]
 [ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/Resources/AttributeSet.cs" id="2_ffaxt"]
 [ext_resource type="Script" uid="uid://cgng01q8ok4ba" path="res://Scripts/Resources/SkillSet.cs" id="3_5wlph"]
 [ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/Resources/PatrolLeg.cs" id="4_pnj0w"]

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Arkham Hunters": {
+      "commandName": "Project"
+    },
+    "Profile 1": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\4gate\\Programming\\Godot_v4.5-stable_mono_win64\\Godot_v4.5-stable_mono_win64.exe",
+      "workingDirectory": "C:\\Users\\4gate\\inspired"
+    }
+  }
+}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=4 uid="uid://bgk5v73hj7cv0"]
+[gd_scene load_steps=73 format=4 uid="uid://bgk5v73hj7cv0"]
 
 [ext_resource type="TileSet" uid="uid://cem5hy2763dx" path="res://Sprites/Tilesets/placeholder_tile_set.tres" id="1_hpq63"]
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="1_ndsb5"]
@@ -7,7 +7,6 @@
 [ext_resource type="Resource" uid="uid://vbjq48kype7r" path="res://Resources/Constants/faction_table.tres" id="3_vc5ip"]
 [ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/Characters/player_data.tres" id="4_hbowc"]
 [ext_resource type="PackedScene" uid="uid://d2taxt4eofj2h" path="res://Scenes/enemy.tscn" id="5_wnxun"]
-[ext_resource type="Script" uid="uid://bhf3rn2sin4i2" path="res://Scripts/Abilities/Ability.cs" id="6_02uyx"]
 [ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/Resources/AttributeSet.cs" id="7_wbbaj"]
 [ext_resource type="Script" uid="uid://cgng01q8ok4ba" path="res://Scripts/Resources/SkillSet.cs" id="8_ndsb5"]
 [ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/Resources/PatrolLeg.cs" id="9_b5i2i"]

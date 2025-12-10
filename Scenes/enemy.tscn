@@ -1,14 +1,12 @@
-[gd_scene load_steps=79 format=3 uid="uid://d2taxt4eofj2h"]
+[gd_scene load_steps=77 format=3 uid="uid://d2taxt4eofj2h"]
 
 [ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character/Character.cs" id="1_ghaa6"]
 [ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/Resources/PatrolLeg.cs" id="2_1dp5w"]
 [ext_resource type="Texture2D" uid="uid://op7us3k7d500" path="res://Sprites/Images/Characters/char_knight_02.png" id="2_287tu"]
-[ext_resource type="Script" uid="uid://bhf3rn2sin4i2" path="res://Scripts/Abilities/Ability.cs" id="2_dhkrs"]
 [ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/Resources/AttributeSet.cs" id="3_auwsv"]
 [ext_resource type="Script" uid="uid://cgng01q8ok4ba" path="res://Scripts/Resources/SkillSet.cs" id="4_8uf12"]
 [ext_resource type="Script" uid="uid://cng8hqptg2rbu" path="res://Scripts/Resources/CharacterData.cs" id="5_1dp5w"]
 [ext_resource type="Script" uid="uid://5hcjkamye5ns" path="res://Scripts/Items/AttributeBonus.cs" id="6_5xdhn"]
-[ext_resource type="PackedScene" uid="uid://brdmuedpkp0jn" path="res://Scenes/ability_menu.tscn" id="6_haro7"]
 [ext_resource type="Script" uid="uid://c54dlxcx6qrkd" path="res://Scripts/Items/SkillBonus.cs" id="7_4jyny"]
 [ext_resource type="Script" uid="uid://dgvr4h6v7mkj5" path="res://Scripts/Items/ArmorStats.cs" id="8_vh8xy"]
 [ext_resource type="Script" uid="uid://bg3xbg8f0cawp" path="res://Scripts/Items/AttributeRequirement.cs" id="9_qjcj6"]
@@ -345,14 +343,6 @@ visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea"]
 shape = SubResource("CircleShape2D_wxkh7")
-
-[node name="CombatInteractionMenu" parent="." instance=ExtResource("6_haro7")]
-visible = false
-offset_left = 10.0
-offset_top = -7.0
-offset_right = 42.0
-offset_bottom = 43.0
-scale = Vector2(0.5, 0.5)
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
 radius = 8.39

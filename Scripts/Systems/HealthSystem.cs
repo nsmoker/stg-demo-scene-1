@@ -1,12 +1,10 @@
 using ArkhamHunters.Scripts;
-using ArkhamHunters.Scripts.Abilities;
 
 public struct DamageEvent
 {
     public Character inflicter;
     public Character recipient;
     public int damage;
-    public Ability ability;
 }
 
 public struct DeathEvent
@@ -23,7 +21,7 @@ public static class HealthSystem
     public static DamageEventHandler DamageEventHandlers;
     public static DeathEventHandler DeathEventHandlers;
 
-    public static void PostDamageEvent(Character inflicter, Character recipient, int damage, Ability ability)
+    public static void PostDamageEvent(Character inflicter, Character recipient, int damage)
     {
         recipient.CharacterData.CurrentHitpoints -= damage;
         var ret = new DamageEvent
@@ -31,7 +29,6 @@ public static class HealthSystem
             inflicter = inflicter,
             recipient = recipient,
             damage = damage,
-            ability = ability
         };
         DamageEventHandlers?.Invoke(ret);
 

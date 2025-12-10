@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ArkhamHunters.Scripts.Abilities;
 using Godot;
 
 namespace ArkhamHunters.Scripts;
@@ -68,10 +67,6 @@ public partial class Character : CharacterBody2D
     private double _patrolLegProgress = 0;
 
     protected Area2D _senseArea;
-
-    private AbilityMenu _combatInteractionMenu;
-
-    protected BasicAttack _basicAttack;
 
     private class PatrolState : ICharacterState
     {
@@ -206,11 +201,6 @@ public partial class Character : CharacterBody2D
         public void Process(double delta, Character character) { }
     }
 
-    public AbilityMenu GetCombatInteractionMenu()
-    {
-        return _combatInteractionMenu;
-    }
-
     public interface ICharacterState
     {
         void Process(double delta, Character character);
@@ -233,12 +223,7 @@ public partial class Character : CharacterBody2D
 
         _senseArea.BodyEntered += OnBodyEnteredSenseArea;
         
-        _combatInteractionMenu = GetNode<AbilityMenu>("CombatInteractionMenu");
-        _combatInteractionMenu.Visible = false;
-        _basicAttack = new BasicAttack();
-		CharacterData.Abilities.Add(_basicAttack);
         EquipmentSystem.SetEquipment(CharacterData.ResourcePath, CharacterData.StartingEquipment);
-        _basicAttack.SetWeapon(CharacterData.StartingEquipment.Weapon);
         NavObstacle = GetNode<NavigationObstacle2D>("NavigationObstacle2D");
     }
 

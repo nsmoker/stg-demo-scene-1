@@ -339,7 +339,6 @@ public partial class Player : Character
 		base._Ready();
 		CombatLog.Initialize();
 		FactionSystem.Initialize(_factionTable);
-		HostilitySystem.HostilityChangeHandlers += OnHostilityChanged;
 		SpriteAnim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_dialogueDisplay = GetNode<DialogueController>("DialogueDisplay");
 		_interactableRange = GetNode<Area2D>("InteractableRange");
@@ -367,7 +366,6 @@ public partial class Player : Character
 				case ItemType.Weapon:
 					{
 						eq.Weapon = itemToEquip;
-						_basicAttack.SetWeapon(itemToEquip);
 						break;
 					}
 				case ItemType.Armor:
@@ -388,35 +386,6 @@ public partial class Player : Character
 
 			EquipmentSystem.SetEquipment(CharacterData.ResourcePath, eq);
 			_inventoryDisplay.CurrentEntity = CharacterData.ResourcePath;
-		}
-	}
-
-	private void OnHostilityChanged(string entity1, string entity2, bool hostility)
-	{
-		var entity2Match = _senseArea.GetOverlappingBodies().FirstOrDefault(n => n is Character c && c.CharacterData.ResourcePath == entity1);
-		if (entity2 == CharacterData.ResourcePath && entity2Match != null)
-		{
-			if (hostility)
-			{
-				var enemy = (Character) entity2Match;
-                var combatMenu = enemy.GetCombatInteractionMenu();
-                if (combatMenu != null)
-                {
-                    combatMenu.Visible = true;
-                    combatMenu.SetAbilities(CharacterData.Abilities);
-                    combatMenu.ProcessMode = ProcessModeEnum.Always;
-                    _combatInteractions[enemy] = () =>
-                    {
-                        var ability = combatMenu.GetCurrentAbility();
-                        if (ability != null)
-                        {
-                            GetTree().Paused = false;
-                        }
-                    };
-
-                    combatMenu._activationButton.Pressed += _combatInteractions[enemy];
-                }
-            }
 		}
 	}
 	

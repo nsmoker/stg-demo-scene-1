@@ -1,5 +1,4 @@
 using ArkhamHunters.Scripts;
-using ArkhamHunters.Scripts.Abilities;
 using Godot;
 
 [Tool]
@@ -23,9 +22,6 @@ public partial class CharacterData : Resource
     public int MaxHitpoints = 100;
     [Export]
     public int CurrentHitpoints = 100;
-
-    [Export]
-	public Godot.Collections.Array<Ability> Abilities = [];
 
     [Export]
     public Faction InitialFaction;
