@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://d2taxt4eofj2h"]
+[gd_scene load_steps=78 format=3 uid="uid://d2taxt4eofj2h"]
 
 [ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character/Character.cs" id="1_ghaa6"]
 [ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/Resources/PatrolLeg.cs" id="2_1dp5w"]
@@ -240,6 +240,8 @@ PatrolLegs = Array[ExtResource("2_1dp5w")]([SubResource("Resource_po0sg"), SubRe
 StartingEquipment = SubResource("Resource_fmsty")
 metadata/_custom_type_script = "uid://cng8hqptg2rbu"
 
+[sub_resource type="SystemFont" id="SystemFont_tk7xo"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ss715"]
 size = Vector2(16, 12)
 
@@ -328,6 +330,7 @@ radius = 80.0
 [node name="Enemy" type="CharacterBody2D"]
 script = ExtResource("1_ghaa6")
 CharacterData = SubResource("Resource_56vhr")
+ToHitFont = SubResource("SystemFont_tk7xo")
 metadata/_custom_type_script = "uid://bsrhat3n35udl"
 
 [node name="MainCollider" type="CollisionShape2D" parent="."]

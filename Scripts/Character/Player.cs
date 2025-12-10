@@ -251,25 +251,33 @@ public partial class Player : Character
 
         public void PhysicsProcess(double delta, Character character)
         {
-            if (Input.IsActionJustPressed("Combat Interact") && CombatSystem.NavReady() && _isOurTurn)
-            {
-				var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), _player.GlobalPosition, _player.GetGlobalMousePosition(), true, 0x1u);
-				var len = ComputePathLength(path, character.GlobalPosition);
-				if (len <= _player.CharacterData.MovementRange)
+			if (Input.IsActionJustPressed("Combat Interact") && CombatSystem.NavReady() && _isOurTurn)
+			{
+				if (HoverSystem.AnyHovered())
 				{
-                	_player.State = new CombatNavState(_player, path);
-					CombatSystem.TurnHandlers -= OnTurnBegin;
-					_player.Draw -= OnPlayerDraw;
+					CombatSystem.AttemptAttack(character.CharacterData, CharacterSystem.GetInstance(HoverSystem.Hovered).CharacterData);
+                    CombatSystem.EndTurn(character.CharacterData);
+                }
+				else
+				{
+					var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), _player.GlobalPosition, _player.GetGlobalMousePosition(), true, 0x1u);
+					var len = ComputePathLength(path, character.GlobalPosition);
+					if (len <= _player.CharacterData.MovementRange)
+					{
+						_player.State = new CombatNavState(_player, path);
+						CombatSystem.TurnHandlers -= OnTurnBegin;
+						_player.Draw -= OnPlayerDraw;
+					}
 				}
-            }
-			_player.QueueRedraw();
+			}
+            _player.QueueRedraw();
         }
 
         public void Process(double delta, Character character) { }
 
 		public void OnPlayerDraw()
         {
-			if (_isOurTurn)
+			if (_isOurTurn && !HoverSystem.AnyHovered())
 			{
 				_player.DrawCircle(new Vector2(0.0f, 2.0f), 8.0f, new Color(0.0f, 0.0f, 1.0f), filled: false);			
 				// Draw the path to the player's hovered location.

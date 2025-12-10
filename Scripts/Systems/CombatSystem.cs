@@ -4,14 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public struct AbilityUseEvent
+public struct AttackEvent
 {
     public Character attacker;
     public Character target;
     public bool hit;
     // Only use if hit is true.
     public int targetDamage;
-    public int areaDamage;
 }
 
 public struct CombatStartEvent
@@ -25,16 +24,16 @@ public static class CombatSystem
     private static readonly List<string> _currentCombatants = [];
     private static NavigationRegion2D navRegion;
 
-    public delegate void AbilityEventHandler(AbilityUseEvent e);
+    public delegate void AttackEventHandler(AttackEvent e);
     public delegate void CombatStartHandler(CombatStartEvent e);
     public delegate void CharacterJoinedCombatHandler(CharacterData c);
     public delegate void TurnHandler(CharacterData turnTaker);
 
-    private static AbilityEventHandler abilityEventHandler1;
+    private static AttackEventHandler attackHandlers;
     private static CombatStartHandler combatStartHandler1;
     private static CharacterJoinedCombatHandler characterJoinedCombatHandler1;
 
-    private static Character TakingTurn;
+    private static Character takingTurn;
     private static TurnHandler turnHandler;
 
     public static NavigationRegion2D NavRegion { get => navRegion; set 
@@ -49,11 +48,11 @@ public static class CombatSystem
 
     private static bool _pathingReady = true;
 
-    public static AbilityEventHandler AbilityEventHandlers { get => abilityEventHandler1; set => abilityEventHandler1 = value; }
+    public static AttackEventHandler AttackHandlers { get => attackHandlers; set => attackHandlers = value; }
     public static CombatStartHandler CombatStartHandlers { get => combatStartHandler1; set => combatStartHandler1 = value; }
     public static CharacterJoinedCombatHandler CharacterJoinedCombatHandlers { get => characterJoinedCombatHandler1; set => characterJoinedCombatHandler1 = value; }
     public static TurnHandler TurnHandlers { get => turnHandler; set => turnHandler = value; }
-
+    public static Character TakingTurn { get => takingTurn; set => takingTurn = value; }
 
     private static void OnNavRebakeFinished(Rid rid)
     {
@@ -61,6 +60,11 @@ public static class CombatSystem
         {
             _pathingReady = true;
         }
+    }
+
+    private static void OnCharacterDeath(DeathEvent e)
+    {
+        _currentCombatants.Remove(e.deceased.CharacterData.ResourcePath);
     }
 
     public static bool NavReady()
@@ -107,6 +111,7 @@ public static class CombatSystem
             };
 
             TakingTurn = CharacterSystem.GetInstance(_currentCombatants.First());
+            HealthSystem.DeathEventHandlers += OnCharacterDeath;
             CombatStartHandlers?.Invoke(e);
             BeginTurn(TakingTurn);
         }
@@ -124,9 +129,37 @@ public static class CombatSystem
         }
     }
 
+    public static float ComputeToHitChance(CharacterData attacker, CharacterData target)
+    {
+        var instance = CharacterSystem.GetInstance(attacker.ResourcePath);
+        return (10.0f + instance.ComputeToHitMod()) / 20.0f;
+    }
+
+
     public static void AttemptAttack(CharacterData attacker, CharacterData attacked)
     {
-
+        var attackerInstance = CharacterSystem.GetInstance(attacker.ResourcePath);
+        var attackedInstance = CharacterSystem.GetInstance(attacked.ResourcePath);
+        if (attacker.ResourcePath.Equals(TakingTurn.CharacterData.ResourcePath))
+        {
+            var rand = new Random();
+            var toHitMod = attackerInstance.ComputeToHitMod();
+            var toHitRoll = Math.Max(0, Math.Min(19, rand.Next(20) + toHitMod));
+            var hitThresh = 9;
+            var damageRoll = rand.Next(20);
+            var hit = toHitRoll >= hitThresh;
+            AttackHandlers?.Invoke(new AttackEvent
+            {
+                attacker = attackerInstance,
+                target = attackedInstance,
+                hit = hit,
+                targetDamage = damageRoll,
+            });
+            if (hit)
+            {
+                HealthSystem.PostDamageEvent(attackerInstance, attackedInstance, damageRoll);
+            }
+        }
     }
 
     public static HashSet<string> GetCombatants()

@@ -31,6 +31,9 @@ public partial class Character : CharacterBody2D
     [Export]
     public CharacterData CharacterData;
 
+    [Export]
+    public Font ToHitFont;
+
     public int Strength => CharacterData.BaseAttributes.Strength + GetEquipmentSet().ComputeAttributeBonus().StrengthBonus;
     public int Endurance => CharacterData.BaseAttributes.Endurance + GetEquipmentSet().ComputeAttributeBonus().EnduranceBonus;
     public int Dexterity => CharacterData.BaseAttributes.Dexterity + GetEquipmentSet().ComputeAttributeBonus().DexterityBonus;
@@ -120,10 +123,14 @@ public partial class Character : CharacterBody2D
     {
         Character _c;
         bool _isOurTurn = false;
+        bool _hovered = false;
         public CombatState(Character character)
         {
             _c = character;
             _c.Draw += OnCharacterDraw;
+            _c.InputPickable = true;
+            _c.MouseEntered += OnHover;
+            _c.MouseExited += OnHoverEnd;
             CombatSystem.TurnHandlers += OnTurnBegin;
             _c.QueueRedraw();
         }
@@ -133,30 +140,51 @@ public partial class Character : CharacterBody2D
             if (_isOurTurn && CombatSystem.NavReady())
             {
                 var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), character.GlobalPosition, character.GlobalPosition + new Vector2(32.0f, 0.0f), true, 0x1u);
-				var len = ComputePathLength(path, character.GlobalPosition);
-				if (len <= _c.CharacterData.MovementRange)
-				{
-                	character.State = new CombatNavState(_c, path);
-					CombatSystem.TurnHandlers -= OnTurnBegin;
-					character.Draw -= OnCharacterDraw;
-				}
+                var len = ComputePathLength(path, character.GlobalPosition);
+                if (len <= _c.CharacterData.MovementRange)
+                {
+                    character.State = new CombatNavState(_c, path);
+                    character.MouseEntered -= OnHover;
+                    character.MouseExited -= OnHoverEnd;
+                    character.InputPickable = false;
+                    CombatSystem.TurnHandlers -= OnTurnBegin;
+                    character.Draw -= OnCharacterDraw;
+                }
             }
             character.QueueRedraw();
         }
 
         public void Process(double delta, Character character)
         {
-            
         }
 
         public void OnCharacterDraw()
         {
-            _c.DrawCircle(new Vector2(0.0f, 2.0f), 8.0f, new Color(1.0f, 0.0f, 0.0f), filled: false);
+            if (_hovered)
+            {
+                _c.DrawCircle(new Vector2(0.0f, 2.0f), 8.0f, new Color(1.0f, 0.0f, 0.0f), filled: false);
+                var chance = CombatSystem.ComputeToHitChance(CombatSystem.TakingTurn.CharacterData, _c.CharacterData) * 100.0f;
+                _c.DrawString(_c.ToHitFont, new Vector2(12.0f, 0.0f), $"{chance.ToString("0")}%", fontSize: 8);
+            }
         }
 
         public void OnTurnBegin(CharacterData c)
         {
             _isOurTurn = c.ResourcePath.Equals(_c.CharacterData.ResourcePath);
+        }
+
+        public void OnHover()
+        {
+            _hovered = true;
+            HoverSystem.SetHovered(_c.CharacterData.ResourcePath);
+            _c.QueueRedraw();
+        }
+
+        public void OnHoverEnd()
+        {
+            _hovered = false;
+            HoverSystem.SetUnhovered(_c.CharacterData.ResourcePath);
+            _c.QueueRedraw();
         }
     }
 

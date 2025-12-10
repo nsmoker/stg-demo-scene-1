@@ -46,6 +46,7 @@ public static class HealthSystem
             deceased = deceased,
             killer = killer
         };
+        HoverSystem.SetUnhovered(deceased.CharacterData.ResourcePath);
         DeathEventHandlers?.Invoke(ret);
     }
 }
