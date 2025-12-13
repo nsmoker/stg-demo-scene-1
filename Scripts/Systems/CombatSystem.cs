@@ -3,6 +3,8 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security;
 
 public struct AttackEvent
 {
@@ -19,21 +21,26 @@ public struct CombatStartEvent
     public CharacterData initiator;
 }
 
+struct CombatantState
+{
+    public int MovesRemaining;
+    public int ActionsRemaining;
+}
+
 public static class CombatSystem
 {
-    private static readonly List<string> _currentCombatants = [];
+    private static readonly Dictionary<string, CombatantState> _currentCombatants = [];
     private static NavigationRegion2D navRegion;
 
     public delegate void AttackEventHandler(AttackEvent e);
     public delegate void CombatStartHandler(CombatStartEvent e);
     public delegate void CharacterJoinedCombatHandler(CharacterData c);
-    public delegate void TurnHandler(CharacterData turnTaker);
+    public delegate void TurnHandler(List<string> side);
 
     private static AttackEventHandler attackHandlers;
     private static CombatStartHandler combatStartHandler1;
     private static CharacterJoinedCombatHandler characterJoinedCombatHandler1;
 
-    private static Character takingTurn;
     private static TurnHandler turnHandler;
 
     public static NavigationRegion2D NavRegion { get => navRegion; set 
@@ -52,10 +59,13 @@ public static class CombatSystem
     public static CombatStartHandler CombatStartHandlers { get => combatStartHandler1; set => combatStartHandler1 = value; }
     public static CharacterJoinedCombatHandler CharacterJoinedCombatHandlers { get => characterJoinedCombatHandler1; set => characterJoinedCombatHandler1 = value; }
     public static TurnHandler TurnHandlers { get => turnHandler; set => turnHandler = value; }
-    public static Character TakingTurn { get => takingTurn; set => takingTurn = value; }
     public static Action CombatEnded { get => combatEnded; set => combatEnded = value; }
 
     private static System.Action combatEnded;
+
+    private static List<List<string>> _sides = [];
+
+    private static int _sideMoving = 0;
 
     private static void OnNavRebakeFinished(Rid rid)
     {
@@ -67,7 +77,10 @@ public static class CombatSystem
 
     private static void OnCharacterDeath(DeathEvent e)
     {
-        _currentCombatants.Remove(e.deceased.CharacterData.ResourcePath);
+        var deceasedId = e.deceased.CharacterData.ResourcePath;
+        _currentCombatants.Remove(deceasedId);
+        _sides.Find(x => x.Contains(deceasedId)).Remove(deceasedId);
+        _sides = [.. _sides.Where(x => !(x.Count == 0))];
         if (_currentCombatants.Count == 1)
         {
             CombatEnded?.Invoke();
@@ -79,59 +92,85 @@ public static class CombatSystem
         return _pathingReady && navRegion.NavigationPolygon != null;
     }
 
-    private static Character GetNextCharacter()
+    private static void EndTurn()
     {
-        int i = _currentCombatants.FindIndex(TakingTurn.CharacterData.ResourcePath.Equals);
-        i = (i + 1) % _currentCombatants.Count;
-        return CharacterSystem.GetInstance(_currentCombatants[i]);
-    }
-
-    public static void EndTurn(CharacterData turnTaker)
-    {
-        if (turnTaker.ResourcePath.Equals(TakingTurn.CharacterData.ResourcePath))
-        {
-            TakingTurn.NavObstacle.AffectNavigationMesh = true;
-            BeginTurn(GetNextCharacter());
-        }
-    }
-
-    private static void BeginTurn(Character turnTaker)
-    {
-        TakingTurn = turnTaker;
-        TakingTurn.NavObstacle.AffectNavigationMesh = false;
+        var currentSide = _sides[_sideMoving];
+        currentSide.ForEach(x => CharacterSystem.GetInstance(x).NavObstacle.AffectNavigationMesh = true);
+        _sideMoving = (_sideMoving + 1) % _sides.Count;
+        currentSide = _sides[_sideMoving];
         _pathingReady = false;
+        currentSide.ForEach(x =>
+        {
+            var instance = CharacterSystem.GetInstance(x);
+            instance.NavObstacle.AffectNavigationMesh = false;
+            var state = new CombatantState
+            {
+                ActionsRemaining = instance.CharacterData.CombatActions,
+                MovesRemaining = instance.CharacterData.CombatMoves
+            };
+            _currentCombatants[x] = state;
+        });
         NavRegion.BakeNavigationPolygon();
-        TurnHandlers?.Invoke(TakingTurn.CharacterData);
+        TurnHandlers?.Invoke(currentSide);
     }
 
-    public static void BeginCombat(CharacterData initiator, List<CharacterData> opponents)
+    public static void BeginCombat(CharacterData initiator, CharacterData opponent)
     {
         if (_currentCombatants.Count == 0)
         {
-            _currentCombatants.Add(initiator.ResourcePath);
-            _currentCombatants.AddRange(opponents.Select(opp => opp.ResourcePath));
+            _currentCombatants.Add(initiator.ResourcePath, new CombatantState { MovesRemaining = initiator.CombatMoves, ActionsRemaining = initiator.CombatActions });
+            _currentCombatants.Add(opponent.ResourcePath, new CombatantState { MovesRemaining = opponent.CombatMoves, ActionsRemaining = opponent.CombatActions });
+            _sides.Add([initiator.ResourcePath]);
+            _sides.Add([opponent.ResourcePath]);
 
             CombatStartEvent e = new()
             {
                 initiator = initiator,
-                participants = _currentCombatants
+                participants = [.. _currentCombatants.Keys]
             };
+            CharacterSystem.GetInstance(initiator.ResourcePath).NavObstacle.AffectNavigationMesh = false;
+            CharacterSystem.GetInstance(opponent.ResourcePath).NavObstacle.AffectNavigationMesh = true;
+            _pathingReady = false;
+            navRegion.BakeNavigationPolygon();
 
-            TakingTurn = CharacterSystem.GetInstance(_currentCombatants.First());
+
             HealthSystem.DeathEventHandlers += OnCharacterDeath;
             CombatStartHandlers?.Invoke(e);
-            BeginTurn(TakingTurn);
+            _sideMoving = 0;
+            TurnHandlers?.Invoke(_sides[0]);
         }
     }
 
     public static void JoinCombat(CharacterData toJoin)
     {
-        if (!_currentCombatants.Contains(toJoin.ResourcePath))
+        if (!_currentCombatants.ContainsKey(toJoin.ResourcePath))
         {
-            _currentCombatants.Add(toJoin.ResourcePath);
+            _currentCombatants.Add(toJoin.ResourcePath, new CombatantState { MovesRemaining = toJoin.CombatMoves, ActionsRemaining = toJoin.CombatActions });
+            // New participant fights on the first side in which they are hostile to noone.
+            var joiningSide = -1;
+            for (int i = 0; i < _sides.Count; ++i)
+            {
+                var side = _sides[i];
+                if (!side.Any(x => HostilitySystem.GetHostility(x, toJoin.ResourcePath) || HostilitySystem.GetHostility(toJoin.ResourcePath, x)))
+                {
+                    side.Add(toJoin.ResourcePath);
+                    joiningSide = i;
+                    break;
+                }
+            }
+            // If no suitable side is found, make a new one.
+            if (joiningSide < 0)
+            {
+                _sides.Add([toJoin.ResourcePath]);
+                joiningSide = _sides.Count - 1;
+            }
             var instance = CharacterSystem.GetInstance(toJoin.ResourcePath);
-            instance.NavObstacle.AffectNavigationMesh = true;
-            NavRegion.BakeNavigationPolygon();
+            // Only redo the nav if the new combatant is not currently moving.
+            instance.NavObstacle.AffectNavigationMesh = joiningSide != _sideMoving;
+            if (joiningSide != _sideMoving)
+            {
+                NavRegion.BakeNavigationPolygon();
+            }
             CharacterJoinedCombatHandlers?.Invoke(toJoin);
         }
     }
@@ -142,13 +181,42 @@ public static class CombatSystem
         return (10.0f + instance.ComputeToHitMod()) / 20.0f;
     }
 
+    public static void AttemptMove(CharacterData mover)
+    {
+        var currentSide = _sides[_sideMoving];
+        if (currentSide.Contains(mover.ResourcePath))
+        {
+            var currentState = _currentCombatants[mover.ResourcePath];
+            var state = new CombatantState
+            {
+                MovesRemaining = currentState.MovesRemaining - 1,
+                ActionsRemaining = currentState.ActionsRemaining,
+            };
+
+            _currentCombatants[mover.ResourcePath] = state;
+
+            if (TurnShouldEnd())
+            {
+                EndTurn();
+            }
+        }
+    }
+
 
     public static void AttemptAttack(CharacterData attacker, CharacterData attacked)
     {
         var attackerInstance = CharacterSystem.GetInstance(attacker.ResourcePath);
         var attackedInstance = CharacterSystem.GetInstance(attacked.ResourcePath);
-        if (attacker.ResourcePath.Equals(TakingTurn.CharacterData.ResourcePath))
+        var attackerState = _currentCombatants[attacker.ResourcePath];
+        var currentSide = _sides[_sideMoving];
+        if (currentSide.Contains(attacker.ResourcePath) && attackerState.ActionsRemaining > 0 && attackerState.MovesRemaining > 0)
         {
+            var newAttackerState = new CombatantState
+            {
+                ActionsRemaining = attackerState.ActionsRemaining - 1,
+                MovesRemaining = attackerState.MovesRemaining - 1,
+            };
+            _currentCombatants[attacker.ResourcePath] = newAttackerState;
             var rand = new Random();
             var toHitMod = attackerInstance.ComputeToHitMod();
             var toHitRoll = Math.Max(0, Math.Min(19, rand.Next(20) + toHitMod));
@@ -167,15 +235,49 @@ public static class CombatSystem
                 HealthSystem.PostDamageEvent(attackerInstance, attackedInstance, damageRoll);
             }
         }
+
+        if (TurnShouldEnd())
+        {
+            EndTurn();
+        }
     }
 
-    public static HashSet<string> GetCombatants()
+    public static void PassTurn(CharacterData character)
     {
-        return [ .._currentCombatants];
+        _currentCombatants[character.ResourcePath] = new CombatantState
+        {
+            ActionsRemaining = 0,
+            MovesRemaining = 0,
+        };
+        
+        if (TurnShouldEnd())
+        {
+            EndTurn();
+        }
+    }
+
+    public static bool TurnShouldEnd()
+    {
+        return !_sides[_sideMoving].Any(x => _currentCombatants[x].MovesRemaining > 0 && _currentCombatants[x].ActionsRemaining > 0);
+    }
+
+    public static List<string> GetMovingSide()
+    {
+        return _sides[_sideMoving];
     }
 
     public static bool IsInCombat(CharacterData c)
     {
-        return _currentCombatants.Contains(c.ResourcePath);
-    }          
+        return _currentCombatants.ContainsKey(c.ResourcePath);
+    }
+
+    public static int GetActionsRemianing(CharacterData c)
+    {
+        return _currentCombatants[c.ResourcePath].ActionsRemaining;
+    }
+
+    public static int GetMovesRemaining(CharacterData c)
+    {
+        return _currentCombatants[c.ResourcePath].MovesRemaining;
+    }
 }

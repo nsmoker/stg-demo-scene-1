@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=4 uid="uid://bgk5v73hj7cv0"]
+[gd_scene load_steps=74 format=4 uid="uid://bgk5v73hj7cv0"]
 
 [ext_resource type="TileSet" uid="uid://cem5hy2763dx" path="res://Sprites/Tilesets/placeholder_tile_set.tres" id="1_hpq63"]
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="1_ndsb5"]
@@ -27,6 +27,8 @@
 agent_radius = 8.5
 
 [sub_resource type="SystemFont" id="SystemFont_wbbaj"]
+
+[sub_resource type="SystemFont" id="SystemFont_ndsb5"]
 
 [sub_resource type="Resource" id="Resource_auwsv"]
 script = ExtResource("7_wbbaj")
@@ -287,6 +289,7 @@ position = Vector2(283, 437)
 _factionTable = ExtResource("3_vc5ip")
 _pathFont = SubResource("SystemFont_wbbaj")
 CharacterData = ExtResource("4_hbowc")
+ToHitFont = SubResource("SystemFont_ndsb5")
 
 [node name="Enemy" parent="NavigationRegion2D" instance=ExtResource("5_wnxun")]
 position = Vector2(527, 447)

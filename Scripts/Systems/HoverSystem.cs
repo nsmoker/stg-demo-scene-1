@@ -15,7 +15,7 @@ public static class HoverSystem
 
     public static void SetUnhovered(string unhovered)
     {
-        if (_hovered.Equals(unhovered))
+        if (_hovered != null && _hovered.Equals(unhovered))
         {
             _hovered = null;
         }

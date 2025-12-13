@@ -245,7 +245,7 @@ public partial class Player : Character
 			_player = player;
             player.Draw += OnPlayerDraw;
 			CombatSystem.TurnHandlers += OnTurnBegin;
-			_isOurTurn = false;
+			_isOurTurn = CombatSystem.GetMovingSide().Contains(_player.CharacterData.ResourcePath);
 			player.QueueRedraw();
         }
 
@@ -256,7 +256,6 @@ public partial class Player : Character
 				if (HoverSystem.AnyHovered())
 				{
 					CombatSystem.AttemptAttack(character.CharacterData, CharacterSystem.GetInstance(HoverSystem.Hovered).CharacterData);
-                    CombatSystem.EndTurn(character.CharacterData);
                 }
 				else
 				{
@@ -289,14 +288,21 @@ public partial class Player : Character
 					var pathTransformed = path.Select(_player.ToLocal).ToArray();
 					float dist = len / 16.0f;
 					_player.DrawPolyline(pathTransformed, inRange ? new Color(1.0f, 1.0f, 1.0f) : new Color(1.0f, 0.0f, 0.0f));
-					_player.DrawString(_player._pathFont, pathTransformed[pathTransformed.Length - 1], $"{dist.ToString("0.00")}m", fontSize: 8);
+					_player.DrawString(_player._pathFont, pathTransformed[pathTransformed.Length - 1], $"{dist:0.00}m", fontSize: 8);
 				}
 			}
+
+			if (HoverSystem.AnyHovered())
+			{
+				var hovered = CharacterSystem.GetInstance(HoverSystem.Hovered);
+                var chance = CombatSystem.ComputeToHitChance(_player.CharacterData, hovered.CharacterData) * 100.0f;
+                _player.DrawString(_player.ToHitFont, new Vector2(12.0f, 0.0f) + _player.GetLocalMousePosition(), $"{chance:0}%", fontSize: 8);
+            }
         }
 
-		public void OnTurnBegin(CharacterData taker)
+		public void OnTurnBegin(List<string> sideMoving)
         {
-            _isOurTurn = taker.ResourcePath.Equals(_player.CharacterData.ResourcePath);
+            _isOurTurn = sideMoving.Contains(_player.CharacterData.ResourcePath);
         }
     }
 
@@ -309,7 +315,7 @@ public partial class Player : Character
 
 	private PanelContainer _mapDisplay;
 
-	private Dictionary<Character, Action> _combatInteractions = new();
+	private Dictionary<Character, Action> _combatInteractions = [];
 
 	private List<IInteractable> GetInteractablesInRange()
 	{

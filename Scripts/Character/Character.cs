@@ -122,8 +122,9 @@ public partial class Character : CharacterBody2D
     private class CombatState : ICharacterState
     {
         Character _c;
-        bool _isOurTurn = false;
+        bool _isOurTurn;
         bool _hovered = false;
+        int _actionsRemaining;
         public CombatState(Character character)
         {
             _c = character;
@@ -133,6 +134,7 @@ public partial class Character : CharacterBody2D
             _c.MouseExited += OnHoverEnd;
             CombatSystem.TurnHandlers += OnTurnBegin;
             _c.QueueRedraw();
+            _isOurTurn = CombatSystem.GetMovingSide().Contains(character.CharacterData.ResourcePath);
         }
 
         public void PhysicsProcess(double delta, Character character)
@@ -163,14 +165,12 @@ public partial class Character : CharacterBody2D
             if (_hovered)
             {
                 _c.DrawCircle(new Vector2(0.0f, 2.0f), 8.0f, new Color(1.0f, 0.0f, 0.0f), filled: false);
-                var chance = CombatSystem.ComputeToHitChance(CombatSystem.TakingTurn.CharacterData, _c.CharacterData) * 100.0f;
-                _c.DrawString(_c.ToHitFont, new Vector2(12.0f, 0.0f), $"{chance.ToString("0")}%", fontSize: 8);
             }
         }
 
-        public void OnTurnBegin(CharacterData c)
+        public void OnTurnBegin(List<string> movingSide)
         {
-            _isOurTurn = c.ResourcePath.Equals(_c.CharacterData.ResourcePath);
+            _isOurTurn = movingSide.Contains(_c.CharacterData.ResourcePath);
         }
 
         public void OnHover()
@@ -199,6 +199,7 @@ public partial class Character : CharacterBody2D
         {
 			_character = character;
 			_path = path;
+            HoverSystem.SetUnhovered(character.CharacterData.ResourcePath);
         }
 
         public void PhysicsProcess(double delta, Character character)
@@ -213,8 +214,8 @@ public partial class Character : CharacterBody2D
                 }
 				else
                 {
+                    CombatSystem.AttemptMove(character.CharacterData);
                     _character.SetState(_character.GetCombatState());
-					CombatSystem.EndTurn(_character.CharacterData);
                 }
             }
 			else
@@ -329,7 +330,7 @@ public partial class Character : CharacterBody2D
 			}
 			else
 			{
-				CombatSystem.BeginCombat(CharacterData, [character.CharacterData]);
+				CombatSystem.BeginCombat(CharacterData, character.CharacterData);
 			}
 		}
     }

@@ -37,4 +37,10 @@ public partial class CharacterData : Resource
 
     [Export]
     public float MovementRange = 20.0f;
+
+    [Export]
+    public int CombatMoves = 2;
+
+    [Export]
+    public int CombatActions = 1;
 }
