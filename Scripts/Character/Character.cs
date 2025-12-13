@@ -5,6 +5,14 @@ using Godot;
 
 namespace ArkhamHunters.Scripts;
 
+public struct CoverCheckResult
+{
+    public int CoverLevelNorth;
+    public int CoverLevelSouth;
+    public int CoverLevelEast;
+    public int CoverLevelWest;
+}
+
 [GlobalClass]
 public partial class Character : CharacterBody2D
 {
@@ -33,6 +41,8 @@ public partial class Character : CharacterBody2D
 
     [Export]
     public Font ToHitFont;
+
+    public Sprite2D CoverBadge;
 
     public int Strength => CharacterData.BaseAttributes.Strength + GetEquipmentSet().ComputeAttributeBonus().StrengthBonus;
     public int Endurance => CharacterData.BaseAttributes.Endurance + GetEquipmentSet().ComputeAttributeBonus().EnduranceBonus;
@@ -68,6 +78,13 @@ public partial class Character : CharacterBody2D
 
     private int _patrolLegIndex;
     private double _patrolLegProgress = 0;
+    private CoverCheckResult _coverState = new()
+    {
+        CoverLevelNorth = 0,
+        CoverLevelSouth = 0,
+        CoverLevelEast = 0,
+        CoverLevelWest = 0,
+    };
 
     protected Area2D _senseArea;
 
@@ -134,23 +151,25 @@ public partial class Character : CharacterBody2D
             CombatSystem.TurnHandlers += OnTurnBegin;
             _c.QueueRedraw();
             _isOurTurn = CombatSystem.GetMovingSide().Contains(character.CharacterData.ResourcePath);
+            _c.UpdateCoverState(_c.GetWorld2D().DirectSpaceState);
         }
 
         public void PhysicsProcess(double delta, Character character)
         {
             if (_isOurTurn && CombatSystem.NavReady())
             {
-                var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), character.GlobalPosition, character.GlobalPosition + new Vector2(32.0f, 0.0f), true, 0x1u);
-                var len = ComputePathLength(path, character.GlobalPosition);
-                if (len <= _c.CharacterData.MovementRange)
-                {
-                    character.State = new CombatNavState(_c, path);
-                    character.MouseEntered -= OnHover;
-                    character.MouseExited -= OnHoverEnd;
-                    character.InputPickable = false;
-                    CombatSystem.TurnHandlers -= OnTurnBegin;
-                    character.Draw -= OnCharacterDraw;
-                }
+                CombatSystem.PassTurn(character.CharacterData);
+                //var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), character.GlobalPosition, character.GlobalPosition + new Vector2(32.0f, 0.0f), true, 0x1u);
+                //var len = ComputePathLength(path, character.GlobalPosition);
+                //if (len <= _c.CharacterData.MovementRange)
+                //{
+                //    character.State = new CombatNavState(_c, path);
+                //    character.MouseEntered -= OnHover;
+                //    character.MouseExited -= OnHoverEnd;
+                //    character.InputPickable = false;
+                //    CombatSystem.TurnHandlers -= OnTurnBegin;
+                //    character.Draw -= OnCharacterDraw;
+                //}
             }
             character.QueueRedraw();
         }
@@ -199,6 +218,7 @@ public partial class Character : CharacterBody2D
 			_character = character;
 			_path = path;
             HoverSystem.SetUnhovered(character.CharacterData.ResourcePath);
+            character.CoverBadge.Hide();
         }
 
         public void PhysicsProcess(double delta, Character character)
@@ -214,6 +234,7 @@ public partial class Character : CharacterBody2D
 				else
                 {
                     CombatSystem.AttemptMove(character.CharacterData);
+                    character.UpdateCoverState(character.GetWorld2D().DirectSpaceState);
                     _character.SetState(_character.GetCombatState());
                 }
             }
@@ -240,6 +261,7 @@ public partial class Character : CharacterBody2D
     public override void _Ready()
     {
         SpriteAnim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        CoverBadge = GetNode<Sprite2D>("CoverBadge");
         collider = GetNode<CollisionShape2D>("MainCollider");
         FactionSystem.SetFaction(CharacterData.ResourcePath, CharacterData.InitialFaction);
         InventorySystem.SetInventory(CharacterData.ResourcePath, [.. InitialInventory]);
@@ -278,9 +300,35 @@ public partial class Character : CharacterBody2D
         }
     }
 
-    public int ComputeAc()
+    public int ComputeAc(Vector2 fromDirection)
     {
-        return GetEquipmentSet().ComputeAc() + DexterityMod;
+        var ac = GetEquipmentSet().ComputeAc() + DexterityMod;
+
+        if (IsTakingCover())
+        {
+            // Add cover.
+            var toAttacker = (-fromDirection).Normalized();
+            List<Vector2> cardinals = [Vector2.Up, Vector2.Down, Vector2.Right, Vector2.Left];
+            // Use the cover level of the cardinal direction with the minimum angular distance to the attacker's target vector.
+            var toAttackerQuantized = cardinals.MinBy(cardinal => Mathf.Abs(toAttacker.AngleTo(cardinal)));
+            if (toAttackerQuantized == Vector2.Up)
+            {
+                ac += _coverState.CoverLevelNorth * 2;
+            }
+            if (toAttackerQuantized == Vector2.Down)
+            {
+                ac += _coverState.CoverLevelSouth * 2;
+            }
+            if (toAttackerQuantized == Vector2.Right)
+            {
+                ac += _coverState.CoverLevelEast * 2;
+            }
+            if (toAttackerQuantized == Vector2.Left)
+            {
+                ac += _coverState.CoverLevelWest * 2;
+            }
+        }
+        return ac;
     }
 
     public DamageRoll GetDamageRolls()
@@ -361,5 +409,45 @@ public partial class Character : CharacterBody2D
         {
             State = new PatrolState();
         }
+        CoverBadge.Visible = false;
+    }
+
+    public bool IsTakingCover()
+    {
+        return _coverState.CoverLevelWest > 0 || _coverState.CoverLevelEast > 0 || _coverState.CoverLevelSouth > 0 || _coverState.CoverLevelNorth > 0;
+    }
+
+    public CoverCheckResult UpdateCoverState(PhysicsDirectSpaceState2D physicsState)
+    {
+        var ret = new CoverCheckResult();
+        var rayNorth = PhysicsRayQueryParameters2D.Create(GlobalPosition, GlobalPosition + new Vector2(0.0f, -30.0f), 1 << (22 - 1));
+        var raySouth = PhysicsRayQueryParameters2D.Create(GlobalPosition, GlobalPosition + new Vector2(0.0f, 30.0f), 1 << (22 - 1));
+        var rayWest = PhysicsRayQueryParameters2D.Create(GlobalPosition, GlobalPosition + new Vector2(-30.0f, 0.0f), 1 << (22 - 1));
+        var rayEast = PhysicsRayQueryParameters2D.Create(GlobalPosition, GlobalPosition + new Vector2(30.0f, 0.0f), 1 << (22 - 1));
+        var northResult = physicsState.IntersectRay(rayNorth);
+        if (northResult.Count > 0)
+        {
+            ret.CoverLevelNorth = 1;
+        }
+        var southResult = physicsState.IntersectRay(raySouth);
+        if (southResult.Count > 0)
+        {
+            ret.CoverLevelSouth = 1;
+        }
+        var eastResult = physicsState.IntersectRay(rayEast);
+        if (eastResult.Count > 0)
+        {
+            ret.CoverLevelEast = 1;
+        }
+        var westResult = physicsState.IntersectRay(rayWest);
+        if (westResult.Count > 0)
+        {
+            ret.CoverLevelWest = 1;
+        }
+
+        _coverState = ret;
+        CoverBadge.Visible = IsTakingCover();
+            
+        return ret;
     }
 }

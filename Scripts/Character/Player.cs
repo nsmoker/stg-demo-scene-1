@@ -188,31 +188,6 @@ public partial class Player : Character
 
 		public void PhysicsProcess(double delta, Character character) { }
 	}
-
-	private class CombatState : ICharacterState
-	{
-		private NavigationState _substate;
-
-		public CombatState()
-		{
-			_substate = new NavigationState();
-		}
-
-		public void Process(double delta, Character character)
-		{
-			_substate.Process(delta, character);
-			if (Input.IsActionJustPressed("Pause"))
-			{
-				character.GetTree().Paused = true;
-				character.SetState(new PauseState(this));
-			}
-		}
-
-		public void PhysicsProcess(double delta, Character character)
-		{
-			_substate.PhysicsProcess(delta, character);
-		}
-	}
 		
 	private class PauseState: ICharacterState
 	{
@@ -246,7 +221,8 @@ public partial class Player : Character
             player.Draw += OnPlayerDraw;
 			CombatSystem.TurnHandlers += OnTurnBegin;
 			_isOurTurn = CombatSystem.GetMovingSide().Contains(_player.CharacterData.ResourcePath);
-			player.QueueRedraw();
+            player.UpdateCoverState(player.GetWorld2D().DirectSpaceState);
+            player.QueueRedraw();
         }
 
         public void PhysicsProcess(double delta, Character character)

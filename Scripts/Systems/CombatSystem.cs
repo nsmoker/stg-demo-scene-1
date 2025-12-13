@@ -177,8 +177,10 @@ public static class CombatSystem
 
     public static float ComputeToHitChance(CharacterData attacker, CharacterData target)
     {
-        var instance = CharacterSystem.GetInstance(attacker.ResourcePath);
-        return (10.0f + instance.ComputeToHitMod()) / 20.0f;
+        var attackerInstance = CharacterSystem.GetInstance(attacker.ResourcePath);
+        var attackedInstance = CharacterSystem.GetInstance(target.ResourcePath);
+        var targetVector = (attackedInstance.GlobalPosition - attackerInstance.GlobalPosition);
+        return (20.0f - attackedInstance.ComputeAc(targetVector.Normalized()) + attackerInstance.ComputeToHitMod()) / 20.0f;
     }
 
     public static void AttemptMove(CharacterData mover)
@@ -220,7 +222,10 @@ public static class CombatSystem
             var rand = new Random();
             var toHitMod = attackerInstance.ComputeToHitMod();
             var toHitRoll = Math.Max(0, Math.Min(19, rand.Next(20) + toHitMod));
-            var hitThresh = 9;
+
+            var targetVector = attackedInstance.GlobalPosition - attackerInstance.GlobalPosition;
+            var hitThresh = attackedInstance.ComputeAc(targetVector);
+
             var damageRoll = rand.Next(20);
             var hit = toHitRoll >= hitThresh;
             AttackHandlers?.Invoke(new AttackEvent

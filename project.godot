@@ -89,3 +89,4 @@ Map={
 
 2d_physics/layer_20="Interactable"
 2d_physics/layer_21="Attacks"
+2d_physics/layer_22="Cover"

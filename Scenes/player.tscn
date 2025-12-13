@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://gedp1qirf71n"]
+[gd_scene load_steps=21 format=3 uid="uid://gedp1qirf71n"]
 
 [ext_resource type="Script" uid="uid://04a5i0tk15gy" path="res://Scripts/Character/Player.cs" id="1_co212"]
 [ext_resource type="PackedScene" uid="uid://ctgni16h8tre6" path="res://Scenes/container_display.tscn" id="3_bcg5f"]
@@ -43,6 +43,10 @@ atlas = ExtResource("7_3smsa")
 region = Rect2(16, 16, 16, 16)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tx1dd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gymyn"]
+atlas = ExtResource("7_3smsa")
+region = Rect2(16, 0, 16, 16)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_co212")
@@ -166,3 +170,10 @@ size_flags_vertical = 3
 texture = SubResource("CompressedTexture2D_tx1dd")
 expand_mode = 1
 stretch_mode = 4
+
+[node name="CoverBadge" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(-5, -15)
+scale = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_gymyn")

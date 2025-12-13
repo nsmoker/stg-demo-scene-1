@@ -18,6 +18,13 @@
 
 [sub_resource type="Resource" id="Resource_1lm1u"]
 script = ExtResource("1_2brja")
+Strength = 10
+Dexterity = 10
+Intelligence = 10
+Wisdom = 10
+Charisma = 10
+Endurance = 10
+Willpower = 10
 
 [sub_resource type="Resource" id="Resource_jhnre"]
 script = ExtResource("2_t3gvy")

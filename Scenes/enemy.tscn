@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=3 uid="uid://d2taxt4eofj2h"]
+[gd_scene load_steps=80 format=3 uid="uid://d2taxt4eofj2h"]
 
 [ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character/Character.cs" id="1_ghaa6"]
 [ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/Resources/PatrolLeg.cs" id="2_1dp5w"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://bpuijyxf410pp" path="res://Scripts/Items/WearableStats.cs" id="14_qqxsh"]
 [ext_resource type="Script" uid="uid://bu40wng0pu1b6" path="res://Scripts/Items/Item.cs" id="15_0whn2"]
 [ext_resource type="Script" uid="uid://cuq2diuirpwbs" path="res://Scripts/Resources/EquipmentSet.cs" id="16_bx1xr"]
+[ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://Sprites/Images/spr_itemsncolectables.png" id="18_scl1n"]
 
 [sub_resource type="Resource" id="Resource_auwsv"]
 script = ExtResource("3_auwsv")
@@ -238,6 +239,7 @@ CurrentHitpoints = 10
 InitialFaction = 1
 PatrolLegs = Array[ExtResource("2_1dp5w")]([SubResource("Resource_po0sg"), SubResource("Resource_haro7")])
 StartingEquipment = SubResource("Resource_fmsty")
+CombatActions = 2
 metadata/_custom_type_script = "uid://cng8hqptg2rbu"
 
 [sub_resource type="SystemFont" id="SystemFont_tk7xo"]
@@ -327,6 +329,10 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_wxkh7"]
 radius = 80.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhkrs"]
+atlas = ExtResource("18_scl1n")
+region = Rect2(16, 0, 16, 16)
+
 [node name="Enemy" type="CharacterBody2D"]
 script = ExtResource("1_ghaa6")
 CharacterData = SubResource("Resource_56vhr")
@@ -350,3 +356,10 @@ shape = SubResource("CircleShape2D_wxkh7")
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
 radius = 8.39
 affect_navigation_mesh = true
+
+[node name="CoverBadge" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(-5, -15)
+scale = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_dhkrs")

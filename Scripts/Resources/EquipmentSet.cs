@@ -66,7 +66,7 @@ public partial class EquipmentSet: Resource
 
     public int ComputeAc()
     {
-        return Armor.ArmorStats.Ac;
+        return 9 + Armor.ArmorStats.Ac;
     }
 
     public DamageRoll GetDamageRolls()
