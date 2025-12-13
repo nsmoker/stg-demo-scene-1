@@ -124,7 +124,6 @@ public partial class Character : CharacterBody2D
         Character _c;
         bool _isOurTurn;
         bool _hovered = false;
-        int _actionsRemaining;
         public CombatState(Character character)
         {
             _c = character;
