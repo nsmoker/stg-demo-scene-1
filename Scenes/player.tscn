@@ -1,8 +1,7 @@
-[gd_scene load_steps=28 format=3 uid="uid://gedp1qirf71n"]
+[gd_scene load_steps=25 format=3 uid="uid://gedp1qirf71n"]
 
 [ext_resource type="Script" uid="uid://04a5i0tk15gy" path="res://Scripts/Character/Player.cs" id="1_co212"]
 [ext_resource type="PackedScene" uid="uid://ctgni16h8tre6" path="res://Scenes/container_display.tscn" id="3_bcg5f"]
-[ext_resource type="Script" uid="uid://4wgqj3gknq04" path="res://Scripts/Controls/DialogueController.cs" id="4_3smsa"]
 [ext_resource type="PackedScene" uid="uid://dheqe5k157l3j" path="res://Scenes/inventory_display.tscn" id="4_ntcgu"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="7_3smsa"]
 [ext_resource type="PackedScene" uid="uid://brdmuedpkp0jn" path="res://Scenes/ability_menu.tscn" id="8_8erm5"]
@@ -11,27 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://bpclhkah8www8" path="res://Scenes/map_marker.tscn" id="10_pu2lt"]
 [ext_resource type="Resource" uid="uid://bfnu0evsky1mc" path="res://map_capture.tres" id="11_gymyn"]
 [ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="12_pu2lt"]
-[ext_resource type="Texture2D" uid="uid://8vi5lpjuchfl" path="res://Sprites/Characters/pc_ingame_placeholder.png" id="12_ukyrk"]
+[ext_resource type="Texture2D" uid="uid://bwy06x60up0j8" path="res://Sprites/Characters/pc_ingame_placeholder.png" id="12_ukyrk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7efl3"]
 size = Vector2(14, 29)
-
-[sub_resource type="SystemFont" id="SystemFont_8fl2o"]
-font_names = PackedStringArray("Arial")
-disable_embedded_bitmaps = false
-allow_system_fallback = false
-subpixel_positioning = 0
-msdf_size = 16
-oversampling = 10.0
-
-[sub_resource type="LabelSettings" id="LabelSettings_e2uky"]
-font = SubResource("SystemFont_8fl2o")
-font_size = 10
-font_color = Color(0.16470589, 0.29411766, 1, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_x3wgy"]
-font = SubResource("SystemFont_8fl2o")
-font_size = 10
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_o8msw"]
 radius = 25.0
@@ -66,7 +48,6 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_h4iuc"]
 resource_name = "walk_h"
-length = 0.6
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -75,10 +56,10 @@ tracks/0/path = NodePath("MainSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [2, 3]
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
 
 [sub_resource type="Animation" id="Animation_pu2lt"]
@@ -92,10 +73,10 @@ tracks/0/path = NodePath("MainSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [6, 7]
+"values": [9]
 }
 
 [sub_resource type="Animation" id="Animation_7dp3o"]
@@ -109,15 +90,31 @@ tracks/0/path = NodePath("MainSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0, 1]
+"values": [9]
+}
+
+[sub_resource type="Animation" id="Animation_gymyn"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [9]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ukyrk"]
 _data = {
 &"RESET": SubResource("Animation_ukyrk"),
+&"idle": SubResource("Animation_gymyn"),
 &"walk_h": SubResource("Animation_h4iuc"),
 &"walk_north": SubResource("Animation_pu2lt"),
 &"walk_south": SubResource("Animation_7dp3o")
@@ -132,43 +129,6 @@ script = ExtResource("1_co212")
 [node name="MainCollider" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_7efl3")
-
-[node name="DialogueDisplay" type="ScrollContainer" parent="."]
-process_mode = 3
-visible = false
-z_index = 1
-offset_left = -163.0
-offset_top = 3.0
-offset_right = 166.0
-offset_bottom = 92.0
-script = ExtResource("4_3smsa")
-_typewriterSpeed = 0.1
-
-[node name="PanelContainer" type="PanelContainer" parent="DialogueDisplay"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="DialogueDisplay/PanelContainer"]
-layout_mode = 2
-
-[node name="SpeakerLabel" type="Label" parent="DialogueDisplay/PanelContainer/VBoxContainer"]
-custom_minimum_size = Vector2(15, 15)
-layout_mode = 2
-mouse_filter = 0
-label_settings = SubResource("LabelSettings_e2uky")
-autowrap_mode = 3
-justification_flags = 131
-clip_text = true
-text_overrun_behavior = 3
-
-[node name="DialogueLabel" type="Label" parent="DialogueDisplay/PanelContainer/VBoxContainer"]
-custom_minimum_size = Vector2(15, 15)
-layout_mode = 2
-mouse_filter = 0
-label_settings = SubResource("LabelSettings_x3wgy")
-autowrap_mode = 3
-justification_flags = 131
 
 [node name="ContainerDisplay" parent="." instance=ExtResource("3_bcg5f")]
 visible = false
@@ -273,6 +233,7 @@ libraries = {
 [node name="MainSprite" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("12_ukyrk")
+hframes = 10
 
 [node name="CombatStatusLabel" type="Label" parent="."]
 visible = false

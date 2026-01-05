@@ -122,7 +122,7 @@ NodeType = 1
 DNodeId = 281479271743490
 Action = ExtResource("4_6cbt5")
 EditorPos = Vector2(3660, 640)
-EditorSize = Vector2(456.00024, 257)
+EditorSize = Vector2(456, 257)
 
 [sub_resource type="Resource" id="Resource_xcja8"]
 script = ExtResource("2_s18b8")
@@ -138,7 +138,7 @@ NodeType = 1
 DNodeId = 281483566776322
 Action = ExtResource("5_nfbxk")
 EditorPos = Vector2(3700, 1060)
-EditorSize = Vector2(456.00024, 257)
+EditorSize = Vector2(456, 257)
 
 [sub_resource type="Resource" id="Resource_5p0oh"]
 script = ExtResource("2_s18b8")
@@ -146,7 +146,7 @@ NodeType = 3
 Content = "Exit"
 DNodeId = 281487861743618
 EditorPos = Vector2(3080, 1600)
-EditorSize = Vector2(380.00067, 340.00012)
+EditorSize = Vector2(380.00073, 340.00012)
 
 [sub_resource type="Resource" id="Resource_0quph"]
 script = ExtResource("2_s18b8")
@@ -156,7 +156,7 @@ Addressee = "Player"
 DNodeId = 281487861743619
 Condition = ExtResource("6_3ynid")
 EditorPos = Vector2(1460, -940)
-EditorSize = Vector2(879.99963, 499.9994)
+EditorSize = Vector2(879.9995, 499.9994)
 
 [resource]
 script = ExtResource("3_h7dhw")

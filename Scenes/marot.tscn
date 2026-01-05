@@ -1,9 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://dsawqshhjgquw"]
+[gd_scene load_steps=17 format=3 uid="uid://dsawqshhjgquw"]
 
 [ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character/Character.cs" id="1_cw48i"]
 [ext_resource type="Resource" uid="uid://cx3eet0w6nlc3" path="res://Resources/Characters/marot.tres" id="2_322xl"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="17_yaiay"]
-[ext_resource type="Texture2D" uid="uid://b6qo6c8elu5yw" path="res://Sprites/Characters/marot_ingame_placeholder.png" id="18_cw48i"]
+[ext_resource type="Texture2D" uid="uid://df61qjlm3djp4" path="res://Sprites/Characters/marot_ingame_placeholder.png" id="18_cw48i"]
 [ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="19_5aljl"]
 
 [sub_resource type="SystemFont" id="SystemFont_tk7xo"]
@@ -85,9 +85,13 @@ tracks/0/keys = {
 "values": [0, 1]
 }
 
+[sub_resource type="Animation" id="Animation_322xl"]
+resource_name = "idle"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dhkrs"]
 _data = {
 &"RESET": SubResource("Animation_dhkrs"),
+&"idle": SubResource("Animation_322xl"),
 &"walk_h": SubResource("Animation_4jyny"),
 &"walk_north": SubResource("Animation_scl1n"),
 &"walk_south": SubResource("Animation_5xdhn")

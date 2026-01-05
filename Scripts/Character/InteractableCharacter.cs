@@ -1,7 +1,4 @@
 using Godot;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using ArkhamHunters.Scripts;
 
 [GlobalClass]
@@ -32,9 +29,9 @@ public partial class InteractableCharacter : Character, IDialogueInteractable, I
 		return Dialogue;
 	}
 
-	public DialogueGraphNode GetEntryPoint()
+	public int GetEntryPoint()
 	{
-		return Dialogue.EntryPoints[EntryPoint];
+		return EntryPoint;
 	}
 
 	public void SetShowBadge(bool showBadge)

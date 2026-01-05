@@ -122,7 +122,7 @@ public partial class DialogueController : ScrollContainer
             if (possibleContinuations == 0)
             {
                 controller.State = new IdleState(controller);
-                controller.ConversationEnded?.Invoke(controller._conversation);
+                DialogueSystem.CompleteDialogue();
             }
             else if (possibleContinuations == 1)
             {
@@ -143,8 +143,6 @@ public partial class DialogueController : ScrollContainer
                         controller.State = new WriteState(controller, nodeOut);
                         break;
                 }
-
-                controller.DialogueNodeReached?.Invoke(controller, nodeOut);
             }
             else // Must be player responses
             {
@@ -233,7 +231,6 @@ public partial class DialogueController : ScrollContainer
                 if (e is InputEventMouseButton mouseEvent && mouseEvent.IsPressed() && mouseEvent.ButtonIndex == MouseButton.Left)
                 {
                     controller.State = new WriteState(controller, choice);
-                    controller.DialogueNodeReached?.Invoke(controller, choice);
                 }
             };
             controller._container.AddChild(choiceLabel);
@@ -261,19 +258,12 @@ public partial class DialogueController : ScrollContainer
         }
     }
 
-    public delegate void ConversationBeganEvent(Conversation conversation);
-    public delegate void ConversationEndedEvent(Conversation conversation);
-    public delegate void DialogueNodeReachedEvent(DialogueController controller, DialogueGraphNode node);
-
-    public ConversationBeganEvent ConversationBegan;
-    public ConversationEndedEvent ConversationEnded;
-    public DialogueNodeReachedEvent DialogueNodeReached;
-
     public override void _Ready()
     {
         _container = GetNode<VBoxContainer>("PanelContainer/VBoxContainer");
         _dialogueLabel = _container.GetNode<Label>("DialogueLabel");
         _speakerLabel = _container.GetNode<Label>("SpeakerLabel");
+        DialogueSystem.OnDialogueStarted += BeginConversation;
         State = new IdleState(this);
     }
 
@@ -282,15 +272,13 @@ public partial class DialogueController : ScrollContainer
         State.Process(delta, this);
     }
 
-    public void BeginConversation(Conversation conversation, DialogueGraphNode entryPoint)
+    public void BeginConversation(Conversation conversation, int entryPoint)
     {
         _conversation = conversation;
 
         Visible = true;
-        State = new EvalState(entryPoint, this);
+        State = new EvalState(_conversation.Nodes[entryPoint], this);
 
         ProcessMode = ProcessModeEnum.Always;
-
-        ConversationBegan?.Invoke(conversation);
     }
 }

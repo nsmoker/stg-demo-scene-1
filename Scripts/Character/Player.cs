@@ -1,21 +1,12 @@
-using System;
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
 using ArkhamHunters.Scripts;
 using ArkhamHunters.Scripts.Items;
 using Container = ArkhamHunters.Scripts.Container;
-using System.IO;
 
 public partial class Player : Character
 {
-	private class DialogueState : ICharacterState
-	{
-		public void Process(double delta, Character character) { }
-
-		public void PhysicsProcess(double delta, Character player) { }
-	}
-
 	private class InventoryState : ICharacterState
 	{
 		public InventoryState(Player player)
@@ -30,7 +21,7 @@ public partial class Player : Character
 			if (Input.IsActionJustPressed("Open Inventory"))
 			{
 				player._inventoryDisplay.Visible = false;
-				player.State = new NavigationState();
+				player.ControllerState = new NavigationState();
                 EquipmentSystem.RetrieveEquipment(player.CharacterData.ResourcePath, out EquipmentSet eq);
 			}
 		}
@@ -54,31 +45,6 @@ public partial class Player : Character
 				player._lastBadgedInteractable = closestInteractable;
 			}
 
-			if (Input.IsActionPressed("Move West"))
-			{
-				player.Anim.Play("walk_h");
-				player._mainSprite.FlipH = false;
-			}
-			else if (Input.IsActionPressed("Move South"))
-			{
-				player.Anim.Play("walk_south");
-				player._mainSprite.FlipH = false;
-			}
-			else if (Input.IsActionPressed("Move East"))
-			{
-				player.Anim.Play("walk_h");
-				player._mainSprite.FlipH = true;
-			}
-			else if (Input.IsActionPressed("Move North"))
-			{
-				player.Anim.Play("walk_north");
-				player._mainSprite.FlipH = false;
-			}
-			else
-			{
-				player.Anim.Pause();
-			}
-
 			if (Input.IsActionJustPressed("Interact"))
 			{
 				if (closestInteractable != null)
@@ -88,12 +54,12 @@ public partial class Player : Character
 						case InteractionType.Dialogue:
 							{
 								var dialogueInteractable = (IDialogueInteractable)closestInteractable;
-								player._dialogueDisplay.BeginConversation(dialogueInteractable.GetDialogue(), dialogueInteractable.GetEntryPoint());
+								DialogueSystem.StartDialogue(dialogueInteractable.GetDialogue(), dialogueInteractable.GetEntryPoint());
 								break;
 							}
 						case InteractionType.Container:
 							{
-								player.State = new ContainerSearchState(player);
+								player.ControllerState = new ContainerSearchState(player);
 								break;
 							}
 						case InteractionType.Toggleable:
@@ -139,6 +105,7 @@ public partial class Player : Character
 			// Get the input direction and handle the movement.
 			Vector2 direction = Input.GetVector("Move West", "Move East", "Move North", "Move South");
 			player.Velocity = direction * player.CharacterData.Speed;
+			player.SetWalkAnimState(player.Velocity);
 
 			player.MoveAndSlide();
 		}
@@ -180,7 +147,7 @@ public partial class Player : Character
 				_player._containerDisplay.Visible = false;
 				_player._containerDisplay.OnItemSelected -= OnContainerItemSelect;
 				_player._containerDisplay.ContainerEntity = "";
-				_player.State = new NavigationState();
+				_player.ControllerState = new NavigationState();
 			}
 		}
 
@@ -240,7 +207,14 @@ public partial class Player : Character
 					var len = ComputePathLength(path, character.GlobalPosition);
 					if (len <= _player.CharacterData.MovementRange)
 					{
-						_player.State = new CombatNavState(_player, path);
+						if (path.Length > 0)
+						{
+							_player.ControllerState = new CombatNavState(_player, path);
+						}
+						else
+						{
+							_player.ControllerState = new CombatNavState(_player, [_player.GetGlobalMousePosition()]);
+						}
 						CombatSystem.TurnHandlers -= OnTurnBegin;
 						_player.Draw -= OnPlayerDraw;
 					}
@@ -263,9 +237,15 @@ public partial class Player : Character
 					var len = ComputePathLength(path, _player.GlobalPosition);
 					var inRange = len <= _player.CharacterData.MovementRange;
 					var pathTransformed = path.Select(_player.ToLocal).ToArray();
-					float dist = len / 16.0f;
-					_player.DrawPolyline(pathTransformed, inRange ? new Color(1.0f, 1.0f, 1.0f) : new Color(1.0f, 0.0f, 0.0f));
-					_player.DrawString(_player._pathFont, pathTransformed[pathTransformed.Length - 1], $"{dist:0.00}m", fontSize: 8);
+					float dist = path.Length > 1 ? len / 16.0f : _player.GlobalPosition.DistanceTo(_player.GetGlobalMousePosition()) / 16.0f;
+					var targetPoint = pathTransformed.Length > 1 ? pathTransformed[pathTransformed.Length - 1] : _player.GetLocalMousePosition();
+					if (pathTransformed.Length > 1) {
+						_player.DrawPolyline(pathTransformed, inRange ? new Color(1.0f, 1.0f, 1.0f) : new Color(1.0f, 0.0f, 0.0f));
+					} else
+					{
+						_player.DrawLine(_player.ToLocal(_player.GlobalPosition), _player.GetLocalMousePosition(), inRange ? new Color(1.0f, 1.0f, 1.0f) : new Color(1.0f, 0.0f, 0.0f));
+					}
+					_player.DrawString(_player._pathFont, targetPoint, $"{dist:0.00}m", fontSize: 8);
 				}
 			}
 
@@ -295,7 +275,6 @@ public partial class Player : Character
         }
     }
 
-    private DialogueController _dialogueDisplay;
 	private Area2D _interactableRange;
 	private ContainerDisplay _containerDisplay;
 	private InventoryDisplay _inventoryDisplay;
@@ -303,8 +282,6 @@ public partial class Player : Character
 	private IInteractable _lastBadgedInteractable;
 
 	private PanelContainer _mapDisplay;
-
-	private Dictionary<Character, Action> _combatInteractions = [];
 
 	private List<IInteractable> GetInteractablesInRange()
 	{
@@ -344,7 +321,6 @@ public partial class Player : Character
 		base._Ready();
 		CombatLog.Initialize();
 		FactionSystem.Initialize(_factionTable);
-		_dialogueDisplay = GetNode<DialogueController>("DialogueDisplay");
 		_interactableRange = GetNode<Area2D>("InteractableRange");
 		_containerDisplay = GetNode<ContainerDisplay>("ContainerDisplay");
 		_inventoryDisplay = GetNode<InventoryDisplay>("InventoryDisplay");
@@ -354,10 +330,10 @@ public partial class Player : Character
 		_senseArea = GetNode<Area2D>("SenseArea");
 		_combatStatusLabel = GetNode<Label>("CombatStatusLabel");
 
-		State = new NavigationState();
+		ControllerState = new NavigationState();
 		_senseArea.BodyExited += OnBodyExitedSenseArea;
-		_dialogueDisplay.ConversationEnded += OnConversationEnded;
-		_dialogueDisplay.ConversationBegan += OnConversationStarted;
+		DialogueSystem.OnDialogueComplete += OnConversationEnded;
+		DialogueSystem.OnDialogueStarted += OnConversationStarted;
 	}
 
 	private void OnInventorySelection(Item item)
@@ -398,26 +374,11 @@ public partial class Player : Character
 	{
 	}
 
-	private void OnConversationEnded(Conversation conversation)
-	{
-		State = new NavigationState();
-	}
-
-	private void OnConversationStarted(Conversation conversation)
-    {
-        State = new DialogueState();
-    }
-
-	public DialogueController GetDialogueController()
-	{
-		return _dialogueDisplay;
-	}
-
 	public override void OnCombatStarted(CombatStartEvent e)
     {
         if (e.participants.Contains(CharacterData.ResourcePath))
         {
-            State = new PlayerCombatState(this);
+            ControllerState = new PlayerCombatState(this);
 			_healthLabel.Show();
         }
     }
@@ -426,7 +387,7 @@ public partial class Player : Character
     {
         if (joiner.ResourcePath.Equals(CharacterData.ResourcePath))
         {
-            State = new PlayerCombatState(this);
+            ControllerState = new PlayerCombatState(this);
 			_healthLabel.Show();
         }
     }
@@ -438,9 +399,9 @@ public partial class Player : Character
 
     public override void OnCombatEnded()
     {
-        if (State is PlayerCombatState || State is CombatNavState)
+        if (ControllerState is PlayerCombatState || ControllerState is CombatNavState)
 		{
-			State = new NavigationState();
+			ControllerState = new NavigationState();
 		}
 		if (ActionPip1 != null && ActionPip2 != null)
         {
@@ -450,5 +411,22 @@ public partial class Player : Character
 		_combatStatusLabel.Visible = false;
 		_healthLabel.Hide();
         QueueRedraw();
+    }
+
+	private void OnConversationEnded()
+	{
+		if (CombatSystem.IsInCombat(CharacterData))
+		{
+			ControllerState = new PlayerCombatState(this);
+		}
+		else
+		{
+			ControllerState = new NavigationState();
+		}
+	}
+
+	private void OnConversationStarted(Conversation conversation, int entryPoint)
+    {
+        ControllerState = new DialogueState();
     }
 }

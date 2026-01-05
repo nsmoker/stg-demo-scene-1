@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://c7jepn55q3mxg"]
+[gd_scene load_steps=77 format=3 uid="uid://c7jepn55q3mxg"]
 
 [ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character/Character.cs" id="1_bcfsq"]
 [ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/Resources/AttributeSet.cs" id="2_1cv77"]
@@ -17,7 +17,7 @@
 [ext_resource type="Script" uid="uid://cuq2diuirpwbs" path="res://Scripts/Resources/EquipmentSet.cs" id="15_kbnar"]
 [ext_resource type="Script" uid="uid://cng8hqptg2rbu" path="res://Scripts/Resources/CharacterData.cs" id="16_1qmdm"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="17_giusq"]
-[ext_resource type="Texture2D" uid="uid://c7gkusiwo0t5q" path="res://Sprites/Characters/henneman_ingame.png" id="18_ujab1"]
+[ext_resource type="Texture2D" uid="uid://cglqky4m6htl7" path="res://Sprites/Characters/henneman_ingame.png" id="18_ujab1"]
 [ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="19_k3hug"]
 
 [sub_resource type="Resource" id="Resource_auwsv"]
@@ -308,9 +308,13 @@ tracks/0/keys = {
 "values": [0, 1]
 }
 
+[sub_resource type="Animation" id="Animation_bcfsq"]
+resource_name = "idle"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dhkrs"]
 _data = {
 &"RESET": SubResource("Animation_dhkrs"),
+&"idle": SubResource("Animation_bcfsq"),
 &"walk_h": SubResource("Animation_4jyny"),
 &"walk_north": SubResource("Animation_scl1n"),
 &"walk_south": SubResource("Animation_5xdhn")

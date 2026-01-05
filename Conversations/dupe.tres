@@ -103,7 +103,7 @@ Addressee = "Player"
 DNodeId = 281474976710658
 Condition = SubResource("Resource_0bit8")
 EditorPos = Vector2(1560, -80)
-EditorSize = Vector2(699.9997, 383.00003)
+EditorSize = Vector2(699.99976, 383)
 
 [sub_resource type="Resource" id="Resource_a5pc5"]
 script = ExtResource("2_3af4n")
@@ -119,7 +119,7 @@ NodeType = 1
 DNodeId = 281479271743490
 Action = ExtResource("4_5hirs")
 EditorPos = Vector2(3660, 640)
-EditorSize = Vector2(456.00073, 257.00018)
+EditorSize = Vector2(456.00098, 257.00018)
 
 [sub_resource type="Resource" id="Resource_012ho"]
 script = ExtResource("2_3af4n")

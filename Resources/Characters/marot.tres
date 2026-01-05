@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/Resources/AttributeSet.cs" id="1_2rvwv"]
 [ext_resource type="Script" uid="uid://cgng01q8ok4ba" path="res://Scripts/Resources/SkillSet.cs" id="2_40hyh"]
-[ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/Resources/PatrolLeg.cs" id="3_4uyc1"]
+[ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/Resources/PatrolLeg.cs" id="3_2rvwv"]
 [ext_resource type="Script" uid="uid://5hcjkamye5ns" path="res://Scripts/Items/AttributeBonus.cs" id="4_6w02r"]
 [ext_resource type="Script" uid="uid://c54dlxcx6qrkd" path="res://Scripts/Items/SkillBonus.cs" id="5_sj4w5"]
 [ext_resource type="Script" uid="uid://dgvr4h6v7mkj5" path="res://Scripts/Items/ArmorStats.cs" id="6_jr3y0"]
@@ -222,5 +222,6 @@ BaseSkills = SubResource("Resource_8uf12")
 MaxHitpoints = 10
 CurrentHitpoints = 10
 InitialFaction = 2
+Speed = 50.0
 StartingEquipment = SubResource("Resource_fmsty")
 metadata/_custom_type_script = "uid://cng8hqptg2rbu"

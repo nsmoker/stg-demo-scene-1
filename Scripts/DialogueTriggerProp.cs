@@ -31,8 +31,8 @@ public partial class DialogueTriggerProp : StaticBody2D, IInteractable, IDialogu
         return _conversation;
     }
 
-    public DialogueGraphNode GetEntryPoint()
+    public int GetEntryPoint()
     {
-        return _conversation.EntryPoints[_entryPoint];
+        return _entryPoint;
     }
 }

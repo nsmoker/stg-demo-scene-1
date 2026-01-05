@@ -82,6 +82,17 @@ public partial class Character : CharacterBody2D
     private int _patrolLegIndex;
     private double _patrolLegProgress = 0;
 
+    protected enum AnimState
+    {
+        Idle,
+        WalkNorth,
+        WalkSouth,
+        WalkEast,
+        WalkWest 
+    }
+
+    protected AnimState _currentAnimState = AnimState.Idle;
+
     protected Sprite2D _mainSprite;
 
     private CoverCheckResult _coverState = new()
@@ -96,6 +107,13 @@ public partial class Character : CharacterBody2D
 
     protected Label _healthLabel;
 
+    protected class DialogueState : ICharacterState
+	{
+		public void Process(double delta, Character character) { }
+
+		public void PhysicsProcess(double delta, Character player) { }
+	}
+
     private class PatrolState : ICharacterState
     {
         public void Process(double delta, Character character)
@@ -105,22 +123,22 @@ public partial class Character : CharacterBody2D
                 var currentPatrolLeg = character.CharacterData.PatrolLegs[character._patrolLegIndex];
                 if (currentPatrolLeg.Direction.X < 0)
                 {
-                    character.Anim.Play("walk_west");
+                    character._currentAnimState = AnimState.WalkWest;
                 }
 
                 if (currentPatrolLeg.Direction.X > 0)
                 {
-                    character.Anim.Play("walk_east");
+                    character._currentAnimState = AnimState.WalkEast;
                 }
 
                 if (currentPatrolLeg.Direction.Y > 0)
                 {
-                    character.Anim.Play("walk_north");
+                    character._currentAnimState = AnimState.WalkNorth;
                 }
 
                 if (currentPatrolLeg.Direction.Y < 0)
                 {
-                    character.Anim.Play("walk_south");
+                    character._currentAnimState = AnimState.WalkSouth;
                 }
             }
         }
@@ -218,10 +236,13 @@ public partial class Character : CharacterBody2D
     {
         Vector2 _targetPoint;
         ICharacterState _nextState;
-        public NavState(Vector2 point, ICharacterState nextState)
+
+        Action _onComplete;
+        public NavState(Vector2 point, ICharacterState nextState, Action onComplete = null)
         {
             _targetPoint = point;
             _nextState = nextState;
+            _onComplete = onComplete;
         }
 
         public void Process(double delta, Character character)
@@ -234,11 +255,14 @@ public partial class Character : CharacterBody2D
             var targetVector = _targetPoint - character.Position;
             var vel = targetVector.Normalized() * character.CharacterData.Speed;
             character.Velocity = vel;
+            character.SetWalkAnimState(vel);
             character.MoveAndSlide();
             if (character.Position.DistanceTo(_targetPoint) <= 1.0f)
             {
                 character.Position = _targetPoint;
-                character.State = _nextState;
+                character.ControllerState = _nextState;
+                character.SetWalkAnimState(Vector2.Zero);
+                _onComplete?.Invoke();
             }
         }
     }
@@ -272,6 +296,7 @@ public partial class Character : CharacterBody2D
                 {
                     CombatSystem.AttemptMove(character.CharacterData);
                     character.UpdateCoverState(character.GetWorld2D().DirectSpaceState);
+                    _character.SetWalkAnimState(Vector2.Zero);
                     _character.SetState(_character.GetCombatState());
                 }
             }
@@ -280,6 +305,7 @@ public partial class Character : CharacterBody2D
 				var targetVector = targetPoint - _character.Position;
 				var vel = targetVector.Normalized() * _character.CharacterData.Speed;
 				_character.Velocity = vel;
+                _character.SetWalkAnimState(vel);
 				_character.MoveAndSlide();
 			}
         }
@@ -293,7 +319,7 @@ public partial class Character : CharacterBody2D
         void PhysicsProcess(double delta, Character character);
     }
 
-    protected ICharacterState State;
+    protected ICharacterState ControllerState;
 
     public override void _Ready()
     {
@@ -309,7 +335,8 @@ public partial class Character : CharacterBody2D
         CombatSystem.CombatEnded += OnCombatEnded;
         HealthSystem.DeathEventHandlers += OnDeath;
         HealthSystem.DamageEventHandlers += OnDamage;
-        State = new PatrolState();
+        HostilitySystem.HostilityChangeHandlers += OnHostilityChanged;
+        ControllerState = new PatrolState();
         ActionPip1 = GetNode<Sprite2D>("ActionPip");
         ActionPip2 = GetNode<Sprite2D>("ActionPip2");
         _senseArea = GetNode<Area2D>("SenseArea");
@@ -325,12 +352,37 @@ public partial class Character : CharacterBody2D
 
     public override void _Process(double delta)
     {
-        State.Process(delta, this);
+        ControllerState.Process(delta, this);
+        UpdateAnimation();
+    }
+
+    public virtual void UpdateAnimation()
+    {
+        switch (_currentAnimState)
+        {
+            case AnimState.Idle:
+                Anim.Play("idle");
+                break;
+            case AnimState.WalkNorth:
+                Anim.Play("walk_north");
+                break;
+            case AnimState.WalkSouth:
+                Anim.Play("walk_south");
+                break;
+            case AnimState.WalkEast:
+                _mainSprite.FlipH = true;
+                Anim.Play("walk_h");
+                break;
+            case AnimState.WalkWest:
+                _mainSprite.FlipH = false;
+                Anim.Play("walk_h");
+                break;
+        }
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        State.PhysicsProcess(delta, this);
+        ControllerState.PhysicsProcess(delta, this);
     }
 
     protected EquipmentSet GetEquipmentSet()
@@ -404,7 +456,7 @@ public partial class Character : CharacterBody2D
 
     public void SetState(ICharacterState characterState)
     {
-        State = characterState;
+        ControllerState = characterState;
     }
 
     public Area2D GetSenseArea()
@@ -432,7 +484,7 @@ public partial class Character : CharacterBody2D
         if (e.participants.Contains(CharacterData.ResourcePath))
         {
             _healthLabel.Show();
-            State = GetCombatState();
+            ControllerState = GetCombatState();
         }
     }
 
@@ -441,7 +493,7 @@ public partial class Character : CharacterBody2D
         if (c.ResourcePath.Equals(CharacterData.ResourcePath))
         {
             _healthLabel.Show();
-            State = GetCombatState();
+            ControllerState = GetCombatState();
         } 
     }
 
@@ -452,9 +504,9 @@ public partial class Character : CharacterBody2D
 
     public virtual void OnCombatEnded()
     {
-        if (State is CombatState || State is CombatNavState)
+        if (ControllerState is CombatState || ControllerState is CombatNavState)
         {
-            State = new PatrolState();
+            ControllerState = new PatrolState();
         }
         CoverBadge.Visible = false;
         if (ActionPip1 != null && ActionPip2 != null)
@@ -523,9 +575,54 @@ public partial class Character : CharacterBody2D
 		}
 	}
 
-    public void WalkToPoint(Vector2 point)
+    public virtual void OnHostilityChanged(string characterA, string characterB, bool areHostile)
     {
-        State = new NavState(point, State);
+        if (characterA.Equals(CharacterData.ResourcePath) && areHostile && !CombatSystem.IsInCombat(CharacterData))
+        {
+            _senseArea.GetOverlappingBodies().ToList().ForEach(body =>
+            {
+                if (body is Character character && HostilitySystem.GetHostility(CharacterData.ResourcePath, character.CharacterData.ResourcePath))
+                {
+                    if (CombatSystem.IsInCombat(character.CharacterData))
+                    {
+                        CombatSystem.JoinCombat(CharacterData);
+                    }
+                    else
+                    {
+                        CombatSystem.BeginCombat(CharacterData, character.CharacterData);
+                    }
+                }
+            });
+        }
+    }
+
+    public void SetWalkAnimState(Vector2 direction)
+    {
+        if (direction.X < 0)
+        {
+            _currentAnimState = AnimState.WalkWest;
+        }
+        else if (direction.X > 0)
+        {
+            _currentAnimState = AnimState.WalkEast;
+        }
+        else if (direction.Y < 0)
+        {
+            _currentAnimState = AnimState.WalkNorth;
+        }
+        else if (direction.Y > 0)
+        {
+            _currentAnimState = AnimState.WalkSouth;
+        }
+        else
+        {
+            _currentAnimState = AnimState.Idle;
+        }
+    }
+
+    public void WalkToPoint(Vector2 point, Action onComplete = null)
+    {
+        ControllerState = new NavState(point, ControllerState, onComplete);
     }
 
     private void CleanDelegates()
@@ -535,5 +632,6 @@ public partial class Character : CharacterBody2D
         CombatSystem.CombatEnded -= OnCombatEnded;
         HealthSystem.DeathEventHandlers -= OnDeath;
         HealthSystem.DamageEventHandlers -= OnDamage;
+        HostilitySystem.HostilityChangeHandlers -= OnHostilityChanged;
     }
 }

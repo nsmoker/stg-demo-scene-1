@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class Plinth : InteractableCharacter
 {
@@ -16,8 +15,7 @@ public partial class Plinth : InteractableCharacter
         if (node is Player player && !_doneInitialDialogue)
         {
             _doneInitialDialogue = true;
-            var dialogueController = player.GetDialogueController();
-            dialogueController.BeginConversation(Dialogue, Dialogue.EntryPoints[EntryPoint]);
+            DialogueSystem.StartDialogue(Dialogue, EntryPoint);
         }
     }
 }
