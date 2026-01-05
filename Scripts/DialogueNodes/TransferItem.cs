@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 [GlobalClass]
@@ -13,8 +14,9 @@ public partial class TransferItem : DialogueAction
     [Export]
     public Item ItemToTransfer;
 
-    public override void Execute()
+    public override void Execute(Action onComplete)
     {
         InventorySystem.Transfer(FromCharacter.ResourcePath, ToCharacter.ResourcePath, ItemToTransfer);
+        onComplete?.Invoke();
     }
 }

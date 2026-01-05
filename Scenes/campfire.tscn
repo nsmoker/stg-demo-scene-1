@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://denkyqh4dplr3"]
 
 [ext_resource type="Script" uid="uid://bq7en1cm2ue2e" path="res://Scripts/Toggleable.cs" id="1_4ew5v"]
-[ext_resource type="Texture2D" uid="uid://cghkewvx1aglm" path="res://Sprites/Images/ts_castle.png" id="2_r8ups"]
-[ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://Sprites/Images/spr_itemsncolectables.png" id="3_dfnng"]
+[ext_resource type="Texture2D" uid="uid://cghkewvx1aglm" path="res://SpritesPlaceholder/Images/ts_castle.png" id="2_r8ups"]
+[ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="3_dfnng"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gvvdf"]
 size = Vector2(14, 16)

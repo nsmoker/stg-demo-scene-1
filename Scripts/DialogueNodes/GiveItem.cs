@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 [GlobalClass]
@@ -10,8 +11,9 @@ public partial class GiveItem : DialogueAction
     [Export]
     Item ItemToGive;
 
-    public override void Execute()
+    public override void Execute(Action onComplete)
     {
         InventorySystem.AddItem(Recipient.ResourcePath, ItemToGive);
+        onComplete?.Invoke();
     }
 }

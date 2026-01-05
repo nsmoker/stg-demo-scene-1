@@ -226,7 +226,7 @@ public static class CombatSystem
             var targetVector = attackedInstance.GlobalPosition - attackerInstance.GlobalPosition;
             var hitThresh = attackedInstance.ComputeAc(targetVector);
 
-            var damageRoll = rand.Next(20);
+            var damageRoll = rand.Next(10);
             var hit = toHitRoll >= hitThresh;
             AttackHandlers?.Invoke(new AttackEvent
             {

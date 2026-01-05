@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 public static class CombatLog
@@ -11,12 +12,14 @@ public static class CombatLog
         CombatSystem.AttackHandlers += OnAbilityUse;
         CombatSystem.CharacterJoinedCombatHandlers += OnCombatJoined;
         CombatSystem.CombatStartHandlers += OnCombatStarted;
+        CombatSystem.TurnHandlers += OnTurnStarted;
         QuestSystem.OnQuestUpdated += OnQuestUpdate;
     }
 
     public static void OnDamageEvent(DamageEvent e)
     {
-        GD.Print($"{e.inflicter.Name} dealt {e.damage} damage to {e.recipient.Name}. {e.recipient.Name} has {e.recipient.CharacterData.CurrentHitpoints} HP remaining out of {e.recipient.CharacterData.MaxHitpoints}.");
+        var recipientHp = HealthSystem.GetCurrentHitpoints(e.recipient.CharacterData.ResourcePath);
+        GD.Print($"{e.inflicter.Name} dealt {e.damage} damage to {e.recipient.Name}. {e.recipient.Name} has {recipientHp} HP remaining out of {e.recipient.CharacterData.MaxHitpoints}.");
     }
 
     public static void OnAbilityUse(AttackEvent e) 
@@ -42,5 +45,13 @@ public static class CombatLog
     public static void OnCombatJoined(CharacterData joiner)
     {
         GD.Print($"{joiner.CharacterName} joined combat.");
+    }
+
+    public static void OnTurnStarted(List<string> movingSide)
+    {
+        var characterNames = movingSide
+            .Select(path => ResourceLoader.Load<CharacterData>(path).CharacterName)
+            .ToArray();
+        GD.Print($"It is now {characterNames[0]}'s turn.");
     }
 }

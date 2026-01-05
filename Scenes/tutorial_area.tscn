@@ -1,6 +1,6 @@
 [gd_scene load_steps=57 format=4 uid="uid://l1bcdmrxgp74"]
 
-[ext_resource type="TileSet" uid="uid://cem5hy2763dx" path="res://Sprites/Tilesets/placeholder_tile_set.tres" id="1_dw8ip"]
+[ext_resource type="TileSet" uid="uid://cem5hy2763dx" path="res://SpritesPlaceholder/Tilesets/placeholder_tile_set.tres" id="1_dw8ip"]
 [ext_resource type="PackedScene" uid="uid://ybqbrpd6jk4p" path="res://Scenes/herald.tscn" id="6_8an7w"]
 [ext_resource type="Script" uid="uid://d4dn75qbvhtwf" path="res://Scripts/Character/CharacterScripts/Plinth.cs" id="7_rymyd"]
 [ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="7_u4jjt"]

@@ -1,8 +1,8 @@
 [gd_scene load_steps=26 format=3 uid="uid://dheqe5k157l3j"]
 
 [ext_resource type="Script" uid="uid://b1ldx2g05u1jp" path="res://Scripts/Controls/InventoryDisplay.cs" id="1_2s17u"]
-[ext_resource type="Texture2D" uid="uid://r8utc0oomgmk" path="res://Sprites/Images/spr_itemsncolectables-black.png" id="2_aoa24"]
-[ext_resource type="Texture2D" uid="uid://ck0kjtailcqvt" path="res://Sprites/Images/spr_itemsncolectables-black-outlined.png" id="3_ctciw"]
+[ext_resource type="Texture2D" uid="uid://r8utc0oomgmk" path="res://SpritesPlaceholder/Images/spr_itemsncolectables-black.png" id="2_aoa24"]
+[ext_resource type="Texture2D" uid="uid://ck0kjtailcqvt" path="res://SpritesPlaceholder/Images/spr_itemsncolectables-black-outlined.png" id="3_ctciw"]
 [ext_resource type="Script" uid="uid://f3onm1a3m2r4" path="res://Scripts/Controls/InventoryButton.cs" id="4_8w0ad"]
 [ext_resource type="Script" uid="uid://b5n701s51v170" path="res://Scripts/Controls/ItemListDisplay.cs" id="5_olcl8"]
 [ext_resource type="PackedScene" uid="uid://ce04r4c7q8n5i" path="res://Scenes/item_display.tscn" id="6_qg6nd"]

@@ -37,6 +37,7 @@ public partial class DialogueEditor : Control
 
         EditorNode.GuiInput += OnInputEvent;
         EditorNode.GetMenuHBox().AddChild(_statusLabel);
+        EditorNode.GetMenuHBox().AddChild(CreateRegenIdsButton());
 
         EditorNode.NodeSelected += node =>
         {
@@ -296,25 +297,25 @@ public partial class DialogueEditor : Control
                 }
             case DialogueNodeType.PlayerResponse:
                 {
-                    newNode.Title += $" {_responseCounter}";
-                    _responseCounter++;
+                    newNode.Title += $" {_nodeCounter}";
+                    _nodeCounter++;
                     break;
                 }
             case DialogueNodeType.ScriptAction:
                 {
-                    newNode.Title += $" {_actionCounter}";
-                    _actionCounter++;
+                    newNode.Title += $" {_nodeCounter}";
+                    _nodeCounter++;
                     break;
                 }
             case DialogueNodeType.ScriptEntry:
                 {
-                    newNode.Title += $" {_entryCounter}";
-                    _entryCounter++;
+                    newNode.Title += $" {_nodeCounter}";
+                    _nodeCounter++;
                     break;
                 }
         }
 
-        newNode.DNodeId = _nodeCounter + _actionCounter + _responseCounter + _entryCounter;
+        newNode.DNodeId = _nodeCounter;
 
         return newNode;
     }
@@ -322,7 +323,7 @@ public partial class DialogueEditor : Control
     public DialogueNode AddNode(string localPath, Vector2 pos = new Vector2() )
     {
         var newNode = _AddNodeInternal(localPath);
-        newNode.PositionOffset = pos;
+        newNode.PositionOffset = (EditorNode.ScrollOffset + EditorNode.Size / 2) / EditorNode.Zoom - newNode.Size / 2;
         undoRedoManager.CreateAction($"Add {newNode.Title}");
         undoRedoManager.AddDoMethod(this, MethodName.AddAndEnableNode, newNode);
         undoRedoManager.AddUndoMethod(this, MethodName.DisableNode, newNode);
@@ -480,10 +481,7 @@ public partial class DialogueEditor : Control
                         }
                 }
                 pastedNode.Name = pastedNode.Title;
-                pastedNode.DNodeId |= _nodeCounter;
-                pastedNode.DNodeId |= ((ulong) _actionCounter) << 16;
-                pastedNode.DNodeId |= ((ulong) _responseCounter) << 32;
-                pastedNode.DNodeId |= ((ulong) _entryCounter) << 48;
+                pastedNode.DNodeId = _nodeCounter;
                 pastedNode.PositionOffset += new Vector2(50, 50); // Offset to avoid overlap
                 undoRedoManager.AddDoMethod(this, MethodName.AddAndEnableNode, pastedNode);
                 undoRedoManager.AddUndoMethod(this, MethodName.DisableNode, pastedNode);
@@ -584,6 +582,32 @@ public partial class DialogueEditor : Control
             dialog.Exclusive = true;
             AddChild(dialog);
             dialog.Show();
+        }
+    }
+
+    private Button CreateRegenIdsButton()
+    {
+        var button = new Button
+        {
+            Text = "Regenerate Node IDs"
+        };
+        button.Pressed += () =>
+        {
+            RegenerateNodeIds();
+        };
+        return button;
+    }
+
+    public void RegenerateNodeIds()
+    {
+        _nodeCounter = 0;
+        foreach (var child in EditorNode.GetChildren())
+        {
+            if (child is DialogueNode dialogueNode)
+            {
+                _nodeCounter++;
+                dialogueNode.DNodeId = _nodeCounter;
+            }
         }
     }
 }

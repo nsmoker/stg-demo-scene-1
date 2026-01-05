@@ -104,7 +104,7 @@ Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281483566776321
 EditorPos = Vector2(340, -480)
-EditorSize = Vector2(659.99817, 360.0003)
+EditorSize = Vector2(659.9981, 360.0003)
 
 [sub_resource type="Resource" id="Resource_0bit8"]
 script = ExtResource("3_yb246")
@@ -118,7 +118,7 @@ Addressee = "Player"
 DNodeId = 281483566776322
 Condition = SubResource("Resource_0bit8")
 EditorPos = Vector2(1440, 440)
-EditorSize = Vector2(699.9966, 383.0001)
+EditorSize = Vector2(699.9966, 383.00012)
 
 [sub_resource type="Resource" id="Resource_0p2yr"]
 script = ExtResource("2_3wuwt")

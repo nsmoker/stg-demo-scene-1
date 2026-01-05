@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 [Tool]
@@ -10,5 +11,5 @@ public abstract partial class DialogueAction : Resource
         return root.GetNode<Player>("Player");
     }
 
-    public abstract void Execute();
+    public abstract void Execute(Action onComplete);
 }

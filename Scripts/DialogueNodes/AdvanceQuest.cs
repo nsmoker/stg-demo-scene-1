@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 [Tool]
@@ -9,8 +10,9 @@ public partial class AdvanceQuest : DialogueAction
 
     [Export]
     public int StageToAdvanceTo;
-    public override void Execute()
+    public override void Execute(Action onComplete)
     {
         QuestSystem.SetQuestStage(QuestToAdvance.ResourcePath, StageToAdvanceTo);
+        onComplete?.Invoke();
     }
 }

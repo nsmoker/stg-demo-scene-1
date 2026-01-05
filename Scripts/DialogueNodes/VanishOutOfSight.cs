@@ -16,7 +16,7 @@ public partial class VanishOutOfSight : DialogueAction
     private Character _visionInstance;
     private Area2D _visionRange;
 
-    public override void Execute()
+    public override void Execute(Action onComplete)
     {
         _vanishInstance = CharacterSystem.GetInstance(characterToVanish.ResourcePath);
         _visionInstance = CharacterSystem.GetInstance(visionRangeOf.ResourcePath);
@@ -24,6 +24,7 @@ public partial class VanishOutOfSight : DialogueAction
         _visionRange = _visionInstance.GetSenseArea();
 
         _visionRange.BodyExited += VisionHandler;
+        onComplete?.Invoke();
     }
 
     public void VisionHandler(Node2D body)

@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Arkham Hunters"
+config/name="STG Demo Scene 1"
 run/main_scene="uid://bgk5v73hj7cv0"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="res://icon.svg"

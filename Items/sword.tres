@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="Item" load_steps=28 format=3 uid="uid://kftvfg1stwmt"]
 
 [ext_resource type="Script" uid="uid://5hcjkamye5ns" path="res://Scripts/Items/AttributeBonus.cs" id="1_7s7sv"]
-[ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://Sprites/Images/spr_itemsncolectables.png" id="1_182yy"]
+[ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="1_182yy"]
 [ext_resource type="Script" uid="uid://bg3xbg8f0cawp" path="res://Scripts/Items/AttributeRequirement.cs" id="1_fr8e0"]
-[ext_resource type="Texture2D" uid="uid://clru4be0tsesu" path="res://Sprites/Images/spr_itemsncolectables-outlined.png" id="2_dapqe"]
+[ext_resource type="Texture2D" uid="uid://clru4be0tsesu" path="res://SpritesPlaceholder/Images/spr_itemsncolectables-outlined.png" id="2_dapqe"]
 [ext_resource type="Script" uid="uid://bjq8iqwdrtj6w" path="res://Scripts/Items/SkillRequirement.cs" id="3_2rubl"]
 [ext_resource type="Script" uid="uid://c54dlxcx6qrkd" path="res://Scripts/Items/SkillBonus.cs" id="3_f8cyh"]
 [ext_resource type="Script" uid="uid://cs3jsnbfssvyu" path="res://Scripts/Items/WeaponStats.cs" id="4_sflb1"]

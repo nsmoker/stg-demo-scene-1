@@ -30,7 +30,7 @@ public partial class Character : CharacterBody2D
     }
 
     public CollisionShape2D collider;
-    protected AnimatedSprite2D SpriteAnim;
+    protected AnimationPlayer Anim;
     public NavigationObstacle2D NavObstacle;
 
     [Export]
@@ -51,6 +51,9 @@ public partial class Character : CharacterBody2D
     public int Wisdom => CharacterData.BaseAttributes.Wisdom + GetEquipmentSet().ComputeAttributeBonus().WisdomBonus;
     public int Charisma => CharacterData.BaseAttributes.Charisma + GetEquipmentSet().ComputeAttributeBonus().CharismaBonus;
     public int Willpower => CharacterData.BaseAttributes.Willpower + GetEquipmentSet().ComputeAttributeBonus().WillpowerBonus;
+
+    public Sprite2D ActionPip1;
+    public Sprite2D ActionPip2;
 
     public AttributeSet FinalAttributes => new AttributeSet()
     {
@@ -78,6 +81,9 @@ public partial class Character : CharacterBody2D
 
     private int _patrolLegIndex;
     private double _patrolLegProgress = 0;
+
+    protected Sprite2D _mainSprite;
+
     private CoverCheckResult _coverState = new()
     {
         CoverLevelNorth = 0,
@@ -88,6 +94,8 @@ public partial class Character : CharacterBody2D
 
     protected Area2D _senseArea;
 
+    protected Label _healthLabel;
+
     private class PatrolState : ICharacterState
     {
         public void Process(double delta, Character character)
@@ -97,22 +105,22 @@ public partial class Character : CharacterBody2D
                 var currentPatrolLeg = character.CharacterData.PatrolLegs[character._patrolLegIndex];
                 if (currentPatrolLeg.Direction.X < 0)
                 {
-                    character.SpriteAnim.Play("walk_west");
+                    character.Anim.Play("walk_west");
                 }
 
                 if (currentPatrolLeg.Direction.X > 0)
                 {
-                    character.SpriteAnim.Play("walk_east");
+                    character.Anim.Play("walk_east");
                 }
 
                 if (currentPatrolLeg.Direction.Y > 0)
                 {
-                    character.SpriteAnim.Play("walk_north");
+                    character.Anim.Play("walk_north");
                 }
 
                 if (currentPatrolLeg.Direction.Y < 0)
                 {
-                    character.SpriteAnim.Play("walk_south");
+                    character.Anim.Play("walk_south");
                 }
             }
         }
@@ -206,6 +214,35 @@ public partial class Character : CharacterBody2D
         }
     }
 
+    protected class NavState : ICharacterState
+    {
+        Vector2 _targetPoint;
+        ICharacterState _nextState;
+        public NavState(Vector2 point, ICharacterState nextState)
+        {
+            _targetPoint = point;
+            _nextState = nextState;
+        }
+
+        public void Process(double delta, Character character)
+        {
+            
+        }
+
+        public void PhysicsProcess(double delta, Character character)
+        {
+            var targetVector = _targetPoint - character.Position;
+            var vel = targetVector.Normalized() * character.CharacterData.Speed;
+            character.Velocity = vel;
+            character.MoveAndSlide();
+            if (character.Position.DistanceTo(_targetPoint) <= 1.0f)
+            {
+                character.Position = _targetPoint;
+                character.State = _nextState;
+            }
+        }
+    }
+
     protected class CombatNavState : ICharacterState
     {
         Character _character;
@@ -260,17 +297,25 @@ public partial class Character : CharacterBody2D
 
     public override void _Ready()
     {
-        SpriteAnim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        Anim = GetNode<AnimationPlayer>("AnimationPlayer");
         CoverBadge = GetNode<Sprite2D>("CoverBadge");
         collider = GetNode<CollisionShape2D>("MainCollider");
         FactionSystem.SetFaction(CharacterData.ResourcePath, CharacterData.InitialFaction);
         InventorySystem.SetInventory(CharacterData.ResourcePath, [.. InitialInventory]);
         CharacterSystem.SetInstance(CharacterData.ResourcePath, this);
+        HealthSystem.SetCurrentHitpoints(CharacterData.ResourcePath, CharacterData.CurrentHitpoints);
         CombatSystem.CombatStartHandlers += OnCombatStarted;
 		CombatSystem.CharacterJoinedCombatHandlers += OnCombatJoined;
         CombatSystem.CombatEnded += OnCombatEnded;
+        HealthSystem.DeathEventHandlers += OnDeath;
+        HealthSystem.DamageEventHandlers += OnDamage;
         State = new PatrolState();
+        ActionPip1 = GetNode<Sprite2D>("ActionPip");
+        ActionPip2 = GetNode<Sprite2D>("ActionPip2");
         _senseArea = GetNode<Area2D>("SenseArea");
+        _mainSprite = GetNode<Sprite2D>("MainSprite");
+        _healthLabel = GetNode<Label>("HealthLabel");
+        _healthLabel.Text = $"{CharacterData.CurrentHitpoints} / {CharacterData.MaxHitpoints}";
 
         _senseArea.BodyEntered += OnBodyEnteredSenseArea;
         
@@ -386,6 +431,7 @@ public partial class Character : CharacterBody2D
     {
         if (e.participants.Contains(CharacterData.ResourcePath))
         {
+            _healthLabel.Show();
             State = GetCombatState();
         }
     }
@@ -394,6 +440,7 @@ public partial class Character : CharacterBody2D
     {
         if (c.ResourcePath.Equals(CharacterData.ResourcePath))
         {
+            _healthLabel.Show();
             State = GetCombatState();
         } 
     }
@@ -410,6 +457,22 @@ public partial class Character : CharacterBody2D
             State = new PatrolState();
         }
         CoverBadge.Visible = false;
+        if (ActionPip1 != null && ActionPip2 != null)
+        {
+            ActionPip1.Visible = false;
+            ActionPip2.Visible = false;
+        }
+        _healthLabel.Hide();
+        QueueRedraw();
+    }
+
+    public virtual void OnDeath(DeathEvent e)
+    {
+        if (e.deceased.CharacterData.ResourcePath == CharacterData.ResourcePath)
+        {
+            CleanDelegates();
+            QueueFree();
+        }
     }
 
     public bool IsTakingCover()
@@ -449,5 +512,28 @@ public partial class Character : CharacterBody2D
         CoverBadge.Visible = IsTakingCover();
             
         return ret;
+    }
+
+    public virtual void OnDamage(DamageEvent e)
+	{
+        string recipientId = e.recipient.CharacterData.ResourcePath;
+		if (recipientId == CharacterData.ResourcePath)
+		{
+			_healthLabel.Text = $"{HealthSystem.GetCurrentHitpoints(recipientId)} / {CharacterData.MaxHitpoints}";
+		}
+	}
+
+    public void WalkToPoint(Vector2 point)
+    {
+        State = new NavState(point, State);
+    }
+
+    private void CleanDelegates()
+    {
+        CombatSystem.CombatStartHandlers -= OnCombatStarted;
+        CombatSystem.CharacterJoinedCombatHandlers -= OnCombatJoined;
+        CombatSystem.CombatEnded -= OnCombatEnded;
+        HealthSystem.DeathEventHandlers -= OnDeath;
+        HealthSystem.DamageEventHandlers -= OnDamage;
     }
 }

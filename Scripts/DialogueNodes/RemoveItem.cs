@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 [GlobalClass]
@@ -10,8 +11,9 @@ public partial class RemoveItem : DialogueAction
     [Export]
     public Item ItemToRemove;
 
-    public override void Execute()
+    public override void Execute(Action onComplete)
     {
         InventorySystem.RemoveItem(FromCharacter.ResourcePath, ItemToRemove);
+        onComplete?.Invoke();
     }
 }

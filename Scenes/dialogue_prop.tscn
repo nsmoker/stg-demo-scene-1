@@ -1,0 +1,36 @@
+[gd_scene load_steps=8 format=3 uid="uid://bt4uh756ddpxy"]
+
+[ext_resource type="Script" uid="uid://d31xijw3tfna4" path="res://Scripts/DialogueTriggerProp.cs" id="1_it0bl"]
+[ext_resource type="Resource" uid="uid://d0vtobfhyip5c" path="res://Conversations/elemental_studies_intro.tres" id="2_6ge7v"]
+[ext_resource type="Texture2D" uid="uid://drfjfexp0haqi" path="res://SpritesPlaceholder/Images/ts_interiorDecorations.png" id="2_8hwud"]
+[ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="3_6ge7v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8de8j"]
+atlas = ExtResource("2_8hwud")
+region = Rect2(32, 192, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k78ma"]
+size = Vector2(16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kglut"]
+atlas = ExtResource("3_6ge7v")
+region = Rect2(0, 64, 16, 16)
+
+[node name="Container" type="StaticBody2D"]
+z_index = 2
+script = ExtResource("1_it0bl")
+_conversation = ExtResource("2_6ge7v")
+
+[node name="MainSprite" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = SubResource("AtlasTexture_8de8j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_k78ma")
+
+[node name="BadgeSprite" type="Sprite2D" parent="."]
+visible = false
+z_index = 2
+texture_filter = 1
+position = Vector2(0, -14)
+texture = SubResource("AtlasTexture_kglut")

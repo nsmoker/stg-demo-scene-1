@@ -15,8 +15,9 @@ public partial class HostilityOverride : DialogueAction
     [Export]
     public bool IsHostile;
 
-    public override void Execute()
+    public override void Execute(Action onComplete)
     {
         HostilitySystem.SetHostilityOverride(Hater.ResourcePath, Hatee.ResourcePath, IsHostile);
+        onComplete?.Invoke();
     }
 }

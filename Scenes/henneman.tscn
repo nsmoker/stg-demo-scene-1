@@ -1,0 +1,380 @@
+[gd_scene load_steps=76 format=3 uid="uid://c7jepn55q3mxg"]
+
+[ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character/Character.cs" id="1_bcfsq"]
+[ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/Resources/AttributeSet.cs" id="2_1cv77"]
+[ext_resource type="Script" uid="uid://cgng01q8ok4ba" path="res://Scripts/Resources/SkillSet.cs" id="3_iadn1"]
+[ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/Resources/PatrolLeg.cs" id="4_75al0"]
+[ext_resource type="Script" uid="uid://5hcjkamye5ns" path="res://Scripts/Items/AttributeBonus.cs" id="5_y8ivr"]
+[ext_resource type="Script" uid="uid://c54dlxcx6qrkd" path="res://Scripts/Items/SkillBonus.cs" id="6_8g7k5"]
+[ext_resource type="Script" uid="uid://dgvr4h6v7mkj5" path="res://Scripts/Items/ArmorStats.cs" id="7_wi412"]
+[ext_resource type="Script" uid="uid://bg3xbg8f0cawp" path="res://Scripts/Items/AttributeRequirement.cs" id="8_ei2gb"]
+[ext_resource type="Script" uid="uid://cn548gp046jaa" path="res://Scripts/Items/ConsumableStats.cs" id="9_d48i7"]
+[ext_resource type="Script" uid="uid://bjq8iqwdrtj6w" path="res://Scripts/Items/SkillRequirement.cs" id="10_c6tvd"]
+[ext_resource type="Script" uid="uid://mxrfbr2ffrey" path="res://Scripts/Resources/DamageRoll.cs" id="11_v5yvf"]
+[ext_resource type="Script" uid="uid://cs3jsnbfssvyu" path="res://Scripts/Items/WeaponStats.cs" id="12_itkp2"]
+[ext_resource type="Script" uid="uid://bpuijyxf410pp" path="res://Scripts/Items/WearableStats.cs" id="13_sx0iq"]
+[ext_resource type="Script" uid="uid://bu40wng0pu1b6" path="res://Scripts/Items/Item.cs" id="14_w573h"]
+[ext_resource type="Script" uid="uid://cuq2diuirpwbs" path="res://Scripts/Resources/EquipmentSet.cs" id="15_kbnar"]
+[ext_resource type="Script" uid="uid://cng8hqptg2rbu" path="res://Scripts/Resources/CharacterData.cs" id="16_1qmdm"]
+[ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="17_giusq"]
+[ext_resource type="Texture2D" uid="uid://c7gkusiwo0t5q" path="res://Sprites/Characters/henneman_ingame.png" id="18_ujab1"]
+[ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="19_k3hug"]
+
+[sub_resource type="Resource" id="Resource_auwsv"]
+script = ExtResource("2_1cv77")
+
+[sub_resource type="Resource" id="Resource_8uf12"]
+script = ExtResource("3_iadn1")
+
+[sub_resource type="Resource" id="Resource_n85mp"]
+script = ExtResource("5_y8ivr")
+
+[sub_resource type="Resource" id="Resource_nxecp"]
+script = ExtResource("6_8g7k5")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_6jaer"]
+script = ExtResource("7_wi412")
+SkillBonuses = SubResource("Resource_nxecp")
+AttributeBonuses = SubResource("Resource_n85mp")
+
+[sub_resource type="Resource" id="Resource_ve8xs"]
+script = ExtResource("8_ei2gb")
+
+[sub_resource type="Resource" id="Resource_q0iv8"]
+script = ExtResource("9_d48i7")
+DamageRolls = []
+HealRolls = []
+
+[sub_resource type="Resource" id="Resource_c1gwg"]
+script = ExtResource("10_c6tvd")
+
+[sub_resource type="Resource" id="Resource_3mxp7"]
+script = ExtResource("5_y8ivr")
+
+[sub_resource type="Resource" id="Resource_5a56t"]
+script = ExtResource("11_v5yvf")
+
+[sub_resource type="Resource" id="Resource_a6sir"]
+script = ExtResource("6_8g7k5")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_8ej4m"]
+script = ExtResource("12_itkp2")
+DamageRolls = SubResource("Resource_5a56t")
+SkillBonuses = SubResource("Resource_a6sir")
+AttributeBonuses = SubResource("Resource_3mxp7")
+
+[sub_resource type="Resource" id="Resource_bwheg"]
+script = ExtResource("5_y8ivr")
+
+[sub_resource type="Resource" id="Resource_iol0x"]
+script = ExtResource("6_8g7k5")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_ofqcr"]
+script = ExtResource("13_sx0iq")
+SkillBonuses = SubResource("Resource_iol0x")
+AttributeBonuses = SubResource("Resource_bwheg")
+
+[sub_resource type="Resource" id="Resource_nus6a"]
+script = ExtResource("14_w573h")
+ItemType = 4
+AttributeRequirements = SubResource("Resource_ve8xs")
+SkillRequirements = SubResource("Resource_c1gwg")
+ConsumableStats = SubResource("Resource_q0iv8")
+WearableStats = SubResource("Resource_ofqcr")
+ArmorStats = SubResource("Resource_6jaer")
+WeaponStats = SubResource("Resource_8ej4m")
+Name = " (Equipped)"
+
+[sub_resource type="Resource" id="Resource_imgxb"]
+script = ExtResource("5_y8ivr")
+
+[sub_resource type="Resource" id="Resource_pyrvc"]
+script = ExtResource("6_8g7k5")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_pja2t"]
+script = ExtResource("7_wi412")
+SkillBonuses = SubResource("Resource_pyrvc")
+AttributeBonuses = SubResource("Resource_imgxb")
+
+[sub_resource type="Resource" id="Resource_jx5vc"]
+script = ExtResource("8_ei2gb")
+
+[sub_resource type="Resource" id="Resource_7vco5"]
+script = ExtResource("9_d48i7")
+DamageRolls = []
+HealRolls = []
+
+[sub_resource type="Resource" id="Resource_7xmqa"]
+script = ExtResource("10_c6tvd")
+
+[sub_resource type="Resource" id="Resource_8w0mm"]
+script = ExtResource("5_y8ivr")
+
+[sub_resource type="Resource" id="Resource_ebugx"]
+script = ExtResource("11_v5yvf")
+
+[sub_resource type="Resource" id="Resource_mpt27"]
+script = ExtResource("6_8g7k5")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_0dyvk"]
+script = ExtResource("12_itkp2")
+DamageRolls = SubResource("Resource_ebugx")
+SkillBonuses = SubResource("Resource_mpt27")
+AttributeBonuses = SubResource("Resource_8w0mm")
+
+[sub_resource type="Resource" id="Resource_anrbk"]
+script = ExtResource("5_y8ivr")
+
+[sub_resource type="Resource" id="Resource_rcolj"]
+script = ExtResource("6_8g7k5")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_mhcg5"]
+script = ExtResource("13_sx0iq")
+SkillBonuses = SubResource("Resource_rcolj")
+AttributeBonuses = SubResource("Resource_anrbk")
+
+[sub_resource type="Resource" id="Resource_twqvw"]
+script = ExtResource("14_w573h")
+ItemType = 4
+AttributeRequirements = SubResource("Resource_jx5vc")
+SkillRequirements = SubResource("Resource_7xmqa")
+ConsumableStats = SubResource("Resource_7vco5")
+WearableStats = SubResource("Resource_mhcg5")
+ArmorStats = SubResource("Resource_pja2t")
+WeaponStats = SubResource("Resource_0dyvk")
+Name = " (Equipped)"
+
+[sub_resource type="Resource" id="Resource_1twfy"]
+script = ExtResource("5_y8ivr")
+
+[sub_resource type="Resource" id="Resource_qhwq3"]
+script = ExtResource("6_8g7k5")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_fv6oi"]
+script = ExtResource("7_wi412")
+SkillBonuses = SubResource("Resource_qhwq3")
+AttributeBonuses = SubResource("Resource_1twfy")
+
+[sub_resource type="Resource" id="Resource_wf4eh"]
+script = ExtResource("8_ei2gb")
+
+[sub_resource type="Resource" id="Resource_hvksc"]
+script = ExtResource("9_d48i7")
+DamageRolls = []
+HealRolls = []
+
+[sub_resource type="Resource" id="Resource_j0vx4"]
+script = ExtResource("10_c6tvd")
+
+[sub_resource type="Resource" id="Resource_wad7k"]
+script = ExtResource("5_y8ivr")
+
+[sub_resource type="Resource" id="Resource_2ytd7"]
+script = ExtResource("11_v5yvf")
+
+[sub_resource type="Resource" id="Resource_3pfub"]
+script = ExtResource("6_8g7k5")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_oque4"]
+script = ExtResource("12_itkp2")
+DamageRolls = SubResource("Resource_2ytd7")
+SkillBonuses = SubResource("Resource_3pfub")
+AttributeBonuses = SubResource("Resource_wad7k")
+
+[sub_resource type="Resource" id="Resource_l8wrx"]
+script = ExtResource("5_y8ivr")
+
+[sub_resource type="Resource" id="Resource_mqrwb"]
+script = ExtResource("6_8g7k5")
+BonusProficiencies = []
+
+[sub_resource type="Resource" id="Resource_ghhmq"]
+script = ExtResource("13_sx0iq")
+SkillBonuses = SubResource("Resource_mqrwb")
+AttributeBonuses = SubResource("Resource_l8wrx")
+
+[sub_resource type="Resource" id="Resource_i4rlt"]
+script = ExtResource("14_w573h")
+ItemType = 4
+AttributeRequirements = SubResource("Resource_wf4eh")
+SkillRequirements = SubResource("Resource_j0vx4")
+ConsumableStats = SubResource("Resource_hvksc")
+WearableStats = SubResource("Resource_ghhmq")
+ArmorStats = SubResource("Resource_fv6oi")
+WeaponStats = SubResource("Resource_oque4")
+Name = " (Equipped)"
+
+[sub_resource type="Resource" id="Resource_fmsty"]
+script = ExtResource("15_kbnar")
+Armor = SubResource("Resource_nus6a")
+Weapon = SubResource("Resource_i4rlt")
+Helmet = SubResource("Resource_twqvw")
+
+[sub_resource type="Resource" id="Resource_56vhr"]
+script = ExtResource("16_1qmdm")
+CharacterName = "Henneman"
+BaseAttributes = SubResource("Resource_auwsv")
+BaseSkills = SubResource("Resource_8uf12")
+MaxHitpoints = 10
+CurrentHitpoints = 10
+InitialFaction = 2
+StartingEquipment = SubResource("Resource_fmsty")
+metadata/_custom_type_script = "uid://cng8hqptg2rbu"
+
+[sub_resource type="SystemFont" id="SystemFont_tk7xo"]
+subpixel_positioning = 0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ss715"]
+size = Vector2(13, 29)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wxkh7"]
+radius = 80.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhkrs"]
+atlas = ExtResource("17_giusq")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="Animation" id="Animation_dhkrs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_4jyny"]
+resource_name = "walk_h"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_scl1n"]
+resource_name = "walk_north"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_5xdhn"]
+resource_name = "walk_south"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dhkrs"]
+_data = {
+&"RESET": SubResource("Animation_dhkrs"),
+&"walk_h": SubResource("Animation_4jyny"),
+&"walk_north": SubResource("Animation_scl1n"),
+&"walk_south": SubResource("Animation_5xdhn")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_dhkrs"]
+font_size = 8
+
+[node name="Henneman" type="CharacterBody2D"]
+z_index = 2
+script = ExtResource("1_bcfsq")
+CharacterData = SubResource("Resource_56vhr")
+ToHitFont = SubResource("SystemFont_tk7xo")
+metadata/_custom_type_script = "uid://bsrhat3n35udl"
+
+[node name="MainCollider" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 1.5)
+shape = SubResource("RectangleShape2D_ss715")
+
+[node name="SenseArea" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea"]
+shape = SubResource("CircleShape2D_wxkh7")
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+radius = 8.39
+affect_navigation_mesh = true
+
+[node name="CoverBadge" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(0, -21)
+scale = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_dhkrs")
+
+[node name="MainSprite" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("18_ujab1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_dhkrs")
+}
+
+[node name="ActionPip" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(-8, 16)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("19_k3hug")
+
+[node name="ActionPip2" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(0, 16)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("19_k3hug")
+
+[node name="HealthLabel" type="Label" parent="."]
+visible = false
+offset_left = -7.0
+offset_top = -20.0
+offset_right = 13.0
+offset_bottom = -8.833332
+text = "asd"
+label_settings = SubResource("LabelSettings_dhkrs")

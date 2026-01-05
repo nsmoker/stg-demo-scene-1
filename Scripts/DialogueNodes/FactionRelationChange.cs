@@ -14,8 +14,9 @@ public partial class FactionRelationChange : DialogueAction
     [Export]
     bool Relation;
 
-    public override void Execute()
+    public override void Execute(Action onComplete)
     {
         FactionSystem.SetFactionRelation(Hater, Hatee, Relation);
+        onComplete?.Invoke();
     }
 }

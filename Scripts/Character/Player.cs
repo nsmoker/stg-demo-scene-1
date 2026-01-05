@@ -49,36 +49,34 @@ public partial class Player : Character
 
 			if (closestInteractable != player._lastBadgedInteractable)
 			{
-				if (player._lastBadgedInteractable != null)
-				{
-					player._lastBadgedInteractable.SetShowBadge(false);
-				}
-				if (closestInteractable != null)
-				{
-					closestInteractable.SetShowBadge(true);
-				}
+				player._lastBadgedInteractable?.SetShowBadge(false);
+				closestInteractable?.SetShowBadge(true);
 				player._lastBadgedInteractable = closestInteractable;
 			}
 
 			if (Input.IsActionPressed("Move West"))
 			{
-				player.SpriteAnim.Play("walk_west");
+				player.Anim.Play("walk_h");
+				player._mainSprite.FlipH = false;
 			}
 			else if (Input.IsActionPressed("Move South"))
 			{
-				player.SpriteAnim.Play("walk_south");
+				player.Anim.Play("walk_south");
+				player._mainSprite.FlipH = false;
 			}
 			else if (Input.IsActionPressed("Move East"))
 			{
-				player.SpriteAnim.Play("walk_east");
+				player.Anim.Play("walk_h");
+				player._mainSprite.FlipH = true;
 			}
 			else if (Input.IsActionPressed("Move North"))
 			{
-				player.SpriteAnim.Play("walk_north");
+				player.Anim.Play("walk_north");
+				player._mainSprite.FlipH = false;
 			}
 			else
 			{
-				player.SpriteAnim.Pause();
+				player.Anim.Pause();
 			}
 
 			if (Input.IsActionJustPressed("Interact"))
@@ -222,6 +220,9 @@ public partial class Player : Character
 			CombatSystem.TurnHandlers += OnTurnBegin;
 			_isOurTurn = CombatSystem.GetMovingSide().Contains(_player.CharacterData.ResourcePath);
             player.UpdateCoverState(player.GetWorld2D().DirectSpaceState);
+			_player.ActionPip1.Visible = true;
+			_player.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_player.CharacterData) > 1;
+			_player._combatStatusLabel.Visible = true;
             player.QueueRedraw();
         }
 
@@ -279,6 +280,18 @@ public partial class Player : Character
 		public void OnTurnBegin(List<string> sideMoving)
         {
             _isOurTurn = sideMoving.Contains(_player.CharacterData.ResourcePath);
+			if (_isOurTurn)
+			{
+				_player.ActionPip1.Visible = true;
+				_player.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_player.CharacterData) > 1;
+			}
+			else
+			{
+				_player.ActionPip1.Hide();
+				_player.ActionPip2.Hide();
+			}
+			_player._combatStatusLabel.Text = _isOurTurn ? "YOUR TURN" : "ENEMY TURN";
+			_player.QueueRedraw();
         }
     }
 
@@ -324,12 +337,13 @@ public partial class Player : Character
 	[Export]
 	private Font _pathFont;
 
+	private Label _combatStatusLabel;
+
     public override void _Ready()
 	{
 		base._Ready();
 		CombatLog.Initialize();
 		FactionSystem.Initialize(_factionTable);
-		SpriteAnim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_dialogueDisplay = GetNode<DialogueController>("DialogueDisplay");
 		_interactableRange = GetNode<Area2D>("InteractableRange");
 		_containerDisplay = GetNode<ContainerDisplay>("ContainerDisplay");
@@ -338,6 +352,7 @@ public partial class Player : Character
 		_journalDisplay = GetNode<JournalDisplay>("JournalDisplay");
 		_mapDisplay = GetNode<PanelContainer>("MapDisplay");
 		_senseArea = GetNode<Area2D>("SenseArea");
+		_combatStatusLabel = GetNode<Label>("CombatStatusLabel");
 
 		State = new NavigationState();
 		_senseArea.BodyExited += OnBodyExitedSenseArea;
@@ -403,6 +418,7 @@ public partial class Player : Character
         if (e.participants.Contains(CharacterData.ResourcePath))
         {
             State = new PlayerCombatState(this);
+			_healthLabel.Show();
         }
     }
 
@@ -411,6 +427,7 @@ public partial class Player : Character
         if (joiner.ResourcePath.Equals(CharacterData.ResourcePath))
         {
             State = new PlayerCombatState(this);
+			_healthLabel.Show();
         }
     }
 
@@ -425,5 +442,13 @@ public partial class Player : Character
 		{
 			State = new NavigationState();
 		}
+		if (ActionPip1 != null && ActionPip2 != null)
+        {
+            ActionPip1.Visible = false;
+            ActionPip2.Visible = false;
+        }
+		_combatStatusLabel.Visible = false;
+		_healthLabel.Hide();
+        QueueRedraw();
     }
 }

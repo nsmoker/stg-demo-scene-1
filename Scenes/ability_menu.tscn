@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://brdmuedpkp0jn"]
 
-[ext_resource type="Texture2D" uid="uid://di2o52umbf010" path="res://Sprites/Images/arrow.png" id="1_e7t4l"]
+[ext_resource type="Texture2D" uid="uid://di2o52umbf010" path="res://SpritesPlaceholder/Images/arrow.png" id="1_e7t4l"]
 [ext_resource type="Script" uid="uid://i0c5dyxgercy" path="res://Scripts/Controls/AbilityMenu.cs" id="1_muvf5"]
-[ext_resource type="Texture2D" uid="uid://ctnegrdyuamw5" path="res://Sprites/Images/arrow_outline.png" id="2_gpnv8"]
-[ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://Sprites/Images/spr_itemsncolectables.png" id="3_gaum7"]
-[ext_resource type="Texture2D" uid="uid://clru4be0tsesu" path="res://Sprites/Images/spr_itemsncolectables-outlined.png" id="4_fxx1f"]
+[ext_resource type="Texture2D" uid="uid://ctnegrdyuamw5" path="res://SpritesPlaceholder/Images/arrow_outline.png" id="2_gpnv8"]
+[ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="3_gaum7"]
+[ext_resource type="Texture2D" uid="uid://clru4be0tsesu" path="res://SpritesPlaceholder/Images/spr_itemsncolectables-outlined.png" id="4_fxx1f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_285tm"]
 atlas = ExtResource("3_gaum7")

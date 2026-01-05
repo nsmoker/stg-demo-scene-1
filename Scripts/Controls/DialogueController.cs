@@ -14,6 +14,8 @@ public partial class DialogueController : ScrollContainer
     private VBoxContainer _container;
     private List<Label> _choiceLabels = [];
 
+    private bool actionDone = true;
+
     [Export]
     private float _typewriterSpeed;
 
@@ -110,6 +112,11 @@ public partial class DialogueController : ScrollContainer
 
         public void Process(double delta, DialogueController controller) 
         {
+            if (!controller.actionDone)
+            {
+                return;
+            }
+
             var possibleContinuations = EvaluateContinuation(controller._conversation, _node, out var nodeOut);
 
             if (possibleContinuations == 0)
@@ -125,7 +132,8 @@ public partial class DialogueController : ScrollContainer
                         controller.State = new WriteState(controller, nodeOut);
                         break;
                     case EverydayDialogueEditor.DialogueNodeType.ScriptAction:
-                        nodeOut.Action?.Execute();
+                        controller.actionDone = false;
+                        nodeOut.Action?.Execute(() => controller.actionDone = true);
                         controller.State = new EvalState(nodeOut, controller);
                         break;
                     case EverydayDialogueEditor.DialogueNodeType.ScriptEntry:

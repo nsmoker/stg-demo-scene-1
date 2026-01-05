@@ -8,8 +8,9 @@ public partial class TriggerQuest : DialogueAction
     [Export]
     public Quest QuestToTrigger;
 
-    public override void Execute()
+    public override void Execute(Action onComplete)
     {
         QuestSystem.AddQuest(QuestToTrigger);
+        onComplete?.Invoke();
     }
 }
