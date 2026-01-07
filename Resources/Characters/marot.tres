@@ -224,4 +224,6 @@ CurrentHitpoints = 10
 InitialFaction = 2
 Speed = 50.0
 StartingEquipment = SubResource("Resource_fmsty")
+MovementRange = 50.0
+AttackRange = 100
 metadata/_custom_type_script = "uid://cng8hqptg2rbu"

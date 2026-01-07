@@ -184,18 +184,41 @@ public partial class Character : CharacterBody2D
         {
             if (_isOurTurn && CombatSystem.NavReady())
             {
-                CombatSystem.PassTurn(character.CharacterData);
-                //var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), character.GlobalPosition, character.GlobalPosition + new Vector2(32.0f, 0.0f), true, 0x1u);
-                //var len = ComputePathLength(path, character.GlobalPosition);
-                //if (len <= _c.CharacterData.MovementRange)
-                //{
-                //    character.State = new CombatNavState(_c, path);
-                //    character.MouseEntered -= OnHover;
-                //    character.MouseExited -= OnHoverEnd;
-                //    character.InputPickable = false;
-                //    CombatSystem.TurnHandlers -= OnTurnBegin;
-                //    character.Draw -= OnCharacterDraw;
-                //}
+                List<Character> enemiesInSense = character.GetSenseArea().GetOverlappingBodies().Where(body => body is Character).Cast<Character>().Where(c => HostilitySystem.GetHostility(character.CharacterData.ResourcePath, c.CharacterData.ResourcePath)).ToList();
+                var closestEnemy = enemiesInSense.OrderBy(c => c.GlobalPosition.DistanceTo(character.GlobalPosition)).FirstOrDefault();
+                if (closestEnemy != null)
+                {
+                    var distance = closestEnemy.GlobalPosition.DistanceTo(character.GlobalPosition);
+                    if (distance > character.CharacterData.AttackRange)
+                    {
+                        var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), character.GlobalPosition, closestEnemy.GlobalPosition, true, 0x1u);                        var len = ComputePathLength(path, character.GlobalPosition);
+                        if (path.Length == 0)
+                        {
+                            var targetVec = closestEnemy.GlobalPosition - character.GlobalPosition;
+                            character.SetState(new CombatNavState(character, [character.GlobalPosition + targetVec.Normalized() * character.CharacterData.MovementRange]));
+                        } else if (len <= character.CharacterData.MovementRange)
+                        {
+                            character.ControllerState = new CombatNavState(character, path);
+                            character.MouseEntered -= OnHover;
+                            character.MouseExited -= OnHoverEnd;
+                            character.InputPickable = false;
+                            CombatSystem.TurnHandlers -= OnTurnBegin;
+                            character.Draw -= OnCharacterDraw;
+                            _isOurTurn = false;
+                            character.QueueRedraw();
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        // In range, attack.
+                        CombatSystem.AttemptAttack(character.CharacterData, closestEnemy.CharacterData);
+                    }
+                }
+                else
+                {
+                    CombatSystem.PassTurn(character.CharacterData);
+                }   
             }
             character.QueueRedraw();
         }
@@ -370,11 +393,11 @@ public partial class Character : CharacterBody2D
                 Anim.Play("walk_south");
                 break;
             case AnimState.WalkEast:
-                _mainSprite.FlipH = true;
+                _mainSprite.FlipH = false;
                 Anim.Play("walk_h");
                 break;
             case AnimState.WalkWest:
-                _mainSprite.FlipH = false;
+                _mainSprite.FlipH = true;
                 Anim.Play("walk_h");
                 break;
         }

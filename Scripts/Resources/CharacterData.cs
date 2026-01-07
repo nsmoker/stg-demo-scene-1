@@ -43,4 +43,7 @@ public partial class CharacterData : Resource
 
     [Export]
     public int CombatActions = 1;
+
+    [Export]
+    public int AttackRange = 20;
 }

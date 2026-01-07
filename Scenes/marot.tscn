@@ -13,13 +13,16 @@ subpixel_positioning = 0
 size = Vector2(14, 29)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wxkh7"]
-radius = 80.0
+radius = 500.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dhkrs"]
 atlas = ExtResource("17_yaiay")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="Animation" id="Animation_dhkrs"]
+[sub_resource type="LabelSettings" id="LabelSettings_dhkrs"]
+font_size = 8
+
+[sub_resource type="Animation" id="Animation_ukyrk"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -34,9 +37,24 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_4jyny"]
+[sub_resource type="Animation" id="Animation_gymyn"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [9]
+}
+
+[sub_resource type="Animation" id="Animation_h4iuc"]
 resource_name = "walk_h"
-length = 0.6
+length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -45,13 +63,13 @@ tracks/0/path = NodePath("MainSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [2, 3]
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
 
-[sub_resource type="Animation" id="Animation_scl1n"]
+[sub_resource type="Animation" id="Animation_pu2lt"]
 resource_name = "walk_north"
 length = 0.6
 loop_mode = 1
@@ -62,13 +80,13 @@ tracks/0/path = NodePath("MainSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [6, 7]
+"values": [9]
 }
 
-[sub_resource type="Animation" id="Animation_5xdhn"]
+[sub_resource type="Animation" id="Animation_7dp3o"]
 resource_name = "walk_south"
 length = 0.6
 loop_mode = 1
@@ -79,26 +97,20 @@ tracks/0/path = NodePath("MainSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0, 1]
+"values": [9]
 }
 
-[sub_resource type="Animation" id="Animation_322xl"]
-resource_name = "idle"
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_dhkrs"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ukyrk"]
 _data = {
-&"RESET": SubResource("Animation_dhkrs"),
-&"idle": SubResource("Animation_322xl"),
-&"walk_h": SubResource("Animation_4jyny"),
-&"walk_north": SubResource("Animation_scl1n"),
-&"walk_south": SubResource("Animation_5xdhn")
+&"RESET": SubResource("Animation_ukyrk"),
+&"idle": SubResource("Animation_gymyn"),
+&"walk_h": SubResource("Animation_h4iuc"),
+&"walk_north": SubResource("Animation_pu2lt"),
+&"walk_south": SubResource("Animation_7dp3o")
 }
-
-[sub_resource type="LabelSettings" id="LabelSettings_dhkrs"]
-font_size = 8
 
 [node name="Marot" type="CharacterBody2D"]
 z_index = 1
@@ -113,7 +125,6 @@ position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_ss715")
 
 [node name="SenseArea" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea"]
 shape = SubResource("CircleShape2D_wxkh7")
@@ -132,11 +143,7 @@ texture = SubResource("AtlasTexture_dhkrs")
 [node name="MainSprite" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("18_cw48i")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_dhkrs")
-}
+hframes = 10
 
 [node name="ActionPip" type="Sprite2D" parent="."]
 visible = false
@@ -160,3 +167,8 @@ offset_right = 13.0
 offset_bottom = -8.833332
 text = "asd"
 label_settings = SubResource("LabelSettings_dhkrs")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ukyrk")
+}
