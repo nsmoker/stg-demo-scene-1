@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ArkhamHunters.Scripts;
 using Godot;
 
@@ -46,4 +47,8 @@ public partial class CharacterData : Resource
 
     [Export]
     public int AttackRange = 20;
+
+    // Quests the character has or has had.
+    [Export]
+    public Godot.Collections.Array<Quest> Journal = [];
 }

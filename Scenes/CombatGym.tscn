@@ -1,12 +1,20 @@
-[gd_scene load_steps=23 format=3 uid="uid://bgk5v73hj7cv0"]
+[gd_scene load_steps=40 format=3 uid="uid://bgk5v73hj7cv0"]
 
 [ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_gokwg"]
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="1_ndsb5"]
 [ext_resource type="PackedScene" uid="uid://gedp1qirf71n" path="res://Scenes/player.tscn" id="2_lkpyc"]
 [ext_resource type="Resource" uid="uid://vbjq48kype7r" path="res://Resources/Constants/faction_table.tres" id="3_vc5ip"]
+[ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/Characters/player_data.tres" id="4_hbowc"]
 [ext_resource type="Texture2D" uid="uid://ddrbb60d32lkn" path="res://Sprites/Backdrops/classroom_test.png" id="5_wnxun"]
 [ext_resource type="PackedScene" uid="uid://c7jepn55q3mxg" path="res://Scenes/henneman.tscn" id="6_4iq4d"]
 [ext_resource type="Script" uid="uid://4wgqj3gknq04" path="res://Scripts/Controls/DialogueController.cs" id="10_8ac3a"]
+[ext_resource type="Script" uid="uid://ub8tuk2mpv4d" path="res://Scripts/Triggers/ElementalStudiesTrigger.cs" id="10_713ei"]
+[ext_resource type="Resource" uid="uid://c1vd5jl7hb2nd" path="res://Resources/Quests/elemental_studies_day_1_quest.tres" id="11_sw1uk"]
+[ext_resource type="Resource" uid="uid://bw07dkj8e3pq0" path="res://Conversations/CoverHelpConversation.tres" id="13_b8mys"]
+[ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="13_tw53w"]
+[ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="14_b8mys"]
+[ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/edi/Scripts/Conversation.cs" id="15_j6uhh"]
+[ext_resource type="Script" uid="uid://b53uhtgi4ltn7" path="res://Scripts/DialogueNodes/WalkCharToPointBlocking.cs" id="16_j6uhh"]
 [ext_resource type="Script" uid="uid://d31xijw3tfna4" path="res://Scripts/DialogueTriggerProp.cs" id="25_044gb"]
 [ext_resource type="Resource" uid="uid://d0vtobfhyip5c" path="res://Conversations/elemental_studies_intro.tres" id="26_gokwg"]
 
@@ -54,6 +62,62 @@ size = Vector2(8, 11)
 [sub_resource type="AtlasTexture" id="AtlasTexture_kglut"]
 atlas = SubResource("CompressedTexture2D_8ac3a")
 region = Rect2(0, 64, 16, 16)
+
+[sub_resource type="Resource" id="Resource_tmqtc"]
+script = ExtResource("13_tw53w")
+fromNode = 1
+toNode = 2
+
+[sub_resource type="Resource" id="Resource_h4iwy"]
+script = ExtResource("13_tw53w")
+toNode = 1
+
+[sub_resource type="Resource" id="Resource_0bad5"]
+script = ExtResource("14_b8mys")
+NodeType = 2
+DNodeId = 1
+EditorPos = Vector2(5653.3584, 1956.9138)
+EditorSize = Vector2(300, 194.00012)
+
+[sub_resource type="Resource" id="Resource_02uyx"]
+script = ExtResource("14_b8mys")
+NodeType = 2
+DNodeId = 1
+EditorPos = Vector2(5653.3584, 1956.9138)
+EditorSize = Vector2(300, 194.00012)
+
+[sub_resource type="Resource" id="Resource_wbbaj"]
+script = ExtResource("14_b8mys")
+Content = "Mr. Tines? Get back here, please."
+Speaker = "Henneman"
+Addressee = "Player"
+DNodeId = 2
+EditorPos = Vector2(6232.631, 1969.0237)
+EditorSize = Vector2(719.99976, 420)
+
+[sub_resource type="Resource" id="Resource_ndsb5"]
+script = ExtResource("16_j6uhh")
+CharacterData = ExtResource("4_hbowc")
+Point = Vector2(75, 0)
+metadata/_custom_type_script = "uid://b53uhtgi4ltn7"
+
+[sub_resource type="Resource" id="Resource_b5i2i"]
+script = ExtResource("14_b8mys")
+NodeType = 1
+DNodeId = 3
+Action = SubResource("Resource_ndsb5")
+EditorPos = Vector2(7260, 1960)
+EditorSize = Vector2(720, 380)
+
+[sub_resource type="Resource" id="Resource_j6uhh"]
+script = ExtResource("15_j6uhh")
+Nodes = Array[ExtResource("14_b8mys")]([SubResource("Resource_02uyx"), SubResource("Resource_wbbaj"), SubResource("Resource_b5i2i")])
+EntryPoints = Array[ExtResource("14_b8mys")]([SubResource("Resource_0bad5")])
+Connections = Array[ExtResource("13_tw53w")]([SubResource("Resource_tmqtc"), SubResource("Resource_h4iwy")])
+metadata/_custom_type_script = "uid://cmw85ukaae1eh"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f311p"]
+size = Vector2(640, 360)
 
 [node name="ClassroomSceneTest" type="Node2D"]
 texture_filter = 1
@@ -263,3 +327,13 @@ z_index = 2
 texture_filter = 1
 position = Vector2(0, -14)
 texture = SubResource("AtlasTexture_kglut")
+
+[node name="ElementalStudiesTrigger" type="Area2D" parent="."]
+script = ExtResource("10_713ei")
+IntroQuest = ExtResource("11_sw1uk")
+Player = ExtResource("4_hbowc")
+CoverHelpConversation = ExtResource("13_b8mys")
+ForceGetBackConversation = SubResource("Resource_j6uhh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ElementalStudiesTrigger"]
+shape = SubResource("RectangleShape2D_f311p")

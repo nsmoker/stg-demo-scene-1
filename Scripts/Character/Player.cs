@@ -329,6 +329,10 @@ public partial class Player : Character
 		_mapDisplay = GetNode<PanelContainer>("MapDisplay");
 		_senseArea = GetNode<Area2D>("SenseArea");
 		_combatStatusLabel = GetNode<Label>("CombatStatusLabel");
+		foreach (Quest q in CharacterData.Journal)
+		{
+			QuestSystem.AddQuest(q);
+		}
 
 		ControllerState = new NavigationState();
 		_senseArea.BodyExited += OnBodyExitedSenseArea;
@@ -428,5 +432,6 @@ public partial class Player : Character
 	private void OnConversationStarted(Conversation conversation, int entryPoint)
     {
         ControllerState = new DialogueState();
+		_currentAnimState = AnimState.Idle;
     }
 }
