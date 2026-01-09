@@ -277,7 +277,7 @@ public partial class DialogueController : ScrollContainer
         _conversation = conversation;
 
         Visible = true;
-        State = new EvalState(_conversation.Nodes[entryPoint], this);
+        State = new EvalState(_conversation.EntryPoints[entryPoint], this);
 
         ProcessMode = ProcessModeEnum.Always;
     }

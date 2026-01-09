@@ -231,7 +231,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 5
 EditorPos = Vector2(8280, 860)
-EditorSize = Vector2(1000.0078, 480.00342)
+EditorSize = Vector2(1000.0083, 480.00342)
 
 [sub_resource type="Resource" id="Resource_fapgf"]
 script = ExtResource("2_f2a17")
@@ -240,7 +240,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 6
 EditorPos = Vector2(12120, 880)
-EditorSize = Vector2(999.9922, 479.99963)
+EditorSize = Vector2(999.9922, 479.99957)
 
 [sub_resource type="Resource" id="Resource_1bdhf"]
 script = ExtResource("2_f2a17")
@@ -249,7 +249,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 7
 EditorPos = Vector2(13400, 880)
-EditorSize = Vector2(1000.00195, 479.99963)
+EditorSize = Vector2(1000.00195, 479.99957)
 
 [sub_resource type="Resource" id="Resource_ybmnx"]
 script = ExtResource("2_f2a17")
@@ -258,7 +258,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 8
 EditorPos = Vector2(14560, 880)
-EditorSize = Vector2(1000, 479.99963)
+EditorSize = Vector2(1000, 479.99957)
 
 [sub_resource type="Resource" id="Resource_0f2vm"]
 script = ExtResource("2_f2a17")
@@ -294,7 +294,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 13
 EditorPos = Vector2(10720, 880)
-EditorSize = Vector2(1000.0117, 479.99963)
+EditorSize = Vector2(1000.0117, 479.99957)
 
 [sub_resource type="Resource" id="Resource_41k6r"]
 script = ExtResource("2_f2a17")
@@ -303,7 +303,7 @@ Speaker = "Darian"
 Addressee = "Player"
 DNodeId = 14
 EditorPos = Vector2(9520, 880)
-EditorSize = Vector2(1000, 480.00012)
+EditorSize = Vector2(1000, 480.00006)
 
 [sub_resource type="Resource" id="Resource_dpv4a"]
 script = ExtResource("2_f2a17")
@@ -312,7 +312,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 15
 EditorPos = Vector2(15860, 880)
-EditorSize = Vector2(999.9883, 479.99963)
+EditorSize = Vector2(999.9883, 479.99957)
 
 [sub_resource type="Resource" id="Resource_cu5ln"]
 script = ExtResource("2_f2a17")
@@ -348,7 +348,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 19
 EditorPos = Vector2(2980, 780)
-EditorSize = Vector2(979.9961, 440.00354)
+EditorSize = Vector2(979.996, 440.00354)
 
 [sub_resource type="Resource" id="Resource_j37rw"]
 script = ExtResource("2_f2a17")
@@ -357,7 +357,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 20
 EditorPos = Vector2(5660, 880)
-EditorSize = Vector2(980.0039, 440.00427)
+EditorSize = Vector2(980.0039, 440.0042)
 
 [sub_resource type="Resource" id="Resource_31obe"]
 script = ExtResource("5_i1b76")
@@ -372,7 +372,7 @@ NodeType = 1
 DNodeId = 21
 Action = SubResource("Resource_31obe")
 EditorPos = Vector2(23740, 900)
-EditorSize = Vector2(779.98926, 339.99878)
+EditorSize = Vector2(779.99023, 339.99878)
 
 [sub_resource type="Resource" id="Resource_2pn1o"]
 script = ExtResource("2_f2a17")
@@ -381,7 +381,7 @@ Speaker = "Darian"
 Addressee = "Player"
 DNodeId = 11
 EditorPos = Vector2(22520, 960)
-EditorSize = Vector2(1000.0029, 479.99854)
+EditorSize = Vector2(1000.00195, 479.99854)
 
 [sub_resource type="Resource" id="Resource_vxc8s"]
 script = ExtResource("2_f2a17")
@@ -425,7 +425,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 28
 EditorPos = Vector2(29780, 920)
-EditorSize = Vector2(1000.0088, 479.99902)
+EditorSize = Vector2(1000.00977, 479.99896)
 
 [sub_resource type="Resource" id="Resource_0p2lq"]
 script = ExtResource("2_f2a17")
@@ -458,7 +458,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 22
 EditorPos = Vector2(32280, 920)
-EditorSize = Vector2(1000.0117, 479.99902)
+EditorSize = Vector2(1000.0117, 479.99896)
 
 [sub_resource type="Resource" id="Resource_50kl1"]
 script = ExtResource("2_f2a17")
@@ -511,7 +511,7 @@ NodeType = 1
 DNodeId = 29
 Action = SubResource("Resource_4lycf")
 EditorPos = Vector2(33600, 920)
-EditorSize = Vector2(719.99316, 379.99683)
+EditorSize = Vector2(719.9922, 379.99677)
 
 [resource]
 resource_name = "elemental_studies_intro"
