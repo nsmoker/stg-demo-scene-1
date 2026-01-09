@@ -199,7 +199,7 @@ public partial class Player : Character
 			{
 				if (HoverSystem.AnyHovered())
 				{
-					CombatSystem.AttemptAttack(character.CharacterData, CharacterSystem.GetInstance(HoverSystem.Hovered).CharacterData);
+					character.SetState(new AttackState(character, CharacterSystem.GetInstance(HoverSystem.Hovered).CharacterData));
                 }
 				else
 				{

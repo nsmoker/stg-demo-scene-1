@@ -88,7 +88,8 @@ public partial class Character : CharacterBody2D
         WalkNorth,
         WalkSouth,
         WalkEast,
-        WalkWest 
+        WalkWest,
+        Attack
     }
 
     protected AnimState _currentAnimState = AnimState.Idle;
@@ -205,14 +206,18 @@ public partial class Character : CharacterBody2D
                             CombatSystem.TurnHandlers -= OnTurnBegin;
                             character.Draw -= OnCharacterDraw;
                             _isOurTurn = false;
-                            character.QueueRedraw();
-                            return;
                         }
                     }
                     else
                     {
                         // In range, attack.
-                        CombatSystem.AttemptAttack(character.CharacterData, closestEnemy.CharacterData);
+                        character.SetState(new AttackState(character, closestEnemy.CharacterData));
+                        character.MouseEntered -= OnHover;
+                        character.MouseExited -= OnHoverEnd;
+                        character.InputPickable = false;
+                        CombatSystem.TurnHandlers -= OnTurnBegin;
+                        character.Draw -= OnCharacterDraw;
+                        _isOurTurn = false;
                     }
                 }
                 else
@@ -252,6 +257,36 @@ public partial class Character : CharacterBody2D
             _hovered = false;
             HoverSystem.SetUnhovered(_c.CharacterData.ResourcePath);
             _c.QueueRedraw();
+        }
+    }
+
+    public class AttackState : ICharacterState
+    {
+        private readonly Character _character;
+        private readonly CharacterData _target;
+
+        public AttackState(Character character, CharacterData target)
+        {
+            _character = character;
+            Character targetInstance = CharacterSystem.GetInstance(target.ResourcePath);
+            character.SetAttackAnimState(character.GlobalPosition.DirectionTo(targetInstance.GlobalPosition));
+            character.Anim.AnimationFinished += OnAnimationFinished;
+            _target = target;
+        }
+
+        public void Process(double delta, Character character) { }
+
+        public void PhysicsProcess(double delta, Character character) { }
+
+        public void OnAnimationFinished(StringName animationName)
+        {
+            if (animationName.Equals("attack"))
+            {
+                CombatSystem.AttemptAttack(_character.CharacterData, _target);
+                _character.Anim.AnimationFinished -= OnAnimationFinished;
+                _character._currentAnimState = AnimState.Idle;
+                _character.ControllerState = _character.GetCombatState();
+            }
         }
     }
 
@@ -399,6 +434,12 @@ public partial class Character : CharacterBody2D
             case AnimState.WalkWest:
                 _mainSprite.FlipH = true;
                 Anim.Play("walk_h");
+                break;
+            case AnimState.Attack:
+                Anim.Play("attack");
+                break;
+            default:
+                Anim.Play("idle");
                 break;
         }
     }
@@ -643,6 +684,12 @@ public partial class Character : CharacterBody2D
         }
     }
 
+    public void SetAttackAnimState(Vector2 targetVector)
+    {
+        _currentAnimState = AnimState.Attack;
+        SetFacing(targetVector);
+    }
+
     public void WalkToPoint(Vector2 point, Action onComplete = null)
     {
         ControllerState = new NavState(point, ControllerState, onComplete);
@@ -656,5 +703,17 @@ public partial class Character : CharacterBody2D
         HealthSystem.DeathEventHandlers -= OnDeath;
         HealthSystem.DamageEventHandlers -= OnDamage;
         HostilitySystem.HostilityChangeHandlers -= OnHostilityChanged;
+    }
+
+    public void SetFacing(Vector2 dir)
+    {
+        if (dir.X < 0)
+        {
+            _mainSprite.FlipH = true;
+        }
+        else
+        {
+            _mainSprite.FlipH = false;
+        }
     }
 }

@@ -440,6 +440,7 @@ EditorSize = Vector2(559.99805, 400.0011)
 script = ExtResource("9_ny82k")
 CharacterData = ExtResource("6_cak2s")
 Point = Vector2(250, 0)
+Facing = Vector2(-1, 0)
 metadata/_custom_type_script = "uid://bk0yjlafq7ee1"
 
 [sub_resource type="Resource" id="Resource_vjv3b"]
@@ -472,6 +473,7 @@ EditorSize = Vector2(540, 459.99963)
 script = ExtResource("10_pa0kp")
 Characters = [ExtResource("6_cak2s"), ExtResource("21_y3wwa")]
 Points = PackedVector2Array(75, 0, -75, 0)
+Facing = PackedVector2Array(-1, 0, 1, 0)
 metadata/_custom_type_script = "uid://b80bt1fjx0tih"
 
 [sub_resource type="Resource" id="Resource_50ujf"]

@@ -11,6 +11,9 @@ public partial class WalkCharsToPointsBlocking : DialogueAction
     [Export]
     public Vector2[] Points;
 
+    [Export]
+    public Vector2[] Facing;
+
     public override void Execute(Action onComplete)
     {
         if (Characters.Length != Points.Length)
@@ -24,8 +27,10 @@ public partial class WalkCharsToPointsBlocking : DialogueAction
         for (int i = 0; i < Characters.Length; i++)
         {
             var character = CharacterSystem.GetInstance(Characters[i].ResourcePath);
+            var facingDir = Facing[i];
             character.WalkToPoint(Points[i], () =>
             {
+                character.SetFacing(facingDir);
                 remaining--;
                 if (remaining == 0)
                 {

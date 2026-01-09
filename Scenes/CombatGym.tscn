@@ -329,6 +329,7 @@ position = Vector2(0, -14)
 texture = SubResource("AtlasTexture_kglut")
 
 [node name="ElementalStudiesTrigger" type="Area2D" parent="."]
+visible = false
 script = ExtResource("10_713ei")
 IntroQuest = ExtResource("11_sw1uk")
 Player = ExtResource("4_hbowc")

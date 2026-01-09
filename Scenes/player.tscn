@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://gedp1qirf71n"]
+[gd_scene load_steps=27 format=3 uid="uid://gedp1qirf71n"]
 
 [ext_resource type="Script" uid="uid://04a5i0tk15gy" path="res://Scripts/Character/Player.cs" id="1_co212"]
 [ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/Characters/player_data.tres" id="2_pu2lt"]
@@ -45,6 +45,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_fd4e3"]
+resource_name = "attack"
+length = 1.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12, 13, 14]
 }
 
 [sub_resource type="Animation" id="Animation_gymyn"]
@@ -116,6 +132,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ukyrk"]
 _data = {
 &"RESET": SubResource("Animation_ukyrk"),
+&"attack": SubResource("Animation_fd4e3"),
 &"idle": SubResource("Animation_gymyn"),
 &"walk_h": SubResource("Animation_h4iuc"),
 &"walk_north": SubResource("Animation_pu2lt"),
@@ -236,7 +253,7 @@ libraries = {
 [node name="MainSprite" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("12_ukyrk")
-hframes = 10
+hframes = 17
 
 [node name="CombatStatusLabel" type="Label" parent="."]
 visible = false
