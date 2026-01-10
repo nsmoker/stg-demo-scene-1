@@ -1,6 +1,16 @@
-# Arkham Hunters Demo
+# STG Demo Scene 1
 
-This is a project I wrote in the summer of 2025 to implement a top-down, 2D tile-based RPG with a realtime D20 combat system ala KotOR or Baldur's Gate 1/2. The system is almost feature complete, though the demo lacks content examples. It's only been lightly tested, and some features are more than a bit sketchy in their implementation; do not hold back with suggestions if you have them.
+This project is a tiny chunk of a scene for one of my other settings. I primarily made it so I would have a place where I could make some simple content and experiment with getting a scene to play out in a reasonably fluid way. 
+
+The highlights are:
+
+* More sophisticated animation handling for characters, including a separate animation state machine.
+* A new notion of "blocking" nodes in the dialogue controller, which allow you to more easily and flexibly tell characters or props to do stuff during dialogue.
+* A scene with an actual exit condition/completion state. 
+* A bunch of bugfixes for combat.
+* An exit menu. 
+
+The actual player controller is really simplified as well since I cut out the inventory and a bunch of other stuff I wasn't working on for the demo, whihc might make it a better jumping off point than the code in inspired. Depending on where we end up with inspired, we can hopefully end up bringing some changes over from it soon.
 
 ## Building
 
@@ -19,43 +29,3 @@ If Visual Studio gives you trouble, run Project -> Tools -> C# -> Create C# Solu
 
 Finally, if you're using VSCode and are annoyed by the .uid files that Godot leaves everywhere, I added the following to my `files.exclude` setting: 
 `**/*.uid`.
-
-## Current Features
-
-* Movement and collision on a sprite-based tilemap.
-* Branching dialogue with typewriter dialogue boxes and a node-based editor.
-* Arbitrary condition checks in dialogue, addable and visible in node editor.
-* Arbitrary action invocations in dialogue, addable and visible in node editor.
-* Data-driven items linked to the Godot editor.
-* Player inventory with equipment slots and stat bonuses from equipped items.
-* Containers with contents customizable in the Godot editor.
-* Data-driven abilities linked to the Godot editor.
-* Inventory UI with item display per-slot.
-* Enemies with in-editor patrol route definition.
-* Combat system with ability menu UI.
-* Pathfinding and range handling during combat.
-* Pause function
-* Faction system and per-character hostility overrides.
-* Quest system with journal display.
-* Map image capture.
-
-## Missing Features
-
-This was pretty much a "for-fun" project when I did it, and some features we would need to make a game are missing, including:
-
-* Sophisticated Enemy AI (by far the biggest thing missing).
-* Saves
-
-## Other Technical Considerations
-
-Almost all of the demo's systems are written with events; in general, all of the classes in the "Scripts/Systems" directory are static classes that manage some mapping between instance ids and object state, and send updates to event channels.
-This approach is nice because it makes reacting to changes in e.g. dialogue state or faction relationships very easy for any object to do. It also means that there's a single authoritative record of what, e.g., the inventory of a container being searched is, and the various displays and entities don't need to worry about keeping their records synchronized since Godot's processing is single threaded. The problem with the way it's currently implemented, however, is that Godot doesn't provide any sort of identifier that is persistent between in-game and editor states. All our event systems currently use instance IDs, which are invalidated the moment the game starts running and don't even exist in the editor. This is fine for now, but it poses two problems:
-1. Saving data out from the systems such that we can reconstruct a scene state from disk is going to be a challenge.
-2. If you do need to reference an entity from the editor, you have to use the scene path to do so, which is unstable.
-
-We have to reckon with these eventually, though they're not pressing currently. One way I've found to address it that I used to make the dialogue scripting a bit less painless is by using resources to store character attributes, exploiting the persistence of resource IDs. This approach has worked thus far and shows promise.
-
-
-## Art Credit
-
-The art in this demo is placeholder. I did not make it; I bought it several years ago as part of an itch.io bundle in support of Palestine. The artist is Itch.io user Raou. You can find the set here. https://raou.itch.io/dungeon-tileset-top-down-rpg
