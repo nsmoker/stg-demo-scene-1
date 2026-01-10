@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://bgk5v73hj7cv0"]
+[gd_scene load_steps=41 format=3 uid="uid://bgk5v73hj7cv0"]
 
 [ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_gokwg"]
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="1_ndsb5"]
@@ -15,15 +15,17 @@
 [ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="14_b8mys"]
 [ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/edi/Scripts/Conversation.cs" id="15_j6uhh"]
 [ext_resource type="Script" uid="uid://b53uhtgi4ltn7" path="res://Scripts/DialogueNodes/WalkCharToPointBlocking.cs" id="16_j6uhh"]
+[ext_resource type="PackedScene" uid="uid://djslysixa4d0a" path="res://Scenes/darian.tscn" id="18_tmqtc"]
 [ext_resource type="Script" uid="uid://d31xijw3tfna4" path="res://Scripts/DialogueTriggerProp.cs" id="25_044gb"]
 [ext_resource type="Resource" uid="uid://d0vtobfhyip5c" path="res://Conversations/elemental_studies_intro.tres" id="26_gokwg"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_02uyx"]
-agent_radius = 8.5
-
-[sub_resource type="SystemFont" id="SystemFont_wbbaj"]
-
-[sub_resource type="SystemFont" id="SystemFont_ndsb5"]
+vertices = PackedVector2Array(215, -12.5, 128, -12.5, -158, -17, -126, -17, 215, 38.5, 128, 38.5, -158, 34, -126, 34, 215, 89.5, 128, 89.5, -158, 85, -126, 85, -69, 163.13281, -304, 160.1875, -158, 136, -126, 136, -245, 136, 215, 136, 304, 167.78906, 24, 164.28906, 128, 136, 215, -17, 215, -63.5, 304, -168, -304, -168, 128, -63.5, -245, 89.5, -13, 114, -13, 163.82813, -32, 163.59375, -32, 114, 128, 34, 96, 34, 96, -12.5, 9, -12.5, 128, 85, 96, 85, 96, 38.5, 9, 38.5, 24, 136, 96, 136, 96, 89.5, 9, 89.5, 9, 114, -39, 89.5, -39, 114, -69, 136, -126, 89.5, -158, 89.5, 128, -17, 96, -17, 96, -63.5, 9, -63.5, -245, 85, -245, 38.5, 215, 85, 215, 34, 9, 34, -39, 34, -39, -12.5, -126, -12.5, -158, -12.5, 9, 85, -39, 85, -39, 38.5, -126, 38.5, -158, 38.5, 9, -17, -39, -17, -39, -63.5, -126, -63.5, -158, -63.5, -245, -63.5, -245, -17, -245, -12.5, -245, 34)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 9, 10, 11), PackedInt32Array(12, 13, 14, 15), PackedInt32Array(16, 14, 13), PackedInt32Array(17, 18, 19, 20), PackedInt32Array(21, 22, 23, 18), PackedInt32Array(24, 23, 22, 25), PackedInt32Array(16, 13, 24, 26), PackedInt32Array(27, 28, 29, 30), PackedInt32Array(1, 31, 32, 33), PackedInt32Array(2, 1, 33), PackedInt32Array(2, 33, 34), PackedInt32Array(5, 35, 36, 37), PackedInt32Array(6, 5, 37), PackedInt32Array(6, 37, 38), PackedInt32Array(19, 39, 40), PackedInt32Array(20, 19, 40), PackedInt32Array(9, 20, 40, 41), PackedInt32Array(10, 9, 41), PackedInt32Array(10, 41, 42), PackedInt32Array(42, 43, 27, 44), PackedInt32Array(30, 45, 44), PackedInt32Array(15, 46, 12), PackedInt32Array(47, 15, 14, 48), PackedInt32Array(25, 49, 50, 51), PackedInt32Array(24, 25, 51), PackedInt32Array(24, 51, 52), PackedInt32Array(27, 30, 44), PackedInt32Array(10, 42, 44), PackedInt32Array(10, 44, 47), PackedInt32Array(10, 47, 48, 53), PackedInt32Array(53, 48, 26), PackedInt32Array(53, 26, 24), PackedInt32Array(54, 53, 24), PackedInt32Array(18, 17, 8), PackedInt32Array(55, 18, 8), PackedInt32Array(35, 55, 8), PackedInt32Array(18, 55, 4), PackedInt32Array(56, 18, 4), PackedInt32Array(31, 56, 4), PackedInt32Array(18, 56, 0), PackedInt32Array(21, 18, 0), PackedInt32Array(49, 21, 0), PackedInt32Array(32, 31, 4), PackedInt32Array(36, 35, 8), PackedInt32Array(50, 49, 0), PackedInt32Array(57, 32, 4), PackedInt32Array(57, 4, 58), PackedInt32Array(34, 57, 58, 59), PackedInt32Array(2, 34, 59), PackedInt32Array(2, 59, 60), PackedInt32Array(2, 60, 7, 61), PackedInt32Array(62, 36, 8), PackedInt32Array(62, 8, 63), PackedInt32Array(38, 62, 63, 64), PackedInt32Array(6, 38, 64), PackedInt32Array(6, 64, 65), PackedInt32Array(6, 65, 11, 66), PackedInt32Array(67, 50, 0), PackedInt32Array(67, 0, 68), PackedInt32Array(67, 68, 69, 52), PackedInt32Array(24, 52, 69), PackedInt32Array(24, 69, 70), PackedInt32Array(3, 68, 0), PackedInt32Array(70, 3, 2, 71), PackedInt32Array(24, 70, 71), PackedInt32Array(24, 71, 72), PackedInt32Array(24, 72, 73), PackedInt32Array(7, 58, 4), PackedInt32Array(7, 6, 61), PackedInt32Array(73, 2, 61, 74), PackedInt32Array(24, 73, 74), PackedInt32Array(24, 74, 75), PackedInt32Array(54, 24, 75), PackedInt32Array(54, 75, 6, 66), PackedInt32Array(10, 66, 11), PackedInt32Array(8, 11, 63)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-320, 176, -320, -184, 320, -184, 320, 184)])
+source_geometry_mode = 1
+source_geometry_group_name = &"NavObjects"
+agent_radius = 16.0
 
 [sub_resource type="SystemFont" id="SystemFont_8fl2o"]
 font_names = PackedStringArray("Arial")
@@ -41,27 +43,6 @@ font_color = Color(0.16470589, 0.29411766, 1, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_713ei"]
 font = SubResource("SystemFont_8fl2o")
 font_size = 10
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wnxun"]
-size = Vector2(55, 14.5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_b5i2i"]
-size = Vector2(5, 50)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_f311p"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8de8j"]
-atlas = SubResource("CompressedTexture2D_f311p")
-region = Rect2(32, 192, 16, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_k78ma"]
-size = Vector2(8, 11)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8ac3a"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kglut"]
-atlas = SubResource("CompressedTexture2D_8ac3a")
-region = Rect2(0, 64, 16, 16)
 
 [sub_resource type="Resource" id="Resource_tmqtc"]
 script = ExtResource("13_tw53w")
@@ -111,31 +92,47 @@ EditorSize = Vector2(720, 380)
 
 [sub_resource type="Resource" id="Resource_j6uhh"]
 script = ExtResource("15_j6uhh")
-Nodes = Array[ExtResource("14_b8mys")]([SubResource("Resource_02uyx"), SubResource("Resource_wbbaj"), SubResource("Resource_b5i2i")])
-EntryPoints = Array[ExtResource("14_b8mys")]([SubResource("Resource_0bad5")])
-Connections = Array[ExtResource("13_tw53w")]([SubResource("Resource_tmqtc"), SubResource("Resource_h4iwy")])
+Nodes = [SubResource("Resource_02uyx"), SubResource("Resource_wbbaj"), SubResource("Resource_b5i2i")]
+EntryPoints = [SubResource("Resource_0bad5")]
+Connections = [SubResource("Resource_tmqtc"), SubResource("Resource_h4iwy")]
 metadata/_custom_type_script = "uid://cmw85ukaae1eh"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f311p"]
 size = Vector2(640, 360)
+
+[sub_resource type="SystemFont" id="SystemFont_wbbaj"]
+
+[sub_resource type="SystemFont" id="SystemFont_ndsb5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wnxun"]
+size = Vector2(55, 14.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b5i2i"]
+size = Vector2(5, 50)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_f311p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8de8j"]
+atlas = SubResource("CompressedTexture2D_f311p")
+region = Rect2(32, 192, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k78ma"]
+size = Vector2(8, 11)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8ac3a"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kglut"]
+atlas = SubResource("CompressedTexture2D_8ac3a")
+region = Rect2(0, 64, 16, 16)
 
 [node name="ClassroomSceneTest" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_gokwg")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+visible = false
 navigation_polygon = SubResource("NavigationPolygon_02uyx")
 script = ExtResource("1_ndsb5")
-
-[node name="Player" parent="NavigationRegion2D" instance=ExtResource("2_lkpyc")]
-z_index = 1
-position = Vector2(-14, 157)
-_factionTable = ExtResource("3_vc5ip")
-_pathFont = SubResource("SystemFont_wbbaj")
-ToHitFont = SubResource("SystemFont_ndsb5")
-
-[node name="Henneman" parent="NavigationRegion2D" instance=ExtResource("6_4iq4d")]
-position = Vector2(0, -117)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
@@ -177,129 +174,157 @@ label_settings = SubResource("LabelSettings_713ei")
 autowrap_mode = 3
 justification_flags = 131
 
+[node name="ElementalStudiesTrigger" type="Area2D" parent="."]
+visible = false
+script = ExtResource("10_713ei")
+IntroQuest = ExtResource("11_sw1uk")
+Player = ExtResource("4_hbowc")
+IntroConversation = ExtResource("26_gokwg")
+NudgeEntry = 1
+CoverHelpConversation = ExtResource("13_b8mys")
+ForceGetBackConversation = SubResource("Resource_j6uhh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ElementalStudiesTrigger"]
+shape = SubResource("RectangleShape2D_f311p")
+
+[node name="Darian" parent="." instance=ExtResource("18_tmqtc")]
+position = Vector2(-36, 158)
+
+[node name="Player" parent="." instance=ExtResource("2_lkpyc")]
+z_index = 1
+position = Vector2(-14, 157)
+_factionTable = ExtResource("3_vc5ip")
+_pathFont = SubResource("SystemFont_wbbaj")
+ToHitFont = SubResource("SystemFont_ndsb5")
+
+[node name="Henneman" parent="." instance=ExtResource("6_4iq4d")]
+position = Vector2(0, -117)
+
 [node name="SceneBackdrop" type="Sprite2D" parent="."]
 texture = ExtResource("5_wnxun")
 
-[node name="PropCollider" type="StaticBody2D" parent="SceneBackdrop"]
+[node name="PropCollider" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(-100, -37)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider"]
+visible = false
 position = Vector2(17.5, -3.25)
 shape = SubResource("RectangleShape2D_wnxun")
 
-[node name="PropCollider2" type="StaticBody2D" parent="SceneBackdrop"]
+[node name="PropCollider2" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(-219, -37)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider2"]
 position = Vector2(17.5, -3.25)
 shape = SubResource("RectangleShape2D_wnxun")
 
-[node name="PropCollider3" type="StaticBody2D" parent="SceneBackdrop"]
+[node name="PropCollider3" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(-100, 14)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider3"]
 position = Vector2(17.5, -3.25)
 shape = SubResource("RectangleShape2D_wnxun")
 
-[node name="PropCollider4" type="StaticBody2D" parent="SceneBackdrop"]
+[node name="PropCollider4" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(-219, 14)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider4"]
 position = Vector2(17.5, -3.25)
 shape = SubResource("RectangleShape2D_wnxun")
 
-[node name="PropCollider5" type="StaticBody2D" parent="SceneBackdrop"]
+[node name="PropCollider5" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(-100, 65)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider5"]
 position = Vector2(17.5, -3.25)
 shape = SubResource("RectangleShape2D_wnxun")
 
-[node name="PropCollider6" type="StaticBody2D" parent="SceneBackdrop"]
+[node name="PropCollider6" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(-219, 65)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider6"]
 position = Vector2(17.5, -3.25)
 shape = SubResource("RectangleShape2D_wnxun")
 
-[node name="PropCollider7" type="StaticBody2D" parent="SceneBackdrop"]
+[node name="PropCollider7" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(-100, 116)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider7"]
 position = Vector2(17.5, -3.25)
 shape = SubResource("RectangleShape2D_wnxun")
 
-[node name="PropCollider8" type="StaticBody2D" parent="SceneBackdrop"]
+[node name="PropCollider8" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(-219, 116)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider8"]
 position = Vector2(17.5, -3.25)
 shape = SubResource("RectangleShape2D_wnxun")
 
-[node name="PropCollider9" type="StaticBody2D" parent="SceneBackdrop"]
+[node name="PropCollider9" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(154, -37)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider9"]
 position = Vector2(17.5, -3.25)
 shape = SubResource("RectangleShape2D_wnxun")
 
-[node name="PropCollider10" type="StaticBody2D" parent="SceneBackdrop"]
+[node name="PropCollider10" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(35, -37)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider10"]
 position = Vector2(17.5, -3.25)
 shape = SubResource("RectangleShape2D_wnxun")
 
-[node name="PropCollider11" type="StaticBody2D" parent="SceneBackdrop"]
+[node name="PropCollider11" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(154, 14)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider11"]
 position = Vector2(17.5, -3.25)
 shape = SubResource("RectangleShape2D_wnxun")
 
-[node name="PropCollider12" type="StaticBody2D" parent="SceneBackdrop"]
+[node name="PropCollider12" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(35, 14)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider12"]
 position = Vector2(17.5, -3.25)
 shape = SubResource("RectangleShape2D_wnxun")
 
-[node name="PropCollider13" type="StaticBody2D" parent="SceneBackdrop"]
+[node name="PropCollider13" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(154, 65)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider13"]
 position = Vector2(17.5, -3.25)
 shape = SubResource("RectangleShape2D_wnxun")
 
-[node name="PropCollider14" type="StaticBody2D" parent="SceneBackdrop"]
+[node name="PropCollider14" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(35, 65)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider14"]
 position = Vector2(17.5, -3.25)
 shape = SubResource("RectangleShape2D_wnxun")
 
-[node name="PropCollider15" type="StaticBody2D" parent="SceneBackdrop"]
+[node name="PropCollider15" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(154, 116)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider15"]
 position = Vector2(17.5, -3.25)
 shape = SubResource("RectangleShape2D_wnxun")
 
-[node name="PropCollider16" type="StaticBody2D" parent="SceneBackdrop"]
+[node name="PropCollider16" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(35, 116)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider16"]
 position = Vector2(17.5, -3.25)
 shape = SubResource("RectangleShape2D_wnxun")
 
-[node name="PropCollider17" type="StaticBody2D" parent="SceneBackdrop"]
+[node name="PropCollider17" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(-43, 131)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider17"]
 position = Vector2(-7.5, 24)
 shape = SubResource("RectangleShape2D_b5i2i")
 
-[node name="PropCollider18" type="StaticBody2D" parent="SceneBackdrop"]
+[node name="PropCollider18" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(13, 131)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider18"]
@@ -327,14 +352,3 @@ z_index = 2
 texture_filter = 1
 position = Vector2(0, -14)
 texture = SubResource("AtlasTexture_kglut")
-
-[node name="ElementalStudiesTrigger" type="Area2D" parent="."]
-visible = false
-script = ExtResource("10_713ei")
-IntroQuest = ExtResource("11_sw1uk")
-Player = ExtResource("4_hbowc")
-CoverHelpConversation = ExtResource("13_b8mys")
-ForceGetBackConversation = SubResource("Resource_j6uhh")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ElementalStudiesTrigger"]
-shape = SubResource("RectangleShape2D_f311p")

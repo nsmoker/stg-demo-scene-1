@@ -24,9 +24,9 @@ window/size/viewport_height=1080
 
 project/assembly_name="Arkham Hunters"
 
-[editor_plugins]
+[global_group]
 
-enabled=PackedStringArray("res://addons/edi/plugin.cfg")
+NavObjects=""
 
 [gui]
 

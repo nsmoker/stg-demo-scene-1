@@ -77,7 +77,7 @@ _data = {
 &"takeoff": SubResource("Animation_r8e0v")
 }
 
-[node name="CoverProp" type="StaticBody2D"]
+[node name="CoverProp" type="StaticBody2D" groups=["NavObjects"]]
 collision_layer = 2097153
 script = ExtResource("1_hvgce")
 

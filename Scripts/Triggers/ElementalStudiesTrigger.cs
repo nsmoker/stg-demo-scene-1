@@ -10,6 +10,12 @@ public partial class ElementalStudiesTrigger : Area2D
 	public CharacterData Player;
 
 	[Export]
+	public Conversation IntroConversation;
+
+	[Export]
+	public int NudgeEntry;
+
+	[Export]
 	public Conversation CoverHelpConversation;
 
 	[Export]
@@ -32,6 +38,7 @@ public partial class ElementalStudiesTrigger : Area2D
 		if (body is Player && QuestSystem.TryGetQuest(IntroQuest.ResourcePath, out Quest introQuest) && introQuest.CurrentStage < 10)
 		{
 			CombatSystem.AttackHandlers += OnCombatAttack;
+			DialogueSystem.StartDialogue(IntroConversation, NudgeEntry);
 		}
 	}
 

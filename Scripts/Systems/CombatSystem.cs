@@ -78,11 +78,6 @@ public static class CombatSystem
         var deceasedId = e.deceased.CharacterData.ResourcePath;
         _currentCombatants.Remove(deceasedId);
         _sides.Find(x => x.Contains(deceasedId)).Remove(deceasedId);
-        _sides = [.. _sides.Where(x => !(x.Count == 0))];
-        if (_currentCombatants.Count == 1)
-        {
-            CombatEnded?.Invoke();
-        }
     }
 
     public static bool NavReady()
@@ -92,24 +87,32 @@ public static class CombatSystem
 
     private static void EndTurn()
     {
-        var currentSide = _sides[_sideMoving];
-        currentSide.ForEach(x => CharacterSystem.GetInstance(x).NavObstacle.AffectNavigationMesh = true);
-        _sideMoving = (_sideMoving + 1) % _sides.Count;
-        currentSide = _sides[_sideMoving];
-        _pathingReady = false;
-        currentSide.ForEach(x =>
+        _sides = [.. _sides.Where(x => x.Count > 0)];
+        if (_sides.Count < 2)
         {
-            var instance = CharacterSystem.GetInstance(x);
-            instance.NavObstacle.AffectNavigationMesh = false;
-            var state = new CombatantState
+            combatEnded?.Invoke();
+        }
+        else
+        {
+            var currentSide = _sides[_sideMoving];
+            currentSide.ForEach(x => CharacterSystem.GetInstance(x).NavObstacle.AffectNavigationMesh = true);
+            _sideMoving = (_sideMoving + 1) % _sides.Count;
+            currentSide = _sides[_sideMoving];
+            _pathingReady = false;
+            currentSide.ForEach(x =>
             {
-                ActionsRemaining = instance.CharacterData.CombatActions,
-                MovesRemaining = instance.CharacterData.CombatMoves
-            };
-            _currentCombatants[x] = state;
-        });
-        NavRegion.BakeNavigationPolygon();
-        TurnHandlers?.Invoke(currentSide);
+                var instance = CharacterSystem.GetInstance(x);
+                instance.NavObstacle.AffectNavigationMesh = false;
+                var state = new CombatantState
+                {
+                    ActionsRemaining = instance.CharacterData.CombatActions,
+                    MovesRemaining = instance.CharacterData.CombatMoves
+                };
+                _currentCombatants[x] = state;
+            });
+            NavRegion.BakeNavigationPolygon();
+            TurnHandlers?.Invoke(currentSide);
+        }
     }
 
     public static void BeginCombat(CharacterData initiator, CharacterData opponent)

@@ -27,7 +27,11 @@ public partial class Prop : StaticBody2D
 	{
 		_destination = destination;
 		_time = time;
-		_hoverCompletionCallback = onComplete;
+		_hoverCompletionCallback = () =>
+		{
+			CombatSystem.NavRegion.BakeNavigationPolygon();
+			onComplete();
+		};
 		_animationPlayer.Play("takeoff");
 	}
 

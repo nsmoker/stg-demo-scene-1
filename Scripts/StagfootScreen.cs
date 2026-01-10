@@ -23,15 +23,19 @@ public partial class StagfootScreen : Node2D
 		{
 			child.Visible = false;
 			child.ProcessMode = ProcessModeEnum.Disabled;
+			child.RemoveFromGroup("NavObjects");
 		}
-	}
+        CombatSystem.NavRegion.BakeNavigationPolygon();
+    }
 
-	public void EnableBackdropProps()
+    public void EnableBackdropProps()
 	{
 		foreach (Node2D child in _backdrop.GetChildren().Cast<Node2D>())
 		{
 			child.Visible = true;
 			child.ProcessMode = ProcessModeEnum.Inherit;
-		}
-	}
+			child.AddToGroup("NavObjects");
+        }
+        CombatSystem.NavRegion.BakeNavigationPolygon();
+    }
 }

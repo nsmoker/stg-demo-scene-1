@@ -27,7 +27,12 @@ public partial class Player : Character
 		}
 
 		public void PhysicsProcess(double delta, Character player) { }
-	}
+
+        public void OnTransition(Character character)
+        {
+            ((Player) character)._inventoryDisplay.Visible = true;
+        }
+    }
 
 	private class NavigationState : ICharacterState
 	{
@@ -75,12 +80,12 @@ public partial class Player : Character
             if (Input.IsActionJustPressed("Pause"))
             {
                 character.GetTree().Paused = true;
-				player.SetState(new PauseState(this));
+				player.ControllerState = new PauseState(this);
             }
 
             if (Input.IsActionJustPressed("Open Inventory"))
 			{
-				player.SetState(new InventoryState(player));
+				player.ControllerState = new InventoryState(player);
 			}
 
 			if (Input.IsActionJustPressed("Journal"))
@@ -109,7 +114,9 @@ public partial class Player : Character
 
 			player.MoveAndSlide();
 		}
-	}
+
+        public void OnTransition(Character character) { }
+    }
 
 	private class ContainerSearchState : ICharacterState
 	{
@@ -144,15 +151,19 @@ public partial class Player : Character
 					}
 				}
 
-				_player._containerDisplay.Visible = false;
-				_player._containerDisplay.OnItemSelected -= OnContainerItemSelect;
-				_player._containerDisplay.ContainerEntity = "";
 				_player.ControllerState = new NavigationState();
 			}
 		}
 
 		public void PhysicsProcess(double delta, Character character) { }
-	}
+
+        public void OnTransition(Character character)
+        {
+            _player._containerDisplay.OnItemSelected -= OnContainerItemSelect;
+            _player._containerDisplay.Visible = false;
+            _player._containerDisplay.ContainerEntity = "";
+        }
+    }
 		
 	private class PauseState: ICharacterState
 	{
@@ -167,13 +178,15 @@ public partial class Player : Character
             if (Input.IsActionJustPressed("Pause"))
             {
                 character.GetTree().Paused = false;
-                character.SetState(_resumeState);
+                character.ControllerState = _resumeState;
             }
         }
 
         public void PhysicsProcess(double delta, Character character)
         {
         }
+
+        public void OnTransition(Character character) { }
     }
 
     private class PlayerCombatState : ICharacterState
@@ -199,7 +212,8 @@ public partial class Player : Character
 			{
 				if (HoverSystem.AnyHovered())
 				{
-					character.SetState(new AttackState(character, CharacterSystem.GetInstance(HoverSystem.Hovered).CharacterData));
+					character.SetAttackTarget(ResourceLoader.Load<CharacterData>(HoverSystem.Hovered));
+					character.SetAnimState(AnimState.Attack);
                 }
 				else
 				{
@@ -272,6 +286,16 @@ public partial class Player : Character
 			}
 			_player._combatStatusLabel.Text = _isOurTurn ? "YOUR TURN" : "ENEMY TURN";
 			_player.QueueRedraw();
+        }
+
+        public void OnTransition(Character character)
+        {
+            character.Draw -= OnPlayerDraw;
+            CombatSystem.TurnHandlers -= OnTurnBegin;
+            _player.ActionPip1.Visible = false;
+            _player.ActionPip2.Visible = false;
+            _player._combatStatusLabel.Visible = false;
+            _player.QueueRedraw();
         }
     }
 

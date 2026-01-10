@@ -14,4 +14,9 @@ public static class CharacterSystem
     {
         return _characterMap[id];
     }
+
+    public static void Despawn(CharacterData character)
+    {
+        GetInstance(character.ResourcePath).Despawn();
+    }
 }

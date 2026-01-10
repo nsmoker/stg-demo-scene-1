@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bpclhkah8www8" path="res://Scenes/map_marker.tscn" id="10_pu2lt"]
 [ext_resource type="Resource" uid="uid://bfnu0evsky1mc" path="res://map_capture.tres" id="11_gymyn"]
 [ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="12_pu2lt"]
-[ext_resource type="Texture2D" uid="uid://b8uvb505e6tva" path="res://Sprites/Characters/pc_ingame_placeholder.png" id="12_ukyrk"]
+[ext_resource type="Texture2D" uid="uid://cusnf7nuh7o57" path="res://Sprites/Characters/pc_ingame_placeholder.png" id="12_ukyrk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7efl3"]
 size = Vector2(14, 29)

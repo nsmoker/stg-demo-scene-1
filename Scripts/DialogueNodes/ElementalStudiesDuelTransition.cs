@@ -15,6 +15,9 @@ public partial class ElementalStudiesDuelTransition : DialogueAction
     [Export]
     public PackedScene MarotScene;
 
+    [Export]
+    public CharacterData DarianData;
+
     public override void Execute(Action onComplete)
     {
         var stagfootScreen = (Godot.Engine.GetMainLoop() as SceneTree)
@@ -31,6 +34,7 @@ public partial class ElementalStudiesDuelTransition : DialogueAction
             var marot = MarotScene.Instantiate<Character>();
             marot.GlobalPosition = MarotSpawnPosition;
             stagfootScreen.AddChild(marot);
+            CharacterSystem.Despawn(DarianData);
         }));
 		tween
 			.TweenProperty(stagfootScreen, "modulate", new Color(1.0f, 1.0f, 1.0f, 1.0f), 1.0f)
