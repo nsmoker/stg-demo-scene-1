@@ -16,6 +16,7 @@ public partial class Prop : StaticBody2D
 		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		_sprite = GetNode<Sprite2D>("Sprite2D");
 		_animationPlayer.AnimationFinished += OnAnimationFinished;
+		_animationPlayer.Play("idle");
 	}
 
 	public void SetSprite(Texture2D sprite)
@@ -50,6 +51,7 @@ public partial class Prop : StaticBody2D
 			case "land":
 				{
 					_hoverCompletionCallback?.Invoke();
+					_animationPlayer.Play("idle");
 					break;
 				}
 			default:

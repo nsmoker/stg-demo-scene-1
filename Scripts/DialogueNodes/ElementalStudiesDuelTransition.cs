@@ -20,8 +20,9 @@ public partial class ElementalStudiesDuelTransition : DialogueAction
 
     public override void Execute(Action onComplete)
     {
-        var stagfootScreen = (Godot.Engine.GetMainLoop() as SceneTree)
-			.CurrentScene as StagfootScreen;
+        var masterScene = (Godot.Engine.GetMainLoop() as SceneTree)
+			.CurrentScene as MasterScene;
+        StagfootScreen stagfootScreen = masterScene.GetCurrentScreen();
 		var tween = stagfootScreen.GetTree().CreateTween();
 		tween.TweenCallback(Callable.From(stagfootScreen.DisableBackdropProps));
 		tween

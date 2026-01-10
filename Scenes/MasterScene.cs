@@ -1,0 +1,84 @@
+using Godot;
+using System;
+using System.Collections.Generic;
+using static AreaTransition;
+
+public partial class MasterScene : Node2D
+{
+
+    private JournalDisplay _journalDisplay;
+    private Button _exitButton;
+    private PanelContainer _exitMenu;
+    private Player _player;
+    private StagfootScreen _currentScreen;
+    private Label _combatStatusLabel;
+
+    [Export]
+    private PackedScene _startingScene;
+
+    public override void _Ready()
+    {
+        base._Ready();
+        _journalDisplay = GetNode<JournalDisplay>("Camera2D/JournalDisplay");
+        _exitButton = GetNode<Button>("Camera2D/ExitMenu/VBoxContainer/ExitButton");
+        _exitButton.Pressed += OnExitPressed;
+        _exitMenu = GetNode<PanelContainer>("Camera2D/ExitMenu");
+        _player = GetNode<Player>("Player");
+        _currentScreen = SceneSystem.GetInstance(_startingScene.ResourcePath);
+        _combatStatusLabel = GetNode<Label>("Camera2D/CombatStatusLabel");
+        CombatSystem.Initialize();
+        SwitchScene(_currentScreen);
+    }
+
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustPressed("Exit Menu"))
+        {
+            ToggleExitMenu();
+        }
+    }
+
+    public StagfootScreen GetCurrentScreen()
+    {
+        return _currentScreen;
+    }
+
+    public Label GetCombatStatusLabel()
+    {
+        return _combatStatusLabel;
+    }
+
+    public void SwitchScene(StagfootScreen destination)
+    {
+        _currentScreen = destination;
+        CombatSystem.NavRegion = destination.NavRegion;
+        Camera2D camera = GetViewport().GetCamera2D();
+
+        var tween = GetTree().CreateTween();
+        tween.TweenProperty(camera, "global_position", destination.GlobalPosition, 0.3f);
+        tween.SetEase(Tween.EaseType.InOut);
+    }
+
+    public bool ToggleJournalDisplay()
+    {
+        _journalDisplay.Visible = !_journalDisplay.Visible;
+        return _journalDisplay.Visible;
+    }
+
+    public void SetJournalEntries(List<Quest> quests)
+    {
+        _journalDisplay.SetQuestEntries(quests);
+    }
+
+    public bool ToggleExitMenu()
+    {
+        _exitMenu.Visible = !_exitMenu.Visible;
+        return _exitMenu.Visible;
+    }
+
+    public void OnExitPressed()
+    {
+        GetTree().Quit();
+    }
+
+}

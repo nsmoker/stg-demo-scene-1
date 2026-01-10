@@ -32,11 +32,6 @@ public partial class ElementalStudiesTrigger : Area2D
 		HealthSystem.DeathEventHandlers += OnCharacterDeath;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 	public void OnBodyEntered(Node2D body)
 	{
 		if (body is Player && QuestSystem.TryGetQuest(IntroQuest.ResourcePath, out Quest introQuest) && introQuest.CurrentStage < 10)

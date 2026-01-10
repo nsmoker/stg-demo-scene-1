@@ -43,12 +43,7 @@ public static class CombatSystem
 
     public static NavigationRegion2D NavRegion { get => navRegion; set 
     {
-        if (navRegion != null)
-        {
-            NavigationServer2D.MapChanged -= OnNavRebakeFinished;
-        }
         navRegion = value; 
-        NavigationServer2D.MapChanged += OnNavRebakeFinished;
     }}
 
     private static bool _pathingReady = true;
@@ -126,10 +121,15 @@ public static class CombatSystem
         }
     }
 
+    public static void Initialize()
+    {
+        NavigationServer2D.MapChanged += OnNavRebakeFinished;
+    }
+
     public static void BeginCombat(CharacterData initiator, CharacterData opponent)
     {
         var scene = (Godot.Engine.GetMainLoop() as SceneTree)
-            .CurrentScene as StagfootScreen;
+            .CurrentScene as MasterScene;
         _combatStatusLabel = scene.GetCombatStatusLabel();
         if (_currentCombatants.Count == 0)
         {

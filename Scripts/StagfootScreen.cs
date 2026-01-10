@@ -6,36 +6,20 @@ using System.Linq;
 public partial class StagfootScreen : Node2D
 {
 	private Sprite2D _backdrop;
-	private JournalDisplay _journalDisplay;
-	private Button _exitButton;
-	private PanelContainer _exitMenu;
+	private NavigationRegion2D _navRegion;
 	public Sprite2D Backdrop { get => _backdrop; set => _backdrop = value; }
+	public NavigationRegion2D NavRegion { get => _navRegion; set => _navRegion = value; }
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		NavRegion = GetNode<NavigationRegion2D>("NavigationRegion2D");
 		Backdrop = GetNode<Sprite2D>("SceneBackdrop");
-		_journalDisplay = GetNode<JournalDisplay>("JournalDisplay");
-		_exitButton = GetNode<Button>("ExitMenu/VBoxContainer/ExitButton");
-		_exitButton.Pressed += OnExitPressed;
-		_exitMenu = GetNode<PanelContainer>("ExitMenu");
+		SceneSystem.Register(SceneFilePath, this);
 	}
-
-    public override void _Process(double delta)
-    {
-        if (Input.IsActionJustPressed("Exit Menu"))
-		{
-			ToggleExitMenu();
-		}
-    }
 
 	public void SetBackdropTexture(Texture2D texture)
 	{
 		Backdrop.Texture = texture;
-	}
-
-	public Label GetCombatStatusLabel()
-	{
-		return GetNode<Label>("CombatStatusLabel");
 	}
 
 	public void DisableBackdropProps()
@@ -59,26 +43,4 @@ public partial class StagfootScreen : Node2D
         }
         CombatSystem.NavRegion.BakeNavigationPolygon();
     }
-
-	public bool ToggleJournalDisplay()
-	{
-		_journalDisplay.Visible = !_journalDisplay.Visible;
-		return _journalDisplay.Visible;
-	}
-
-	public void SetJournalEntries(List<Quest> quests)
-	{
-		_journalDisplay.SetQuestEntries(quests);
-	}
-
-	public bool ToggleExitMenu()
-	{
-		_exitMenu.Visible = !_exitMenu.Visible;
-		return _exitMenu.Visible;
-	}
-
-	public void OnExitPressed()
-	{
-		GetTree().Quit();
-	}
 }

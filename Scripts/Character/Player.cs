@@ -174,7 +174,7 @@ public partial class Player : Character
 
 	private Area2D _interactableRange;
 	private IInteractable _lastBadgedInteractable;
-	private StagfootScreen _scene;
+	private MasterScene _scene;
 
 	private List<IInteractable> GetInteractablesInRange()
 	{
@@ -221,7 +221,7 @@ public partial class Player : Character
 		ControllerState = new NavigationState();
 		DialogueSystem.OnDialogueComplete += OnConversationEnded;
 		DialogueSystem.OnDialogueStarted += OnConversationStarted;
-		_scene = (StagfootScreen) (GetTree().CurrentScene);
+		_scene = (MasterScene) (GetTree().CurrentScene);
 	}
 
 	public override void OnCombatStarted(CombatStartEvent e)

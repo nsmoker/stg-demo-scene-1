@@ -31,17 +31,17 @@ fromNode = 3
 [sub_resource type="Resource" id="Resource_apt3x"]
 script = ExtResource("2_i15d2")
 NodeType = 2
-DNodeId = 6
+DNodeId = 5
 EditorPos = Vector2(1300, 700)
-EditorSize = Vector2(300.00046, 194.00061)
+EditorSize = Vector2(300.0005, 194.0003)
 
 [sub_resource type="Resource" id="Resource_ufvau"]
 script = ExtResource("2_i15d2")
 Content = "Position a character next to a cover object to take cover, making it harder for your opponents to hit you."
 Speaker = "Tutorial"
-DNodeId = 2
+DNodeId = 1
 EditorPos = Vector2(4160, 780)
-EditorSize = Vector2(659.9978, 439.99585)
+EditorSize = Vector2(659.9966, 439.99512)
 
 [sub_resource type="Resource" id="Resource_ibqq7"]
 script = ExtResource("4_xcxv4")
@@ -59,10 +59,10 @@ metadata/_custom_type_script = "uid://bli6vlvra72l3"
 [sub_resource type="Resource" id="Resource_v7wqc"]
 script = ExtResource("2_i15d2")
 NodeType = 1
-DNodeId = 4
+DNodeId = 2
 Action = SubResource("Resource_4ihu1")
 EditorPos = Vector2(1880, 740)
-EditorSize = Vector2(456.00098, 257)
+EditorSize = Vector2(456.00098, 257.00012)
 
 [sub_resource type="Resource" id="Resource_xg0d3"]
 script = ExtResource("6_3swjm")
@@ -74,26 +74,26 @@ metadata/_custom_type_script = "uid://cqpvvgn7ryfvm"
 [sub_resource type="Resource" id="Resource_t1mp5"]
 script = ExtResource("2_i15d2")
 NodeType = 1
-DNodeId = 5
+DNodeId = 3
 Action = SubResource("Resource_xg0d3")
 EditorPos = Vector2(2540, 720)
-EditorSize = Vector2(456.00067, 257.00092)
+EditorSize = Vector2(456.00024, 257.0011)
 
 [sub_resource type="Resource" id="Resource_7m7c5"]
 script = ExtResource("2_i15d2")
 Content = "Mr. Tines! I encourage you to make use of your environment to avoid your opponent's spells. It will help a great deal."
 Speaker = "Henneman"
 Addressee = "Player"
-DNodeId = 1
+DNodeId = 4
 EditorPos = Vector2(3240, 700)
-EditorSize = Vector2(800.0025, 479.99805)
+EditorSize = Vector2(800.00195, 479.9973)
 
 [sub_resource type="Resource" id="Resource_g6hk4"]
 script = ExtResource("2_i15d2")
 NodeType = 2
-DNodeId = 6
+DNodeId = 5
 EditorPos = Vector2(1300, 700)
-EditorSize = Vector2(300.00046, 194.00061)
+EditorSize = Vector2(300.0005, 194.0003)
 
 [resource]
 script = ExtResource("3_mr82h")

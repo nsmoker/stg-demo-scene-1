@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="STG Demo Scene 1"
-run/main_scene="uid://bgk5v73hj7cv0"
+run/main_scene="uid://bnrfgnbsigxmy"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -23,6 +23,10 @@ window/size/viewport_height=1080
 [dotnet]
 
 project/assembly_name="Arkham Hunters"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/edi/plugin.cfg")
 
 [global_group]
 

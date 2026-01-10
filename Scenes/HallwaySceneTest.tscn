@@ -1,0 +1,86 @@
+[gd_scene load_steps=12 format=3 uid="uid://fq7wp3pxnthf"]
+
+[ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_nc75b"]
+[ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="2_xfs0e"]
+[ext_resource type="Texture2D" uid="uid://cvobau2o6qy0n" path="res://Sprites/Backdrops/Hallway.png" id="4_xfs0e"]
+[ext_resource type="PackedScene" uid="uid://bgk5v73hj7cv0" path="res://Scenes/CombatGym.tscn" id="5_03dat"]
+[ext_resource type="PackedScene" uid="uid://b02trvpappmbg" path="res://Scenes/BrazierProp.tscn" id="7_21ohs"]
+[ext_resource type="Script" uid="uid://cwhflap727bje" path="res://Scenes/AreaTransition.cs" id="7_k3e6v"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_2impm"]
+vertices = PackedVector2Array(128, 120, 304, 167.78906, -304, 160.1875, 80, 120, -112, 120, -160, 120, 128, 24, 128, -40, 304, -110, -304, -110, -160, 56, -13, -110, 80, -110, 80, -72, -112, -40, 128, -72, 128, -110, 80, -40, 80, 24, -112, 24, 80, 56, -112, 56, -160, -110, -160, -72, -112, -72, -112, -110, -32, -110, -32, -168, -13, -168, -160, -40, 128, 56, -160, 24)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 3, 2), PackedInt32Array(5, 4, 2), PackedInt32Array(6, 7, 8, 1), PackedInt32Array(5, 2, 9, 10), PackedInt32Array(11, 12, 13, 14), PackedInt32Array(15, 16, 8), PackedInt32Array(15, 8, 7), PackedInt32Array(13, 15, 7, 17), PackedInt32Array(17, 18, 19, 14), PackedInt32Array(13, 17, 14), PackedInt32Array(20, 3, 4, 21), PackedInt32Array(9, 22, 23), PackedInt32Array(24, 25, 26), PackedInt32Array(26, 27, 28, 11), PackedInt32Array(24, 26, 11, 14, 29), PackedInt32Array(23, 24, 29), PackedInt32Array(9, 23, 29), PackedInt32Array(1, 0, 30), PackedInt32Array(6, 1, 30, 18), PackedInt32Array(18, 30, 20, 19), PackedInt32Array(19, 20, 21, 31), PackedInt32Array(31, 21, 10), PackedInt32Array(31, 10, 9), PackedInt32Array(9, 29, 31)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-320, 176, -320, -184, 320, -184, 320, 184)])
+source_geometry_mode = 1
+source_geometry_group_name = &"NavObjects"
+agent_radius = 16.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_03dat"]
+size = Vector2(26, 59)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gkcab"]
+size = Vector2(272, 54)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3e6v"]
+size = Vector2(317, 54)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_21ohs"]
+size = Vector2(25, 34)
+
+[node name="HallwaySceneTest" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_nc75b")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+visible = false
+navigation_polygon = SubResource("NavigationPolygon_2impm")
+script = ExtResource("2_xfs0e")
+
+[node name="SceneBackdrop" type="Sprite2D" parent="."]
+texture = ExtResource("4_xfs0e")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="SceneBackdrop"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/StaticBody2D"]
+position = Vector2(-10, -145.5)
+shape = SubResource("RectangleShape2D_03dat")
+
+[node name="PropCollider19" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
+position = Vector2(-310, -165)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider19"]
+position = Vector2(126, 12)
+shape = SubResource("RectangleShape2D_gkcab")
+
+[node name="PropCollider20" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
+position = Vector2(13, -165)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider20"]
+position = Vector2(148.5, 12)
+shape = SubResource("RectangleShape2D_k3e6v")
+
+[node name="Transition" type="Area2D" parent="."]
+script = ExtResource("7_k3e6v")
+Destination = ExtResource("5_03dat")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transition"]
+position = Vector2(-35.5, -143)
+shape = SubResource("RectangleShape2D_21ohs")
+
+[node name="CoverProp" parent="." instance=ExtResource("7_21ohs")]
+position = Vector2(-136, -104)
+
+[node name="CoverProp2" parent="." instance=ExtResource("7_21ohs")]
+position = Vector2(104, -104)
+
+[node name="CoverProp3" parent="." instance=ExtResource("7_21ohs")]
+position = Vector2(-136, -8)
+
+[node name="CoverProp4" parent="." instance=ExtResource("7_21ohs")]
+position = Vector2(104, -8)
+
+[node name="CoverProp3" parent="CoverProp4" instance=ExtResource("7_21ohs")]
+position = Vector2(-240, 96)
+
+[node name="CoverProp4" parent="CoverProp4" instance=ExtResource("7_21ohs")]
+position = Vector2(0, 96)
