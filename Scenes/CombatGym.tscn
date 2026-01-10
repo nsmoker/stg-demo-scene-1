@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://bgk5v73hj7cv0"]
+[gd_scene load_steps=58 format=3 uid="uid://bgk5v73hj7cv0"]
 
 [ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_gokwg"]
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="1_ndsb5"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://b53uhtgi4ltn7" path="res://Scripts/DialogueNodes/WalkCharToPointBlocking.cs" id="16_j6uhh"]
 [ext_resource type="PackedScene" uid="uid://djslysixa4d0a" path="res://Scenes/darian.tscn" id="18_tmqtc"]
 [ext_resource type="PackedScene" uid="uid://bahvdxf74e24c" path="res://Scenes/journal_display.tscn" id="19_h4iwy"]
+[ext_resource type="PackedScene" uid="uid://m8tbjngrrk7x" path="res://Scenes/ExitMenu.tscn" id="22_wbbaj"]
 [ext_resource type="Script" uid="uid://d31xijw3tfna4" path="res://Scripts/DialogueTriggerProp.cs" id="25_044gb"]
 [ext_resource type="Resource" uid="uid://d0vtobfhyip5c" path="res://Conversations/elemental_studies_intro.tres" id="26_gokwg"]
 
@@ -143,7 +144,7 @@ NodeType = 1
 DNodeId = 2
 Action = SubResource("Resource_fftnu")
 EditorPos = Vector2(800, 780)
-EditorSize = Vector2(456.00012, 257)
+EditorSize = Vector2(456.0001, 257)
 
 [sub_resource type="Resource" id="Resource_qvvil"]
 script = ExtResource("13_0bad5")
@@ -155,21 +156,21 @@ NodeType = 1
 DNodeId = 3
 Action = SubResource("Resource_qvvil")
 EditorPos = Vector2(3960, 720)
-EditorSize = Vector2(456.00012, 257.00018)
+EditorSize = Vector2(456.00024, 257.00024)
 
 [sub_resource type="Resource" id="Resource_dj2i3"]
 script = ExtResource("14_b8mys")
 Content = "You beat the game by murduring that poor child. Congrats."
 DNodeId = 4
 EditorPos = Vector2(1860, 720)
-EditorSize = Vector2(640, 379.9997)
+EditorSize = Vector2(640.00006, 379.99976)
 
 [sub_resource type="Resource" id="Resource_3hohp"]
 script = ExtResource("14_b8mys")
 Content = "You may press E to exit the game. Monster."
 DNodeId = 5
 EditorPos = Vector2(2840, 740)
-EditorSize = Vector2(679.9995, 359.99915)
+EditorSize = Vector2(679.99963, 359.99915)
 
 [sub_resource type="Resource" id="Resource_lh5eo"]
 script = ExtResource("15_j6uhh")
@@ -446,3 +447,10 @@ offset_bottom = 160.0
 text = "YOUR TURN"
 
 [node name="JournalDisplay" parent="." instance=ExtResource("19_h4iwy")]
+
+[node name="ExitMenu" parent="." instance=ExtResource("22_wbbaj")]
+visible = false
+offset_left = -84.0
+offset_top = -102.0
+offset_right = 29.599998
+offset_bottom = 65.6

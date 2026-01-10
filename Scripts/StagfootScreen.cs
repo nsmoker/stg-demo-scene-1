@@ -7,13 +7,26 @@ public partial class StagfootScreen : Node2D
 {
 	private Sprite2D _backdrop;
 	private JournalDisplay _journalDisplay;
+	private Button _exitButton;
+	private PanelContainer _exitMenu;
 	public Sprite2D Backdrop { get => _backdrop; set => _backdrop = value; }
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		Backdrop = GetNode<Sprite2D>("SceneBackdrop");
 		_journalDisplay = GetNode<JournalDisplay>("JournalDisplay");
+		_exitButton = GetNode<Button>("ExitMenu/VBoxContainer/ExitButton");
+		_exitButton.Pressed += OnExitPressed;
+		_exitMenu = GetNode<PanelContainer>("ExitMenu");
 	}
+
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustPressed("Exit Menu"))
+		{
+			ToggleExitMenu();
+		}
+    }
 
 	public void SetBackdropTexture(Texture2D texture)
 	{
@@ -56,5 +69,16 @@ public partial class StagfootScreen : Node2D
 	public void SetJournalEntries(List<Quest> quests)
 	{
 		_journalDisplay.SetQuestEntries(quests);
+	}
+
+	public bool ToggleExitMenu()
+	{
+		_exitMenu.Visible = !_exitMenu.Visible;
+		return _exitMenu.Visible;
+	}
+
+	public void OnExitPressed()
+	{
+		GetTree().Quit();
 	}
 }
