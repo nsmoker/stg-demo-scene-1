@@ -155,14 +155,14 @@ NodeType = 1
 DNodeId = 3
 Action = SubResource("Resource_qvvil")
 EditorPos = Vector2(3960, 720)
-EditorSize = Vector2(456, 257.00012)
+EditorSize = Vector2(456.00012, 257.00018)
 
 [sub_resource type="Resource" id="Resource_dj2i3"]
 script = ExtResource("14_b8mys")
-Content = "You beat the game by murduring a child. Congrats."
+Content = "You beat the game by murduring that poor child. Congrats."
 DNodeId = 4
 EditorPos = Vector2(1860, 720)
-EditorSize = Vector2(640, 379.99963)
+EditorSize = Vector2(640, 379.9997)
 
 [sub_resource type="Resource" id="Resource_3hohp"]
 script = ExtResource("14_b8mys")

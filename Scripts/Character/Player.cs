@@ -106,8 +106,6 @@ public partial class Player : Character
 						{
 							_player.ControllerState = new CombatNavState(_player, [_player.GetGlobalMousePosition()]);
 						}
-						CombatSystem.TurnHandlers -= OnTurnBegin;
-						_player.Draw -= OnPlayerDraw;
 					}
 				}
 			}
