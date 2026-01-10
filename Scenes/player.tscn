@@ -1,15 +1,9 @@
-[gd_scene load_steps=27 format=3 uid="uid://gedp1qirf71n"]
+[gd_scene load_steps=20 format=3 uid="uid://gedp1qirf71n"]
 
 [ext_resource type="Script" uid="uid://04a5i0tk15gy" path="res://Scripts/Character/Player.cs" id="1_co212"]
 [ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/Characters/player_data.tres" id="2_pu2lt"]
-[ext_resource type="PackedScene" uid="uid://ctgni16h8tre6" path="res://Scenes/container_display.tscn" id="3_bcg5f"]
-[ext_resource type="PackedScene" uid="uid://dheqe5k157l3j" path="res://Scenes/inventory_display.tscn" id="4_ntcgu"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="7_3smsa"]
 [ext_resource type="PackedScene" uid="uid://brdmuedpkp0jn" path="res://Scenes/ability_menu.tscn" id="8_8erm5"]
-[ext_resource type="PackedScene" uid="uid://bahvdxf74e24c" path="res://Scenes/journal_display.tscn" id="8_f1ek2"]
-[ext_resource type="Script" uid="uid://dgamvmgoq2trt" path="res://Scripts/Controls/MapDisplay.cs" id="9_tx1dd"]
-[ext_resource type="PackedScene" uid="uid://bpclhkah8www8" path="res://Scenes/map_marker.tscn" id="10_pu2lt"]
-[ext_resource type="Resource" uid="uid://bfnu0evsky1mc" path="res://map_capture.tres" id="11_gymyn"]
 [ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="12_pu2lt"]
 [ext_resource type="Texture2D" uid="uid://cusnf7nuh7o57" path="res://Sprites/Characters/pc_ingame_placeholder.png" id="12_ukyrk"]
 
@@ -25,8 +19,6 @@ size = Vector2(306, 163)
 [sub_resource type="AtlasTexture" id="AtlasTexture_8erm5"]
 atlas = ExtResource("7_3smsa")
 region = Rect2(16, 16, 16, 16)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tx1dd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gymyn"]
 atlas = ExtResource("7_3smsa")
@@ -150,17 +142,6 @@ CharacterData = ExtResource("2_pu2lt")
 position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_7efl3")
 
-[node name="ContainerDisplay" parent="." instance=ExtResource("3_bcg5f")]
-visible = false
-z_index = 1
-
-[node name="InventoryDisplay" parent="." instance=ExtResource("4_ntcgu")]
-visible = false
-offset_left = -81.0
-offset_top = -55.0
-offset_right = 39.0
-offset_bottom = 65.0
-
 [node name="InteractableRange" type="Area2D" parent="."]
 visible = false
 
@@ -193,37 +174,6 @@ position = Vector2(6, 0)
 scale = Vector2(0.5, 0.5)
 texture = SubResource("AtlasTexture_8erm5")
 
-[node name="JournalDisplay" parent="." instance=ExtResource("8_f1ek2")]
-
-[node name="MapDisplay" type="PanelContainer" parent="."]
-visible = false
-offset_left = -140.0
-offset_top = -80.0
-offset_right = 140.0
-offset_bottom = 80.0
-script = ExtResource("9_tx1dd")
-MapMarkerScene = ExtResource("10_pu2lt")
-MapCaptureRes = ExtResource("11_gymyn")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MapDisplay"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MapDisplay/VBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-text = "Map"
-horizontal_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="MapDisplay/VBoxContainer"]
-texture_filter = 1
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-size_flags_vertical = 3
-texture = SubResource("CompressedTexture2D_tx1dd")
-expand_mode = 1
-stretch_mode = 4
-
 [node name="CoverBadge" type="Sprite2D" parent="."]
 visible = false
 texture_filter = 1
@@ -254,15 +204,6 @@ libraries = {
 texture_filter = 1
 texture = ExtResource("12_ukyrk")
 hframes = 17
-
-[node name="CombatStatusLabel" type="Label" parent="."]
-visible = false
-offset_left = -17.0
-offset_top = 58.0
-offset_right = 23.0
-offset_bottom = 105.66669
-text = "ASD
-"
 
 [node name="HealthLabel" type="Label" parent="."]
 visible = false

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MapCaptureResource" load_steps=3 format=4 uid="uid://bfnu0evsky1mc"]
+[gd_resource type="Resource" load_steps=3 format=4 uid="uid://bfnu0evsky1mc"]
 
 [ext_resource type="Script" uid="uid://b2ugs4wx1cjai" path="res://Scripts/Resources/MapCaptureResource.cs" id="1_5wk78"]
 

@@ -65,6 +65,8 @@ public static class CombatSystem
 
     private static int _sideMoving = 0;
 
+    private static Label _combatStatusLabel;
+
     private static void OnNavRebakeFinished(Rid rid)
     {
         if (rid == navRegion.GetNavigationMap())
@@ -91,6 +93,7 @@ public static class CombatSystem
         if (_sides.Count < 2)
         {
             combatEnded?.Invoke();
+            _combatStatusLabel.Visible = false;
         }
         else
         {
@@ -98,6 +101,14 @@ public static class CombatSystem
             currentSide.ForEach(x => CharacterSystem.GetInstance(x).NavObstacle.AffectNavigationMesh = true);
             _sideMoving = (_sideMoving + 1) % _sides.Count;
             currentSide = _sides[_sideMoving];
+            if (currentSide.Any(x => CharacterSystem.GetInstance(x) is Player))
+            {
+                _combatStatusLabel.Text = "YOUR TURN";
+            }
+            else
+            {
+                _combatStatusLabel.Text = "ENEMY TURN";
+            }
             _pathingReady = false;
             currentSide.ForEach(x =>
             {
@@ -117,6 +128,9 @@ public static class CombatSystem
 
     public static void BeginCombat(CharacterData initiator, CharacterData opponent)
     {
+        var scene = (Godot.Engine.GetMainLoop() as SceneTree)
+            .CurrentScene as StagfootScreen;
+        _combatStatusLabel = scene.GetCombatStatusLabel();
         if (_currentCombatants.Count == 0)
         {
             _currentCombatants.Add(initiator.ResourcePath, new CombatantState { MovesRemaining = initiator.CombatMoves, ActionsRemaining = initiator.CombatActions });
@@ -129,13 +143,22 @@ public static class CombatSystem
                 initiator = initiator,
                 participants = [.. _currentCombatants.Keys]
             };
-            CharacterSystem.GetInstance(initiator.ResourcePath).NavObstacle.AffectNavigationMesh = false;
+            var initiatiorInstance = CharacterSystem.GetInstance(initiator.ResourcePath);
+            initiatiorInstance.NavObstacle.AffectNavigationMesh = false;
             CharacterSystem.GetInstance(opponent.ResourcePath).NavObstacle.AffectNavigationMesh = true;
             _pathingReady = false;
             navRegion.BakeNavigationPolygon();
 
-
+            if (initiatiorInstance is Player)
+            {
+                _combatStatusLabel.Text = "YOUR TURN";
+            }
+            else
+            {
+                _combatStatusLabel.Text = "ENEMY TURN";
+            }
             HealthSystem.DeathEventHandlers += OnCharacterDeath;
+            _combatStatusLabel.Visible = true;
             CombatStartHandlers?.Invoke(e);
             _sideMoving = 0;
             TurnHandlers?.Invoke(_sides[0]);

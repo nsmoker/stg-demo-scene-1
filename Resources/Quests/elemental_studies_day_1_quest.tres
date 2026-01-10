@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Quest" load_steps=6 format=3 uid="uid://c1vd5jl7hb2nd"]
+[gd_resource type="Resource" load_steps=6 format=3 uid="uid://c1vd5jl7hb2nd"]
 
 [ext_resource type="Script" uid="uid://ho5p3miawhuu" path="res://Scripts/Resources/QuestStage.cs" id="1_npb6p"]
 [ext_resource type="Script" uid="uid://be0fsg3lmta4c" path="res://Scripts/Resources/Quest.cs" id="2_ql3l1"]
@@ -25,5 +25,5 @@ metadata/_custom_type_script = "uid://ho5p3miawhuu"
 script = ExtResource("2_ql3l1")
 Title = "Elemental Studies: First Day of Class"
 Description = "It's my first class at Stagfoot! I get to learn the elements."
-Stages = Array[ExtResource("1_npb6p")]([SubResource("Resource_npb6p"), SubResource("Resource_ql3l1"), SubResource("Resource_iqlfy")])
+Stages = [SubResource("Resource_npb6p"), SubResource("Resource_ql3l1"), SubResource("Resource_iqlfy")]
 metadata/_custom_type_script = "uid://be0fsg3lmta4c"

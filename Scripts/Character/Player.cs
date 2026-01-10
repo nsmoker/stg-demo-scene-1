@@ -2,38 +2,9 @@ using Godot;
 using System.Collections.Generic;
 using System.Linq;
 using ArkhamHunters.Scripts;
-using ArkhamHunters.Scripts.Items;
-using Container = ArkhamHunters.Scripts.Container;
 
 public partial class Player : Character
 {
-	private class InventoryState : ICharacterState
-	{
-		public InventoryState(Player player)
-		{
-			player._inventoryDisplay.CurrentEntity = player.CharacterData.ResourcePath;
-			player._inventoryDisplay.Visible = true;
-			player._inventoryDisplay.EquipmentId = player.CharacterData.ResourcePath;
-		}
-		public void Process(double delta, Character character)
-		{
-			var player = (Player)character;
-			if (Input.IsActionJustPressed("Open Inventory"))
-			{
-				player._inventoryDisplay.Visible = false;
-				player.ControllerState = new NavigationState();
-                EquipmentSystem.RetrieveEquipment(player.CharacterData.ResourcePath, out EquipmentSet eq);
-			}
-		}
-
-		public void PhysicsProcess(double delta, Character player) { }
-
-        public void OnTransition(Character character)
-        {
-            ((Player) character)._inventoryDisplay.Visible = true;
-        }
-    }
-
 	private class NavigationState : ICharacterState
 	{
 		public void Process(double delta, Character character)
@@ -62,11 +33,6 @@ public partial class Player : Character
 								DialogueSystem.StartDialogue(dialogueInteractable.GetDialogue(), dialogueInteractable.GetEntryPoint());
 								break;
 							}
-						case InteractionType.Container:
-							{
-								player.ControllerState = new ContainerSearchState(player);
-								break;
-							}
 						case InteractionType.Toggleable:
 							{
 								var toggle = (IToggleableInteractable)closestInteractable;
@@ -77,30 +43,13 @@ public partial class Player : Character
 				}
 			}
 
-            if (Input.IsActionJustPressed("Pause"))
-            {
-                character.GetTree().Paused = true;
-				player.ControllerState = new PauseState(this);
-            }
-
-            if (Input.IsActionJustPressed("Open Inventory"))
-			{
-				player.ControllerState = new InventoryState(player);
-			}
-
 			if (Input.IsActionJustPressed("Journal"))
 			{
-				player._journalDisplay.Visible = !player._journalDisplay.Visible;
-				if (player._journalDisplay.Visible)
+				if (player._scene.ToggleJournalDisplay())
 				{
-					player._journalDisplay.SetQuestEntries(QuestSystem.GetAllQuests());
+					player._scene.SetJournalEntries(QuestSystem.GetAllQuests());
 				}
 			}
-
-			if (Input.IsActionJustPressed("Map"))
-            {
-                player._mapDisplay.Visible = !player._mapDisplay.Visible;
-            }
 		}
 
 		public void PhysicsProcess(double delta, Character character)
@@ -118,77 +67,6 @@ public partial class Player : Character
         public void OnTransition(Character character) { }
     }
 
-	private class ContainerSearchState : ICharacterState
-	{
-		private readonly Container _container;
-		private Player _player;
-
-		private void OnContainerItemSelect(Item item)
-		{
-			InventorySystem.Transfer(_container.ContainerData.ResourcePath, _player.CharacterData.ResourcePath, item);
-		}
-
-		public ContainerSearchState(Character character)
-		{
-			_player = (Player)character;
-			_container = (Container)_player.GetClosestInteractable();
-			_player._containerDisplay.ContainerEntity = _container.ContainerData.ResourcePath;
-			_player._containerDisplay.OnItemSelected += OnContainerItemSelect;
-		}
-
-		public void Process(double delta, Character character)
-		{
-			_player = (Player)character;
-			var closeRequested = _player._containerDisplay.GetAllPressed() || _player._containerDisplay.ClosePressed();
-			if (closeRequested)
-			{
-				if (_player._containerDisplay.GetAllPressed())
-				{
-					var containerItems = InventorySystem.RetrieveInventory(_container.ContainerData.ResourcePath);
-					foreach (var item in containerItems)
-					{
-						InventorySystem.Transfer(_container.ContainerData.ResourcePath, _player.CharacterData.ResourcePath, item);
-					}
-				}
-
-				_player.ControllerState = new NavigationState();
-			}
-		}
-
-		public void PhysicsProcess(double delta, Character character) { }
-
-        public void OnTransition(Character character)
-        {
-            _player._containerDisplay.OnItemSelected -= OnContainerItemSelect;
-            _player._containerDisplay.Visible = false;
-            _player._containerDisplay.ContainerEntity = "";
-        }
-    }
-		
-	private class PauseState: ICharacterState
-	{
-		private ICharacterState _resumeState;
-        public PauseState(ICharacterState resumeState)
-        {
-			_resumeState = resumeState;
-        }
-
-        public void Process(double delta, Character character)
-        {
-            if (Input.IsActionJustPressed("Pause"))
-            {
-                character.GetTree().Paused = false;
-                character.ControllerState = _resumeState;
-            }
-        }
-
-        public void PhysicsProcess(double delta, Character character)
-        {
-        }
-
-        public void OnTransition(Character character) { }
-    }
-
     private class PlayerCombatState : ICharacterState
     {
 		private Player _player;
@@ -202,7 +80,6 @@ public partial class Player : Character
             player.UpdateCoverState(player.GetWorld2D().DirectSpaceState);
 			_player.ActionPip1.Visible = true;
 			_player.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_player.CharacterData) > 1;
-			_player._combatStatusLabel.Visible = true;
             player.QueueRedraw();
         }
 
@@ -284,7 +161,6 @@ public partial class Player : Character
 				_player.ActionPip1.Hide();
 				_player.ActionPip2.Hide();
 			}
-			_player._combatStatusLabel.Text = _isOurTurn ? "YOUR TURN" : "ENEMY TURN";
 			_player.QueueRedraw();
         }
 
@@ -294,18 +170,13 @@ public partial class Player : Character
             CombatSystem.TurnHandlers -= OnTurnBegin;
             _player.ActionPip1.Visible = false;
             _player.ActionPip2.Visible = false;
-            _player._combatStatusLabel.Visible = false;
             _player.QueueRedraw();
         }
     }
 
 	private Area2D _interactableRange;
-	private ContainerDisplay _containerDisplay;
-	private InventoryDisplay _inventoryDisplay;
-	private JournalDisplay _journalDisplay;
 	private IInteractable _lastBadgedInteractable;
-
-	private PanelContainer _mapDisplay;
+	private StagfootScreen _scene;
 
 	private List<IInteractable> GetInteractablesInRange()
 	{
@@ -334,11 +205,8 @@ public partial class Player : Character
 
 	[Export]
 	private FactionTable _factionTable;
-
 	[Export]
 	private Font _pathFont;
-
-	private Label _combatStatusLabel;
 
     public override void _Ready()
 	{
@@ -346,60 +214,16 @@ public partial class Player : Character
 		CombatLog.Initialize();
 		FactionSystem.Initialize(_factionTable);
 		_interactableRange = GetNode<Area2D>("InteractableRange");
-		_containerDisplay = GetNode<ContainerDisplay>("ContainerDisplay");
-		_inventoryDisplay = GetNode<InventoryDisplay>("InventoryDisplay");
-		_inventoryDisplay.OnItemSelected += OnInventorySelection;
-		_journalDisplay = GetNode<JournalDisplay>("JournalDisplay");
-		_mapDisplay = GetNode<PanelContainer>("MapDisplay");
 		_senseArea = GetNode<Area2D>("SenseArea");
-		_combatStatusLabel = GetNode<Label>("CombatStatusLabel");
 		foreach (Quest q in CharacterData.Journal)
 		{
 			QuestSystem.AddQuest(q);
 		}
 
 		ControllerState = new NavigationState();
-		_senseArea.BodyExited += OnBodyExitedSenseArea;
 		DialogueSystem.OnDialogueComplete += OnConversationEnded;
 		DialogueSystem.OnDialogueStarted += OnConversationStarted;
-	}
-
-	private void OnInventorySelection(Item item)
-	{
-		var itemToEquip = item.Equipped ? Item.NoneItem() : item;
-		var eq = GetEquipmentSet();
-		if (MeetsEquipRequirements(itemToEquip))
-		{
-			switch (item.ItemType)
-			{
-				case ItemType.Weapon:
-					{
-						eq.Weapon = itemToEquip;
-						break;
-					}
-				case ItemType.Armor:
-					{
-						eq.Armor = itemToEquip;
-						break;
-					}
-				case ItemType.Wearable:
-					{
-						eq.Helmet = itemToEquip;
-						break;
-					}
-				default:
-					{
-						break;
-					}
-			}
-
-			EquipmentSystem.SetEquipment(CharacterData.ResourcePath, eq);
-			_inventoryDisplay.CurrentEntity = CharacterData.ResourcePath;
-		}
-	}
-	
-	private void OnBodyExitedSenseArea(Node2D body)
-	{
+		_scene = (StagfootScreen) (GetTree().CurrentScene);
 	}
 
 	public override void OnCombatStarted(CombatStartEvent e)
@@ -436,7 +260,6 @@ public partial class Player : Character
             ActionPip1.Visible = false;
             ActionPip2.Visible = false;
         }
-		_combatStatusLabel.Visible = false;
 		_healthLabel.Hide();
         QueueRedraw();
     }

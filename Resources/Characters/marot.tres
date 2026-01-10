@@ -1,9 +1,7 @@
-[gd_resource type="Resource" script_class="CharacterData" load_steps=62 format=3 uid="uid://cx3eet0w6nlc3"]
+[gd_resource type="Resource" load_steps=60 format=3 uid="uid://cx3eet0w6nlc3"]
 
 [ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/Resources/AttributeSet.cs" id="1_2rvwv"]
 [ext_resource type="Script" uid="uid://cgng01q8ok4ba" path="res://Scripts/Resources/SkillSet.cs" id="2_40hyh"]
-[ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/Resources/PatrolLeg.cs" id="3_2rvwv"]
-[ext_resource type="Script" uid="uid://be0fsg3lmta4c" path="res://Scripts/Resources/Quest.cs" id="3_40hyh"]
 [ext_resource type="Script" uid="uid://5hcjkamye5ns" path="res://Scripts/Items/AttributeBonus.cs" id="4_6w02r"]
 [ext_resource type="Script" uid="uid://c54dlxcx6qrkd" path="res://Scripts/Items/SkillBonus.cs" id="5_sj4w5"]
 [ext_resource type="Script" uid="uid://dgvr4h6v7mkj5" path="res://Scripts/Items/ArmorStats.cs" id="6_jr3y0"]

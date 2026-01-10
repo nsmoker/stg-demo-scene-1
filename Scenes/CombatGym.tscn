@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://bgk5v73hj7cv0"]
+[gd_scene load_steps=42 format=3 uid="uid://bgk5v73hj7cv0"]
 
 [ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_gokwg"]
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="1_ndsb5"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/edi/Scripts/Conversation.cs" id="15_j6uhh"]
 [ext_resource type="Script" uid="uid://b53uhtgi4ltn7" path="res://Scripts/DialogueNodes/WalkCharToPointBlocking.cs" id="16_j6uhh"]
 [ext_resource type="PackedScene" uid="uid://djslysixa4d0a" path="res://Scenes/darian.tscn" id="18_tmqtc"]
+[ext_resource type="PackedScene" uid="uid://bahvdxf74e24c" path="res://Scenes/journal_display.tscn" id="19_h4iwy"]
 [ext_resource type="Script" uid="uid://d31xijw3tfna4" path="res://Scripts/DialogueTriggerProp.cs" id="25_044gb"]
 [ext_resource type="Resource" uid="uid://d0vtobfhyip5c" path="res://Conversations/elemental_studies_intro.tres" id="26_gokwg"]
 
@@ -352,3 +353,14 @@ z_index = 2
 texture_filter = 1
 position = Vector2(0, -14)
 texture = SubResource("AtlasTexture_kglut")
+
+[node name="CombatStatusLabel" type="Label" parent="."]
+visible = false
+custom_minimum_size = Vector2(128, 32)
+offset_left = -64.0
+offset_top = 128.0
+offset_right = 64.0
+offset_bottom = 160.0
+text = "YOUR TURN"
+
+[node name="JournalDisplay" parent="." instance=ExtResource("19_h4iwy")]
