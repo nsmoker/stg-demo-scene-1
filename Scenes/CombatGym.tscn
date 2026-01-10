@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://b53uhtgi4ltn7" path="res://Scripts/DialogueNodes/WalkCharToPointBlocking.cs" id="16_j6uhh"]
 [ext_resource type="PackedScene" uid="uid://djslysixa4d0a" path="res://Scenes/darian.tscn" id="18_tmqtc"]
 [ext_resource type="PackedScene" uid="uid://bahvdxf74e24c" path="res://Scenes/journal_display.tscn" id="19_h4iwy"]
+[ext_resource type="Texture2D" uid="uid://clru4be0tsesu" path="res://SpritesPlaceholder/Images/spr_itemsncolectables-outlined.png" id="21_ndsb5"]
 [ext_resource type="PackedScene" uid="uid://m8tbjngrrk7x" path="res://Scenes/ExitMenu.tscn" id="22_wbbaj"]
 [ext_resource type="Script" uid="uid://d31xijw3tfna4" path="res://Scripts/DialogueTriggerProp.cs" id="25_044gb"]
 [ext_resource type="Resource" uid="uid://d0vtobfhyip5c" path="res://Conversations/elemental_studies_intro.tres" id="26_gokwg"]
@@ -144,7 +145,7 @@ NodeType = 1
 DNodeId = 2
 Action = SubResource("Resource_fftnu")
 EditorPos = Vector2(800, 780)
-EditorSize = Vector2(456.0001, 257)
+EditorSize = Vector2(456.00012, 257)
 
 [sub_resource type="Resource" id="Resource_qvvil"]
 script = ExtResource("13_0bad5")
@@ -201,10 +202,8 @@ region = Rect2(32, 192, 16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k78ma"]
 size = Vector2(8, 11)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8ac3a"]
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_kglut"]
-atlas = SubResource("CompressedTexture2D_8ac3a")
+atlas = ExtResource("21_ndsb5")
 region = Rect2(0, 64, 16, 16)
 
 [node name="ClassroomSceneTest" type="Node2D"]
@@ -431,8 +430,7 @@ position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_k78ma")
 
 [node name="BadgeSprite" type="Sprite2D" parent="SceneBackdrop/DialogueTrigger"]
-visible = false
-z_index = 2
+z_index = 20
 texture_filter = 1
 position = Vector2(0, -14)
 texture = SubResource("AtlasTexture_kglut")

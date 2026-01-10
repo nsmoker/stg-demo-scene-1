@@ -81,14 +81,14 @@ script = ExtResource("2_s18b8")
 NodeType = 2
 DNodeId = 281474976710656
 EditorPos = Vector2(-260, 720)
-EditorSize = Vector2(352, 194.00006)
+EditorSize = Vector2(352, 194)
 
 [sub_resource type="Resource" id="Resource_d5tal"]
 script = ExtResource("2_s18b8")
 NodeType = 2
 DNodeId = 281474976710656
 EditorPos = Vector2(-260, 720)
-EditorSize = Vector2(352, 194.00006)
+EditorSize = Vector2(352, 194)
 
 [sub_resource type="Resource" id="Resource_8dkci"]
 script = ExtResource("2_s18b8")
@@ -114,7 +114,7 @@ NodeType = 3
 Content = "Make enemies friendly."
 DNodeId = 281479271677954
 EditorPos = Vector2(2980, 320)
-EditorSize = Vector2(480, 339.99963)
+EditorSize = Vector2(480, 339.99957)
 
 [sub_resource type="Resource" id="Resource_f2m6o"]
 script = ExtResource("2_s18b8")
@@ -156,7 +156,7 @@ Addressee = "Player"
 DNodeId = 281487861743619
 Condition = ExtResource("6_3ynid")
 EditorPos = Vector2(1460, -940)
-EditorSize = Vector2(879.9995, 499.9994)
+EditorSize = Vector2(879.99945, 499.9994)
 
 [resource]
 script = ExtResource("3_h7dhw")
