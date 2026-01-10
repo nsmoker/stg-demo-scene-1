@@ -21,11 +21,15 @@ public partial class ElementalStudiesTrigger : Area2D
 	[Export]
 	public Conversation ForceGetBackConversation;
 
+	[Export]
+	public Conversation DeathConversation;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		BodyEntered += OnBodyEntered;
 		BodyExited += OnBodyExited;
+		HealthSystem.DeathEventHandlers += OnCharacterDeath;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -69,5 +73,10 @@ public partial class ElementalStudiesTrigger : Area2D
 				DialogueSystem.StartDialogue(CoverHelpConversation, 0);
 			}
 		}
+	}
+
+	public void OnCharacterDeath(DeathEvent e)
+	{
+		DialogueSystem.StartDialogue(DeathConversation, 0);
 	}
 }

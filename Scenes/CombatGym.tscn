@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bgk5v73hj7cv0"]
+[gd_scene load_steps=57 format=3 uid="uid://bgk5v73hj7cv0"]
 
 [ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_gokwg"]
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="1_ndsb5"]
@@ -10,8 +10,10 @@
 [ext_resource type="Script" uid="uid://4wgqj3gknq04" path="res://Scripts/Controls/DialogueController.cs" id="10_8ac3a"]
 [ext_resource type="Script" uid="uid://ub8tuk2mpv4d" path="res://Scripts/Triggers/ElementalStudiesTrigger.cs" id="10_713ei"]
 [ext_resource type="Resource" uid="uid://c1vd5jl7hb2nd" path="res://Resources/Quests/elemental_studies_day_1_quest.tres" id="11_sw1uk"]
+[ext_resource type="Script" uid="uid://b56v5x2jg14o4" path="res://Scripts/DialogueNodes/ExitGame.cs" id="13_0bad5"]
 [ext_resource type="Resource" uid="uid://bw07dkj8e3pq0" path="res://Conversations/CoverHelpConversation.tres" id="13_b8mys"]
 [ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="13_tw53w"]
+[ext_resource type="Script" uid="uid://ctqwrwf20m1nj" path="res://Scripts/DialogueNodes/FadeToBlack.cs" id="14_02uyx"]
 [ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="14_b8mys"]
 [ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/edi/Scripts/Conversation.cs" id="15_j6uhh"]
 [ext_resource type="Script" uid="uid://b53uhtgi4ltn7" path="res://Scripts/DialogueNodes/WalkCharToPointBlocking.cs" id="16_j6uhh"]
@@ -45,37 +47,37 @@ font_color = Color(0.16470589, 0.29411766, 1, 1)
 font = SubResource("SystemFont_8fl2o")
 font_size = 10
 
-[sub_resource type="Resource" id="Resource_tmqtc"]
+[sub_resource type="Resource" id="Resource_02uyx"]
 script = ExtResource("13_tw53w")
 fromNode = 1
 toNode = 2
 
-[sub_resource type="Resource" id="Resource_h4iwy"]
+[sub_resource type="Resource" id="Resource_wbbaj"]
 script = ExtResource("13_tw53w")
 toNode = 1
 
-[sub_resource type="Resource" id="Resource_0bad5"]
+[sub_resource type="Resource" id="Resource_b5i2i"]
 script = ExtResource("14_b8mys")
 NodeType = 2
 DNodeId = 1
 EditorPos = Vector2(5653.3584, 1956.9138)
 EditorSize = Vector2(300, 194.00012)
 
-[sub_resource type="Resource" id="Resource_02uyx"]
+[sub_resource type="Resource" id="Resource_qilru"]
 script = ExtResource("14_b8mys")
 NodeType = 2
 DNodeId = 1
 EditorPos = Vector2(5653.3584, 1956.9138)
 EditorSize = Vector2(300, 194.00012)
 
-[sub_resource type="Resource" id="Resource_wbbaj"]
+[sub_resource type="Resource" id="Resource_044gb"]
 script = ExtResource("14_b8mys")
 Content = "Mr. Tines? Get back here, please."
 Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 2
 EditorPos = Vector2(6232.631, 1969.0237)
-EditorSize = Vector2(719.99976, 420)
+EditorSize = Vector2(720, 419.99988)
 
 [sub_resource type="Resource" id="Resource_ndsb5"]
 script = ExtResource("16_j6uhh")
@@ -83,7 +85,7 @@ CharacterData = ExtResource("4_hbowc")
 Point = Vector2(75, 0)
 metadata/_custom_type_script = "uid://b53uhtgi4ltn7"
 
-[sub_resource type="Resource" id="Resource_b5i2i"]
+[sub_resource type="Resource" id="Resource_gokwg"]
 script = ExtResource("14_b8mys")
 NodeType = 1
 DNodeId = 3
@@ -93,9 +95,87 @@ EditorSize = Vector2(720, 380)
 
 [sub_resource type="Resource" id="Resource_j6uhh"]
 script = ExtResource("15_j6uhh")
-Nodes = [SubResource("Resource_02uyx"), SubResource("Resource_wbbaj"), SubResource("Resource_b5i2i")]
-EntryPoints = [SubResource("Resource_0bad5")]
-Connections = [SubResource("Resource_tmqtc"), SubResource("Resource_h4iwy")]
+Nodes = Array[ExtResource("14_b8mys")]([SubResource("Resource_qilru"), SubResource("Resource_044gb"), SubResource("Resource_gokwg")])
+EntryPoints = Array[ExtResource("14_b8mys")]([SubResource("Resource_b5i2i")])
+Connections = Array[ExtResource("13_tw53w")]([SubResource("Resource_02uyx"), SubResource("Resource_wbbaj")])
+metadata/_custom_type_script = "uid://cmw85ukaae1eh"
+
+[sub_resource type="Resource" id="Resource_l4oaw"]
+script = ExtResource("13_tw53w")
+fromNode = 1
+toNode = 3
+
+[sub_resource type="Resource" id="Resource_su8nj"]
+script = ExtResource("13_tw53w")
+fromNode = 4
+toNode = 2
+
+[sub_resource type="Resource" id="Resource_wqt3d"]
+script = ExtResource("13_tw53w")
+fromNode = 3
+toNode = 4
+
+[sub_resource type="Resource" id="Resource_r2l7g"]
+script = ExtResource("13_tw53w")
+toNode = 1
+
+[sub_resource type="Resource" id="Resource_wyuvk"]
+script = ExtResource("14_b8mys")
+NodeType = 2
+DNodeId = 1
+EditorPos = Vector2(293, 782)
+EditorSize = Vector2(300, 194)
+
+[sub_resource type="Resource" id="Resource_4ch5w"]
+script = ExtResource("14_b8mys")
+NodeType = 2
+DNodeId = 1
+EditorPos = Vector2(293, 782)
+EditorSize = Vector2(300, 194)
+
+[sub_resource type="Resource" id="Resource_fftnu"]
+script = ExtResource("14_02uyx")
+metadata/_custom_type_script = "uid://ctqwrwf20m1nj"
+
+[sub_resource type="Resource" id="Resource_324pm"]
+script = ExtResource("14_b8mys")
+NodeType = 1
+DNodeId = 2
+Action = SubResource("Resource_fftnu")
+EditorPos = Vector2(800, 780)
+EditorSize = Vector2(456.00012, 257)
+
+[sub_resource type="Resource" id="Resource_qvvil"]
+script = ExtResource("13_0bad5")
+metadata/_custom_type_script = "uid://b56v5x2jg14o4"
+
+[sub_resource type="Resource" id="Resource_svi83"]
+script = ExtResource("14_b8mys")
+NodeType = 1
+DNodeId = 3
+Action = SubResource("Resource_qvvil")
+EditorPos = Vector2(3960, 720)
+EditorSize = Vector2(456, 257.00012)
+
+[sub_resource type="Resource" id="Resource_dj2i3"]
+script = ExtResource("14_b8mys")
+Content = "You beat the game by murduring a child. Congrats."
+DNodeId = 4
+EditorPos = Vector2(1860, 720)
+EditorSize = Vector2(640, 379.99963)
+
+[sub_resource type="Resource" id="Resource_3hohp"]
+script = ExtResource("14_b8mys")
+Content = "You may press E to exit the game. Monster."
+DNodeId = 5
+EditorPos = Vector2(2840, 740)
+EditorSize = Vector2(679.9995, 359.99915)
+
+[sub_resource type="Resource" id="Resource_lh5eo"]
+script = ExtResource("15_j6uhh")
+Nodes = Array[ExtResource("14_b8mys")]([SubResource("Resource_4ch5w"), SubResource("Resource_324pm"), SubResource("Resource_svi83"), SubResource("Resource_dj2i3"), SubResource("Resource_3hohp")])
+EntryPoints = Array[ExtResource("14_b8mys")]([SubResource("Resource_wyuvk")])
+Connections = Array[ExtResource("13_tw53w")]([SubResource("Resource_l4oaw"), SubResource("Resource_su8nj"), SubResource("Resource_wqt3d"), SubResource("Resource_r2l7g")])
 metadata/_custom_type_script = "uid://cmw85ukaae1eh"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f311p"]
@@ -141,6 +221,7 @@ zoom = Vector2(3, 3)
 [node name="DialogueDisplay" type="ScrollContainer" parent="."]
 process_mode = 3
 visible = false
+top_level = true
 z_index = 1
 offset_left = -166.0
 offset_top = 91.0
@@ -184,6 +265,7 @@ IntroConversation = ExtResource("26_gokwg")
 NudgeEntry = 1
 CoverHelpConversation = ExtResource("13_b8mys")
 ForceGetBackConversation = SubResource("Resource_j6uhh")
+DeathConversation = SubResource("Resource_lh5eo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ElementalStudiesTrigger"]
 shape = SubResource("RectangleShape2D_f311p")
