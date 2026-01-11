@@ -1,10 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://gedp1qirf71n"]
+[gd_scene load_steps=25 format=3 uid="uid://gedp1qirf71n"]
 
 [ext_resource type="Script" uid="uid://04a5i0tk15gy" path="res://Scripts/Character/Player.cs" id="1_co212"]
 [ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/Characters/player_data.tres" id="2_pu2lt"]
+[ext_resource type="Texture2D" uid="uid://ceplksydvx5mr" path="res://Sprites/UI/battle_action_pip_v2.png" id="5_x3wgy"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="7_3smsa"]
+[ext_resource type="FontFile" uid="uid://cdbx3tisu3tsv" path="res://UI/Fonts/Pixeled.ttf" id="7_8erm5"]
 [ext_resource type="PackedScene" uid="uid://brdmuedpkp0jn" path="res://Scenes/ability_menu.tscn" id="8_8erm5"]
-[ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="12_pu2lt"]
 [ext_resource type="Texture2D" uid="uid://cusnf7nuh7o57" path="res://Sprites/Characters/pc_ingame_placeholder.png" id="12_ukyrk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7efl3"]
@@ -23,6 +24,61 @@ region = Rect2(16, 16, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_gymyn"]
 atlas = ExtResource("7_3smsa")
 region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="Animation" id="Animation_3smsa"]
+resource_name = "gleam"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_8erm5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_f1ek2"]
+resource_name = "used"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f1ek2"]
+_data = {
+&"RESET": SubResource("Animation_8erm5"),
+&"gleam": SubResource("Animation_3smsa"),
+&"used": SubResource("Animation_f1ek2")
+}
 
 [sub_resource type="Animation" id="Animation_ukyrk"]
 length = 0.001
@@ -132,7 +188,8 @@ _data = {
 }
 
 [sub_resource type="LabelSettings" id="LabelSettings_pu2lt"]
-font_size = 8
+font = ExtResource("7_8erm5")
+font_size = 5
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_co212")
@@ -184,16 +241,30 @@ texture = SubResource("AtlasTexture_gymyn")
 [node name="ActionPip" type="Sprite2D" parent="."]
 visible = false
 texture_filter = 1
-position = Vector2(-6, 20)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("12_pu2lt")
+position = Vector2(-5, 19)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_x3wgy")
+hframes = 4
+frame = 2
+
+[node name="AnimationPip" type="AnimationPlayer" parent="ActionPip"]
+libraries = {
+&"": SubResource("AnimationLibrary_f1ek2")
+}
 
 [node name="ActionPip2" type="Sprite2D" parent="."]
 visible = false
 texture_filter = 1
-position = Vector2(2, 20)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("12_pu2lt")
+position = Vector2(5, 19)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_x3wgy")
+hframes = 4
+frame = 2
+
+[node name="AnimationPip2" type="AnimationPlayer" parent="ActionPip2"]
+libraries = {
+&"": SubResource("AnimationLibrary_f1ek2")
+}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -207,9 +278,19 @@ hframes = 17
 
 [node name="HealthLabel" type="Label" parent="."]
 visible = false
-offset_left = -7.0
-offset_top = -20.0
-offset_right = 13.0
-offset_bottom = -8.833332
-text = "asd"
+texture_filter = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -27.0
+offset_right = 14.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "100/100"
 label_settings = SubResource("LabelSettings_pu2lt")
+horizontal_alignment = 1
+vertical_alignment = 1

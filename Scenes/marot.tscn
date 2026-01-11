@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://dsawqshhjgquw"]
+[gd_scene load_steps=23 format=3 uid="uid://dsawqshhjgquw"]
 
 [ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character/Character.cs" id="1_cw48i"]
 [ext_resource type="Resource" uid="uid://cx3eet0w6nlc3" path="res://Resources/Characters/marot.tres" id="2_322xl"]
+[ext_resource type="Texture2D" uid="uid://ceplksydvx5mr" path="res://Sprites/UI/battle_action_pip_v2.png" id="5_322xl"]
+[ext_resource type="FontFile" uid="uid://cdbx3tisu3tsv" path="res://UI/Fonts/Pixeled.ttf" id="5_ej473"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="17_yaiay"]
 [ext_resource type="Texture2D" uid="uid://bxwkf6u5ijdho" path="res://Sprites/Characters/marot_ingame_placeholder.png" id="18_cw48i"]
-[ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="19_5aljl"]
 
 [sub_resource type="SystemFont" id="SystemFont_tk7xo"]
 subpixel_positioning = 0
@@ -19,8 +20,9 @@ radius = 500.0
 atlas = ExtResource("17_yaiay")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="LabelSettings" id="LabelSettings_dhkrs"]
-font_size = 8
+[sub_resource type="LabelSettings" id="LabelSettings_cytio"]
+font = ExtResource("5_ej473")
+font_size = 5
 
 [sub_resource type="Animation" id="Animation_ukyrk"]
 length = 0.001
@@ -129,6 +131,61 @@ _data = {
 &"walk_south": SubResource("Animation_7dp3o")
 }
 
+[sub_resource type="Animation" id="Animation_3smsa"]
+resource_name = "gleam"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_8erm5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_f1ek2"]
+resource_name = "used"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f1ek2"]
+_data = {
+&"RESET": SubResource("Animation_8erm5"),
+&"gleam": SubResource("Animation_3smsa"),
+&"used": SubResource("Animation_f1ek2")
+}
+
 [node name="Marot" type="CharacterBody2D"]
 z_index = 1
 script = ExtResource("1_cw48i")
@@ -142,6 +199,7 @@ position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_ss715")
 
 [node name="SenseArea" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea"]
 shape = SubResource("CircleShape2D_wxkh7")
@@ -162,30 +220,54 @@ texture_filter = 1
 texture = ExtResource("18_cw48i")
 hframes = 17
 
-[node name="ActionPip" type="Sprite2D" parent="."]
-visible = false
-texture_filter = 1
-position = Vector2(-8, 16)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("19_5aljl")
-
-[node name="ActionPip2" type="Sprite2D" parent="."]
-visible = false
-texture_filter = 1
-position = Vector2(0, 16)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("19_5aljl")
-
 [node name="HealthLabel" type="Label" parent="."]
 visible = false
-offset_left = -7.0
-offset_top = -20.0
-offset_right = 13.0
-offset_bottom = -8.833332
-text = "asd"
-label_settings = SubResource("LabelSettings_dhkrs")
+texture_filter = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -27.0
+offset_right = 14.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "100/100"
+label_settings = SubResource("LabelSettings_cytio")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_ukyrk")
+}
+
+[node name="ActionPip" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(-5, 19)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_322xl")
+hframes = 4
+frame = 2
+
+[node name="AnimationPip" type="AnimationPlayer" parent="ActionPip"]
+libraries = {
+&"": SubResource("AnimationLibrary_f1ek2")
+}
+
+[node name="ActionPip2" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(5, 19)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_322xl")
+hframes = 4
+frame = 2
+
+[node name="AnimationPip2" type="AnimationPlayer" parent="ActionPip2"]
+libraries = {
+&"": SubResource("AnimationLibrary_f1ek2")
 }

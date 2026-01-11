@@ -66,6 +66,7 @@ public static class CombatSystem
     private static int _sideMoving = 0;
 
     private static Label _combatStatusLabel;
+    private static Sprite2D _battleBanner;
 
     private static void OnNavRebakeFinished(Rid rid)
     {
@@ -92,8 +93,9 @@ public static class CombatSystem
         _sides = [.. _sides.Where(x => x.Count > 0)];
         if (_sides.Count < 2)
         {
+            // i learned that you have to hide the UI elements BEFORE combat ends, otherwise it doesn't take
+            _battleBanner.Visible = false;
             combatEnded?.Invoke();
-            _combatStatusLabel.Visible = false;
         }
         else
         {
@@ -103,11 +105,11 @@ public static class CombatSystem
             currentSide = _sides[_sideMoving];
             if (currentSide.Any(x => CharacterSystem.GetInstance(x) is Player))
             {
-                _combatStatusLabel.Text = "YOUR TURN";
+                _combatStatusLabel.Text = "YOUR TURN!";
             }
             else
             {
-                _combatStatusLabel.Text = "ENEMY TURN";
+                _combatStatusLabel.Text = "ENEMY TURN!";
             }
             _pathingReady = false;
             currentSide.ForEach(x =>
@@ -130,6 +132,7 @@ public static class CombatSystem
     {
         var scene = (Godot.Engine.GetMainLoop() as SceneTree)
             .CurrentScene as StagfootScreen;
+        _battleBanner = scene.GetBattleBanner();
         _combatStatusLabel = scene.GetCombatStatusLabel();
         if (_currentCombatants.Count == 0)
         {
@@ -151,14 +154,14 @@ public static class CombatSystem
 
             if (initiatiorInstance is Player)
             {
-                _combatStatusLabel.Text = "YOUR TURN";
+                _combatStatusLabel.Text = "YOUR TURN!";
             }
             else
             {
-                _combatStatusLabel.Text = "ENEMY TURN";
+                _combatStatusLabel.Text = "ENEMY TURN!";
             }
             HealthSystem.DeathEventHandlers += OnCharacterDeath;
-            _combatStatusLabel.Visible = true;
+            _battleBanner.Visible = true;
             CombatStartHandlers?.Invoke(e);
             _sideMoving = 0;
             TurnHandlers?.Invoke(_sides[0]);

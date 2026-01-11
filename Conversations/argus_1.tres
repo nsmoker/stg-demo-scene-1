@@ -1,8 +1,8 @@
-[gd_resource type="Resource" load_steps=43 format=3 uid="uid://bewehuhajler"]
+[gd_resource type="Resource" script_class="Conversation" load_steps=43 format=3 uid="uid://bewehuhajler"]
 
-[ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/Sprites/addons/edi/Scripts/DialogueConnection.cs" id="1_oxqrr"]
-[ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/Sprites/addons/edi/Scripts/DialogueGraphNode.cs" id="2_dm36e"]
-[ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/Sprites/addons/edi/Scripts/Conversation.cs" id="3_7gpfp"]
+[ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="1_oxqrr"]
+[ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="2_dm36e"]
+[ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/edi/Scripts/Conversation.cs" id="3_7gpfp"]
 [ext_resource type="Resource" uid="uid://caxvm2rtrh3t5" path="res://Scripts/DialogueNodes/ArgusVanish.tres" id="3_dm36e"]
 [ext_resource type="Resource" uid="uid://lkg3802fai2s" path="res://Scripts/DialogueNodes/AdvanceCabin1.tres" id="4_tfaht"]
 [ext_resource type="Resource" uid="uid://uqbvgoe2s4uc" path="res://Scripts/DialogueNodes/CheckHasCabin.tres" id="5_l8aqh"]
@@ -255,7 +255,7 @@ EditorSize = Vector2(700.0033, 400.00372)
 
 [resource]
 script = ExtResource("3_7gpfp")
-Nodes = [SubResource("Resource_y0ki2"), SubResource("Resource_7exsp"), SubResource("Resource_cs57e"), SubResource("Resource_lgc6r"), SubResource("Resource_w8wmo"), SubResource("Resource_n8ac3"), SubResource("Resource_mjyhw"), SubResource("Resource_5v0ru"), SubResource("Resource_05niy"), SubResource("Resource_aclli"), SubResource("Resource_3jdyt"), SubResource("Resource_eh7ra"), SubResource("Resource_dra02"), SubResource("Resource_qmwy4"), SubResource("Resource_2ji41"), SubResource("Resource_hm62t"), SubResource("Resource_fmicw"), SubResource("Resource_mkpte")]
-EntryPoints = [SubResource("Resource_usqqm")]
-Connections = [SubResource("Resource_tfaht"), SubResource("Resource_l8aqh"), SubResource("Resource_0smud"), SubResource("Resource_11bn8"), SubResource("Resource_3da1e"), SubResource("Resource_udfk6"), SubResource("Resource_33w5l"), SubResource("Resource_6hua1"), SubResource("Resource_pxsiu"), SubResource("Resource_t1qrt"), SubResource("Resource_6v78y"), SubResource("Resource_bd2o5"), SubResource("Resource_kpx75"), SubResource("Resource_8eksi"), SubResource("Resource_w2x2p"), SubResource("Resource_f26bc"), SubResource("Resource_pxjla")]
+Nodes = Array[ExtResource("2_dm36e")]([SubResource("Resource_y0ki2"), SubResource("Resource_7exsp"), SubResource("Resource_cs57e"), SubResource("Resource_lgc6r"), SubResource("Resource_w8wmo"), SubResource("Resource_n8ac3"), SubResource("Resource_mjyhw"), SubResource("Resource_5v0ru"), SubResource("Resource_05niy"), SubResource("Resource_aclli"), SubResource("Resource_3jdyt"), SubResource("Resource_eh7ra"), SubResource("Resource_dra02"), SubResource("Resource_qmwy4"), SubResource("Resource_2ji41"), SubResource("Resource_hm62t"), SubResource("Resource_fmicw"), SubResource("Resource_mkpte")])
+EntryPoints = Array[ExtResource("2_dm36e")]([SubResource("Resource_usqqm")])
+Connections = Array[ExtResource("1_oxqrr")]([SubResource("Resource_tfaht"), SubResource("Resource_l8aqh"), SubResource("Resource_0smud"), SubResource("Resource_11bn8"), SubResource("Resource_3da1e"), SubResource("Resource_udfk6"), SubResource("Resource_33w5l"), SubResource("Resource_6hua1"), SubResource("Resource_pxsiu"), SubResource("Resource_t1qrt"), SubResource("Resource_6v78y"), SubResource("Resource_bd2o5"), SubResource("Resource_kpx75"), SubResource("Resource_8eksi"), SubResource("Resource_w2x2p"), SubResource("Resource_f26bc"), SubResource("Resource_pxjla")])
 metadata/_custom_type_script = "uid://cmw85ukaae1eh"
