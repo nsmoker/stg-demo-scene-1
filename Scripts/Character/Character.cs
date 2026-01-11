@@ -293,14 +293,16 @@ public partial class Character : CharacterBody2D
     {
         ICharacterState _nextState;
 
-        Action _onComplete;
-        private Vector2[] _path;
+        readonly Action _onComplete;
+        private readonly Vector2[] _path;
         private int _currentPoint = 0;
-        public NavState(Vector2[] path, ICharacterState nextState, Action onComplete = null)
+        private readonly float _speed = -1;
+        public NavState(Vector2[] path, ICharacterState nextState, Action onComplete = null, float speed = -1)
         {
             _path = path;
             _nextState = nextState;
             _onComplete = onComplete;
+            _speed = speed;
         }
 
         public void Process(double delta, Character character)
@@ -328,7 +330,7 @@ public partial class Character : CharacterBody2D
             else
             {
                 var targetVector = targetPoint - character.Position;
-                var vel = targetVector.Normalized() * character.CharacterData.Speed;
+                var vel = targetVector.Normalized() * (_speed > 0.0f ? _speed : character.CharacterData.Speed);
                 character.Velocity = vel;
                 character.SetWalkAnimState(vel);
                 character.MoveAndSlide();
@@ -734,16 +736,16 @@ public partial class Character : CharacterBody2D
         SetFacing(targetVector);
     }
 
-    public void WalkToPoint(Vector2 point, Action onComplete = null)
+    public void WalkToPoint(Vector2 point, Action onComplete = null, float speed = -1.0f)
     {
-        var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), GlobalPosition, point, true, 0x1u); 
+        var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), Position, point, true, 0x1u); 
         if (path.Length == 0)
         {
-            ControllerState = new NavState([point], ControllerState, onComplete);
+            ControllerState = new NavState([point], ControllerState, onComplete, speed > 0 ? speed : CharacterData.Speed);
         }
         else
         {
-            ControllerState = new NavState(path, ControllerState, onComplete);
+            ControllerState = new NavState(path, ControllerState, onComplete, speed > 0 ? speed : CharacterData.Speed);
         }
     }
 
@@ -823,5 +825,11 @@ public partial class Character : CharacterBody2D
     public void SetCollision(bool enabled)
     {
         collider.Disabled = !enabled || !_collisionOverride;
+    }
+
+    public void SetIdle()
+    {
+        ControllerState = new PatrolState();
+        SetAnimState(AnimState.Idle);
     }
 }

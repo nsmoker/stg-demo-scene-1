@@ -25,6 +25,9 @@ public partial class StagfootScreen : Node2D
 	[Export]
 	public PackedScene GenericNpcScene;
 
+	[Export]
+	public CrowdAIDirector GenericNpcDirector = new();
+
 	public Vector2 GetRandomTraversablePoint()
 	{
 		// Generate a random point within the axis aligned bounding box of the nav mesh.
@@ -52,6 +55,11 @@ public partial class StagfootScreen : Node2D
 		NavigationServer2D.MapChanged += OnFirstNavMeshSync;
 	}
 
+    public override void _Process(double delta)
+    {
+		GenericNpcDirector.Process(delta, this);
+    }
+
 	private void OnFirstNavMeshSync(Rid mapId)
 	{
         if (mapId.Equals(_navRegion.GetNavigationMap()) && GenericNpcCount > 0)
@@ -77,6 +85,8 @@ public partial class StagfootScreen : Node2D
 
 			NavigationServer2D.MapChanged -= OnFirstNavMeshSync;
         }
+
+		GenericNpcDirector.ManagedCharacters = _genericNpcInstances;
     }
 
 	public void SetBackdropTexture(Texture2D texture)
