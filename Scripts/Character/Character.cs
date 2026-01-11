@@ -110,7 +110,8 @@ public partial class Character : CharacterBody2D
         WalkSouth,
         WalkEast,
         WalkWest,
-        Attack
+        Attack,
+        Sitting
     }
 
     protected AnimState _currentAnimState = AnimState.Idle;
@@ -462,9 +463,19 @@ public partial class Character : CharacterBody2D
             case AnimState.Attack:
                 Anim.Play("attack");
                 break;
+            case AnimState.Sitting:
+                Anim.Play("sit");
+                break;
             default:
                 Anim.Play("idle");
                 break;
+        }
+
+        if (_currentAnimState != AnimState.Sitting)
+        {
+            collider.Disabled = false;
+            _mainSprite.GlobalPosition = GlobalPosition;
+            _mainSprite.ZIndex = 4;
         }
     }
 
@@ -767,5 +778,18 @@ public partial class Character : CharacterBody2D
     public void SetAttackTarget(CharacterData c)
     {
         _attackTarget = c;
+    }
+
+    public void SitOn(Prop prop)
+    {
+        if (prop.IsSeat())
+        {
+            SetAnimState(AnimState.Sitting);
+
+            Vector2 seatBottomLeft = prop.GetSeatRegionCenter();
+            _mainSprite.GlobalPosition = seatBottomLeft;
+            collider.Disabled = true;
+            _mainSprite.ZIndex = 2;
+        }
     }
 }

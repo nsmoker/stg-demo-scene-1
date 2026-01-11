@@ -10,6 +10,7 @@ public enum InteractionType
     Dialogue,
     Container,
     Toggleable,
+    Furniture,
 }
 
 public interface IInteractable

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://gedp1qirf71n"]
+[gd_scene load_steps=21 format=3 uid="uid://gedp1qirf71n"]
 
 [ext_resource type="Script" uid="uid://04a5i0tk15gy" path="res://Scripts/Character/Player.cs" id="1_co212"]
 [ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/Characters/player_data.tres" id="2_pu2lt"]
@@ -11,7 +11,7 @@
 size = Vector2(14, 29)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_o8msw"]
-radius = 25.0
+radius = 50.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gymyn"]
 size = Vector2(306, 163)
@@ -70,6 +70,22 @@ tracks/0/keys = {
 "values": [9]
 }
 
+[sub_resource type="Animation" id="Animation_x3wgy"]
+resource_name = "sit"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [17]
+}
+
 [sub_resource type="Animation" id="Animation_h4iuc"]
 resource_name = "walk_h"
 length = 0.8
@@ -126,6 +142,7 @@ _data = {
 &"RESET": SubResource("Animation_ukyrk"),
 &"attack": SubResource("Animation_fd4e3"),
 &"idle": SubResource("Animation_gymyn"),
+&"sit": SubResource("Animation_x3wgy"),
 &"walk_h": SubResource("Animation_h4iuc"),
 &"walk_north": SubResource("Animation_pu2lt"),
 &"walk_south": SubResource("Animation_7dp3o")
@@ -144,6 +161,7 @@ shape = SubResource("RectangleShape2D_7efl3")
 
 [node name="InteractableRange" type="Area2D" parent="."]
 visible = false
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableRange"]
 shape = SubResource("CircleShape2D_o8msw")
@@ -156,7 +174,7 @@ position = Vector2(-2, -1.5)
 shape = SubResource("RectangleShape2D_gymyn")
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
-radius = 17.65
+radius = 16.0
 affect_navigation_mesh = true
 
 [node name="CombatInteractionMenu" parent="." instance=ExtResource("8_8erm5")]
@@ -203,7 +221,7 @@ libraries = {
 [node name="MainSprite" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("12_ukyrk")
-hframes = 17
+hframes = 18
 
 [node name="HealthLabel" type="Label" parent="."]
 visible = false

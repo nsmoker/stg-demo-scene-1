@@ -39,6 +39,11 @@ public partial class Player : Character
 								toggle.Toggle();
 								break;
 							}
+						case InteractionType.Furniture:
+							{
+								character.SitOn((Prop) closestInteractable);
+								break;
+							}
 					}
 				}
 			}

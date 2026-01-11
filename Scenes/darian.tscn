@@ -1,9 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://djslysixa4d0a"]
+[gd_scene load_steps=19 format=3 uid="uid://djslysixa4d0a"]
 
 [ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character/Character.cs" id="1_p6ogr"]
 [ext_resource type="Resource" uid="uid://c0ev20u8e7nyu" path="res://Resources/Characters/darian.tres" id="2_p6ogr"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="3_oxpus"]
-[ext_resource type="Texture2D" uid="uid://bxwkf6u5ijdho" path="res://Sprites/Characters/marot_ingame_placeholder.png" id="4_ktfjk"]
+[ext_resource type="Texture2D" uid="uid://cusnf7nuh7o57" path="res://Sprites/Characters/pc_ingame_placeholder.png" id="4_p6ogr"]
 [ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="5_obedt"]
 
 [sub_resource type="SystemFont" id="SystemFont_tk7xo"]
@@ -68,6 +68,21 @@ tracks/0/keys = {
 "values": [9]
 }
 
+[sub_resource type="Animation" id="Animation_p6ogr"]
+resource_name = "sit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [17]
+}
+
 [sub_resource type="Animation" id="Animation_h4iuc"]
 resource_name = "walk_h"
 length = 0.8
@@ -124,13 +139,14 @@ _data = {
 &"RESET": SubResource("Animation_ukyrk"),
 &"attack": SubResource("Animation_322xl"),
 &"idle": SubResource("Animation_gymyn"),
+&"sit": SubResource("Animation_p6ogr"),
 &"walk_h": SubResource("Animation_h4iuc"),
 &"walk_north": SubResource("Animation_pu2lt"),
 &"walk_south": SubResource("Animation_7dp3o")
 }
 
 [node name="Darian" type="CharacterBody2D"]
-z_index = 1
+z_index = 4
 script = ExtResource("1_p6ogr")
 CharacterData = ExtResource("2_p6ogr")
 ToHitFont = SubResource("SystemFont_tk7xo")
@@ -161,8 +177,8 @@ texture = SubResource("AtlasTexture_dhkrs")
 [node name="MainSprite" type="Sprite2D" parent="."]
 modulate = Color(0.25565878, 0.25565878, 0.25565878, 1)
 texture_filter = 1
-texture = ExtResource("4_ktfjk")
-hframes = 17
+texture = ExtResource("4_p6ogr")
+hframes = 18
 
 [node name="ActionPip" type="Sprite2D" parent="."]
 visible = false

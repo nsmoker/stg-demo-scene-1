@@ -10,6 +10,11 @@ public partial class Prop : StaticBody2D
 	private Action _hoverCompletionCallback;
 
 	private Sprite2D _sprite;
+	private Marker2D _seatMarker;
+
+	// ONLY USE THIS TO REFERENCE THE NODE FROM A SCRIPT.
+	[Export]
+	PropData _data;
 
 	public override void _Ready()
 	{
@@ -17,6 +22,11 @@ public partial class Prop : StaticBody2D
 		_sprite = GetNode<Sprite2D>("Sprite2D");
 		_animationPlayer.AnimationFinished += OnAnimationFinished;
 		_animationPlayer.Play("idle");
+		_seatMarker = GetNodeOrNull<Marker2D>("SeatMarker");
+		if (_data != null)
+		{
+			PropSystem.Register(_data, this);
+		}
 	}
 
 	public void SetSprite(Texture2D sprite)
@@ -59,5 +69,15 @@ public partial class Prop : StaticBody2D
 					break;
 				}
 		}
+	}
+
+	public bool IsSeat()
+	{
+		return _seatMarker != null;
+	}
+
+	public Vector2 GetSeatRegionCenter()
+	{
+		return _seatMarker.GlobalPosition;
 	}
 }

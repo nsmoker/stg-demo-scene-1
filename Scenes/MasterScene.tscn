@@ -46,7 +46,7 @@ zoom = Vector2(3, 3)
 [node name="DialogueDisplay" type="ScrollContainer" parent="Camera2D"]
 process_mode = 3
 visible = false
-z_index = 1
+z_index = 500
 offset_left = -166.0
 offset_top = 91.0
 offset_right = 163.0
@@ -82,6 +82,7 @@ justification_flags = 131
 
 [node name="CombatStatusLabel" type="Label" parent="Camera2D"]
 visible = false
+z_index = 500
 custom_minimum_size = Vector2(128, 32)
 offset_left = -64.0
 offset_top = 136.0
@@ -90,6 +91,7 @@ offset_bottom = 168.0
 text = "YOUR TURN"
 
 [node name="JournalDisplay" parent="Camera2D" instance=ExtResource("7_7eedp")]
+z_index = 500
 offset_left = -136.0
 offset_top = -48.0
 offset_right = 144.0
@@ -98,6 +100,7 @@ offset_bottom = 112.0
 [node name="ExitMenu" parent="Camera2D" instance=ExtResource("8_fc6rv")]
 visible = false
 top_level = false
+z_index = 500
 offset_left = -84.0
 offset_top = -102.0
 offset_right = 29.599998

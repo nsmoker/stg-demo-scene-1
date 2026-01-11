@@ -24,18 +24,23 @@ public partial class ElementalStudiesTrigger : Area2D
 	[Export]
 	public Conversation DeathConversation;
 
+	[Export]
+	CollisionShape2D _collider;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		BodyEntered += OnBodyEntered;
 		BodyExited += OnBodyExited;
 		HealthSystem.DeathEventHandlers += OnCharacterDeath;
+		_collider = GetNode<CollisionShape2D>("CollisionShape2D");
 	}
 
 	public void OnBodyEntered(Node2D body)
 	{
-		if (body is Player && QuestSystem.TryGetQuest(IntroQuest.ResourcePath, out Quest introQuest) && introQuest.CurrentStage < 10)
+		if (body is Player && QuestSystem.TryGetQuest(IntroQuest.ResourcePath, out Quest introQuest) && introQuest.CurrentStage < 2)
 		{
+			introQuest.CurrentStage = 2;
 			CombatSystem.AttackHandlers += OnCombatAttack;
 			DialogueSystem.StartDialogue(IntroConversation, NudgeEntry);
 		}
@@ -43,7 +48,7 @@ public partial class ElementalStudiesTrigger : Area2D
 
 	public void OnBodyExited(Node2D body)
 	{
-		if (body is Player)
+		if (body is Player && !_collider.Shape.GetRect().HasPoint(body.GlobalPosition))
 		{
 			QuestSystem.TryGetQuest(IntroQuest.ResourcePath, out Quest introQuest);
 			if (introQuest.CurrentStage < 10)

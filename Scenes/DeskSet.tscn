@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfngs83wkjeur"]
+
+[ext_resource type="PackedScene" uid="uid://nxmo2nmx88dw" path="res://Scenes/DeskProp.tscn" id="1_37sht"]
+[ext_resource type="PackedScene" uid="uid://cmpn1crr0je53" path="res://Scenes/ChairProp.tscn" id="2_bc1vk"]
+
+[node name="DeskSet" type="Node2D"]
+
+[node name="DeskProp" parent="." instance=ExtResource("1_37sht")]
+
+[node name="ChairProp" parent="." instance=ExtResource("2_bc1vk")]
+position = Vector2(-14, 9)
+
+[node name="ChairProp2" parent="." instance=ExtResource("2_bc1vk")]
+position = Vector2(14, 9)

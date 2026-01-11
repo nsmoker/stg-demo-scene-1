@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="PropData" load_steps=2 format=3 uid="uid://cbhlbpdtrwxxy"]
+
+[ext_resource type="Script" uid="uid://cplotlk0gi8v" path="res://Scripts/Resources/PropData.cs" id="1_f3rec"]
+
+[resource]
+script = ExtResource("1_f3rec")
+metadata/_custom_type_script = "uid://cplotlk0gi8v"

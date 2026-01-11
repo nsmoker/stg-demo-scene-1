@@ -13,7 +13,7 @@ public partial class SetScreenBackdrop : DialogueAction
         var stagfootScreen = (Godot.Engine.GetMainLoop() as SceneTree)
 			.CurrentScene as StagfootScreen;
 		var tween = stagfootScreen.GetTree().CreateTween();
-		tween.TweenCallback(Callable.From(stagfootScreen.DisableBackdropProps));
+		tween.TweenCallback(Callable.From(stagfootScreen.DisableProps));
 		tween
 			.TweenProperty(stagfootScreen, "modulate", new Color(0.0f, 0.0f, 0.0f, 1.0f), 1.0f)
 			.SetTrans(Tween.TransitionType.Sine)
