@@ -1,3 +1,4 @@
+using ArkhamHunters.Scripts;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,39 @@ public partial class StagfootScreen : Node2D
 	private Sprite2D _backdrop;
 	private NavigationRegion2D _navRegion;
 	private Node2D _clearableProps;
+	private Node2D _genericNpcRoot;
+
+	private List<Character> _genericNpcInstances = [];
+
 	public Sprite2D Backdrop { get => _backdrop; set => _backdrop = value; }
 	public NavigationRegion2D NavRegion { get => _navRegion; set => _navRegion = value; }
+
+	[Export]
+	public int GenericNpcCount = 0;
+
+	[Export]
+	public Godot.Collections.Array<Texture2D> GenericNpcSprites = [];
+
+	[Export]
+	public PackedScene GenericNpcScene;
+
+	public Vector2 GetRandomTraversablePoint()
+	{
+		// Generate a random point within the axis aligned bounding box of the nav mesh.
+		Rect2 navMeshAABB = _navRegion.GetBounds();
+		Vector2 aabbTopLeft = navMeshAABB.Position;
+		// We have to call .Abs because the Godot docs explicitly state that Rect2.Size is not always positive (?!?!?!?!?)
+		Vector2 aabbExtent = navMeshAABB.Size.Abs();
+		var random = new Random();
+		float xVal = aabbTopLeft.X + aabbExtent.X * random.NextSingle();
+		float yVal = aabbTopLeft.Y + aabbExtent.Y * random.NextSingle();
+		var randomPoint = ToGlobal(new Vector2(xVal, yVal));
+
+		// Constrain the AABB point to the nav mesh's surface.
+		Vector2 surfacePoint = NavigationServer2D.RegionGetClosestPoint(NavRegion.GetRid(), randomPoint);
+		return surfacePoint;
+	}
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -17,7 +49,35 @@ public partial class StagfootScreen : Node2D
 		Backdrop = GetNode<Sprite2D>("SceneBackdrop");
 		SceneSystem.Register(SceneFilePath, this);
 		_clearableProps = GetNodeOrNull<Node2D>("ClearableProps");
+		NavigationServer2D.MapChanged += OnFirstNavMeshSync;
 	}
+
+	private void OnFirstNavMeshSync(Rid mapId)
+	{
+        if (mapId.Equals(_navRegion.GetNavigationMap()) && GenericNpcCount > 0)
+        {
+            _genericNpcRoot = new Node2D
+            {
+                Name = "GenericNpcRoot"
+            };
+            AddChild(_genericNpcRoot);
+            var random = new Random();
+
+            for (int i = 0; i < GenericNpcCount; ++i)
+            {
+                var npc = GenericNpcScene.Instantiate<Character>();
+                int spriteIndex = random.Next(0, GenericNpcSprites.Count);
+
+                _genericNpcRoot.AddChild(npc);
+                npc.GlobalPosition = GetRandomTraversablePoint();
+                npc.SetSprite(GenericNpcSprites[spriteIndex]);
+                npc.SetCollisionOverride(false);
+                _genericNpcInstances.Add(npc);
+            }
+
+			NavigationServer2D.MapChanged -= OnFirstNavMeshSync;
+        }
+    }
 
 	public void SetBackdropTexture(Texture2D texture)
 	{

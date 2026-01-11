@@ -1,7 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://fq7wp3pxnthf"]
+[gd_scene load_steps=15 format=3 uid="uid://fq7wp3pxnthf"]
 
 [ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_nc75b"]
+[ext_resource type="Texture2D" uid="uid://cusnf7nuh7o57" path="res://Sprites/Characters/pc_ingame_placeholder.png" id="2_k3e6v"]
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="2_xfs0e"]
+[ext_resource type="Texture2D" uid="uid://bxwkf6u5ijdho" path="res://Sprites/Characters/marot_ingame_placeholder.png" id="3_xfs0e"]
+[ext_resource type="PackedScene" uid="uid://cy27gk81ig72o" path="res://Scenes/generic_npc.tscn" id="4_l2y3h"]
 [ext_resource type="Texture2D" uid="uid://cvobau2o6qy0n" path="res://Sprites/Backdrops/Hallway.png" id="4_xfs0e"]
 [ext_resource type="PackedScene" uid="uid://bgk5v73hj7cv0" path="res://Scenes/CombatGym.tscn" id="5_03dat"]
 [ext_resource type="PackedScene" uid="uid://b02trvpappmbg" path="res://Scenes/BrazierProp.tscn" id="7_21ohs"]
@@ -30,6 +33,9 @@ size = Vector2(25, 34)
 [node name="HallwaySceneTest" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_nc75b")
+GenericNpcCount = 2
+GenericNpcSprites = Array[Texture2D]([ExtResource("2_k3e6v"), ExtResource("3_xfs0e")])
+GenericNpcScene = ExtResource("4_l2y3h")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 visible = false

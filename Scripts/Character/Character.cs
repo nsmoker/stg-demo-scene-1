@@ -103,6 +103,7 @@ public partial class Character : CharacterBody2D
     private int _patrolLegIndex;
     private double _patrolLegProgress = 0;
     private bool _sitting = false;
+    private bool _collisionOverride = true;
 
     public enum AnimState
     {
@@ -146,7 +147,7 @@ public partial class Character : CharacterBody2D
     {
         public void Process(double delta, Character character)
         {
-            if (character.CharacterData.PatrolLegs.Count > 0)
+            if (character.IsNamedCharacter() && character.CharacterData.PatrolLegs.Count > 0)
             {
                 var currentPatrolLeg = character.CharacterData.PatrolLegs[character._patrolLegIndex];
                 if (currentPatrolLeg.Direction.X < 0)
@@ -173,7 +174,7 @@ public partial class Character : CharacterBody2D
 
         public void PhysicsProcess(double delta, Character character)
         {
-            if (character.CharacterData.PatrolLegs.Count > 0)
+            if (character.IsNamedCharacter() && character.CharacterData.PatrolLegs.Count > 0)
             {
                 var currentPatrolLeg = character.CharacterData.PatrolLegs[character._patrolLegIndex];
                 if (character._patrolLegProgress >= currentPatrolLeg.Distance)
@@ -405,32 +406,41 @@ public partial class Character : CharacterBody2D
         }
     }
 
+    public bool IsNamedCharacter()
+    {
+        return CharacterData != null;
+    }
+
     public override void _Ready()
     {
         Anim = GetNode<AnimationPlayer>("AnimationPlayer");
         Anim.AnimationFinished += OnAnimationFinished;
         CoverBadge = GetNode<Sprite2D>("CoverBadge");
         collider = GetNode<CollisionShape2D>("MainCollider");
-        FactionSystem.SetFaction(CharacterData.ResourcePath, CharacterData.InitialFaction);
-        InventorySystem.SetInventory(CharacterData.ResourcePath, [.. InitialInventory]);
-        CharacterSystem.SetInstance(CharacterData.ResourcePath, this);
-        HealthSystem.SetCurrentHitpoints(CharacterData.ResourcePath, CharacterData.CurrentHitpoints);
-        CombatSystem.CombatStartHandlers += OnCombatStarted;
-		CombatSystem.CharacterJoinedCombatHandlers += OnCombatJoined;
-        CombatSystem.CombatEnded += OnCombatEnded;
-        HealthSystem.DeathEventHandlers += OnDeath;
-        HealthSystem.DamageEventHandlers += OnDamage;
-        HostilitySystem.HostilityChangeHandlers += OnHostilityChanged;
         ActionPip1 = GetNode<Sprite2D>("ActionPip");
         ActionPip2 = GetNode<Sprite2D>("ActionPip2");
         _senseArea = GetNode<Area2D>("SenseArea");
         _mainSprite = GetNode<Sprite2D>("MainSprite");
         _healthLabel = GetNode<Label>("HealthLabel");
-        _healthLabel.Text = $"{CharacterData.CurrentHitpoints} / {CharacterData.MaxHitpoints}";
 
-        _senseArea.BodyEntered += OnBodyEnteredSenseArea;
-        
-        EquipmentSystem.SetEquipment(CharacterData.ResourcePath, CharacterData.StartingEquipment);
+        // Only hook into gameplay systems if we are a named, non-background character.
+        if (IsNamedCharacter())
+        {
+            _healthLabel.Text = $"{CharacterData.CurrentHitpoints} / {CharacterData.MaxHitpoints}";
+            EquipmentSystem.SetEquipment(CharacterData.ResourcePath, CharacterData.StartingEquipment);
+            FactionSystem.SetFaction(CharacterData.ResourcePath, CharacterData.InitialFaction);
+            InventorySystem.SetInventory(CharacterData.ResourcePath, [.. InitialInventory]);
+            CharacterSystem.SetInstance(CharacterData.ResourcePath, this);
+            HealthSystem.SetCurrentHitpoints(CharacterData.ResourcePath, CharacterData.CurrentHitpoints);
+            CombatSystem.CombatStartHandlers += OnCombatStarted;
+            CombatSystem.CharacterJoinedCombatHandlers += OnCombatJoined;
+            CombatSystem.CombatEnded += OnCombatEnded;
+            HealthSystem.DeathEventHandlers += OnDeath;
+            HealthSystem.DamageEventHandlers += OnDamage;
+            HostilitySystem.HostilityChangeHandlers += OnHostilityChanged;
+            _senseArea.BodyEntered += OnBodyEnteredSenseArea;
+        }
+
         NavObstacle = GetNode<NavigationObstacle2D>("NavigationObstacle2D");
     }
 
@@ -474,7 +484,7 @@ public partial class Character : CharacterBody2D
 
         if (_currentAnimState != AnimState.Sitting)
         {
-            collider.Disabled = false;
+            SetCollision(true);
             _mainSprite.ZIndex = 4;
         }
     }
@@ -560,7 +570,7 @@ public partial class Character : CharacterBody2D
 
     public virtual void OnBodyEnteredSenseArea(Node2D body)
     {
-        if (body is Character character && HostilitySystem.GetHostility(character.CharacterData.ResourcePath, CharacterData.ResourcePath))
+        if (body is Character character && character.IsNamedCharacter() && HostilitySystem.GetHostility(character.CharacterData.ResourcePath, CharacterData.ResourcePath))
 		{
 			if (CombatSystem.IsInCombat(CharacterData))
 			{
@@ -793,9 +803,25 @@ public partial class Character : CharacterBody2D
 
             Vector2 seatBottomLeft = prop.GetSeatRegionCenter();
             GlobalPosition = seatBottomLeft;
-            collider.Disabled = true;
+            SetCollision(false);
             _mainSprite.ZIndex = 2;
             _sitting = true;
         }
+    }
+
+    public void SetSprite(Texture2D sprite)
+    {
+        _mainSprite.Texture = sprite;
+    }
+
+    public void SetCollisionOverride(bool @override)
+    {
+        _collisionOverride = @override;
+        SetCollision(!collider.Disabled);
+    }
+
+    public void SetCollision(bool enabled)
+    {
+        collider.Disabled = !enabled || !_collisionOverride;
     }
 }
