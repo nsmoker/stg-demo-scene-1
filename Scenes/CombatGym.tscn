@@ -443,6 +443,7 @@ position = Vector2(0, -14)
 texture = SubResource("AtlasTexture_kglut")
 
 [node name="BattleBanner" type="Sprite2D" parent="."]
+visible = false
 top_level = true
 texture_filter = 1
 position = Vector2(0, 112)
