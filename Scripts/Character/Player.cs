@@ -79,15 +79,23 @@ public partial class Player : Character
 			_isOurTurn = CombatSystem.GetMovingSide().Contains(_player.CharacterData.ResourcePath);
             player.UpdateCoverState(player.GetWorld2D().DirectSpaceState);
 			_player.ActionPip1.Visible = true;
+			_player.ActionPip2.Visible = true;
 			_player.ActionPipAnim1.Play("gleam");
-			_player.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_player.CharacterData) > 1;
-			if (_player.ActionPip2.Visible)
+			if (CombatSystem.GetMovesRemaining(_player.CharacterData) > 1)
 			{
-				_player.ActionPipAnim2.Stop();
-			} else
-			{
-				
+				_player.ActionPipAnim2.Play("gleam");
 			}
+			else if (CombatSystem.GetMovesRemaining(_player.CharacterData) < 1)
+			{
+				_player.ActionPipAnim1.Play("used");
+				_player.ActionPipAnim2.Play("used");
+			}
+			else
+			{
+				_player.ActionPipAnim2.Play("used");
+			}
+
+
             player.QueueRedraw();
         }
 
@@ -157,22 +165,25 @@ public partial class Player : Character
 		public void OnTurnBegin(List<string> sideMoving)
         {
             _isOurTurn = sideMoving.Contains(_player.CharacterData.ResourcePath);
+			_player.ActionPip1.Visible = true;
+			_player.ActionPip2.Visible = true;
 			if (_isOurTurn)
 			{
-				_player.ActionPip1.Visible = true;
 				_player.ActionPipAnim1.Play("gleam");
-				_player.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_player.CharacterData) > 1;
-				if (_player.ActionPip2.Visible)
+				if (CombatSystem.GetMovesRemaining(_player.CharacterData) > 1)
 				{
 					_player.ActionPipAnim2.Play("gleam");
 				}
+				else
+				{
+					_player.ActionPipAnim2.Play("used");
+				}
+				
 			}
 			else
 			{
-				_player.ActionPipAnim1.Stop();
-				_player.ActionPip1.Hide();
-				_player.ActionPipAnim2.Stop();
-				_player.ActionPip2.Hide();
+				_player.ActionPipAnim1.Play("used");
+				_player.ActionPipAnim2.Play("used");
 			}
 			_player.QueueRedraw();
         }

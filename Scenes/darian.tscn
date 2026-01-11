@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://djslysixa4d0a"]
+[gd_scene load_steps=23 format=3 uid="uid://djslysixa4d0a"]
 
 [ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character/Character.cs" id="1_p6ogr"]
 [ext_resource type="Resource" uid="uid://c0ev20u8e7nyu" path="res://Resources/Characters/darian.tres" id="2_p6ogr"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="3_oxpus"]
 [ext_resource type="Texture2D" uid="uid://bxwkf6u5ijdho" path="res://Sprites/Characters/marot_ingame_placeholder.png" id="4_ktfjk"]
-[ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="5_obedt"]
+[ext_resource type="FontFile" uid="uid://cdbx3tisu3tsv" path="res://UI/Fonts/Pixeled.ttf" id="5_madw1"]
+[ext_resource type="Texture2D" uid="uid://ceplksydvx5mr" path="res://Sprites/UI/battle_action_pip_v2.png" id="5_p6ogr"]
 
 [sub_resource type="SystemFont" id="SystemFont_tk7xo"]
 subpixel_positioning = 0
@@ -19,8 +20,9 @@ radius = 500.0
 atlas = ExtResource("3_oxpus")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="LabelSettings" id="LabelSettings_dhkrs"]
-font_size = 8
+[sub_resource type="LabelSettings" id="LabelSettings_oxpus"]
+font = ExtResource("5_madw1")
+font_size = 5
 
 [sub_resource type="Animation" id="Animation_ukyrk"]
 length = 0.001
@@ -129,6 +131,61 @@ _data = {
 &"walk_south": SubResource("Animation_7dp3o")
 }
 
+[sub_resource type="Animation" id="Animation_3smsa"]
+resource_name = "gleam"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_8erm5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_f1ek2"]
+resource_name = "used"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f1ek2"]
+_data = {
+&"RESET": SubResource("Animation_8erm5"),
+&"gleam": SubResource("Animation_3smsa"),
+&"used": SubResource("Animation_f1ek2")
+}
+
 [node name="Darian" type="CharacterBody2D"]
 z_index = 1
 script = ExtResource("1_p6ogr")
@@ -164,30 +221,54 @@ texture_filter = 1
 texture = ExtResource("4_ktfjk")
 hframes = 17
 
-[node name="ActionPip" type="Sprite2D" parent="."]
-visible = false
-texture_filter = 1
-position = Vector2(-8, 16)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("5_obedt")
-
-[node name="ActionPip2" type="Sprite2D" parent="."]
-visible = false
-texture_filter = 1
-position = Vector2(0, 16)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("5_obedt")
-
 [node name="HealthLabel" type="Label" parent="."]
 visible = false
-offset_left = -7.0
-offset_top = -20.0
-offset_right = 13.0
-offset_bottom = -8.833332
-text = "asd"
-label_settings = SubResource("LabelSettings_dhkrs")
+texture_filter = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -27.0
+offset_right = 14.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "100/100"
+label_settings = SubResource("LabelSettings_oxpus")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_ukyrk")
+}
+
+[node name="ActionPip" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(-5, 19)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_p6ogr")
+hframes = 4
+frame = 2
+
+[node name="AnimationPip" type="AnimationPlayer" parent="ActionPip"]
+libraries = {
+&"": SubResource("AnimationLibrary_f1ek2")
+}
+
+[node name="ActionPip2" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(5, 19)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_p6ogr")
+hframes = 4
+frame = 2
+
+[node name="AnimationPip2" type="AnimationPlayer" parent="ActionPip2"]
+libraries = {
+&"": SubResource("AnimationLibrary_f1ek2")
 }
