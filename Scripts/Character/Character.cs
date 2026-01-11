@@ -102,6 +102,7 @@ public partial class Character : CharacterBody2D
 
     private int _patrolLegIndex;
     private double _patrolLegProgress = 0;
+    private bool _sitting = false;
 
     public enum AnimState
     {
@@ -474,7 +475,6 @@ public partial class Character : CharacterBody2D
         if (_currentAnimState != AnimState.Sitting)
         {
             collider.Disabled = false;
-            _mainSprite.GlobalPosition = GlobalPosition;
             _mainSprite.ZIndex = 4;
         }
     }
@@ -709,7 +709,12 @@ public partial class Character : CharacterBody2D
         }
         else
         {
-            _currentAnimState = AnimState.Idle;
+            _currentAnimState = _sitting ? AnimState.Sitting : AnimState.Idle;
+        }
+
+        if (direction.X != 0 || direction.Y != 0)
+        {
+            _sitting = false;
         }
     }
 
@@ -787,9 +792,10 @@ public partial class Character : CharacterBody2D
             SetAnimState(AnimState.Sitting);
 
             Vector2 seatBottomLeft = prop.GetSeatRegionCenter();
-            _mainSprite.GlobalPosition = seatBottomLeft;
+            GlobalPosition = seatBottomLeft;
             collider.Disabled = true;
             _mainSprite.ZIndex = 2;
+            _sitting = true;
         }
     }
 }
