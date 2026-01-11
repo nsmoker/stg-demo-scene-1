@@ -79,7 +79,15 @@ public partial class Player : Character
 			_isOurTurn = CombatSystem.GetMovingSide().Contains(_player.CharacterData.ResourcePath);
             player.UpdateCoverState(player.GetWorld2D().DirectSpaceState);
 			_player.ActionPip1.Visible = true;
+			_player.ActionPipAnim1.Play("gleam");
 			_player.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_player.CharacterData) > 1;
+			if (_player.ActionPip2.Visible)
+			{
+				_player.ActionPipAnim2.Stop();
+			} else
+			{
+				
+			}
             player.QueueRedraw();
         }
 
@@ -152,11 +160,18 @@ public partial class Player : Character
 			if (_isOurTurn)
 			{
 				_player.ActionPip1.Visible = true;
+				_player.ActionPipAnim1.Play("gleam");
 				_player.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_player.CharacterData) > 1;
+				if (_player.ActionPip2.Visible)
+				{
+					_player.ActionPipAnim2.Play("gleam");
+				}
 			}
 			else
 			{
+				_player.ActionPipAnim1.Stop();
 				_player.ActionPip1.Hide();
+				_player.ActionPipAnim2.Stop();
 				_player.ActionPip2.Hide();
 			}
 			_player.QueueRedraw();
@@ -166,6 +181,8 @@ public partial class Player : Character
         {
             character.Draw -= OnPlayerDraw;
             CombatSystem.TurnHandlers -= OnTurnBegin;
+			_player.ActionPipAnim1.Stop();
+			_player.ActionPipAnim2.Stop();
             _player.ActionPip1.Visible = false;
             _player.ActionPip2.Visible = false;
             _player.QueueRedraw();
@@ -255,6 +272,8 @@ public partial class Player : Character
 		}
 		if (ActionPip1 != null && ActionPip2 != null)
         {
+			ActionPipAnim1.Stop();
+			ActionPipAnim2.Stop();
             ActionPip1.Visible = false;
             ActionPip2.Visible = false;
         }

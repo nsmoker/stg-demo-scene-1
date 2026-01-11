@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://bgk5v73hj7cv0"]
+[gd_scene load_steps=61 format=3 uid="uid://bgk5v73hj7cv0"]
 
 [ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_gokwg"]
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="1_ndsb5"]
@@ -21,7 +21,9 @@
 [ext_resource type="PackedScene" uid="uid://bahvdxf74e24c" path="res://Scenes/journal_display.tscn" id="19_h4iwy"]
 [ext_resource type="Texture2D" uid="uid://clru4be0tsesu" path="res://SpritesPlaceholder/Images/spr_itemsncolectables-outlined.png" id="21_ndsb5"]
 [ext_resource type="PackedScene" uid="uid://m8tbjngrrk7x" path="res://Scenes/ExitMenu.tscn" id="22_wbbaj"]
+[ext_resource type="Texture2D" uid="uid://cjv1uno48ox4v" path="res://Sprites/UI/battle_turn_box.png" id="24_lh5eo"]
 [ext_resource type="Script" uid="uid://d31xijw3tfna4" path="res://Scripts/DialogueTriggerProp.cs" id="25_044gb"]
+[ext_resource type="FontFile" uid="uid://cgx74d65ilqfh" path="res://UI/Fonts/Square.ttf" id="25_qilru"]
 [ext_resource type="Resource" uid="uid://d0vtobfhyip5c" path="res://Conversations/elemental_studies_intro.tres" id="26_gokwg"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_02uyx"]
@@ -206,6 +208,12 @@ size = Vector2(8, 11)
 atlas = ExtResource("21_ndsb5")
 region = Rect2(0, 64, 16, 16)
 
+[sub_resource type="LabelSettings" id="LabelSettings_044gb"]
+font = ExtResource("25_qilru")
+font_size = 25
+font_color = Color(0, 0, 0, 1)
+shadow_size = 0
+
 [node name="ClassroomSceneTest" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_gokwg")
@@ -291,7 +299,6 @@ position = Vector2(-100, -37)
 collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider"]
-visible = false
 position = Vector2(17.5, -3.25)
 shape = SubResource("RectangleShape2D_wnxun")
 
@@ -435,14 +442,30 @@ texture_filter = 1
 position = Vector2(0, -14)
 texture = SubResource("AtlasTexture_kglut")
 
-[node name="CombatStatusLabel" type="Label" parent="."]
+[node name="BattleBanner" type="Sprite2D" parent="."]
 visible = false
-custom_minimum_size = Vector2(128, 32)
-offset_left = -64.0
-offset_top = 128.0
-offset_right = 64.0
-offset_bottom = 160.0
-text = "YOUR TURN"
+top_level = true
+texture_filter = 1
+position = Vector2(0, 112)
+texture = ExtResource("24_lh5eo")
+
+[node name="CombatStatusLabel" type="Label" parent="BattleBanner"]
+texture_filter = 1
+anchors_preset = -1
+anchor_top = 0.2890625
+anchor_right = 0.65625
+anchor_bottom = 0.7109375
+offset_left = -84.0
+offset_top = -38.5
+offset_right = -84.0
+offset_bottom = -38.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Your turn!"
+label_settings = SubResource("LabelSettings_044gb")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="JournalDisplay" parent="." instance=ExtResource("19_h4iwy")]
 

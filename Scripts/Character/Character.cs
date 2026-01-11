@@ -75,6 +75,8 @@ public partial class Character : CharacterBody2D
 
     public Sprite2D ActionPip1;
     public Sprite2D ActionPip2;
+    public AnimationPlayer ActionPipAnim1;
+    public AnimationPlayer ActionPipAnim2;
 
     public AttributeSet FinalAttributes => new AttributeSet()
     {
@@ -420,7 +422,9 @@ public partial class Character : CharacterBody2D
         HealthSystem.DamageEventHandlers += OnDamage;
         HostilitySystem.HostilityChangeHandlers += OnHostilityChanged;
         ActionPip1 = GetNode<Sprite2D>("ActionPip");
+        ActionPipAnim1 = GetNode<AnimationPlayer>("ActionPip/AnimationPip");
         ActionPip2 = GetNode<Sprite2D>("ActionPip2");
+        ActionPipAnim2 = GetNode<AnimationPlayer>("ActionPip2/AnimationPip2");
         _senseArea = GetNode<Area2D>("SenseArea");
         _mainSprite = GetNode<Sprite2D>("MainSprite");
         _healthLabel = GetNode<Label>("HealthLabel");
@@ -594,7 +598,9 @@ public partial class Character : CharacterBody2D
         CoverBadge.Visible = false;
         if (ActionPip1 != null && ActionPip2 != null)
         {
+            ActionPipAnim1.Stop();
             ActionPip1.Visible = false;
+            ActionPipAnim2.Stop();
             ActionPip2.Visible = false;
         }
         _healthLabel.Hide();

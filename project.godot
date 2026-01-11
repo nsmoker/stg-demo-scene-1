@@ -24,12 +24,17 @@ window/size/viewport_height=1080
 
 project/assembly_name="Arkham Hunters"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/edi/plugin.cfg")
+
 [global_group]
 
 NavObjects=""
 
 [gui]
 
+fonts/dynamic_fonts/use_oversampling=false
 theme/default_font_multichannel_signed_distance_field=true
 
 [input]

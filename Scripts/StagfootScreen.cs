@@ -35,7 +35,12 @@ public partial class StagfootScreen : Node2D
 
 	public Label GetCombatStatusLabel()
 	{
-		return GetNode<Label>("CombatStatusLabel");
+		return GetNode<Label>("BattleBanner/CombatStatusLabel");
+	}
+
+	public Sprite2D GetBattleBanner()
+	{
+		return GetNode<Sprite2D>("BattleBanner");
 	}
 
 	public void DisableBackdropProps()
