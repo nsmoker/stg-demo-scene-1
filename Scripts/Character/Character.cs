@@ -113,7 +113,8 @@ public partial class Character : CharacterBody2D
         WalkEast,
         WalkWest,
         Attack,
-        Sitting
+        Sitting,
+        Talking
     }
 
     protected AnimState _currentAnimState = AnimState.Idle;
@@ -145,32 +146,7 @@ public partial class Character : CharacterBody2D
 
     private class PatrolState : ICharacterState
     {
-        public void Process(double delta, Character character)
-        {
-            if (character.IsNamedCharacter() && character.CharacterData.PatrolLegs.Count > 0)
-            {
-                var currentPatrolLeg = character.CharacterData.PatrolLegs[character._patrolLegIndex];
-                if (currentPatrolLeg.Direction.X < 0)
-                {
-                    character._currentAnimState = AnimState.WalkWest;
-                }
-
-                if (currentPatrolLeg.Direction.X > 0)
-                {
-                    character._currentAnimState = AnimState.WalkEast;
-                }
-
-                if (currentPatrolLeg.Direction.Y > 0)
-                {
-                    character._currentAnimState = AnimState.WalkNorth;
-                }
-
-                if (currentPatrolLeg.Direction.Y < 0)
-                {
-                    character._currentAnimState = AnimState.WalkSouth;
-                }
-            }
-        }
+        public void Process(double delta, Character character) { }
 
         public void PhysicsProcess(double delta, Character character)
         {
@@ -187,6 +163,7 @@ public partial class Character : CharacterBody2D
                 character.Velocity = currentPatrolLeg.Direction * character.CharacterData.Speed;
                 character._patrolLegProgress += character.Velocity.Length();
                 character.MoveAndSlide();
+                character.SetWalkAnimState(character.Velocity);
             }
         }
 
@@ -236,7 +213,7 @@ public partial class Character : CharacterBody2D
                     {
                         // In range, attack.
                         character.SetAttackTarget(closestEnemy.CharacterData);
-                        character._currentAnimState = AnimState.Attack;
+                        character.SetAnimState(AnimState.Attack);
                     }
                 }
                 else
@@ -297,12 +274,14 @@ public partial class Character : CharacterBody2D
         private readonly Vector2[] _path;
         private int _currentPoint = 0;
         private readonly float _speed = -1;
-        public NavState(Vector2[] path, ICharacterState nextState, Action onComplete = null, float speed = -1)
+        private readonly float _tolerance;
+        public NavState(Vector2[] path, ICharacterState nextState, Action onComplete = null, float speed = -1, float tolerance = 1.0f)
         {
             _path = path;
             _nextState = nextState;
             _onComplete = onComplete;
             _speed = speed;
+            _tolerance = tolerance;
         }
 
         public void Process(double delta, Character character)
@@ -313,9 +292,8 @@ public partial class Character : CharacterBody2D
         public void PhysicsProcess(double delta, Character character)
         {
             var targetPoint = _path[_currentPoint];
-            if (character.Position.DistanceTo(targetPoint) <= 1.0f)
+            if (character.GlobalPosition.DistanceTo(targetPoint) <= _tolerance)
             {
-                character.Position = targetPoint;
                 if (_currentPoint + 1 < _path.Length)
                 {
                     _currentPoint += 1;
@@ -323,18 +301,17 @@ public partial class Character : CharacterBody2D
                 else
                 {
                     character.SetWalkAnimState(Vector2.Zero);
-                    _onComplete();
                     character.ControllerState = _nextState;
+                    _onComplete();
+                    return;
                 }
             }
-            else
-            {
-                var targetVector = targetPoint - character.Position;
-                var vel = targetVector.Normalized() * (_speed > 0.0f ? _speed : character.CharacterData.Speed);
-                character.Velocity = vel;
-                character.SetWalkAnimState(vel);
-                character.MoveAndSlide();
-            }
+
+            var targetVector = targetPoint - character.GlobalPosition;
+            var vel = targetVector.Normalized() * (_speed > 0.0f ? _speed : character.CharacterData.Speed);
+            character.Velocity = vel;
+            character.SetWalkAnimState(vel);
+            character.MoveAndSlide();
         }
 
         public void OnTransition(Character character) { }
@@ -383,6 +360,37 @@ public partial class Character : CharacterBody2D
                 _character.SetWalkAnimState(vel);
 				_character.MoveAndSlide();
 			}
+        }
+
+        public void Process(double delta, Character character) { }
+    }
+
+    protected class NavToCharacterState : ICharacterState
+    {
+        private Character _target;
+        private Character _self;
+        private ICharacterState _prevState;
+        private Action _onComplete;
+        private float _speed;
+        private float _tolerance;
+
+        public NavToCharacterState(Character self, Character target, ICharacterState prevState, Action onComplete, float speed, float tolerance)
+        {
+            _target = target;
+            _self = self;
+            _prevState = prevState;
+            _onComplete = onComplete;
+            _speed = speed;
+            _tolerance = tolerance;
+        }
+
+        public void OnTransition(Character character) { }
+
+        public void PhysicsProcess(double delta, Character character)
+        {
+            var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), _self.GlobalPosition, _target.GlobalPosition, true, 0x1u);
+            var substate = new NavState([ ..path.TakeLast(path.Length - 1)], _prevState, _onComplete, _speed, _tolerance);
+            substate.PhysicsProcess(delta, _self);
         }
 
         public void Process(double delta, Character character) { }
@@ -479,6 +487,9 @@ public partial class Character : CharacterBody2D
             case AnimState.Sitting:
                 Anim.Play("sit");
                 break;
+            case AnimState.Talking:
+                Anim.Play("talking");
+                break;
             default:
                 Anim.Play("idle");
                 break;
@@ -561,8 +572,8 @@ public partial class Character : CharacterBody2D
     public Vector2 GetClosestOnCollSurface(Vector2 SourcePoint)
     {
         var toTarget = SourcePoint - Position;
-        var supportPoint = collider.Shape.GetRect().GetSupport(toTarget);
-        return supportPoint + Position;
+        var supportPoint = collider.Shape.GetRect().GetSupport(SourcePoint);
+        return supportPoint;
     }
 
     public Area2D GetSenseArea()
@@ -705,23 +716,23 @@ public partial class Character : CharacterBody2D
     {
         if (direction.X < 0)
         {
-            _currentAnimState = AnimState.WalkWest;
+            SetAnimState(AnimState.WalkWest);
         }
         else if (direction.X > 0)
         {
-            _currentAnimState = AnimState.WalkEast;
+            SetAnimState(AnimState.WalkEast);
         }
         else if (direction.Y < 0)
         {
-            _currentAnimState = AnimState.WalkNorth;
+            SetAnimState(AnimState.WalkNorth);
         }
         else if (direction.Y > 0)
         {
-            _currentAnimState = AnimState.WalkSouth;
+            SetAnimState(AnimState.WalkSouth);
         }
         else
         {
-            _currentAnimState = _sitting ? AnimState.Sitting : AnimState.Idle;
+            SetAnimState(_sitting ? AnimState.Sitting : AnimState.Idle);
         }
 
         if (direction.X != 0 || direction.Y != 0)
@@ -732,13 +743,13 @@ public partial class Character : CharacterBody2D
 
     public void SetAttackAnimState(Vector2 targetVector)
     {
-        _currentAnimState = AnimState.Attack;
+        SetAnimState(AnimState.Attack);
         SetFacing(targetVector);
     }
 
     public void WalkToPoint(Vector2 point, Action onComplete = null, float speed = -1.0f)
     {
-        var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), Position, point, true, 0x1u); 
+        var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), GlobalPosition, point, true, 0x1u); 
         if (path.Length == 0)
         {
             ControllerState = new NavState([point], ControllerState, onComplete, speed > 0 ? speed : CharacterData.Speed);
@@ -777,7 +788,7 @@ public partial class Character : CharacterBody2D
         if (animationName.Equals("attack"))
         {
             CombatSystem.AttemptAttack(CharacterData, _attackTarget);
-            _currentAnimState = AnimState.Idle;
+            SetAnimState(AnimState.Idle);
         }
     }
 
@@ -788,8 +799,14 @@ public partial class Character : CharacterBody2D
     }
 
     public void SetAnimState(AnimState state)
-    { 
-        _currentAnimState = state; 
+    {
+        if (state != _currentAnimState)
+        {
+            // Reset
+            Anim.Play("RESET");
+            Anim.Advance(0);
+            _currentAnimState = state;
+        }
     }
 
     public void SetAttackTarget(CharacterData c)
@@ -831,5 +848,16 @@ public partial class Character : CharacterBody2D
     {
         ControllerState = new PatrolState();
         SetAnimState(AnimState.Idle);
+    }
+
+    public void WalkToCharacter(Character instance, Action onComplete, float speed, float tolerance = 1.0f)
+    {
+        ControllerState = new NavToCharacterState(this, instance, ControllerState, onComplete, speed, tolerance);
+    }
+
+    public void SetTalking()
+    {
+        ControllerState = new PatrolState();
+        SetAnimState(AnimState.Talking);
     }
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cy27gk81ig72o"]
+[gd_scene load_steps=19 format=3 uid="uid://cy27gk81ig72o"]
 
 [ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character/Character.cs" id="1_o8lhq"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="3_anx2h"]
@@ -34,6 +34,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TalkingLabel:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_322xl"]
@@ -80,6 +92,34 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [17]
+}
+
+[sub_resource type="Animation" id="Animation_ekhxd"]
+resource_name = "talking"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TalkingLabel:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [9]
 }
 
 [sub_resource type="Animation" id="Animation_h4iuc"]
@@ -139,6 +179,7 @@ _data = {
 &"attack": SubResource("Animation_322xl"),
 &"idle": SubResource("Animation_gymyn"),
 &"sit": SubResource("Animation_p6ogr"),
+&"talking": SubResource("Animation_ekhxd"),
 &"walk_h": SubResource("Animation_h4iuc"),
 &"walk_north": SubResource("Animation_pu2lt"),
 &"walk_south": SubResource("Animation_7dp3o")
@@ -205,3 +246,13 @@ label_settings = SubResource("LabelSettings_dhkrs")
 libraries = {
 &"": SubResource("AnimationLibrary_ukyrk")
 }
+
+[node name="TalkingLabel" type="Label" parent="."]
+visible = false
+z_index = 500
+offset_left = -8.0
+offset_top = -20.0
+offset_right = 60.0
+offset_bottom = 3.0
+theme_override_font_sizes/font_size = 5
+text = "TALKING"

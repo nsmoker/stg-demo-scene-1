@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://fq7wp3pxnthf"]
+[gd_scene load_steps=21 format=3 uid="uid://fq7wp3pxnthf"]
 
 [ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_nc75b"]
 [ext_resource type="Texture2D" uid="uid://cusnf7nuh7o57" path="res://Sprites/Characters/pc_ingame_placeholder.png" id="2_k3e6v"]
@@ -12,24 +12,29 @@
 [ext_resource type="PackedScene" uid="uid://b02trvpappmbg" path="res://Scenes/BrazierProp.tscn" id="7_21ohs"]
 [ext_resource type="Script" uid="uid://cwhflap727bje" path="res://Scenes/AreaTransition.cs" id="7_k3e6v"]
 
-[sub_resource type="Resource" id="Resource_xnvdo"]
-resource_local_to_scene = true
+[sub_resource type="Resource" id="Resource_osk5m"]
 script = ExtResource("5_2xnf6")
-Type = 1
-Duration = 5.0
-Probability = 0.2
-Speed = 20.0
+Type = 2
+Duration = 10.0
+Probability = 0.25
 metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
 
 [sub_resource type="Resource" id="Resource_2xnf6"]
 script = ExtResource("5_2xnf6")
-Duration = 1.0
-Probability = 0.8
+Type = 1
+Duration = 5.0
+Probability = 0.25
+metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
+
+[sub_resource type="Resource" id="Resource_xnvdo"]
+script = ExtResource("5_2xnf6")
+Duration = 3.0
+Probability = 0.5
 metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
 
 [sub_resource type="Resource" id="Resource_e0fpw"]
 script = ExtResource("6_osk5m")
-PossibleTasks = Array[Object]([SubResource("Resource_xnvdo"), SubResource("Resource_2xnf6")])
+PossibleTasks = Array[Object]([SubResource("Resource_osk5m"), SubResource("Resource_2xnf6"), SubResource("Resource_xnvdo")])
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_2impm"]
 vertices = PackedVector2Array(128, 120, 304, 167.78906, -304, 160.1875, 80, 120, -112, 120, -160, 120, 128, 24, 128, -40, 304, -110, -304, -110, -160, 56, -13, -110, 80, -110, 80, -72, -112, -40, 128, -72, 128, -110, 80, -40, 80, 24, -112, 24, 80, 56, -112, 56, -160, -110, -160, -72, -112, -72, -112, -110, -32, -110, -32, -168, -13, -168, -160, -40, 128, 56, -160, 24)
@@ -54,7 +59,7 @@ size = Vector2(25, 34)
 [node name="HallwaySceneTest" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_nc75b")
-GenericNpcCount = 2
+GenericNpcCount = 10
 GenericNpcSprites = Array[Texture2D]([ExtResource("2_k3e6v"), ExtResource("3_xfs0e")])
 GenericNpcScene = ExtResource("4_l2y3h")
 GenericNpcDirector = SubResource("Resource_e0fpw")

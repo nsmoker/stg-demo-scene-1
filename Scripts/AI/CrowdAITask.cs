@@ -16,7 +16,7 @@ public partial class CrowdAITask : Resource
     public CrowdAITaskType Type;
 
     [Export]
-    public float Duration;
+    public double Duration;
 
     [Export]
     public float Probability;

@@ -160,7 +160,7 @@ texture = SubResource("AtlasTexture_dhkrs")
 [node name="MainSprite" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("18_cw48i")
-hframes = 17
+hframes = 18
 
 [node name="ActionPip" type="Sprite2D" parent="."]
 visible = false
