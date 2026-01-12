@@ -59,12 +59,13 @@ size = Vector2(25, 34)
 [node name="HallwaySceneTest" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_nc75b")
-GenericNpcCount = 10
+GenericNpcCount = 30
 GenericNpcSprites = Array[Texture2D]([ExtResource("2_k3e6v"), ExtResource("3_xfs0e")])
 GenericNpcScene = ExtResource("4_l2y3h")
 GenericNpcDirector = SubResource("Resource_e0fpw")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+visible = false
 navigation_polygon = SubResource("NavigationPolygon_2impm")
 script = ExtResource("2_xfs0e")
 

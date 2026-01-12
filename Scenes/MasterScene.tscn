@@ -38,7 +38,6 @@ _startingScene = ExtResource("2_4j3x6")
 
 [node name="HallwaySceneTest" parent="." instance=ExtResource("2_4j3x6")]
 position = Vector2(0, 360)
-GenericNpcCount = 10
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, 360)
