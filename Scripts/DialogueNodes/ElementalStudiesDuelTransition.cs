@@ -30,6 +30,7 @@ public partial class ElementalStudiesDuelTransition : DialogueAction
 			.SetTrans(Tween.TransitionType.Sine)
 			.SetEase(Tween.EaseType.In);
         tween.TweenCallback(Callable.From(stagfootScreen.DisableProps));
+        tween.TweenCallback(Callable.From(stagfootScreen.ClearNpcs));
         tween.TweenCallback(Callable.From(() =>
         {
             var marot = MarotScene.Instantiate<Character>();

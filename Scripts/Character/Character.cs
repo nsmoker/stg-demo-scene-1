@@ -104,6 +104,7 @@ public partial class Character : CharacterBody2D
     private double _patrolLegProgress = 0;
     private bool _sitting = false;
     private bool _collisionOverride = true;
+    private FurnitureProp _occupiedProp;
 
     public enum AnimState
     {
@@ -738,6 +739,11 @@ public partial class Character : CharacterBody2D
         if (direction.X != 0 || direction.Y != 0)
         {
             _sitting = false;
+            if (_occupiedProp != null)
+            {
+                _occupiedProp.Occupied = false;
+                _occupiedProp = null;
+            }
         }
     }
 
@@ -752,11 +758,11 @@ public partial class Character : CharacterBody2D
         var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), GlobalPosition, point, true, 0x1u); 
         if (path.Length == 0)
         {
-            ControllerState = new NavState([point], ControllerState, onComplete, speed > 0 ? speed : CharacterData.Speed);
+            ControllerState = new NavState([point], new PatrolState(), onComplete, speed > 0 ? speed : CharacterData.Speed);
         }
         else
         {
-            ControllerState = new NavState(path, ControllerState, onComplete, speed > 0 ? speed : CharacterData.Speed);
+            ControllerState = new NavState(path, new PatrolState(), onComplete, speed > 0 ? speed : CharacterData.Speed);
         }
     }
 
@@ -816,11 +822,13 @@ public partial class Character : CharacterBody2D
 
     public void SitOn(Prop prop)
     {
-        if (prop.IsSeat())
+        if (prop is FurnitureProp furniture && !furniture.Occupied)
         {
             SetAnimState(AnimState.Sitting);
 
-            Vector2 seatBottomLeft = prop.GetSeatRegionCenter();
+            Vector2 seatBottomLeft = furniture.GetSeatRegionCenter();
+            furniture.Occupied = true;
+            _occupiedProp = furniture;
             GlobalPosition = seatBottomLeft;
             SetCollision(false);
             _mainSprite.ZIndex = 2;
@@ -852,12 +860,17 @@ public partial class Character : CharacterBody2D
 
     public void WalkToCharacter(Character instance, Action onComplete, float speed, float tolerance = 1.0f)
     {
-        ControllerState = new NavToCharacterState(this, instance, ControllerState, onComplete, speed, tolerance);
+        ControllerState = new NavToCharacterState(this, instance, new PatrolState(), onComplete, speed, tolerance);
     }
 
     public void SetTalking()
     {
         ControllerState = new PatrolState();
         SetAnimState(AnimState.Talking);
+    }
+
+    public bool IsSeated()
+    {
+        return _sitting;
     }
 }

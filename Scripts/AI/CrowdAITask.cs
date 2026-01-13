@@ -5,6 +5,7 @@ public enum CrowdAITaskType
 {
     Idle,
     WalkToRandomPoint,
+    FindOpenSeat,
     TalkToPartner
 }
 

@@ -1,7 +1,10 @@
-[gd_scene load_steps=45 format=3 uid="uid://bgk5v73hj7cv0"]
+[gd_scene load_steps=48 format=3 uid="uid://bgk5v73hj7cv0"]
 
 [ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_gokwg"]
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="1_ndsb5"]
+[ext_resource type="Texture2D" uid="uid://bxwkf6u5ijdho" path="res://Sprites/Characters/marot_ingame_placeholder.png" id="2_ndsb5"]
+[ext_resource type="Texture2D" uid="uid://cusnf7nuh7o57" path="res://Sprites/Characters/pc_ingame_placeholder.png" id="3_b5i2i"]
+[ext_resource type="PackedScene" uid="uid://cy27gk81ig72o" path="res://Scenes/generic_npc.tscn" id="4_b5i2i"]
 [ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/Characters/player_data.tres" id="4_hbowc"]
 [ext_resource type="PackedScene" uid="uid://c7jepn55q3mxg" path="res://Scenes/henneman.tscn" id="6_4iq4d"]
 [ext_resource type="Script" uid="uid://ub8tuk2mpv4d" path="res://Scripts/Triggers/ElementalStudiesTrigger.cs" id="10_713ei"]
@@ -28,32 +31,32 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Arr
 outlines = Array[PackedVector2Array]([PackedVector2Array(-320, 176, -320, -184, 320, -184, 320, 184)])
 source_geometry_mode = 1
 source_geometry_group_name = &"NavObjects"
-agent_radius = 18.0
+agent_radius = 16.0
 
-[sub_resource type="Resource" id="Resource_02uyx"]
+[sub_resource type="Resource" id="Resource_b5i2i"]
 script = ExtResource("13_tw53w")
 fromNode = 1
 toNode = 2
 
-[sub_resource type="Resource" id="Resource_wbbaj"]
+[sub_resource type="Resource" id="Resource_qilru"]
 script = ExtResource("13_tw53w")
 toNode = 1
 
-[sub_resource type="Resource" id="Resource_b5i2i"]
-script = ExtResource("14_b8mys")
-NodeType = 2
-DNodeId = 1
-EditorPos = Vector2(5653.3584, 1956.9138)
-EditorSize = Vector2(300, 194.00024)
-
-[sub_resource type="Resource" id="Resource_qilru"]
-script = ExtResource("14_b8mys")
-NodeType = 2
-DNodeId = 1
-EditorPos = Vector2(5653.3584, 1956.9138)
-EditorSize = Vector2(300, 194.00024)
-
 [sub_resource type="Resource" id="Resource_044gb"]
+script = ExtResource("14_b8mys")
+NodeType = 2
+DNodeId = 1
+EditorPos = Vector2(5653.3584, 1956.9138)
+EditorSize = Vector2(300, 194.00024)
+
+[sub_resource type="Resource" id="Resource_gokwg"]
+script = ExtResource("14_b8mys")
+NodeType = 2
+DNodeId = 1
+EditorPos = Vector2(5653.3584, 1956.9138)
+EditorSize = Vector2(300, 194.00024)
+
+[sub_resource type="Resource" id="Resource_afsmo"]
 script = ExtResource("14_b8mys")
 Content = "Mr. Tines? Get back here, please."
 Speaker = "Henneman"
@@ -69,7 +72,7 @@ Point = Vector2(-32, -128)
 Facing = Vector2(-1, 0)
 metadata/_custom_type_script = "uid://b53uhtgi4ltn7"
 
-[sub_resource type="Resource" id="Resource_gokwg"]
+[sub_resource type="Resource" id="Resource_5c5rk"]
 script = ExtResource("14_b8mys")
 NodeType = 1
 DNodeId = 3
@@ -79,9 +82,9 @@ EditorSize = Vector2(720, 380)
 
 [sub_resource type="Resource" id="Resource_j6uhh"]
 script = ExtResource("15_j6uhh")
-Nodes = Array[ExtResource("14_b8mys")]([SubResource("Resource_qilru"), SubResource("Resource_044gb"), SubResource("Resource_gokwg")])
-EntryPoints = Array[ExtResource("14_b8mys")]([SubResource("Resource_b5i2i")])
-Connections = Array[ExtResource("13_tw53w")]([SubResource("Resource_02uyx"), SubResource("Resource_wbbaj")])
+Nodes = Array[ExtResource("14_b8mys")]([SubResource("Resource_gokwg"), SubResource("Resource_afsmo"), SubResource("Resource_5c5rk")])
+EntryPoints = Array[ExtResource("14_b8mys")]([SubResource("Resource_044gb")])
+Connections = Array[ExtResource("13_tw53w")]([SubResource("Resource_b5i2i"), SubResource("Resource_qilru")])
 metadata/_custom_type_script = "uid://cmw85ukaae1eh"
 
 [sub_resource type="Resource" id="Resource_l4oaw"]
@@ -168,9 +171,11 @@ size = Vector2(640, 324)
 [node name="ClassroomSceneTest" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_gokwg")
+GenericNpcCount = 5
+GenericNpcSprites = Array[Texture2D]([ExtResource("2_ndsb5"), ExtResource("3_b5i2i")])
+GenericNpcScene = ExtResource("4_b5i2i")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
-visible = false
 navigation_polygon = SubResource("NavigationPolygon_02uyx")
 script = ExtResource("1_ndsb5")
 

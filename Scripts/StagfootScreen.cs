@@ -89,16 +89,36 @@ public partial class StagfootScreen : Node2D
 		GenericNpcDirector.ManagedCharacters = _genericNpcInstances;
     }
 
+	public void ClearNpcs()
+	{
+		GenericNpcDirector.ManagedCharacters = [];
+		GenericNpcCount = 0;
+		foreach (var npc in _genericNpcInstances)
+		{
+			npc.QueueFree();
+		}
+	}
+
 	public void SetBackdropTexture(Texture2D texture)
 	{
 		Backdrop.Texture = texture;
+	}
+
+	public IEnumerable<StaticBody2D> GetProps()
+	{
+		return _clearableProps.FindChildren("*", type: "StaticBody2D", recursive: true).Cast<StaticBody2D>();
+	}
+
+	public IEnumerable<StaticBody2D> GetUnnamedFurnitureProps()
+	{
+		return GetProps().Where(x => x is Prop prop && prop.IsSeat() && !prop.IsNamedProp());
 	}
 
 	public void DisableProps()
 	{
 		if (_clearableProps != null)
 		{
-            var children = _clearableProps.FindChildren("*", type: "StaticBody2D", recursive: true).Cast<Node2D>();
+            var children = GetProps();
             foreach (Node2D child in children)
 			{
 				child.Visible = false;
@@ -113,7 +133,7 @@ public partial class StagfootScreen : Node2D
 	{
 		if (_clearableProps != null)
 		{
-            var children = _clearableProps.FindChildren("*", type: "StaticBody2D", recursive: true).Cast<Node2D>();
+            var children = GetProps();
             foreach (Node2D child in children)
             {
 				child.Visible = true;

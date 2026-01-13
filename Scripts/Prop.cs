@@ -76,6 +76,11 @@ public partial class Prop : StaticBody2D
 		return _seatMarker != null;
 	}
 
+	public bool IsNamedProp()
+	{
+		return _data != null;
+	}
+
 	public Vector2 GetSeatRegionCenter()
 	{
 		return _seatMarker.GlobalPosition;
