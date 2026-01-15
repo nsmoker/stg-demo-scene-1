@@ -184,6 +184,24 @@ public partial class CrowdAIDirector : Resource
 
                     break;
                 }
+            case CrowdAITaskType.FollowCrowdFlow:
+                {
+                    var flow = area.FlowField.SampleFlowField(area.ToLocal(character.GlobalPosition));
+                    character.WalkToPoint(character.GlobalPosition + flow.Normalized() * WalkSpeed, () =>
+                    {
+                        var state = GetState(character.GetInstanceId());
+                        StartTask(new CrowdAITask
+                        {
+                            Type = CrowdAITaskType.FollowCrowdFlow,
+                            Duration = state.RemainingDuration,
+                        }, character, area, state.RemainingDuration);
+                        if (!area.CheckBounds(character.Position))
+                        {
+                            character.GlobalPosition = area.ToGlobal(area.GetEdge() + new Vector2(0.0f, -50.0f + _random.NextSingle() * 100.0f));
+                        }
+                    }, 20.0f);
+                    break;
+                }
             default:
                 break;
         }

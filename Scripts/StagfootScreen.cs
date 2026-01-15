@@ -28,6 +28,10 @@ public partial class StagfootScreen : Node2D
 	[Export]
 	public CrowdAIDirector GenericNpcDirector = new();
 
+	[Export(hint: PropertyHint.ResourceType, hintString: "FlowField")]
+	public FlowField FlowField;
+
+
 	public Vector2 GetRandomTraversablePoint()
 	{
 		// Generate a random point within the axis aligned bounding box of the nav mesh.
@@ -143,4 +147,14 @@ public partial class StagfootScreen : Node2D
 			CombatSystem.NavRegion.BakeNavigationPolygon();
 		}
     }
+
+	public bool CheckBounds(Vector2 position)
+	{
+		return _navRegion.GetBounds().HasPoint(position);
+	}
+
+	public Vector2 GetEdge()
+	{
+		return _navRegion.GetBounds().Position + _navRegion.GetBounds().Size * new Vector2(0.0f, 0.5f);
+	}
 }

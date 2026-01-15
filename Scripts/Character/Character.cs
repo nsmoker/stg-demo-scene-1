@@ -758,7 +758,7 @@ public partial class Character : CharacterBody2D
         var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), GlobalPosition, point, true, 0x1u); 
         if (path.Length == 0)
         {
-            ControllerState = new NavState([point], new PatrolState(), onComplete, speed > 0 ? speed : CharacterData.Speed);
+            ControllerState = new NavState([GlobalPosition, point], new PatrolState(), onComplete, speed > 0 ? speed : CharacterData.Speed);
         }
         else
         {

@@ -6,7 +6,8 @@ public enum CrowdAITaskType
     Idle,
     WalkToRandomPoint,
     FindOpenSeat,
-    TalkToPartner
+    TalkToPartner,
+    FollowCrowdFlow,
 }
 
 [GlobalClass]

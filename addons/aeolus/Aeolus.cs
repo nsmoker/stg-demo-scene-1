@@ -1,0 +1,147 @@
+#if TOOLS
+using Godot;
+using System;
+
+[Tool]
+public partial class Aeolus : EditorPlugin
+{
+    private FlowField _editedField;
+    private Node2D _editedScene;
+
+    private Vector2 _controlPointOrigin = Vector2.Zero;
+    private Vector2 _controlPointDestination = Vector2.Zero;
+
+    private bool _controlPointInCreation = false;
+
+
+    public override void _EnablePlugin()
+    {
+        SceneChanged += OnSceneChanged;
+    }
+
+    public override bool _Handles(GodotObject @object)
+    {
+        return @object is FlowField;
+    }
+
+    public override void _Edit(GodotObject @object)
+    {
+        if (@object is FlowField field)
+        {
+            _editedField = field;
+            _editedScene = EditorInterface.Singleton.GetEditedSceneRoot() as Node2D;
+            _editedScene.QueueRedraw();
+        }
+    }
+
+    public override bool _ForwardCanvasGuiInput(InputEvent @event)
+    {
+        if (@event is InputEventMouseButton button && button.IsPressed() && button.ButtonIndex == MouseButton.Right && _editedField != null)
+        {
+            _controlPointInCreation = true;
+            _controlPointOrigin = _editedScene.GetLocalMousePosition();
+            _editedScene.QueueRedraw();
+            return true;
+        }
+        else if (@event is InputEventMouseMotion && _controlPointInCreation)
+        {
+            _controlPointDestination = _editedScene.GetLocalMousePosition();
+            _editedScene.QueueRedraw();
+            return true;
+        }
+        else if (@event is InputEventMouseButton b && b.IsReleased() && b.ButtonIndex == MouseButton.Right && _controlPointInCreation)
+        {
+            var controlPoint = new FlowFieldControlPoint
+            {
+                ControlPoint = _controlPointOrigin,
+                Gradient = _controlPointDestination - _controlPointOrigin
+            };
+            _editedField.ControlPoints.Add(controlPoint);
+            _controlPointInCreation = false;
+            _editedScene.QueueRedraw();
+            return true;
+        }
+
+        return false;
+    }
+
+    public void DrawOverScene()
+    {
+        var rasterSize = 20;
+
+        if (_editedField == null)
+        {
+            return;
+        }
+
+        if (_controlPointInCreation)
+        {
+            // Add to the flow field for sampling purposes.
+            _editedField.ControlPoints.Add(new FlowFieldControlPoint
+            {
+                Gradient = _controlPointDestination - _controlPointOrigin,
+                ControlPoint = _controlPointOrigin
+            });
+            var dest = _controlPointDestination;
+            var gradient = _controlPointDestination - _controlPointOrigin;
+            var col = new Color(1.0f, 1.0f, 1.0f, gradient.Length() * 5.0f);
+            _editedScene.DrawLine(_controlPointOrigin, dest, col, 1.1f);
+            var head = -gradient.Normalized() * 4.0f;
+            _editedScene.DrawLine(dest + head * 0.05f, dest + head.Rotated(0.5f), col, 1.1f);
+            _editedScene.DrawLine(dest + head * 0.05f, dest + head.Rotated(-0.5f), col, 1.1f);
+        }
+
+        for (int x = -320; x <= 320; x += rasterSize)
+        {
+            for (int y = -180; y <= 180; y += rasterSize)
+            {
+                var point = new Vector2(x, y);
+                var gradient = _editedField.SampleFlowField(point);
+                var dest = point + gradient.Normalized() * 15.0f;
+                var col = new Color(1.0f, 1.0f, 1.0f, gradient.Length() * 5.0f);
+                _editedScene.DrawLine(point, dest, col, 1.1f);
+                var head = -gradient.Normalized() * 4.0f;
+                _editedScene.DrawLine(dest + head * 0.05f, dest + head.Rotated(0.5f), col, 1.1f);
+                _editedScene.DrawLine(dest + head * 0.05f, dest + head.Rotated(-0.5f), col, 1.1f);
+            }
+        }
+
+        if (_controlPointInCreation)
+        {
+            // Remove the in-creation controlpoint.
+            _editedField.ControlPoints.RemoveAt(_editedField.ControlPoints.Count - 1);
+        }
+    }
+
+    public void OnSceneChanged(Node _sceneRoot)
+    {
+        if (_sceneRoot is Node2D sceneRoot)
+        {
+            _editedScene.Draw -= DrawOverScene;
+            _editedScene = sceneRoot;
+            _editedScene.Draw += DrawOverScene;
+        }
+    }
+
+    public override void _MakeVisible(bool visible)
+    {
+        if (visible && _editedScene != null)
+        {
+            _editedScene.Draw += DrawOverScene;
+        }
+        else if (_editedScene != null)
+        {
+            _editedScene.Draw -= DrawOverScene;
+        }
+    }
+
+    public override void _Clear()
+    {
+        if (_editedScene != null)
+        {
+            _editedScene.Draw -= DrawOverScene;
+        }
+        _editedField = null;
+    }
+}
+#endif
