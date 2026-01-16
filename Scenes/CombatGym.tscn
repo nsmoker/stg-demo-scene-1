@@ -1,12 +1,16 @@
-[gd_scene load_steps=48 format=3 uid="uid://bgk5v73hj7cv0"]
+[gd_scene load_steps=52 format=3 uid="uid://bgk5v73hj7cv0"]
 
 [ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_gokwg"]
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="1_ndsb5"]
-[ext_resource type="Texture2D" uid="uid://bxwkf6u5ijdho" path="res://Sprites/Characters/marot_ingame_placeholder.png" id="2_ndsb5"]
-[ext_resource type="Texture2D" uid="uid://cusnf7nuh7o57" path="res://Sprites/Characters/pc_ingame_placeholder.png" id="3_b5i2i"]
+[ext_resource type="Texture2D" uid="uid://r2xchsyxvc4r" path="res://Sprites/Characters/pc_ingame_npc_fa.png" id="2_gokwg"]
+[ext_resource type="Texture2D" uid="uid://c6syadx2hm1cg" path="res://Sprites/Characters/pc_ingame_npc_fb.png" id="3_l4oaw"]
 [ext_resource type="PackedScene" uid="uid://cy27gk81ig72o" path="res://Scenes/generic_npc.tscn" id="4_b5i2i"]
 [ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/Characters/player_data.tres" id="4_hbowc"]
+[ext_resource type="Texture2D" uid="uid://b15gt320egkk8" path="res://Sprites/Characters/pc_ingame_npc_fc.png" id="4_su8nj"]
+[ext_resource type="Texture2D" uid="uid://cd7kmy7sbrwsy" path="res://Sprites/Characters/pc_ingame_player_ma.png" id="5_wqt3d"]
 [ext_resource type="PackedScene" uid="uid://c7jepn55q3mxg" path="res://Scenes/henneman.tscn" id="6_4iq4d"]
+[ext_resource type="Texture2D" uid="uid://c3xdtaspbe1s1" path="res://Sprites/Characters/pc_ingame_player_mb.png" id="6_r2l7g"]
+[ext_resource type="Texture2D" uid="uid://b6wph1kvjioyc" path="res://Sprites/Characters/pc_ingame_player_mc.png" id="7_qvvil"]
 [ext_resource type="Script" uid="uid://ub8tuk2mpv4d" path="res://Scripts/Triggers/ElementalStudiesTrigger.cs" id="10_713ei"]
 [ext_resource type="Resource" uid="uid://c1vd5jl7hb2nd" path="res://Resources/Quests/elemental_studies_day_1_quest.tres" id="11_sw1uk"]
 [ext_resource type="Script" uid="uid://b56v5x2jg14o4" path="res://Scripts/DialogueNodes/ExitGame.cs" id="13_0bad5"]
@@ -172,7 +176,7 @@ size = Vector2(640, 324)
 texture_filter = 1
 script = ExtResource("1_gokwg")
 GenericNpcCount = 5
-GenericNpcSprites = Array[Texture2D]([ExtResource("2_ndsb5"), ExtResource("3_b5i2i")])
+GenericNpcSprites = Array[Texture2D]([ExtResource("2_gokwg"), ExtResource("3_l4oaw"), ExtResource("4_su8nj"), ExtResource("5_wqt3d"), ExtResource("6_r2l7g"), ExtResource("7_qvvil")])
 GenericNpcScene = ExtResource("4_b5i2i")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://bnrfgnbsigxmy"]
 
-[ext_resource type="Script" uid="uid://dr6pqcp3wddx8" path="res://Scenes/MasterScene.cs" id="1_l444q"]
+[ext_resource type="Script" uid="uid://dr6pqcp3wddx8" path="res://MasterScene.cs" id="1_l444q"]
 [ext_resource type="PackedScene" uid="uid://bgk5v73hj7cv0" path="res://Scenes/CombatGym.tscn" id="1_smuqh"]
 [ext_resource type="PackedScene" uid="uid://fq7wp3pxnthf" path="res://Scenes/HallwaySceneTest.tscn" id="2_4j3x6"]
 [ext_resource type="Script" uid="uid://bqhkr10ewh7xe" path="res://Scripts/AI/CrowdAITask.cs" id="4_fc6rv"]

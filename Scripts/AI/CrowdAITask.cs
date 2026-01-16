@@ -24,5 +24,5 @@ public partial class CrowdAITask : Resource
     public float Probability;
 
     [Export]
-    public float Speed;
+    public int Tag;
 }

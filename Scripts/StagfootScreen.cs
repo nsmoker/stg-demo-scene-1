@@ -28,8 +28,8 @@ public partial class StagfootScreen : Node2D
 	[Export]
 	public CrowdAIDirector GenericNpcDirector = new();
 
-	[Export(hint: PropertyHint.ResourceType, hintString: "FlowField")]
-	public FlowField FlowField;
+	[Export]
+	public Godot.Collections.Array<FlowField> FlowFields = [];
 
 
 	public Vector2 GetRandomTraversablePoint()

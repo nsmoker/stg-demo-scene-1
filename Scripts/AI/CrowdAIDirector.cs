@@ -186,7 +186,8 @@ public partial class CrowdAIDirector : Resource
                 }
             case CrowdAITaskType.FollowCrowdFlow:
                 {
-                    var flow = area.FlowField.SampleFlowField(area.ToLocal(character.GlobalPosition));
+                    var randomField = area.FlowFields[task.Tag];
+                    var flow = randomField.SampleFlowField(area.ToLocal(character.GlobalPosition));
                     character.WalkToPoint(character.GlobalPosition + flow.Normalized() * WalkSpeed, () =>
                     {
                         var state = GetState(character.GetInstanceId());
@@ -194,10 +195,11 @@ public partial class CrowdAIDirector : Resource
                         {
                             Type = CrowdAITaskType.FollowCrowdFlow,
                             Duration = state.RemainingDuration,
+                            Tag = task.Tag
                         }, character, area, state.RemainingDuration);
                         if (!area.CheckBounds(character.Position))
                         {
-                            character.GlobalPosition = area.ToGlobal(area.GetEdge() + new Vector2(0.0f, -50.0f + _random.NextSingle() * 100.0f));
+                            character.GlobalPosition = area.ToGlobal(area.GetEdge() + new Vector2(0.0f, -100.0f + _random.NextSingle() * 200.0f));
                         }
                     }, 20.0f);
                     break;

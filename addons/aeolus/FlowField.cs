@@ -5,7 +5,7 @@ using Godot;
 public partial class FlowField : Resource
 {
     [Export]
-    public Godot.Collections.Array<FlowFieldControlPoint> ControlPoints;
+    public Godot.Collections.Array<FlowFieldControlPoint> ControlPoints = [];
 
     public static float CalculateAttenuation(Vector2 controlPoint, Vector2 samplePoint)
     {
