@@ -59,7 +59,7 @@ public partial class Aeolus : EditorPlugin
             _editedField.ControlPoints.Add(controlPoint);
             _controlPointInCreation = false;
             _editedScene.QueueRedraw();
-            NotifyPropertyListChanged();
+            _editedField.NotifyPropertyListChanged();
             return true;
         }
 

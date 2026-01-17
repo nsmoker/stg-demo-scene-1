@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://fq7wp3pxnthf"]
+[gd_scene load_steps=71 format=3 uid="uid://fq7wp3pxnthf"]
 
 [ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_nc75b"]
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="2_xfs0e"]
@@ -159,9 +159,19 @@ script = ExtResource("12_x5x36")
 ControlPoint = Vector2(204.53021, 155.14012)
 Gradient = Vector2(20.490417, -199.93666)
 
+[sub_resource type="Resource" id="Resource_363gg"]
+script = ExtResource("12_x5x36")
+ControlPoint = Vector2(-38.661163, 91.699104)
+Gradient = Vector2(82.88278, -36.16121)
+
+[sub_resource type="Resource" id="Resource_5ft3a"]
+script = ExtResource("12_x5x36")
+ControlPoint = Vector2(294.53497, 63.664352)
+Gradient = Vector2(-35.468353, -24.015015)
+
 [sub_resource type="Resource" id="Resource_ugx3j"]
 script = ExtResource("11_2impm")
-ControlPoints = Array[ExtResource("12_x5x36")]([SubResource("Resource_1b7np"), SubResource("Resource_fdiyx"), SubResource("Resource_gkcab"), SubResource("Resource_bsrby"), SubResource("Resource_cmmxr"), SubResource("Resource_ixlj7"), SubResource("Resource_oci8c"), SubResource("Resource_v5s7q"), SubResource("Resource_4j2o6"), SubResource("Resource_5dojg"), SubResource("Resource_xt5ac"), SubResource("Resource_0bj2o"), SubResource("Resource_jkwde"), SubResource("Resource_5pewh"), SubResource("Resource_bttsa"), SubResource("Resource_f2arp"), SubResource("Resource_d7i55"), SubResource("Resource_aw3kn"), SubResource("Resource_krslm"), SubResource("Resource_ky13x"), SubResource("Resource_q7vwq"), SubResource("Resource_c3008"), SubResource("Resource_ypd30")])
+ControlPoints = [SubResource("Resource_1b7np"), SubResource("Resource_fdiyx"), SubResource("Resource_gkcab"), SubResource("Resource_bsrby"), SubResource("Resource_cmmxr"), SubResource("Resource_ixlj7"), SubResource("Resource_oci8c"), SubResource("Resource_v5s7q"), SubResource("Resource_4j2o6"), SubResource("Resource_5dojg"), SubResource("Resource_xt5ac"), SubResource("Resource_0bj2o"), SubResource("Resource_jkwde"), SubResource("Resource_5pewh"), SubResource("Resource_bttsa"), SubResource("Resource_f2arp"), SubResource("Resource_d7i55"), SubResource("Resource_aw3kn"), SubResource("Resource_krslm"), SubResource("Resource_ky13x"), SubResource("Resource_q7vwq"), SubResource("Resource_c3008"), SubResource("Resource_ypd30"), SubResource("Resource_363gg"), SubResource("Resource_5ft3a")]
 metadata/_custom_type_script = "uid://d2tkly6yb1huc"
 
 [sub_resource type="Resource" id="Resource_2impm"]
@@ -251,7 +261,7 @@ Gradient = Vector2(72.12619, 212.62207)
 
 [sub_resource type="Resource" id="Resource_pnfxu"]
 script = ExtResource("11_2impm")
-ControlPoints = Array[ExtResource("12_x5x36")]([SubResource("Resource_2impm"), SubResource("Resource_x5x36"), SubResource("Resource_rlrtk"), SubResource("Resource_xspxd"), SubResource("Resource_w7uu5"), SubResource("Resource_36pbe"), SubResource("Resource_o7u6x"), SubResource("Resource_wkyde"), SubResource("Resource_g3o66"), SubResource("Resource_om115"), SubResource("Resource_y7ii7"), SubResource("Resource_u5nb8"), SubResource("Resource_1cq1y"), SubResource("Resource_5udmk"), SubResource("Resource_17xvu"), SubResource("Resource_3v5f2"), SubResource("Resource_3jsdd")])
+ControlPoints = [SubResource("Resource_2impm"), SubResource("Resource_x5x36"), SubResource("Resource_rlrtk"), SubResource("Resource_xspxd"), SubResource("Resource_w7uu5"), SubResource("Resource_36pbe"), SubResource("Resource_o7u6x"), SubResource("Resource_wkyde"), SubResource("Resource_g3o66"), SubResource("Resource_om115"), SubResource("Resource_y7ii7"), SubResource("Resource_u5nb8"), SubResource("Resource_1cq1y"), SubResource("Resource_5udmk"), SubResource("Resource_17xvu"), SubResource("Resource_3v5f2"), SubResource("Resource_3jsdd")]
 metadata/_custom_type_script = "uid://d2tkly6yb1huc"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_2impm"]

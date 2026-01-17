@@ -76,7 +76,7 @@ public partial class Character : CharacterBody2D
     public Sprite2D ActionPip1;
     public Sprite2D ActionPip2;
 
-    public AttributeSet FinalAttributes => new AttributeSet()
+    public AttributeSet FinalAttributes => new()
     {
         Strength = Strength,
         Endurance = Endurance,
@@ -87,7 +87,7 @@ public partial class Character : CharacterBody2D
         Willpower = Willpower,
     };
 
-    private int ComputeAttributeMod(int value)
+    private static int ComputeAttributeMod(int value)
     {
         return (int)Math.Floor(((double)value - 10.0) / 2.0);
     }
@@ -320,7 +320,7 @@ public partial class Character : CharacterBody2D
 
     protected class CombatNavState : ICharacterState
     {
-        Character _character;
+        readonly Character _character;
 
         private Vector2[] _path;
 		private int _currentPoint = 0;
