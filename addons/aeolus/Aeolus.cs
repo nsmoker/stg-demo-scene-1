@@ -163,7 +163,6 @@ public partial class Aeolus : EditorPlugin
 
     private void ZeroEditorFields()
     {
-        SceneChanged -= OnSceneChanged;
         _editedField = null;
     }
 }
