@@ -84,7 +84,11 @@ public partial class Aeolus : EditorPlugin
 
     public void DrawOverScene()
     {
-        var rasterSize = 20;
+        Vector2 sceneSize = _editedScene.GetNode<Sprite2D>("SceneBackdrop").Texture.GetSize();
+
+        Vector2I sceneSizeOffset = new Vector2I((int) sceneSize.X, (int) sceneSize.Y) / 2;
+
+        int rasterSize = (int) (sceneSize.Y / 18.0f);
 
         if (_editedField == null)
         {
@@ -108,9 +112,9 @@ public partial class Aeolus : EditorPlugin
             _editedScene.DrawLine(dest + head * 0.05f, dest + head.Rotated(-0.5f), col, 1.1f);
         }
 
-        for (int x = -320; x <= 320; x += rasterSize)
+        for (int x = -sceneSizeOffset.X; x <= sceneSizeOffset.X; x += rasterSize)
         {
-            for (int y = -180; y <= 180; y += rasterSize)
+            for (int y = -sceneSizeOffset.Y; y <= sceneSizeOffset.Y; y += rasterSize)
             {
                 var point = new Vector2(x, y);
                 var gradient = _editedField.SampleFlowField(point);

@@ -26,7 +26,7 @@ project/assembly_name="Arkham Hunters"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/edi/plugin.cfg")
+enabled=PackedStringArray("res://addons/aeolus/plugin.cfg", "res://addons/edi/plugin.cfg")
 
 [global_group]
 
