@@ -34,6 +34,26 @@ public partial class Aeolus : EditorPlugin
         }
     }
 
+    private void AddControlPoint(Vector2 controlPoint, Vector2 gradient)
+    {
+        var controlPointInstance = new FlowFieldControlPoint
+        {
+            ControlPoint = controlPoint,
+            Gradient = gradient
+        };
+        _editedField.ControlPoints.Add(controlPointInstance);
+        _controlPointInCreation = false;
+        _editedScene.QueueRedraw();
+        _editedField.NotifyPropertyListChanged();
+    }
+
+    private void RemoveControlPoint(int i)
+    {
+        _editedField.ControlPoints.RemoveAt(i);
+        _editedScene.QueueRedraw();
+        _editedField.NotifyPropertyListChanged();
+    }
+
     public override bool _ForwardCanvasGuiInput(InputEvent @event)
     {
         if (@event is InputEventMouseButton button && button.IsPressed() && button.ButtonIndex == MouseButton.Right && _editedField != null)
@@ -51,15 +71,11 @@ public partial class Aeolus : EditorPlugin
         }
         else if (@event is InputEventMouseButton b && b.IsReleased() && b.ButtonIndex == MouseButton.Right && _controlPointInCreation)
         {
-            var controlPoint = new FlowFieldControlPoint
-            {
-                ControlPoint = _controlPointOrigin,
-                Gradient = _controlPointDestination - _controlPointOrigin
-            };
-            _editedField.ControlPoints.Add(controlPoint);
-            _controlPointInCreation = false;
-            _editedScene.QueueRedraw();
-            _editedField.NotifyPropertyListChanged();
+            var undoRedo = GetUndoRedo();
+            undoRedo.CreateAction($"Add point at {_controlPointOrigin}");
+            undoRedo.AddDoMethod(this, "AddControlPoint", _controlPointOrigin, _controlPointDestination - _controlPointOrigin);
+            undoRedo.AddUndoMethod(this, "RemoveControlPoint", _editedField.ControlPoints.Count);
+            undoRedo.CommitAction();
             return true;
         }
 
