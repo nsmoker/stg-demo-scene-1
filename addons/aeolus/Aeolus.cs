@@ -118,9 +118,7 @@ public partial class Aeolus : EditorPlugin
     {
         if (_sceneRoot is Node2D sceneRoot)
         {
-            _editedScene.Draw -= DrawOverScene;
             _editedScene = sceneRoot;
-            _editedScene.Draw += DrawOverScene;
         }
     }
 
@@ -133,15 +131,23 @@ public partial class Aeolus : EditorPlugin
         else if (_editedScene != null)
         {
             _editedScene.Draw -= DrawOverScene;
+            _editedScene.QueueRedraw();
         }
     }
 
     public override void _Clear()
     {
-        if (_editedScene != null)
-        {
-            _editedScene.Draw -= DrawOverScene;
-        }
+        ZeroEditorFields();
+    }
+
+    public override void _DisablePlugin()
+    {
+        ZeroEditorFields();
+    }
+
+    private void ZeroEditorFields()
+    {
+        SceneChanged -= OnSceneChanged;
         _editedField = null;
     }
 }
