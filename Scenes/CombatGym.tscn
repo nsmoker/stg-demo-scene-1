@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://bgk5v73hj7cv0"]
+[gd_scene load_steps=53 format=3 uid="uid://bgk5v73hj7cv0"]
 
 [ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_gokwg"]
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="1_ndsb5"]
@@ -28,6 +28,7 @@
 [ext_resource type="Resource" uid="uid://cbhlbpdtrwxxy" path="res://Resources/Named Props/player_chair_elem_intro.tres" id="21_02uyx"]
 [ext_resource type="PackedScene" uid="uid://cmpn1crr0je53" path="res://Scenes/ChairProp.tscn" id="22_gokwg"]
 [ext_resource type="Resource" uid="uid://d0vtobfhyip5c" path="res://Conversations/elemental_studies_intro.tres" id="26_gokwg"]
+[ext_resource type="PackedScene" uid="uid://h45jveoxhfv2" path="res://Scenes/book_prop_trigger.tscn" id="29_l4oaw"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_02uyx"]
 vertices = PackedVector2Array(274, 6, 174, 6, -174, -1, -162, -1, 274, 78, 174, 78, -174, 63, -162, 63, 302, 165.77344, -302, 158.21875, -174, 135, -162, 135, 274, -1, 274, -58, 302, -166, -274, 135, -302, -166, -274, 78, 174, -58, 174, 63, 162, 63, 162, 6, 62, 6, 174, 135, 162, 135, 162, 78, 62, 78, 174, -1, 162, -1, 162, -58, 62, -58, 274, 135, 274, 63, 62, 135, -62, 135, -62, 78, -162, 78, -274, 63, 62, 63, -62, 63, -62, 6, -162, 6, -174, 6, -174, 78, -274, 6, 62, -1, -62, -1, -62, -58, -162, -58, -274, -1, -274, -58, -174, -58)
@@ -252,3 +253,6 @@ _data = ExtResource("20_b5i2i")
 [node name="ChairProp2" parent="ClearableProps/DeskSet8" instance=ExtResource("22_gokwg")]
 position = Vector2(14, 9)
 _data = ExtResource("21_02uyx")
+
+[node name="BookProp" parent="." instance=ExtResource("29_l4oaw")]
+position = Vector2(26, 95)

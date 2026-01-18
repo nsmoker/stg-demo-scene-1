@@ -1,9 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://cmpn1crr0je53"]
+[gd_scene load_steps=13 format=3 uid="uid://h45jveoxhfv2"]
 
-[ext_resource type="Script" uid="uid://bvc02vefjnto0" path="res://Scripts/QuestTriggerProp.cs" id="1_qvr8u"]
-[ext_resource type="Texture2D" uid="uid://dkv1adercf2v7" path="res://Sprites/Props/chair_back.png" id="2_j0p0k"]
-[ext_resource type="Resource" uid="uid://dmtc5a1b5qman" path="res://Resources/Quests/book_quest_example.tres" id="2_n5wt5"]
-[ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="3_qvr8u"]
+[ext_resource type="Script" uid="uid://bvc02vefjnto0" path="res://Scripts/QuestTriggerProp.cs" id="1_h68up"]
+[ext_resource type="Resource" uid="uid://dmtc5a1b5qman" path="res://Resources/Quests/book_quest_example.tres" id="2_4cfi3"]
+[ext_resource type="Texture2D" uid="uid://3fs42wx04txx" path="res://Sprites/Props/journal.png" id="3_tw4vg"]
+[ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="4_uysju"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hvgce"]
 size = Vector2(8, 9)
@@ -111,23 +111,23 @@ _data = {
 }
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n5wt5"]
-atlas = ExtResource("3_qvr8u")
+atlas = ExtResource("4_uysju")
 region = Rect2(0, 64, 16, 16)
 
-[node name="ChairProp" type="StaticBody2D"]
+[node name="BookProp" type="StaticBody2D"]
 z_index = 3
 collision_layer = 2097154
-script = ExtResource("1_qvr8u")
-QuestToTrigger = ExtResource("2_n5wt5")
+script = ExtResource("1_h68up")
+QuestToTrigger = ExtResource("2_4cfi3")
 Stage = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1.5)
 shape = SubResource("RectangleShape2D_hvgce")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("2_j0p0k")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_tw4vg")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -74,14 +74,20 @@ public partial class StagfootScreen : Node2D
             };
             AddChild(_genericNpcRoot);
             var random = new Random();
+			var requiredSpawnLocs = GetRequiredNPCSpawns();
 
             for (int i = 0; i < GenericNpcCount; ++i)
             {
                 var npc = GenericNpcScene.Instantiate<Character>();
+				
                 int spriteIndex = random.Next(0, GenericNpcSprites.Count);
 
                 _genericNpcRoot.AddChild(npc);
                 npc.GlobalPosition = GetRandomTraversablePoint();
+				if (i < requiredSpawnLocs.Count)
+				{
+					npc.GlobalPosition = requiredSpawnLocs[i];
+				}
                 npc.SetSprite(GenericNpcSprites[spriteIndex]);
                 npc.SetCollisionOverride(false);
                 _genericNpcInstances.Add(npc);
@@ -156,5 +162,13 @@ public partial class StagfootScreen : Node2D
 	public Vector2 GetEdge()
 	{
 		return _navRegion.GetBounds().Position + _navRegion.GetBounds().Size * new Vector2(0.0f, 0.5f);
+	}
+
+	public List<Vector2> GetRequiredNPCSpawns()
+	{
+		return [.. FindChildren("*", type: "Marker2D", recursive: true)
+			.Cast<Marker2D>()
+			.Where(x => x.IsInGroup("RequiredNpcSpawn"))
+			.Select(x => x.GlobalPosition)];
 	}
 }

@@ -1,0 +1,137 @@
+[gd_scene load_steps=23 format=3 uid="uid://byyqb8ij2pk1f"]
+
+[ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_q4tho"]
+[ext_resource type="Texture2D" uid="uid://r2xchsyxvc4r" path="res://Sprites/Characters/pc_ingame_npc_fa.png" id="2_o0ndj"]
+[ext_resource type="Texture2D" uid="uid://c6syadx2hm1cg" path="res://Sprites/Characters/pc_ingame_npc_fb.png" id="3_w0pkc"]
+[ext_resource type="Texture2D" uid="uid://b15gt320egkk8" path="res://Sprites/Characters/pc_ingame_npc_fc.png" id="4_pilpi"]
+[ext_resource type="Texture2D" uid="uid://cd7kmy7sbrwsy" path="res://Sprites/Characters/pc_ingame_player_ma.png" id="5_cj2ww"]
+[ext_resource type="Texture2D" uid="uid://c3xdtaspbe1s1" path="res://Sprites/Characters/pc_ingame_player_mb.png" id="6_r3qb3"]
+[ext_resource type="Texture2D" uid="uid://b6wph1kvjioyc" path="res://Sprites/Characters/pc_ingame_player_mc.png" id="7_08dwq"]
+[ext_resource type="PackedScene" uid="uid://cy27gk81ig72o" path="res://Scenes/generic_npc.tscn" id="8_af722"]
+[ext_resource type="Script" uid="uid://bqhkr10ewh7xe" path="res://Scripts/AI/CrowdAITask.cs" id="9_jtoeq"]
+[ext_resource type="Script" uid="uid://67g32ecjus0y" path="res://Scripts/AI/CrowdAIDirector.cs" id="10_2eyln"]
+[ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="13_swi3a"]
+[ext_resource type="Texture2D" uid="uid://cvobau2o6qy0n" path="res://Sprites/Backdrops/Hallway.png" id="14_xq4h6"]
+[ext_resource type="Script" uid="uid://cwhflap727bje" path="res://Scenes/AreaTransition.cs" id="15_2kq0i"]
+[ext_resource type="PackedScene" uid="uid://bgk5v73hj7cv0" path="res://Scenes/CombatGym.tscn" id="16_nbds0"]
+[ext_resource type="PackedScene" uid="uid://c1hkfkbdi4p7c" path="res://Scenes/cell.tscn" id="17_q4tho"]
+
+[sub_resource type="Resource" id="Resource_wen7t"]
+script = ExtResource("9_jtoeq")
+Duration = 10000.0
+Probability = 1.0
+metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
+
+[sub_resource type="Resource" id="Resource_e0fpw"]
+script = ExtResource("10_2eyln")
+_possibleTasks = Array[Object]([SubResource("Resource_wen7t")])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_2impm"]
+vertices = PackedVector2Array(304, 167.78906, 155, 165.92969, 155, -100, 304, -100, 27, 118, 27, 164.32813, -69, 163.13281, -69, 140, -39, -100, 27, -100, 27, -83, 107, -83, 107, -51, 75, -51, 75, -74, 27, -74, 107, 13, 107, 45, 75, 45, 75, 22, 27, 13, 27, 22, 107, 109, 107, 141, 75, 141, 75, 118, 27, 109, -149, 140, -149, 108, -117, 108, -117, 131, -69, 131, -69, 44, -69, 35, -149, 44, -149, 12, -117, 12, -117, 35, -69, -52, -69, -61, -149, -52, -149, -84, -117, -84, -117, -61, -69, -101, -39, -101, -197, 161.53125, -304, 160.1875, -304, -101, -197, -101)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 9, 10), PackedInt32Array(11, 12, 13, 14), PackedInt32Array(10, 11, 14, 15), PackedInt32Array(16, 17, 18, 19), PackedInt32Array(20, 16, 19, 21), PackedInt32Array(22, 23, 24, 25), PackedInt32Array(26, 22, 25, 4), PackedInt32Array(27, 28, 29, 30), PackedInt32Array(7, 27, 30, 31), PackedInt32Array(4, 7, 31), PackedInt32Array(4, 31, 32, 26), PackedInt32Array(21, 26, 32, 33), PackedInt32Array(34, 35, 36, 37), PackedInt32Array(32, 34, 37, 33), PackedInt32Array(21, 33, 38, 20), PackedInt32Array(15, 20, 38, 39), PackedInt32Array(40, 41, 42, 43), PackedInt32Array(38, 40, 43, 39), PackedInt32Array(10, 15, 39, 44, 8), PackedInt32Array(45, 8, 44), PackedInt32Array(46, 47, 48, 49)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-320, 176, -320, -184, 320, -184, 320, 184)])
+source_geometry_mode = 1
+source_geometry_group_name = &"NavObjects"
+agent_radius = 16.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_03dat"]
+size = Vector2(26, 59)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gkcab"]
+size = Vector2(272, 54)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3e6v"]
+size = Vector2(317, 59)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_21ohs"]
+size = Vector2(25, 34)
+
+[node name="HallwaySceneTest" type="Node2D"]
+z_index = 4096
+texture_filter = 1
+script = ExtResource("1_q4tho")
+GenericNpcCount = 5
+GenericNpcSprites = Array[Texture2D]([ExtResource("2_o0ndj"), ExtResource("3_w0pkc"), ExtResource("4_pilpi"), ExtResource("5_cj2ww"), ExtResource("6_r3qb3"), ExtResource("7_08dwq")])
+GenericNpcScene = ExtResource("8_af722")
+GenericNpcDirector = SubResource("Resource_e0fpw")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+z_as_relative = false
+navigation_polygon = SubResource("NavigationPolygon_2impm")
+script = ExtResource("13_swi3a")
+
+[node name="SceneBackdrop" type="Sprite2D" parent="."]
+z_as_relative = false
+texture = ExtResource("14_xq4h6")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/StaticBody2D" groups=["NavObjects"]]
+position = Vector2(-10, -145.5)
+shape = SubResource("RectangleShape2D_03dat")
+
+[node name="PropCollider19" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
+position = Vector2(-184, -144)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider19"]
+shape = SubResource("RectangleShape2D_gkcab")
+
+[node name="PropCollider20" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
+position = Vector2(8, -160)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/PropCollider20"]
+position = Vector2(153.5, 14.5)
+shape = SubResource("RectangleShape2D_k3e6v")
+
+[node name="Transition" type="Area2D" parent="."]
+z_as_relative = false
+script = ExtResource("15_2kq0i")
+Destination = ExtResource("16_nbds0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transition"]
+position = Vector2(-35.5, -143)
+shape = SubResource("RectangleShape2D_21ohs")
+
+[node name="ClearableProps" type="Node2D" parent="."]
+z_as_relative = false
+
+[node name="Cell" parent="." instance=ExtResource("17_q4tho")]
+z_index = 5
+
+[node name="Marker2D" type="Marker2D" parent="Cell" groups=["RequiredNpcSpawn"]]
+position = Vector2(-133, 29)
+
+[node name="Cell2" parent="." instance=ExtResource("17_q4tho")]
+z_index = 5
+position = Vector2(0, 96)
+
+[node name="Marker2D" type="Marker2D" parent="Cell2" groups=["RequiredNpcSpawn"]]
+position = Vector2(-133, 29)
+
+[node name="Cell3" parent="." instance=ExtResource("17_q4tho")]
+z_index = 5
+position = Vector2(0, 192)
+
+[node name="Marker2D" type="Marker2D" parent="Cell3" groups=["RequiredNpcSpawn"]]
+position = Vector2(91, -68)
+
+[node name="Cell4" parent="." instance=ExtResource("17_q4tho")]
+z_index = 5
+position = Vector2(-42, -135)
+rotation = 3.1415927
+
+[node name="Marker2D" type="Marker2D" parent="Cell4" groups=["RequiredNpcSpawn"]]
+position = Vector2(-131.00002, -163.99998)
+
+[node name="Cell5" parent="." instance=ExtResource("17_q4tho")]
+z_index = 5
+position = Vector2(-42, -39)
+rotation = 3.1415927
+
+[node name="Marker2D" type="Marker2D" parent="Cell5" groups=["RequiredNpcSpawn"]]
+position = Vector2(-133, 29)
+
+[node name="Cell6" parent="." instance=ExtResource("17_q4tho")]
+z_index = 5
+position = Vector2(-42, 57)
+rotation = 3.1415927

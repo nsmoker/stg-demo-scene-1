@@ -44,6 +44,12 @@ public partial class Player : Character
 								character.SitOn((Prop) closestInteractable);
 								break;
 							}
+						case InteractionType.Trigger:
+							{
+								var trigger = (ITriggerInteractable)closestInteractable;
+								trigger.Trigger();
+								break;
+							}
 					}
 				}
 			}

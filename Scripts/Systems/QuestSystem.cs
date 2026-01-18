@@ -13,6 +13,7 @@ public static class QuestSystem
     {
         _quests[quest.ResourcePath] = quest;
         OnQuestUpdated?.Invoke(quest);
+        UpdateJournalDisplay();
     }
 
     public static void RemoveQuest(Quest quest)
@@ -32,6 +33,16 @@ public static class QuestSystem
             quest.SetStage(stageIndex);
             OnQuestUpdated?.Invoke(quest);
         }
+
+        
+       UpdateJournalDisplay(); 
+    }
+
+    public static void UpdateJournalDisplay()
+    {
+        var stagfootScreen = (Godot.Engine.GetMainLoop() as SceneTree)
+			.CurrentScene as MasterScene;
+        stagfootScreen.SetJournalEntries(GetAllQuests());
     }
 
     public static List<Quest> GetAllQuests()

@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="Quest" load_steps=6 format=3 uid="uid://dmtc5a1b5qman"]
+
+[ext_resource type="Script" uid="uid://ho5p3miawhuu" path="res://Scripts/Resources/QuestStage.cs" id="1_i4gu4"]
+[ext_resource type="Script" uid="uid://be0fsg3lmta4c" path="res://Scripts/Resources/Quest.cs" id="2_2g21d"]
+
+[sub_resource type="Resource" id="Resource_g063b"]
+script = ExtResource("1_i4gu4")
+Title = "You don't have the book yet, go get it"
+Description = "Go get the book."
+metadata/_custom_type_script = "uid://ho5p3miawhuu"
+
+[sub_resource type="Resource" id="Resource_wolc3"]
+script = ExtResource("1_i4gu4")
+StageNumber = 1
+Title = "Got the book"
+Description = "Ok, you've got the book, now bring it back to the dude."
+metadata/_custom_type_script = "uid://ho5p3miawhuu"
+
+[sub_resource type="Resource" id="Resource_shr7w"]
+script = ExtResource("1_i4gu4")
+StageNumber = 2
+Title = "Done!"
+Description = "You got the book and gave it to the dude, good job!"
+CompleteQuest = true
+metadata/_custom_type_script = "uid://ho5p3miawhuu"
+
+[resource]
+script = ExtResource("2_2g21d")
+Title = "Go get a book!"
+Description = "You need to go get a book for this dude."
+Stages = Array[ExtResource("1_i4gu4")]([SubResource("Resource_g063b"), SubResource("Resource_wolc3"), SubResource("Resource_shr7w")])
+metadata/_custom_type_script = "uid://be0fsg3lmta4c"

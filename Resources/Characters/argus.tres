@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="CharacterData" load_steps=61 format=3 uid="uid://cjqtc7qyx61f6"]
+[gd_resource type="Resource" script_class="CharacterData" load_steps=62 format=3 uid="uid://cjqtc7qyx61f6"]
 
 [ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/Resources/AttributeSet.cs" id="1_ge58i"]
 [ext_resource type="Script" uid="uid://cgng01q8ok4ba" path="res://Scripts/Resources/SkillSet.cs" id="2_mbf2h"]
+[ext_resource type="Script" uid="uid://be0fsg3lmta4c" path="res://Scripts/Resources/Quest.cs" id="3_2agks"]
 [ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/Resources/PatrolLeg.cs" id="3_tei13"]
 [ext_resource type="Script" uid="uid://cng8hqptg2rbu" path="res://Scripts/Resources/CharacterData.cs" id="4_eynkf"]
 [ext_resource type="Script" uid="uid://5hcjkamye5ns" path="res://Scripts/Items/AttributeBonus.cs" id="5_naspl"]

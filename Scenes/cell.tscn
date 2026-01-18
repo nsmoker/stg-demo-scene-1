@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1hkfkbdi4p7c"]
+
+[ext_resource type="PackedScene" uid="uid://cn70gd61iefwk" path="res://Scenes/wall_section_prop.tscn" id="1_efq80"]
+[ext_resource type="PackedScene" uid="uid://cmpn1crr0je53" path="res://Scenes/ChairProp.tscn" id="2_da881"]
+
+[node name="Cell" type="Node2D"]
+
+[node name="WallSectionProp" parent="." instance=ExtResource("1_efq80")]
+position = Vector2(-133, -108)
+rotation = 1.5707964
+
+[node name="WallSectionProp2" parent="." instance=ExtResource("1_efq80")]
+position = Vector2(-165, -108)
+rotation = 1.5707964
+
+[node name="WallSectionProp3" parent="." instance=ExtResource("1_efq80")]
+position = Vector2(-173, -84)
+rotation = -3.1415925
+
+[node name="WallSectionProp4" parent="." instance=ExtResource("1_efq80")]
+position = Vector2(-165, -28)
+rotation = 1.5707964
+
+[node name="WallSectionProp5" parent="." instance=ExtResource("1_efq80")]
+position = Vector2(-101, -108)
+rotation = 1.5707964
+
+[node name="WallSectionProp6" parent="." instance=ExtResource("1_efq80")]
+position = Vector2(-173, -52)
+rotation = -3.1415925
+
+[node name="WallSectionProp7" parent="." instance=ExtResource("1_efq80")]
+position = Vector2(-133, -28)
+rotation = 1.5707964
+
+[node name="WallSectionProp8" parent="." instance=ExtResource("1_efq80")]
+position = Vector2(-101, -28)
+rotation = 1.5707964
+
+[node name="WallSectionProp9" parent="." instance=ExtResource("1_efq80")]
+position = Vector2(-93, -93)
+
+[node name="ChairProp" parent="." instance=ExtResource("2_da881")]
+position = Vector2(-147, -46)

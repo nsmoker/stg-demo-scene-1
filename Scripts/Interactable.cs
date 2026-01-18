@@ -11,6 +11,7 @@ public enum InteractionType
     Container,
     Toggleable,
     Furniture,
+    Trigger,
 }
 
 public interface IInteractable
@@ -33,4 +34,9 @@ public interface IContainerInteractable
 public interface IToggleableInteractable
 {
     public void Toggle();
+}
+
+public interface ITriggerInteractable
+{
+    public void Trigger();
 }
