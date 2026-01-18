@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://byyqb8ij2pk1f"]
+[gd_scene load_steps=70 format=3 uid="uid://byyqb8ij2pk1f"]
 
 [ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_q4tho"]
 [ext_resource type="Texture2D" uid="uid://r2xchsyxvc4r" path="res://Sprites/Characters/pc_ingame_npc_fa.png" id="2_o0ndj"]
@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://cy27gk81ig72o" path="res://Scenes/generic_npc.tscn" id="8_af722"]
 [ext_resource type="Script" uid="uid://bqhkr10ewh7xe" path="res://Scripts/AI/CrowdAITask.cs" id="9_jtoeq"]
 [ext_resource type="Script" uid="uid://67g32ecjus0y" path="res://Scripts/AI/CrowdAIDirector.cs" id="10_2eyln"]
+[ext_resource type="Script" uid="uid://d2tkly6yb1huc" path="res://addons/aeolus/FlowField.cs" id="11_q4tho"]
+[ext_resource type="Script" uid="uid://cno40qs5solb3" path="res://addons/aeolus/FlowFieldControlPoint.cs" id="12_o0ndj"]
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="13_swi3a"]
 [ext_resource type="Texture2D" uid="uid://cvobau2o6qy0n" path="res://Sprites/Backdrops/Hallway.png" id="14_xq4h6"]
 [ext_resource type="Script" uid="uid://cwhflap727bje" path="res://Scenes/AreaTransition.cs" id="15_2kq0i"]
@@ -18,6 +20,7 @@
 
 [sub_resource type="Resource" id="Resource_wen7t"]
 script = ExtResource("9_jtoeq")
+Type = 4
 Duration = 10000.0
 Probability = 1.0
 metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
@@ -26,16 +29,243 @@ metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
 script = ExtResource("10_2eyln")
 _possibleTasks = Array[Object]([SubResource("Resource_wen7t")])
 
+[sub_resource type="Resource" id="Resource_w0pkc"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-13.09436, -48.32837)
+Gradient = Vector2(13.09436, 48.32837)
+
+[sub_resource type="Resource" id="Resource_pilpi"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-12.134277, -37.103302)
+Gradient = Vector2(-7.0371094, -93.13818)
+
+[sub_resource type="Resource" id="Resource_cj2ww"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-17.101685, -69.805145)
+Gradient = Vector2(-2.4836426, -81.1337)
+
+[sub_resource type="Resource" id="Resource_r3qb3"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-130.93713, 31.198029)
+Gradient = Vector2(48.431763, -4.553406)
+
+[sub_resource type="Resource" id="Resource_08dwq"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-114.37927, -59.87039)
+Gradient = Vector2(48.431885, 2.8976135)
+
+[sub_resource type="Resource" id="Resource_af722"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(88.8689, -68.14935)
+Gradient = Vector2(-67.47339, 2.0697327)
+
+[sub_resource type="Resource" id="Resource_jtoeq"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(94.664185, 25.402771)
+Gradient = Vector2(-69.54321, -6.209198)
+
+[sub_resource type="Resource" id="Resource_2eyln"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(80.589966, 125.578064)
+Gradient = Vector2(-59.194458, -7.86499)
+
+[sub_resource type="Resource" id="Resource_kc3aj"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-86.644775, 129.71753)
+Gradient = Vector2(6.623169, -1.2418213)
+
+[sub_resource type="Resource" id="Resource_0asdn"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-121.00244, 131.7873)
+Gradient = Vector2(83.20349, -33.115784)
+
+[sub_resource type="Resource" id="Resource_swi3a"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-35.315308, 121.4386)
+Gradient = Vector2(12.004517, -119.63083)
+
+[sub_resource type="Resource" id="Resource_xq4h6"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-28.278198, -4.815399)
+Gradient = Vector2(-4.1395264, -40.566833)
+
+[sub_resource type="Resource" id="Resource_q4tho"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-109.82593, 114.81543)
+Gradient = Vector2(-4.5533447, 73.26874)
+
+[sub_resource type="Resource" id="Resource_o0ndj"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-101.132935, 141.72205)
+Gradient = Vector2(36.84131, -6.2092285)
+
+[sub_resource type="Resource" id="Resource_nbds0"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-94.923706, 127.23389)
+Gradient = Vector2(12.004395, 8.692871)
+
+[sub_resource type="Resource" id="Resource_hlier"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-92.854004, 128.88965)
+Gradient = Vector2(13.660278, -4.967346)
+
+[sub_resource type="Resource" id="Resource_e3meg"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-67.60327, 118.127014)
+Gradient = Vector2(-4.967285, -65.81766)
+
+[sub_resource type="Resource" id="Resource_u2tho"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-23.310791, -128.99963)
+Gradient = Vector2(0.82788086, -75.752396)
+
+[sub_resource type="Resource" id="Resource_f26ul"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(62.104248, -80.05701)
+Gradient = Vector2(-21.45935, -3.7320557)
+
+[sub_resource type="Resource" id="Resource_lokt5"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(76.09949, -82.23404)
+Gradient = Vector2(-12.751221, -8.70813)
+
+[sub_resource type="Resource" id="Resource_s1jrt"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(71.74536, -62.95175)
+Gradient = Vector2(-16.79419, -39.49762)
+
+[sub_resource type="Resource" id="Resource_thtgi"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(39.089966, -93.43024)
+Gradient = Vector2(-45.095703, -3.1100464)
+
+[sub_resource type="Resource" id="Resource_rp2r3"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-94.33118, -68.549835)
+Gradient = Vector2(27.368408, 4.976074)
+
+[sub_resource type="Resource" id="Resource_th38h"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-60.120605, -47.712524)
+Gradient = Vector2(11.507202, -23.947357)
+
+[sub_resource type="Resource" id="Resource_omm6p"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-101.17322, 38.43582)
+Gradient = Vector2(27.368408, 4.976074)
+
+[sub_resource type="Resource" id="Resource_c5bt7"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(68.94641, 20.086548)
+Gradient = Vector2(14.928223, -21.770355)
+
+[sub_resource type="Resource" id="Resource_k3df2"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(70.81238, 37.502808)
+Gradient = Vector2(0.6220703, -15.550232)
+
+[sub_resource type="Resource" id="Resource_n733j"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(65.214355, 7.957367)
+Gradient = Vector2(-78.684204, -17.41629)
+
+[sub_resource type="Resource" id="Resource_41bc4"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(38.77893, 3.603302)
+Gradient = Vector2(-27.368408, 1.5550232)
+
+[sub_resource type="Resource" id="Resource_o1knx"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(45.31006, 14.17746)
+Gradient = Vector2(-106.98572, 25.50238)
+
+[sub_resource type="Resource" id="Resource_3ylgu"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(44.999023, 19.153534)
+Gradient = Vector2(-276.17236, -72.77515)
+
+[sub_resource type="Resource" id="Resource_0vbfp"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(68.32434, 44.655945)
+Gradient = Vector2(2.177002, -23.014374)
+
+[sub_resource type="Resource" id="Resource_kruod"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(68.94641, 45.58896)
+Gradient = Vector2(0.9329834, -10.574188)
+
+[sub_resource type="Resource" id="Resource_5vs6h"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(69.879395, 51.80905)
+Gradient = Vector2(3.7320557, -13.995239)
+
+[sub_resource type="Resource" id="Resource_n626s"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(60.23828, 40.30185)
+Gradient = Vector2(10.885132, -10.574158)
+
+[sub_resource type="Resource" id="Resource_n2co6"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(67.70239, 44.34491)
+Gradient = Vector2(-3.7320557, -18.660278)
+
+[sub_resource type="Resource" id="Resource_3yd8l"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(68.598145, 145.8196)
+Gradient = Vector2(-0.3421631, -21.894745)
+
+[sub_resource type="Resource" id="Resource_frv6t"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(72.019165, 143.08275)
+Gradient = Vector2(-5.131592, -18.473694)
+
+[sub_resource type="Resource" id="Resource_0tc70"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-109.980835, 103.74065)
+Gradient = Vector2(-6.157959, 23.605255)
+
+[sub_resource type="Resource" id="Resource_c1g36"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-104.84924, 11.71431)
+Gradient = Vector2(-6.5, 23.263168)
+
+[sub_resource type="Resource" id="Resource_ana8g"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-109.638794, 10.687988)
+Gradient = Vector2(5.815796, 27.71054)
+
+[sub_resource type="Resource" id="Resource_7jg5d"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-112.03345, 7.9511566)
+Gradient = Vector2(1.0262451, 24.631577)
+
+[sub_resource type="Resource" id="Resource_4jgbx"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(-115.79663, -87.15413)
+Gradient = Vector2(2.7368164, 24.631577)
+
+[sub_resource type="Resource" id="Resource_lt2cn"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(66.54553, -43.022537)
+Gradient = Vector2(7.526245, -36.947388)
+
+[sub_resource type="Resource" id="Resource_klomh"]
+script = ExtResource("12_o0ndj")
+ControlPoint = Vector2(67.91394, -48.49623)
+Gradient = Vector2(7.526245, -44.131584)
+
+[sub_resource type="Resource" id="Resource_2kq0i"]
+script = ExtResource("11_q4tho")
+ControlPoints = Array[ExtResource("12_o0ndj")]([SubResource("Resource_w0pkc"), SubResource("Resource_pilpi"), SubResource("Resource_cj2ww"), SubResource("Resource_r3qb3"), SubResource("Resource_08dwq"), SubResource("Resource_af722"), SubResource("Resource_jtoeq"), SubResource("Resource_2eyln"), SubResource("Resource_kc3aj"), SubResource("Resource_0asdn"), SubResource("Resource_swi3a"), SubResource("Resource_xq4h6"), SubResource("Resource_q4tho"), SubResource("Resource_o0ndj"), SubResource("Resource_nbds0"), SubResource("Resource_hlier"), SubResource("Resource_e3meg"), SubResource("Resource_u2tho"), SubResource("Resource_f26ul"), SubResource("Resource_lokt5"), SubResource("Resource_s1jrt"), SubResource("Resource_thtgi"), SubResource("Resource_rp2r3"), SubResource("Resource_th38h"), SubResource("Resource_omm6p"), SubResource("Resource_c5bt7"), SubResource("Resource_k3df2"), SubResource("Resource_n733j"), SubResource("Resource_41bc4"), SubResource("Resource_o1knx"), SubResource("Resource_3ylgu"), SubResource("Resource_0vbfp"), SubResource("Resource_kruod"), SubResource("Resource_5vs6h"), SubResource("Resource_n626s"), SubResource("Resource_n2co6"), SubResource("Resource_3yd8l"), SubResource("Resource_frv6t"), SubResource("Resource_0tc70"), SubResource("Resource_c1g36"), SubResource("Resource_ana8g"), SubResource("Resource_7jg5d"), SubResource("Resource_4jgbx"), SubResource("Resource_lt2cn"), SubResource("Resource_klomh")])
+metadata/_custom_type_script = "uid://d2tkly6yb1huc"
+
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_2impm"]
-vertices = PackedVector2Array(304, 167.78906, 155, 165.92969, 155, -100, 304, -100, 27, 118, 27, 164.32813, -69, 163.13281, -69, 140, -39, -100, 27, -100, 27, -83, 107, -83, 107, -51, 75, -51, 75, -74, 27, -74, 107, 13, 107, 45, 75, 45, 75, 22, 27, 13, 27, 22, 107, 109, 107, 141, 75, 141, 75, 118, 27, 109, -149, 140, -149, 108, -117, 108, -117, 131, -69, 131, -69, 44, -69, 35, -149, 44, -149, 12, -117, 12, -117, 35, -69, -52, -69, -61, -149, -52, -149, -84, -117, -84, -117, -61, -69, -101, -39, -101, -197, 161.53125, -304, 160.1875, -304, -101, -197, -101)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 9, 10), PackedInt32Array(11, 12, 13, 14), PackedInt32Array(10, 11, 14, 15), PackedInt32Array(16, 17, 18, 19), PackedInt32Array(20, 16, 19, 21), PackedInt32Array(22, 23, 24, 25), PackedInt32Array(26, 22, 25, 4), PackedInt32Array(27, 28, 29, 30), PackedInt32Array(7, 27, 30, 31), PackedInt32Array(4, 7, 31), PackedInt32Array(4, 31, 32, 26), PackedInt32Array(21, 26, 32, 33), PackedInt32Array(34, 35, 36, 37), PackedInt32Array(32, 34, 37, 33), PackedInt32Array(21, 33, 38, 20), PackedInt32Array(15, 20, 38, 39), PackedInt32Array(40, 41, 42, 43), PackedInt32Array(38, 40, 43, 39), PackedInt32Array(10, 15, 39, 44, 8), PackedInt32Array(45, 8, 44), PackedInt32Array(46, 47, 48, 49)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-320, 176, -320, -184, 320, -184, 320, 184)])
+vertices = PackedVector2Array(-32, -101, -32, -168.53125, -13, -168.46875, -13, -100, 27, 118, 27, 166.63281, -69, 166.35156, -69, 140, 27, -100, 27, -83, 107, -83, 107, -51, 75, -51, 75, -74, 27, -74, 107, 13, 107, 45, 75, 45, 75, 22, 27, 13, 27, 22, 107, 109, 107, 141, 75, 141, 75, 118, 27, 109, -149, 140, -149, 108, -117, 108, -117, 131, -69, 131, -69, 44, -69, 35, -149, 44, -149, 12, -117, 12, -117, 35, -69, -52, -69, -61, -149, -52, -149, -84, -117, -84, -117, -61, -69, -101)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(3, 8, 9), PackedInt32Array(10, 11, 12, 13), PackedInt32Array(9, 10, 13, 14), PackedInt32Array(15, 16, 17, 18), PackedInt32Array(19, 15, 18, 20), PackedInt32Array(21, 22, 23, 24), PackedInt32Array(25, 21, 24, 4), PackedInt32Array(26, 27, 28, 29), PackedInt32Array(7, 26, 29, 30), PackedInt32Array(4, 7, 30), PackedInt32Array(4, 30, 31, 25), PackedInt32Array(20, 25, 31, 32), PackedInt32Array(33, 34, 35, 36), PackedInt32Array(31, 33, 36, 32), PackedInt32Array(20, 32, 37, 19), PackedInt32Array(14, 19, 37, 38), PackedInt32Array(39, 40, 41, 42), PackedInt32Array(37, 39, 42, 38), PackedInt32Array(14, 38, 43, 0, 3, 9)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-188, 182, -182, -185, 141, -184, 148, 183)])
 source_geometry_mode = 1
 source_geometry_group_name = &"NavObjects"
 agent_radius = 16.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_03dat"]
-size = Vector2(26, 59)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gkcab"]
 size = Vector2(272, 54)
@@ -44,7 +274,7 @@ size = Vector2(272, 54)
 size = Vector2(317, 59)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_21ohs"]
-size = Vector2(25, 34)
+size = Vector2(51.5, 46)
 
 [node name="HallwaySceneTest" type="Node2D"]
 z_index = 4096
@@ -54,6 +284,7 @@ GenericNpcCount = 5
 GenericNpcSprites = Array[Texture2D]([ExtResource("2_o0ndj"), ExtResource("3_w0pkc"), ExtResource("4_pilpi"), ExtResource("5_cj2ww"), ExtResource("6_r3qb3"), ExtResource("7_08dwq")])
 GenericNpcScene = ExtResource("8_af722")
 GenericNpcDirector = SubResource("Resource_e0fpw")
+FlowFields = Array[ExtResource("11_q4tho")]([SubResource("Resource_2kq0i")])
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 z_as_relative = false
@@ -63,12 +294,6 @@ script = ExtResource("13_swi3a")
 [node name="SceneBackdrop" type="Sprite2D" parent="."]
 z_as_relative = false
 texture = ExtResource("14_xq4h6")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/StaticBody2D" groups=["NavObjects"]]
-position = Vector2(-10, -145.5)
-shape = SubResource("RectangleShape2D_03dat")
 
 [node name="PropCollider19" type="StaticBody2D" parent="SceneBackdrop" groups=["NavObjects"]]
 position = Vector2(-184, -144)
@@ -89,7 +314,7 @@ script = ExtResource("15_2kq0i")
 Destination = ExtResource("16_nbds0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transition"]
-position = Vector2(-35.5, -143)
+position = Vector2(-21.75, -147)
 shape = SubResource("RectangleShape2D_21ohs")
 
 [node name="ClearableProps" type="Node2D" parent="."]

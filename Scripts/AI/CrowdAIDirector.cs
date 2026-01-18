@@ -197,10 +197,7 @@ public partial class CrowdAIDirector : Resource
                             Duration = state.RemainingDuration,
                             Tag = task.Tag
                         }, character, area, state.RemainingDuration);
-                        if (!area.CheckBounds(character.Position))
-                        {
-                            character.GlobalPosition = area.ToGlobal(area.GetEdge() + new Vector2(0.0f, -100.0f + _random.NextSingle() * 200.0f));
-                        }
+                        
                     }, 20.0f);
                     break;
                 }
@@ -213,7 +210,9 @@ public partial class CrowdAIDirector : Resource
 
     public void Process(double delta, StagfootScreen area)
     {
-        foreach (Character c in _managedCharacters)
+        _managedCharacters = _managedCharacters.Where
+            (c => c != null && IsInstanceValid(c) && !c.IsQueuedForDeletion()).ToList();
+        foreach (Character c in _managedCharacters) 
         {
             var state = GetState(c.GetInstanceId());
             state.RemainingDuration -= delta;

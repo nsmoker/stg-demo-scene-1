@@ -89,7 +89,7 @@ public partial class StagfootScreen : Node2D
 					npc.GlobalPosition = requiredSpawnLocs[i];
 				}
                 npc.SetSprite(GenericNpcSprites[spriteIndex]);
-                npc.SetCollisionOverride(false);
+                // npc.SetCollisionOverride(false);
                 _genericNpcInstances.Add(npc);
             }
 

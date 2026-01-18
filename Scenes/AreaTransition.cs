@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Net.WebSockets;
 using System.Security.Cryptography.X509Certificates;
+using ArkhamHunters.Scripts;
 
 public partial class AreaTransition : Area2D
 {
@@ -19,6 +20,10 @@ public partial class AreaTransition : Area2D
         {
             var masterScene = (MasterScene) GetTree().CurrentScene;
             masterScene.SwitchScene(SceneSystem.GetInstance(Destination.ResourcePath));
+        }
+        else if (body is Character)
+        {
+            body.QueueFree();
         }
     }
 }
