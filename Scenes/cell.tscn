@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c8irpnaq3voo2" path="res://Sprites/Props/cellbars.png" id="4_7tk7m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r6d3g"]
-size = Vector2(32, 92)
+size = Vector2(32, 65)
 
 [sub_resource type="Animation" id="Animation_imdwo"]
 resource_name = "DoorOpening"
@@ -153,7 +153,7 @@ rotation = 1.5707964
 
 [node name="WallSectionProp3" parent="." instance=ExtResource("1_efq80")]
 z_index = 3
-position = Vector2(-84, -108)
+position = Vector2(-84, -94)
 rotation = -3.1415925
 
 [node name="WallSectionProp4" parent="." instance=ExtResource("1_efq80")]
@@ -196,14 +196,14 @@ collision_layer = 2097153
 script = ExtResource("3_imdwo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CellDoor"]
-position = Vector2(18, -34)
+position = Vector2(18, -20.5)
 shape = SubResource("RectangleShape2D_r6d3g")
 
 [node name="Sprite2D" type="Sprite2D" parent="CellDoor"]
 z_index = 5
 texture_filter = 1
-position = Vector2(17.999992, -33.874996)
-scale = Vector2(1, 1.4414063)
+position = Vector2(17.999992, -19.999998)
+scale = Vector2(1, 1.0078125)
 texture = ExtResource("4_7tk7m")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CellDoor"]
