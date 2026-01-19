@@ -28,5 +28,5 @@ metadata/_custom_type_script = "uid://ho5p3miawhuu"
 script = ExtResource("2_2g21d")
 Title = "Go get a book!"
 Description = "You need to go get a book for this dude."
-Stages = [SubResource("Resource_g063b"), SubResource("Resource_wolc3"), SubResource("Resource_shr7w")]
+Stages = Array[ExtResource("1_i4gu4")]([SubResource("Resource_g063b"), SubResource("Resource_wolc3"), SubResource("Resource_shr7w")])
 metadata/_custom_type_script = "uid://be0fsg3lmta4c"

@@ -82,6 +82,12 @@ public static class CombatSystem
         return _pathingReady && navRegion.NavigationPolygon != null;
     }
 
+    public static void Rebake()
+    {
+        _pathingReady = false;
+        NavRegion.BakeNavigationPolygon();
+    }
+
     private static void EndTurn()
     {
         _sides = [.. _sides.Where(x => x.Count > 0)];

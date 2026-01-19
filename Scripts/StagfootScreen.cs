@@ -124,6 +124,11 @@ public partial class StagfootScreen : Node2D
 		return GetProps().Where(x => x is Prop prop && prop.IsSeat() && !prop.IsNamedProp());
 	}
 
+	public List<StaticBody2D> GetDoorProps()
+	{
+		return GetProps().Where(x => x is Prop prop && prop.IsInGroup(new StringName("DoorsGroup"))).ToList();
+	}
+
 	public void DisableProps()
 	{
 		if (_clearableProps != null)

@@ -187,6 +187,7 @@ _data = {
 
 [node name="GenericNpc" type="CharacterBody2D"]
 z_index = 4
+z_as_relative = false
 script = ExtResource("1_o8lhq")
 ToHitFont = SubResource("SystemFont_tk7xo")
 metadata/_custom_type_script = "uid://bsrhat3n35udl"

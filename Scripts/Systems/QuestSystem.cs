@@ -13,7 +13,6 @@ public static class QuestSystem
     {
         _quests[quest.ResourcePath] = quest;
         OnQuestUpdated?.Invoke(quest);
-        UpdateJournalDisplay();
     }
 
     public static void RemoveQuest(Quest quest)
@@ -35,7 +34,6 @@ public static class QuestSystem
         }
 
         
-       UpdateJournalDisplay(); 
     }
 
     public static void UpdateJournalDisplay()

@@ -86,7 +86,7 @@ offset_bottom = 168.0
 text = "YOUR TURN"
 
 [node name="JournalDisplay" parent="Camera2D" instance=ExtResource("7_7eedp")]
-z_index = 500
+z_index = 4096
 z_as_relative = false
 offset_left = -136.0
 offset_top = -48.0

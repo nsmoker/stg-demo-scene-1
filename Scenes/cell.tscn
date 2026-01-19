@@ -1,44 +1,213 @@
-[gd_scene load_steps=3 format=3 uid="uid://c1hkfkbdi4p7c"]
+[gd_scene load_steps=13 format=3 uid="uid://c1hkfkbdi4p7c"]
 
 [ext_resource type="PackedScene" uid="uid://cn70gd61iefwk" path="res://Scenes/wall_section_prop.tscn" id="1_efq80"]
 [ext_resource type="PackedScene" uid="uid://cmpn1crr0je53" path="res://Scenes/ChairProp.tscn" id="2_da881"]
+[ext_resource type="Script" uid="uid://bcyi1tcfc373q" path="res://Scripts/Prop.cs" id="3_imdwo"]
+[ext_resource type="Texture2D" uid="uid://c8irpnaq3voo2" path="res://Sprites/Props/cellbars.png" id="4_7tk7m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r6d3g"]
+size = Vector2(32, 92)
+
+[sub_resource type="Animation" id="Animation_imdwo"]
+resource_name = "DoorOpening"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.9333334),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-93, -52), Vector2(-93, -84)]
+}
+
+[sub_resource type="Animation" id="Animation_hvgce"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-93, -52)]
+}
+
+[sub_resource type="Animation" id="Animation_hyryu"]
+resource_name = "hover"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(0.75, 0.75, 1),
+"update": 0,
+"values": [Vector2(0, -12), Vector2(0, -2), Vector2(0, -12)]
+}
+
+[sub_resource type="Animation" id="Animation_onwmm"]
+resource_name = "idle"
+length = 4.0
+loop_mode = 1
+step = 0.5
+
+[sub_resource type="Animation" id="Animation_2s0bl"]
+resource_name = "land"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.05831472, 1),
+"update": 0,
+"values": [Vector2(0, -2), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_r8e0v"]
+resource_name = "takeoff"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -12)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hvgce"]
+_data = {
+&"DoorOpening": SubResource("Animation_imdwo"),
+&"RESET": SubResource("Animation_hvgce"),
+&"hover": SubResource("Animation_hyryu"),
+&"idle": SubResource("Animation_onwmm"),
+&"land": SubResource("Animation_2s0bl"),
+&"takeoff": SubResource("Animation_r8e0v")
+}
 
 [node name="Cell" type="Node2D"]
 
 [node name="WallSectionProp" parent="." instance=ExtResource("1_efq80")]
-position = Vector2(-133, -108)
+z_index = 3
+position = Vector2(-156, -118)
 rotation = 1.5707964
 
 [node name="WallSectionProp2" parent="." instance=ExtResource("1_efq80")]
-position = Vector2(-165, -108)
+z_index = 3
+position = Vector2(-124, -118)
 rotation = 1.5707964
 
 [node name="WallSectionProp3" parent="." instance=ExtResource("1_efq80")]
-position = Vector2(-173, -84)
+z_index = 3
+position = Vector2(-84, -108)
 rotation = -3.1415925
 
 [node name="WallSectionProp4" parent="." instance=ExtResource("1_efq80")]
-position = Vector2(-165, -28)
+z_index = 3
+position = Vector2(-156, -38)
 rotation = 1.5707964
 
 [node name="WallSectionProp5" parent="." instance=ExtResource("1_efq80")]
-position = Vector2(-101, -108)
+z_index = 3
+position = Vector2(-124, -38)
 rotation = 1.5707964
 
 [node name="WallSectionProp6" parent="." instance=ExtResource("1_efq80")]
-position = Vector2(-173, -52)
+z_index = 3
+position = Vector2(-164, -94)
 rotation = -3.1415925
 
 [node name="WallSectionProp7" parent="." instance=ExtResource("1_efq80")]
-position = Vector2(-133, -28)
+z_index = 3
+position = Vector2(-92, -38)
 rotation = 1.5707964
 
 [node name="WallSectionProp8" parent="." instance=ExtResource("1_efq80")]
-position = Vector2(-101, -28)
+z_index = 3
+position = Vector2(-92, -118)
 rotation = 1.5707964
 
 [node name="WallSectionProp9" parent="." instance=ExtResource("1_efq80")]
-position = Vector2(-93, -93)
+z_index = 3
+position = Vector2(-164, -62)
 
 [node name="ChairProp" parent="." instance=ExtResource("2_da881")]
-position = Vector2(-147, -46)
+position = Vector2(-146, -56)
+
+[node name="CellDoor" type="StaticBody2D" parent="." groups=["DoorsGroup", "NavObjects"]]
+z_index = 5
+position = Vector2(-93, -52)
+scale = Vector2(0.5, 0.5)
+collision_layer = 2097153
+script = ExtResource("3_imdwo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CellDoor"]
+position = Vector2(18, -34)
+shape = SubResource("RectangleShape2D_r6d3g")
+
+[node name="Sprite2D" type="Sprite2D" parent="CellDoor"]
+z_index = 5
+texture_filter = 1
+position = Vector2(17.999992, -33.874996)
+scale = Vector2(1, 1.4414063)
+texture = ExtResource("4_7tk7m")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CellDoor"]
+libraries = {
+&"": SubResource("AnimationLibrary_hvgce")
+}
+autoplay = "RESET"

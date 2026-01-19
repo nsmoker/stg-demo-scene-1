@@ -64,6 +64,14 @@ public partial class Prop : StaticBody2D
 					_animationPlayer.Play("idle");
 					break;
 				}
+			case "DoorOpening":
+				{
+					if (CombatSystem.NavReady())
+					{
+						CombatSystem.Rebake();
+					}
+					break;
+				}
 			default:
 				{
 					break;
@@ -85,4 +93,14 @@ public partial class Prop : StaticBody2D
 	{
 		return _seatMarker.GlobalPosition;
 	}
+
+	public void PlayAnimation(String animationName)
+	{
+		_animationPlayer.Play(animationName);
+	}
 }
+
+
+
+
+

@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="Quest" load_steps=6 format=3 uid="uid://bkdpwg5d5lpp7"]
+
+[ext_resource type="Script" uid="uid://ho5p3miawhuu" path="res://Scripts/Resources/QuestStage.cs" id="1_4yfcm"]
+[ext_resource type="Script" uid="uid://be0fsg3lmta4c" path="res://Scripts/Resources/Quest.cs" id="2_htosx"]
+
+[sub_resource type="Resource" id="Resource_l0335"]
+script = ExtResource("1_4yfcm")
+Title = "Get out of bed"
+metadata/_custom_type_script = "uid://ho5p3miawhuu"
+
+[sub_resource type="Resource" id="Resource_s4i28"]
+script = ExtResource("1_4yfcm")
+StageNumber = 1
+Title = "Get Scrappy ;)"
+metadata/_custom_type_script = "uid://ho5p3miawhuu"
+
+[sub_resource type="Resource" id="Resource_3ktmn"]
+script = ExtResource("1_4yfcm")
+StageNumber = 2
+Title = "You are now at Slave Labor"
+Description = "Damn, sucks"
+CompleteQuest = true
+metadata/_custom_type_script = "uid://ho5p3miawhuu"
+
+[resource]
+script = ExtResource("2_htosx")
+Title = "Go to work"
+Description = "Wake the fuck up samurai"
+Stages = Array[ExtResource("1_4yfcm")]([SubResource("Resource_l0335"), SubResource("Resource_s4i28"), SubResource("Resource_3ktmn")])
+metadata/_custom_type_script = "uid://be0fsg3lmta4c"

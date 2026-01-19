@@ -32,6 +32,7 @@ enabled=PackedStringArray("res://addons/aeolus/plugin.cfg", "res://addons/edi/pl
 
 NavObjects=""
 RequiredNpcSpawn=""
+DoorsGroup=""
 
 [gui]
 

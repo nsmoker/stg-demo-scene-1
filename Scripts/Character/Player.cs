@@ -59,6 +59,7 @@ public partial class Player : Character
 				if (player._scene.ToggleJournalDisplay())
 				{
 					player._scene.SetJournalEntries(QuestSystem.GetAllQuests());
+					QuestSystem.UpdateJournalDisplay();
 				}
 			}
 		}
