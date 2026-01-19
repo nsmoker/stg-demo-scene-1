@@ -9,7 +9,7 @@
 subpixel_positioning = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ss715"]
-size = Vector2(14, 29)
+size = Vector2(12, 26)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wxkh7"]
 radius = 500.0
@@ -194,7 +194,7 @@ metadata/_custom_type_script = "uid://bsrhat3n35udl"
 
 [node name="MainCollider" type="CollisionShape2D" parent="."]
 z_index = 2
-position = Vector2(0, 1.5)
+position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_ss715")
 
 [node name="SenseArea" type="Area2D" parent="."]
