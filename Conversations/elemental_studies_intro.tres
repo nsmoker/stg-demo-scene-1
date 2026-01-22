@@ -626,7 +626,6 @@ EditorSize = Vector2(600.0039, 260.00122)
 
 [sub_resource type="Resource" id="Resource_nrw4b"]
 script = ExtResource("19_vgrsl")
-Type = 2
 Duration = 10000000.0
 Probability = 1.0
 metadata/_custom_type_script = "uid://bqhkr10ewh7xe"

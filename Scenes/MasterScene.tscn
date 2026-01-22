@@ -1,12 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://bnrfgnbsigxmy"]
+[gd_scene load_steps=16 format=3 uid="uid://bnrfgnbsigxmy"]
 
 [ext_resource type="Script" uid="uid://dr6pqcp3wddx8" path="res://MasterScene.cs" id="1_l444q"]
 [ext_resource type="PackedScene" uid="uid://gedp1qirf71n" path="res://Scenes/player.tscn" id="4_scu8i"]
 [ext_resource type="Resource" uid="uid://vbjq48kype7r" path="res://Resources/Constants/faction_table.tres" id="5_8vkpp"]
 [ext_resource type="Script" uid="uid://4wgqj3gknq04" path="res://Scripts/Controls/DialogueController.cs" id="6_oiltp"]
 [ext_resource type="PackedScene" uid="uid://bahvdxf74e24c" path="res://Scenes/journal_display.tscn" id="7_7eedp"]
+[ext_resource type="PackedScene" uid="uid://bgk5v73hj7cv0" path="res://Scenes/CombatGym.tscn" id="8_7eedp"]
 [ext_resource type="PackedScene" uid="uid://m8tbjngrrk7x" path="res://Scenes/ExitMenu.tscn" id="8_fc6rv"]
 [ext_resource type="PackedScene" uid="uid://byyqb8ij2pk1f" path="res://Scenes/BunkhouseSceneTest.tscn" id="8_oiltp"]
+[ext_resource type="Script" uid="uid://cwhflap727bje" path="res://Scenes/AreaTransition.cs" id="9_7eedp"]
 
 [sub_resource type="SystemFont" id="SystemFont_8fl2o"]
 font_names = PackedStringArray("Arial")
@@ -28,6 +30,9 @@ font_size = 10
 [sub_resource type="SystemFont" id="SystemFont_vs366"]
 
 [sub_resource type="SystemFont" id="SystemFont_oiltp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7eedp"]
+size = Vector2(99, 34)
 
 [node name="MasterScene" type="Node2D"]
 script = ExtResource("1_l444q")
@@ -111,3 +116,14 @@ ToHitFont = SubResource("SystemFont_oiltp")
 
 [node name="HallwaySceneTest" parent="." instance=ExtResource("8_oiltp")]
 position = Vector2(0, 360)
+
+[node name="ClassroomSceneTest" parent="." instance=ExtResource("8_7eedp")]
+
+[node name="AreaTransition" type="Area2D" parent="."]
+position = Vector2(-21, 208)
+script = ExtResource("9_7eedp")
+Destination = ExtResource("8_7eedp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaTransition"]
+position = Vector2(4.5, 7)
+shape = SubResource("RectangleShape2D_7eedp")

@@ -23,7 +23,7 @@ public partial class CrowdAIDirector : Resource
     }
 
     [Export]
-    private Godot.Collections.Array<CrowdAITask> _possibleTasks;
+    private Godot.Collections.Array<CrowdAITask> _possibleTasks = [];
 
     public Godot.Collections.Array<CrowdAITask> PossibleTasks
     {
