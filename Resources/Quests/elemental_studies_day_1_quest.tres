@@ -25,5 +25,5 @@ metadata/_custom_type_script = "uid://ho5p3miawhuu"
 script = ExtResource("2_ql3l1")
 Title = "Elemental Studies: First Day of Class"
 Description = "It's my first class at Stagfoot! I get to learn the elements."
-Stages = [SubResource("Resource_npb6p"), SubResource("Resource_ql3l1"), SubResource("Resource_iqlfy")]
+Stages = Array[ExtResource("1_npb6p")]([SubResource("Resource_npb6p"), SubResource("Resource_ql3l1"), SubResource("Resource_iqlfy")])
 metadata/_custom_type_script = "uid://be0fsg3lmta4c"

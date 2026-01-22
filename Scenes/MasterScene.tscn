@@ -1,34 +1,13 @@
-[gd_scene load_steps=18 format=3 uid="uid://bnrfgnbsigxmy"]
+[gd_scene load_steps=13 format=3 uid="uid://bnrfgnbsigxmy"]
 
 [ext_resource type="Script" uid="uid://dr6pqcp3wddx8" path="res://MasterScene.cs" id="1_l444q"]
 [ext_resource type="PackedScene" uid="uid://bgk5v73hj7cv0" path="res://Scenes/CombatGym.tscn" id="1_smuqh"]
 [ext_resource type="PackedScene" uid="uid://fq7wp3pxnthf" path="res://Scenes/HallwaySceneTest.tscn" id="2_4j3x6"]
-[ext_resource type="Script" uid="uid://bqhkr10ewh7xe" path="res://Scripts/AI/CrowdAITask.cs" id="4_fc6rv"]
 [ext_resource type="PackedScene" uid="uid://gedp1qirf71n" path="res://Scenes/player.tscn" id="4_scu8i"]
 [ext_resource type="Resource" uid="uid://vbjq48kype7r" path="res://Resources/Constants/faction_table.tres" id="5_8vkpp"]
-[ext_resource type="Script" uid="uid://67g32ecjus0y" path="res://Scripts/AI/CrowdAIDirector.cs" id="5_j3g65"]
 [ext_resource type="Script" uid="uid://4wgqj3gknq04" path="res://Scripts/Controls/DialogueController.cs" id="6_oiltp"]
 [ext_resource type="PackedScene" uid="uid://bahvdxf74e24c" path="res://Scenes/journal_display.tscn" id="7_7eedp"]
 [ext_resource type="PackedScene" uid="uid://m8tbjngrrk7x" path="res://Scenes/ExitMenu.tscn" id="8_fc6rv"]
-
-[sub_resource type="Resource" id="Resource_fc6rv"]
-script = ExtResource("4_fc6rv")
-Type = 2
-Duration = 10000.0
-Probability = 0.05
-metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
-
-[sub_resource type="Resource" id="Resource_j3g65"]
-script = ExtResource("4_fc6rv")
-Type = 3
-Duration = 10.0
-Probability = 0.95
-metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
-
-[sub_resource type="Resource" id="Resource_hqwvr"]
-script = ExtResource("5_j3g65")
-_possibleTasks = Array[Object]([SubResource("Resource_fc6rv"), SubResource("Resource_j3g65")])
-WalkSpeed = 40.0
 
 [sub_resource type="SystemFont" id="SystemFont_8fl2o"]
 font_names = PackedStringArray("Arial")
@@ -55,7 +34,6 @@ _startingScene = ExtResource("2_4j3x6")
 
 [node name="ClassroomSceneTest" parent="." instance=ExtResource("1_smuqh")]
 GenericNpcCount = 22
-GenericNpcDirector = SubResource("Resource_hqwvr")
 
 [node name="HallwaySceneTest" parent="." instance=ExtResource("2_4j3x6")]
 position = Vector2(0, 360)
