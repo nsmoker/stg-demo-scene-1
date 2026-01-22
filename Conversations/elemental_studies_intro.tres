@@ -16,7 +16,7 @@
 [ext_resource type="Resource" uid="uid://cbhlbpdtrwxxy" path="res://Resources/Named Props/player_chair_elem_intro.tres" id="16_2go6d"]
 [ext_resource type="Script" uid="uid://botrmedkq7fbb" path="res://Scripts/DialogueNodes/SitOnPropBlocking.cs" id="17_p6uxs"]
 [ext_resource type="Script" uid="uid://b7078p410g42l" path="res://Scripts/DialogueNodes/SetCurrentScreenCrowdActions.cs" id="17_qopdl"]
-[ext_resource type="Script" uid="uid://bqhkr10ewh7xe" path="res://Scripts/AI/CrowdAITask.cs" id="19_vgrsl"]
+[ext_resource type="Script" uid="uid://bp2gnq1ued153" path="res://Scripts/AI/Tasks/FindOpenSeatTask.cs" id="18_qopdl"]
 [ext_resource type="Script" uid="uid://rwlxgbnachp6" path="res://Scripts/DialogueNodes/HostilityOverride.cs" id="21_7ojc4"]
 [ext_resource type="Resource" uid="uid://cx3eet0w6nlc3" path="res://Resources/Characters/marot.tres" id="21_y3wwa"]
 
@@ -625,11 +625,11 @@ EditorPos = Vector2(-3060, 640)
 EditorSize = Vector2(600.0039, 260.00122)
 
 [sub_resource type="Resource" id="Resource_nrw4b"]
-script = ExtResource("19_vgrsl")
-Type = 2
-Duration = 10000000.0
+script = ExtResource("18_qopdl")
+WalkSpeed = 50.0
 Probability = 1.0
-metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
+Duration = 10000000.0
+metadata/_custom_type_script = "uid://bp2gnq1ued153"
 
 [sub_resource type="Resource" id="Resource_umq8s"]
 script = ExtResource("17_qopdl")

@@ -86,9 +86,9 @@ EditorSize = Vector2(720, 380)
 
 [sub_resource type="Resource" id="Resource_j6uhh"]
 script = ExtResource("15_j6uhh")
-Nodes = Array[ExtResource("14_b8mys")]([SubResource("Resource_gokwg"), SubResource("Resource_afsmo"), SubResource("Resource_5c5rk")])
-EntryPoints = Array[ExtResource("14_b8mys")]([SubResource("Resource_044gb")])
-Connections = Array[ExtResource("13_tw53w")]([SubResource("Resource_b5i2i"), SubResource("Resource_qilru")])
+Nodes = [SubResource("Resource_gokwg"), SubResource("Resource_afsmo"), SubResource("Resource_5c5rk")]
+EntryPoints = [SubResource("Resource_044gb")]
+Connections = [SubResource("Resource_b5i2i"), SubResource("Resource_qilru")]
 metadata/_custom_type_script = "uid://cmw85ukaae1eh"
 
 [sub_resource type="Resource" id="Resource_l4oaw"]
@@ -164,9 +164,9 @@ EditorSize = Vector2(679.99963, 359.99915)
 
 [sub_resource type="Resource" id="Resource_lh5eo"]
 script = ExtResource("15_j6uhh")
-Nodes = Array[ExtResource("14_b8mys")]([SubResource("Resource_4ch5w"), SubResource("Resource_324pm"), SubResource("Resource_svi83"), SubResource("Resource_dj2i3"), SubResource("Resource_3hohp")])
-EntryPoints = Array[ExtResource("14_b8mys")]([SubResource("Resource_wyuvk")])
-Connections = Array[ExtResource("13_tw53w")]([SubResource("Resource_l4oaw"), SubResource("Resource_su8nj"), SubResource("Resource_wqt3d"), SubResource("Resource_r2l7g")])
+Nodes = [SubResource("Resource_4ch5w"), SubResource("Resource_324pm"), SubResource("Resource_svi83"), SubResource("Resource_dj2i3"), SubResource("Resource_3hohp")]
+EntryPoints = [SubResource("Resource_wyuvk")]
+Connections = [SubResource("Resource_l4oaw"), SubResource("Resource_su8nj"), SubResource("Resource_wqt3d"), SubResource("Resource_r2l7g")]
 metadata/_custom_type_script = "uid://cmw85ukaae1eh"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f311p"]

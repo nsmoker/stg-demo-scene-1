@@ -1,11 +1,10 @@
-[gd_scene load_steps=71 format=3 uid="uid://fq7wp3pxnthf"]
+[gd_scene load_steps=72 format=3 uid="uid://fq7wp3pxnthf"]
 
 [ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_nc75b"]
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="2_xfs0e"]
 [ext_resource type="Texture2D" uid="uid://r2xchsyxvc4r" path="res://Sprites/Characters/pc_ingame_npc_fa.png" id="4_1b7np"]
 [ext_resource type="PackedScene" uid="uid://cy27gk81ig72o" path="res://Scenes/generic_npc.tscn" id="4_l2y3h"]
 [ext_resource type="Texture2D" uid="uid://cvobau2o6qy0n" path="res://Sprites/Backdrops/Hallway.png" id="4_xfs0e"]
-[ext_resource type="Script" uid="uid://bqhkr10ewh7xe" path="res://Scripts/AI/CrowdAITask.cs" id="5_2xnf6"]
 [ext_resource type="PackedScene" uid="uid://bgk5v73hj7cv0" path="res://Scenes/CombatGym.tscn" id="5_03dat"]
 [ext_resource type="Texture2D" uid="uid://c6syadx2hm1cg" path="res://Sprites/Characters/pc_ingame_npc_fb.png" id="5_fdiyx"]
 [ext_resource type="Texture2D" uid="uid://b15gt320egkk8" path="res://Sprites/Characters/pc_ingame_npc_fc.png" id="6_gkcab"]
@@ -15,34 +14,36 @@
 [ext_resource type="Script" uid="uid://cwhflap727bje" path="res://Scenes/AreaTransition.cs" id="7_k3e6v"]
 [ext_resource type="Texture2D" uid="uid://c3xdtaspbe1s1" path="res://Sprites/Characters/pc_ingame_player_mb.png" id="8_cmmxr"]
 [ext_resource type="Texture2D" uid="uid://b6wph1kvjioyc" path="res://Sprites/Characters/pc_ingame_player_mc.png" id="9_ixlj7"]
+[ext_resource type="Script" uid="uid://bnnw2jjpr66nv" path="res://Scripts/AI/Tasks/FollowCrowdFlowTask.cs" id="9_x5x36"]
+[ext_resource type="Script" uid="uid://d1vkd3kyomm1f" path="res://Scripts/AI/Tasks/TalkToPartnerTask.cs" id="10_1b7np"]
 [ext_resource type="Script" uid="uid://d2tkly6yb1huc" path="res://addons/aeolus/FlowField.cs" id="11_2impm"]
 [ext_resource type="Script" uid="uid://cno40qs5solb3" path="res://addons/aeolus/FlowFieldControlPoint.cs" id="12_x5x36"]
 
-[sub_resource type="Resource" id="Resource_2xnf6"]
-script = ExtResource("5_2xnf6")
-Type = 4
-Duration = 30.0
+[sub_resource type="Resource" id="Resource_7nwkt"]
+script = ExtResource("9_x5x36")
+WalkSpeed = 20.0
 Probability = 0.475
-metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
+Duration = 100000.0
+metadata/_custom_type_script = "uid://bnnw2jjpr66nv"
 
-[sub_resource type="Resource" id="Resource_xnvdo"]
-script = ExtResource("5_2xnf6")
-Type = 3
-Duration = 60.0
+[sub_resource type="Resource" id="Resource_4m6db"]
+script = ExtResource("10_1b7np")
+WalkSpeed = 20.0
 Probability = 0.05
-metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
+Duration = 10.0
+metadata/_custom_type_script = "uid://d1vkd3kyomm1f"
 
 [sub_resource type="Resource" id="Resource_sbnvp"]
-script = ExtResource("5_2xnf6")
-Type = 4
-Duration = 30.0
+script = ExtResource("9_x5x36")
+FlowFieldIndex = 1
+WalkSpeed = 20.0
 Probability = 0.475
-Tag = 1
-metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
+Duration = 100000.0
+metadata/_custom_type_script = "uid://bnnw2jjpr66nv"
 
 [sub_resource type="Resource" id="Resource_e0fpw"]
 script = ExtResource("6_osk5m")
-_possibleTasks = Array[Object]([SubResource("Resource_2xnf6"), SubResource("Resource_xnvdo"), SubResource("Resource_sbnvp")])
+_possibleTasks = Array[Object]([SubResource("Resource_7nwkt"), SubResource("Resource_4m6db"), SubResource("Resource_sbnvp")])
 
 [sub_resource type="Resource" id="Resource_1b7np"]
 script = ExtResource("12_x5x36")

@@ -1,5 +1,5 @@
+using ArkhamHunters.Scripts;
 using Godot;
-using System;
 
 public enum CrowdAITaskType
 {
@@ -15,14 +15,10 @@ public enum CrowdAITaskType
 public partial class CrowdAITask : Resource
 {
     [Export]
-    public CrowdAITaskType Type;
-
-    [Export]
-    public double Duration;
-
-    [Export]
     public float Probability;
 
     [Export]
-    public int Tag;
+    public float Duration;
+
+    public virtual void StartTask(Character character, StagfootScreen area, double duration, CrowdAIDirector director) { }
 }

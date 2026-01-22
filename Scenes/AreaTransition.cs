@@ -1,7 +1,4 @@
 using Godot;
-using System;
-using System.Net.WebSockets;
-using System.Security.Cryptography.X509Certificates;
 
 public partial class AreaTransition : Area2D
 {
