@@ -12,7 +12,7 @@ public partial class DialogueController : ScrollContainer
     private Label _dialogueLabel;
     private Label _speakerLabel;
     private VBoxContainer _container;
-    private List<Label> _choiceLabels = [];
+    private readonly List<Label> _choiceLabels = [];
 
     private bool actionDone = true;
 
@@ -39,7 +39,7 @@ public partial class DialogueController : ScrollContainer
 
     public static bool TryGetContinuation(Conversation conversation, ulong rootId, int i, out DialogueGraphNode node)
     {
-        var contained = TryGetNodeById(conversation, rootId, out var n);
+        _ = TryGetNodeById(conversation, rootId, out var n);
         var continuations = conversation.GetContinuationsForNode(n);
         if (continuations.Count > i)
         {
@@ -106,14 +106,9 @@ public partial class DialogueController : ScrollContainer
         public void Process(double delta, DialogueController controller) { }
     }
 
-    private class EvalState : IDialogueControllerState
+    private class EvalState(DialogueGraphNode node, DialogueController controller) : IDialogueControllerState
     {
-        private DialogueGraphNode _node;
-        public EvalState(DialogueGraphNode node, DialogueController controller)
-        {
-            _node = node;
-
-        }
+        private readonly DialogueGraphNode _node = node;
 
         public void Process(double delta, DialogueController controller)
         {
@@ -158,7 +153,7 @@ public partial class DialogueController : ScrollContainer
 
     private class WriteState : IDialogueControllerState
     {
-        private DialogueGraphNode _node;
+        private readonly DialogueGraphNode _node;
         private double _timeSinceLastWrite = 0;
 
         public WriteState(DialogueController controller, DialogueGraphNode node)
@@ -205,15 +200,15 @@ public partial class DialogueController : ScrollContainer
 
     private class ChoiceState : IDialogueControllerState
     {
-        private DialogueController _controller;
-        private DialogueGraphNode _node;
+        private readonly DialogueController _controller;
+        private readonly DialogueGraphNode _node;
 
         private void AddChoiceLabel(DialogueController controller, DialogueGraphNode choice, int number)
         {
             var choiceLabel = new DialogueLabel
             {
                 CustomMinimumSize = controller._dialogueLabel.CustomMinimumSize,
-                LabelSettings = (LabelSettings)controller._dialogueLabel.LabelSettings.DuplicateDeep(),
+                LabelSettings = (LabelSettings) controller._dialogueLabel.LabelSettings.DuplicateDeep(),
                 NormalColor = controller.NormalColor,
                 HoveredColor = controller.HoveredColor
             };
@@ -229,10 +224,7 @@ public partial class DialogueController : ScrollContainer
             _controller = controller;
             _node = node;
 
-            var choices = controller._conversation.GetContinuationsForNode(node).Where(x =>
-                {
-                    return x.NodeType == EverydayDialogueEditor.DialogueNodeType.PlayerResponse && (x.Condition == null || x.Condition.Evaluate());
-                }).ToList();
+            var choices = controller._conversation.GetContinuationsForNode(node).Where(x => x.NodeType == EverydayDialogueEditor.DialogueNodeType.PlayerResponse && (x.Condition == null || x.Condition.Evaluate())).ToList();
             for (int i = 0; i < choices.Count; ++i)
             {
                 AddChoiceLabel(controller, choices[i], i);
@@ -254,10 +246,7 @@ public partial class DialogueController : ScrollContainer
         State = new IdleState(this);
     }
 
-    public override void _Process(double delta)
-    {
-        State.Process(delta, this);
-    }
+    public override void _Process(double delta) => State.Process(delta, this);
 
     public void BeginConversation(Conversation conversation, int entryPoint)
     {

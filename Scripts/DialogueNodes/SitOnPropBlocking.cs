@@ -1,16 +1,16 @@
-using System;
 using EverydayDialogueEditor;
 using Godot;
+using System;
 
 [Tool]
 [GlobalClass]
 public partial class SitOnPropBlocking : DialogueAction
 {
     [Export]
-    CharacterData _sitter;
+    private CharacterData _sitter;
 
     [Export]
-    PropData _propData;
+    private PropData _propData;
 
     public override void Execute(Action onComplete)
     {

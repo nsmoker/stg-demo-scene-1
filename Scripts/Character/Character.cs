@@ -1,7 +1,7 @@
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Godot;
 
 namespace ArkhamHunters.Scripts;
 
@@ -71,7 +71,7 @@ public partial class Character : CharacterBody2D
     public NavigationObstacle2D NavObstacle;
 
     [Export]
-    private Godot.Collections.Array<Item> InitialInventory = new();
+    private Godot.Collections.Array<Item> InitialInventory = [];
 
     [Export]
     public CharacterData CharacterData;
@@ -88,18 +88,14 @@ public partial class Character : CharacterBody2D
     [Export]
     public Godot.Collections.Array<Ability> Abilities = [];
 
-    Marker2D _projectileSpawnPoint;
+    private Marker2D _projectileSpawnPoint;
 
     public Sprite2D CoverBadge;
 
-    private Dictionary<StatusEffect, StackStatus> _statusEffects = [];
+    private readonly Dictionary<StatusEffect, StackStatus> _statusEffects = [];
 
-    private float _speed = 20.0f;
-
-    public float Speed { get => _speed; set => _speed = value; }
-
-    private float _movementRange = 20.0f;
-    public float MovementRange { get => _movementRange; set => _movementRange = value; }
+    public float Speed { get; set; } = 20.0f;
+    public float MovementRange { get; set; } = 20.0f;
 
     private StatusEffectContainer _statusEffectContainer;
 
@@ -125,10 +121,7 @@ public partial class Character : CharacterBody2D
         Willpower = Willpower,
     };
 
-    private static int ComputeAttributeMod(int value)
-    {
-        return (int)Math.Floor(((double)value - 10.0) / 2.0);
-    }
+    private static int ComputeAttributeMod(int value) => (int) Math.Floor(((double) value - 10.0) / 2.0);
 
     public int StrengthMod => ComputeAttributeMod(Strength);
     public int EnduranceMod => ComputeAttributeMod(Endurance);
@@ -204,7 +197,7 @@ public partial class Character : CharacterBody2D
 
                 character.Velocity += currentPatrolLeg.Direction * character.Speed;
                 character._patrolLegProgress += character.Velocity.Length();
-                character.MoveAndSlide();
+                _ = character.MoveAndSlide();
                 character.SetWalkAnimState(character.Velocity);
             }
         }
@@ -214,10 +207,10 @@ public partial class Character : CharacterBody2D
 
     private class CombatState : ICharacterState
     {
-        Character _c;
-        bool _isOurTurn;
-        bool _attackedThisTurn = false;
-        bool _hovered = false;
+        private readonly Character _c;
+        private bool _isOurTurn;
+        private bool _attackedThisTurn = false;
+        private bool _hovered = false;
         public CombatState(Character character)
         {
             _c = character;
@@ -228,14 +221,14 @@ public partial class Character : CharacterBody2D
             CombatSystem.TurnHandlers += OnTurnBegin;
             _c.QueueRedraw();
             _isOurTurn = CombatSystem.GetMovingSide().Contains(character.CharacterData.ResourcePath);
-            _c.UpdateCoverState(_c.GetWorld2D().DirectSpaceState);
+            _ = _c.UpdateCoverState(_c.GetWorld2D().DirectSpaceState);
         }
 
         public void PhysicsProcess(double delta, Character character)
         {
             if (_isOurTurn && CombatSystem.NavReady())
             {
-                List<Character> enemiesInSense = character.GetSenseArea().GetOverlappingBodies().Where(body => body is Character).Cast<Character>().Where(c => HostilitySystem.GetHostility(character.CharacterData.ResourcePath, c.CharacterData.ResourcePath)).ToList();
+                List<Character> enemiesInSense = [.. character.GetSenseArea().GetOverlappingBodies().Where(body => body is Character).Cast<Character>().Where(c => HostilitySystem.GetHostility(character.CharacterData.ResourcePath, c.CharacterData.ResourcePath))];
                 var closestEnemy = enemiesInSense.OrderBy(c => c.GlobalPosition.DistanceTo(character.GlobalPosition)).FirstOrDefault();
                 if (closestEnemy != null)
                 {
@@ -246,20 +239,17 @@ public partial class Character : CharacterBody2D
                         if (path.Length == 0)
                         {
                             var targetVec = closestEnemy.GlobalPosition - character.GlobalPosition;
-                            character.ControllerState = new CombatNavState(character, [character.GlobalPosition + targetVec.Normalized() * character._movementRange]);
+                            character.ControllerState = new CombatNavState(character, [character.GlobalPosition + targetVec.Normalized() * character.MovementRange]);
                         }
                         else
                         {
-                            character.ControllerState = new CombatNavState(character, TrimPath(character.GlobalPosition, path, character._movementRange));
+                            character.ControllerState = new CombatNavState(character, TrimPath(character.GlobalPosition, path, character.MovementRange));
                         }
                     }
                     else if (!_attackedThisTurn)
                     {
                         // In range, attack.
-                        character.IssueAttack(closestEnemy.CharacterData, character.GlobalPosition.DirectionTo(closestEnemy.GlobalPosition), () =>
-                        {
-                            character.BasicAttackAbility.Activate(character, closestEnemy, character.GetProjectileSpawnPoint(), closestEnemy.GlobalPosition);
-                        });
+                        character.IssueAttack(closestEnemy.CharacterData, character.GlobalPosition.DirectionTo(closestEnemy.GlobalPosition), () => character.BasicAttackAbility.Activate(character, closestEnemy, character.GetProjectileSpawnPoint(), closestEnemy.GlobalPosition));
                         _attackedThisTurn = true;
                     }
                 }
@@ -314,23 +304,15 @@ public partial class Character : CharacterBody2D
         }
     }
 
-    protected class NavState : ICharacterState
+    protected class NavState(Vector2[] path, Character.ICharacterState nextState, Action onComplete = null, float speed = -1, float tolerance = 1.0f) : ICharacterState
     {
-        ICharacterState _nextState;
+        private readonly ICharacterState _nextState = nextState;
 
-        readonly Action _onComplete;
-        private readonly Vector2[] _path;
+        private readonly Action _onComplete = onComplete;
+        private readonly Vector2[] _path = path;
         private int _currentPoint = 0;
-        private readonly float _speed = -1;
-        private readonly float _tolerance;
-        public NavState(Vector2[] path, ICharacterState nextState, Action onComplete = null, float speed = -1, float tolerance = 1.0f)
-        {
-            _path = path;
-            _nextState = nextState;
-            _onComplete = onComplete;
-            _speed = speed;
-            _tolerance = tolerance;
-        }
+        private readonly float _speed = speed;
+        private readonly float _tolerance = tolerance;
 
         public void Process(double delta, Character character)
         {
@@ -359,7 +341,7 @@ public partial class Character : CharacterBody2D
             var vel = targetVector.Normalized() * (_speed > 0.0f ? _speed : character.Speed);
             character.Velocity += vel;
             character.SetWalkAnimState(vel);
-            character.MoveAndSlide();
+            _ = character.MoveAndSlide();
         }
 
         public void OnTransition(Character character) { }
@@ -367,10 +349,10 @@ public partial class Character : CharacterBody2D
 
     protected class CombatNavState : ICharacterState
     {
-        readonly Character _character;
-        readonly Action _onComplete;
+        private readonly Character _character;
+        private readonly Action _onComplete;
 
-        private Vector2[] _path;
+        private readonly Vector2[] _path;
         private int _currentPoint = 0;
 
         public CombatNavState(Character character, Vector2[] path, Action onComplete = null)
@@ -397,7 +379,7 @@ public partial class Character : CharacterBody2D
                 else
                 {
                     CombatSystem.AttemptMove(character.CharacterData);
-                    character.UpdateCoverState(character.GetWorld2D().DirectSpaceState);
+                    _ = character.UpdateCoverState(character.GetWorld2D().DirectSpaceState);
                     _character.SetAnimState(AnimState.Idle);
                     _character.ControllerState = _character.GetCombatState();
                     _onComplete?.Invoke();
@@ -409,31 +391,21 @@ public partial class Character : CharacterBody2D
                 var vel = targetVector.Normalized() * _character.Speed;
                 _character.Velocity += vel;
                 _character.SetWalkAnimState(vel);
-                _character.MoveAndSlide();
+                _ = _character.MoveAndSlide();
             }
         }
 
         public void Process(double delta, Character character) { }
     }
 
-    protected class NavToCharacterState : ICharacterState
+    protected class NavToCharacterState(Character self, Character target, Character.ICharacterState prevState, Action onComplete, float speed, float tolerance) : ICharacterState
     {
-        private Character _target;
-        private Character _self;
-        private ICharacterState _prevState;
-        private Action _onComplete;
-        private float _speed;
-        private float _tolerance;
-
-        public NavToCharacterState(Character self, Character target, ICharacterState prevState, Action onComplete, float speed, float tolerance)
-        {
-            _target = target;
-            _self = self;
-            _prevState = prevState;
-            _onComplete = onComplete;
-            _speed = speed;
-            _tolerance = tolerance;
-        }
+        private readonly Character _target = target;
+        private readonly Character _self = self;
+        private readonly ICharacterState _prevState = prevState;
+        private readonly Action _onComplete = onComplete;
+        private readonly float _speed = speed;
+        private readonly float _tolerance = tolerance;
 
         public void OnTransition(Character character) { }
 
@@ -459,7 +431,7 @@ public partial class Character : CharacterBody2D
 
     public ICharacterState ControllerState
     {
-        get { return _controllerState; }
+        get => _controllerState;
         set
         {
             _controllerState.OnTransition(this);
@@ -467,10 +439,7 @@ public partial class Character : CharacterBody2D
         }
     }
 
-    public bool IsNamedCharacter()
-    {
-        return CharacterData != null;
-    }
+    public bool IsNamedCharacter() => CharacterData != null;
 
     public void AddStatusEffect(StatusEffect effect)
     {
@@ -479,24 +448,21 @@ public partial class Character : CharacterBody2D
         {
             _statusEffects[effect] = new StackStatus();
         }
-        effect.OnStackAdd(this);
+        _ = effect.OnStackAdd(this);
         _statusEffects[effect].NumStacks += 1;
         if (!effect.IsPermanent)
         {
             _statusEffects[effect].StackTimers.Add(
                 CombatSystem.CreateTimer(effect.Duration, () =>
                 {
-                    effect.OnStackRemove(this);
+                    _ = effect.OnStackRemove(this);
                     _statusEffects[effect].NumStacks -= 1;
                 }, CharacterData)
             );
         }
     }
 
-    public void RemoveStatusEffect(StatusEffect effect)
-    {
-        _statusEffects[effect].NumStacks -= 1;
-    }
+    public void RemoveStatusEffect(StatusEffect effect) => _statusEffects[effect].NumStacks -= 1;
 
     public override void _Ready()
     {
@@ -544,10 +510,7 @@ public partial class Character : CharacterBody2D
         UpdateAnimation();
         UpdateUI();
     }
-    public void UpdateUI()
-    {
-        _statusEffectContainer.SetStatusEffects(_statusEffects);
-    }
+    public void UpdateUI() => _statusEffectContainer.SetStatusEffects(_statusEffects);
 
     public virtual void UpdateAnimation()
     {
@@ -603,8 +566,8 @@ public partial class Character : CharacterBody2D
                 push.OnFinish();
             }
         }
-        MoveAndSlide();
-        _currentPushes.RemoveAll(push => push.Duration <= 0);
+        _ = MoveAndSlide();
+        _ = _currentPushes.RemoveAll(push => push.Duration <= 0);
         Velocity = Vector2.Zero;
         ControllerState.PhysicsProcess(delta, this);
     }
@@ -665,23 +628,17 @@ public partial class Character : CharacterBody2D
         return @base + (eq.Weapon.WeaponStats.Melee ? StrengthMod : DexterityMod);
     }
 
-    public bool MeetsEquipRequirements(Item item)
-    {
-        return item.AttributeRequirements.MeetsRequirements(FinalAttributes) &&
+    public bool MeetsEquipRequirements(Item item) => item.AttributeRequirements.MeetsRequirements(FinalAttributes) &&
                item.SkillRequirements.Proficiencies.All(CharacterData.BaseSkills.Proficiencies.Contains);
-    }
 
     public Vector2 GetClosestOnCollSurface(Vector2 SourcePoint)
     {
-        var toTarget = SourcePoint - Position;
+        _ = SourcePoint - Position;
         var supportPoint = collider.Shape.GetRect().GetSupport(SourcePoint);
         return supportPoint;
     }
 
-    public Area2D GetSenseArea()
-    {
-        return _senseArea;
-    }
+    public Area2D GetSenseArea() => _senseArea;
 
     public virtual void OnBodyEnteredSenseArea(Node2D body)
     {
@@ -716,14 +673,11 @@ public partial class Character : CharacterBody2D
         }
     }
 
-    public virtual ICharacterState GetCombatState()
-    {
-        return new CombatState(this);
-    }
+    public virtual ICharacterState GetCombatState() => new CombatState(this);
 
     public virtual void OnCombatEnded()
     {
-        if (ControllerState is CombatState || ControllerState is CombatNavState)
+        if (ControllerState is CombatState or CombatNavState)
         {
             ControllerState = new PatrolState();
         }
@@ -745,10 +699,7 @@ public partial class Character : CharacterBody2D
         }
     }
 
-    public bool IsTakingCover()
-    {
-        return _coverState.CoverLevelWest > 0 || _coverState.CoverLevelEast > 0 || _coverState.CoverLevelSouth > 0 || _coverState.CoverLevelNorth > 0;
-    }
+    public bool IsTakingCover() => _coverState.CoverLevelWest > 0 || _coverState.CoverLevelEast > 0 || _coverState.CoverLevelSouth > 0 || _coverState.CoverLevelNorth > 0;
 
     public CoverCheckResult UpdateCoverState(PhysicsDirectSpaceState2D physicsState)
     {
@@ -917,10 +868,7 @@ public partial class Character : CharacterBody2D
         }
     }
 
-    public void SetAttackTarget(CharacterData c)
-    {
-        _attackTarget = c;
-    }
+    public void SetAttackTarget(CharacterData c) => _attackTarget = c;
 
     public void IssueAttack(CharacterData target, Vector2 direction, Action onComplete = null)
     {
@@ -929,10 +877,7 @@ public partial class Character : CharacterBody2D
         SetAttackAnimState(direction);
     }
 
-    public void IssueCombatMove(Vector2[] path, Action onComplete = null)
-    {
-        ControllerState = new CombatNavState(this, path, onComplete);
-    }
+    public void IssueCombatMove(Vector2[] path, Action onComplete = null) => ControllerState = new CombatNavState(this, path, onComplete);
 
     public void SitOn(Prop prop)
     {
@@ -950,10 +895,7 @@ public partial class Character : CharacterBody2D
         }
     }
 
-    public void SetSprite(Texture2D sprite)
-    {
-        _mainSprite.Texture = sprite;
-    }
+    public void SetSprite(Texture2D sprite) => _mainSprite.Texture = sprite;
 
     public void SetCollisionOverride(bool @override)
     {
@@ -961,10 +903,7 @@ public partial class Character : CharacterBody2D
         SetCollision(!collider.Disabled);
     }
 
-    public void SetCollision(bool enabled)
-    {
-        collider.Disabled = !enabled || !_collisionOverride;
-    }
+    public void SetCollision(bool enabled) => collider.Disabled = !enabled || !_collisionOverride;
 
     public void SetIdle()
     {
@@ -972,10 +911,7 @@ public partial class Character : CharacterBody2D
         SetAnimState(AnimState.Idle);
     }
 
-    public void WalkToCharacter(Character instance, Action onComplete, float speed, float tolerance = 1.0f)
-    {
-        ControllerState = new NavToCharacterState(this, instance, new PatrolState(), onComplete, speed, tolerance);
-    }
+    public void WalkToCharacter(Character instance, Action onComplete, float speed, float tolerance = 1.0f) => ControllerState = new NavToCharacterState(this, instance, new PatrolState(), onComplete, speed, tolerance);
 
     public void SetTalking()
     {
@@ -983,18 +919,9 @@ public partial class Character : CharacterBody2D
         SetAnimState(AnimState.Talking);
     }
 
-    public bool IsSeated()
-    {
-        return _sitting;
-    }
+    public bool IsSeated() => _sitting;
 
-    public Vector2 GetProjectileSpawnPoint()
-    {
-        return _projectileSpawnPoint.GlobalPosition;
-    }
+    public Vector2 GetProjectileSpawnPoint() => _projectileSpawnPoint.GlobalPosition;
 
-    public void AddPush(Push push)
-    {
-        _currentPushes.Add(push);
-    }
+    public void AddPush(Push push) => _currentPushes.Add(push);
 }

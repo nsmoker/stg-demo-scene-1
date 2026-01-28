@@ -3,14 +3,14 @@ using Godot;
 
 namespace ArkhamHunters.Scripts;
 
-public partial class ItemDisplay: VBoxContainer
+public partial class ItemDisplay : VBoxContainer
 {
     private Label _nameLabel;
     private Label _descriptionLabel;
     private TextureRect _textureRect;
-    
+
     private Item _displayedItem;
-    
+
     public ItemSelected OnItemSelected;
 
     public override void _Ready()
@@ -35,15 +35,9 @@ public partial class ItemDisplay: VBoxContainer
         }
     }
 
-    private void OnMouseEntered()
-    {
-        _textureRect.Texture = _displayedItem.OutlineIcon;
-    }
+    private void OnMouseEntered() => _textureRect.Texture = _displayedItem.OutlineIcon;
 
-    private void OnMouseExited()
-    {
-        _textureRect.Texture = _displayedItem.Icon;
-    }
+    private void OnMouseExited() => _textureRect.Texture = _displayedItem.Icon;
 
     private void InputHandler(InputEvent @event)
     {

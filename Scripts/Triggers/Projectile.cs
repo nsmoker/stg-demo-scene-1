@@ -14,14 +14,11 @@ public partial class Projectile : Area2D
 
     private float _timeAlive;
 
-    public override void _Ready()
-    {
-        BodyEntered += OnBodyEntered;
-    }
+    public override void _Ready() => BodyEntered += OnBodyEntered;
 
     public override void _Process(double delta)
     {
-        float deltaTime = (float)delta;
+        float deltaTime = (float) delta;
         Position += Velocity * deltaTime;
         _timeAlive += deltaTime;
 

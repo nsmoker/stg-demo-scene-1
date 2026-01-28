@@ -19,7 +19,7 @@ public struct CombatStartEvent
     public CharacterData initiator;
 }
 
-struct CombatantState
+internal struct CombatantState
 {
     public int MovesRemaining;
     public int ActionsRemaining;
@@ -40,36 +40,21 @@ public struct CombatTimerHandle
 public static class CombatSystem
 {
     private static readonly Dictionary<string, CombatantState> _currentCombatants = [];
-    private static NavigationRegion2D navRegion;
 
     public delegate void AttackEventHandler(AttackEvent e);
     public delegate void CombatStartHandler(CombatStartEvent e);
     public delegate void CharacterJoinedCombatHandler(CharacterData c);
     public delegate void TurnHandler(List<string> side);
 
-    private static AttackEventHandler attackHandlers;
-    private static CombatStartHandler combatStartHandler1;
-    private static CharacterJoinedCombatHandler characterJoinedCombatHandler1;
-
-    private static TurnHandler turnHandler;
-
-    public static NavigationRegion2D NavRegion
-    {
-        get => navRegion; set
-        {
-            navRegion = value;
-        }
-    }
+    public static NavigationRegion2D NavRegion { get; set; }
 
     private static bool _pathingReady = true;
 
-    public static AttackEventHandler AttackHandlers { get => attackHandlers; set => attackHandlers = value; }
-    public static CombatStartHandler CombatStartHandlers { get => combatStartHandler1; set => combatStartHandler1 = value; }
-    public static CharacterJoinedCombatHandler CharacterJoinedCombatHandlers { get => characterJoinedCombatHandler1; set => characterJoinedCombatHandler1 = value; }
-    public static TurnHandler TurnHandlers { get => turnHandler; set => turnHandler = value; }
-    public static Action CombatEnded { get => combatEnded; set => combatEnded = value; }
-
-    private static Action combatEnded;
+    public static AttackEventHandler AttackHandlers { get; set; }
+    public static CombatStartHandler CombatStartHandlers { get; set; }
+    public static CharacterJoinedCombatHandler CharacterJoinedCombatHandlers { get; set; }
+    public static TurnHandler TurnHandlers { get; set; }
+    public static Action CombatEnded { get; set; }
 
     private static List<List<string>> _sides = [];
 
@@ -81,7 +66,7 @@ public static class CombatSystem
 
     private static void OnNavRebakeFinished(Rid rid)
     {
-        if (rid == navRegion.GetNavigationMap())
+        if (rid == NavRegion.GetNavigationMap())
         {
             _pathingReady = true;
         }
@@ -90,14 +75,11 @@ public static class CombatSystem
     private static void OnCharacterDeath(DeathEvent e)
     {
         var deceasedId = e.deceased.CharacterData.ResourcePath;
-        _currentCombatants.Remove(deceasedId);
-        _sides.Find(x => x.Contains(deceasedId)).Remove(deceasedId);
+        _ = _currentCombatants.Remove(deceasedId);
+        _ = _sides.Find(x => x.Contains(deceasedId)).Remove(deceasedId);
     }
 
-    public static bool NavReady()
-    {
-        return _pathingReady && navRegion.NavigationPolygon != null;
-    }
+    public static bool NavReady() => _pathingReady && NavRegion.NavigationPolygon != null;
 
     private static void EndTurn()
     {
@@ -141,7 +123,7 @@ public static class CombatSystem
     private static void EndCombat()
     {
         SceneSystem.GetMasterScene().SetAbilityBarVisible(false);
-        combatEnded?.Invoke();
+        CombatEnded?.Invoke();
         _combatStatusLabel.Visible = false;
         _currentCombatants.Clear();
         _sides.Clear();
@@ -149,10 +131,7 @@ public static class CombatSystem
         NavRegion.BakeNavigationPolygon();
     }
 
-    public static void Initialize()
-    {
-        NavigationServer2D.MapChanged += OnNavRebakeFinished;
-    }
+    public static void Initialize() => NavigationServer2D.MapChanged += OnNavRebakeFinished;
 
     public static void BeginCombat(CharacterData initiator, CharacterData opponent)
     {
@@ -177,7 +156,7 @@ public static class CombatSystem
             var opponentInstance = CharacterSystem.GetInstance(opponent.ResourcePath);
             opponentInstance.NavObstacle.AffectNavigationMesh = true;
             _pathingReady = false;
-            navRegion.BakeNavigationPolygon();
+            NavRegion.BakeNavigationPolygon();
 
             if (initiatiorInstance is Player)
             {
@@ -219,10 +198,7 @@ public static class CombatSystem
     /// Removes the timer referred to by `handle`. It is an error to pass a handle to this function that was not returned by `CreateTimer` or that has already been removed.
     /// </summary>
     /// <param name="handle">A handle to the timer to clear.</param>
-    public static void RemoveTimer(CombatTimerHandle handle)
-    {
-        _combatTimers.RemoveAt(handle.Index);
-    }
+    public static void RemoveTimer(CombatTimerHandle handle) => _combatTimers.RemoveAt(handle.Index);
 
     private static void TriggerTimers(List<string> side)
     {
@@ -362,34 +338,19 @@ public static class CombatSystem
         }
     }
 
-    public static bool TurnShouldEnd()
-    {
-        return !_sides[_sideMoving].Any(x => _currentCombatants[x].MovesRemaining > 0 && _currentCombatants[x].ActionsRemaining > 0);
-    }
+    public static bool TurnShouldEnd() => !_sides[_sideMoving].Any(x => _currentCombatants[x].MovesRemaining > 0 && _currentCombatants[x].ActionsRemaining > 0);
 
-    public static List<string> GetMovingSide()
-    {
-        return _sides[_sideMoving];
-    }
+    public static List<string> GetMovingSide() => _sides[_sideMoving];
 
-    public static bool IsInCombat(CharacterData c)
-    {
-        return _currentCombatants.ContainsKey(c.ResourcePath);
-    }
+    public static bool IsInCombat(CharacterData c) => _currentCombatants.ContainsKey(c.ResourcePath);
 
-    public static int GetActionsRemianing(CharacterData c)
-    {
-        return _currentCombatants[c.ResourcePath].ActionsRemaining;
-    }
+    public static int GetActionsRemianing(CharacterData c) => _currentCombatants[c.ResourcePath].ActionsRemaining;
 
-    public static int GetMovesRemaining(CharacterData c)
-    {
-        return _currentCombatants[c.ResourcePath].MovesRemaining;
-    }
+    public static int GetMovesRemaining(CharacterData c) => _currentCombatants[c.ResourcePath].MovesRemaining;
 
     public static List<Character> GetCharactersInRange(Vector2 position, Shape2D shape)
     {
-        var spaceState = navRegion.GetWorld2D().DirectSpaceState;
+        var spaceState = NavRegion.GetWorld2D().DirectSpaceState;
         var transform = new Transform2D(0, position);
         var shapeQuery = new PhysicsShapeQueryParameters2D()
         {
@@ -403,7 +364,7 @@ public static class CombatSystem
         foreach (var r in result)
         {
             var collider = r["collider"].As<Node>();
-            if (collider != null && collider is Character character)
+            if (collider is not null and Character character)
             {
                 charactersInRange.Add(character);
             }
@@ -411,8 +372,5 @@ public static class CombatSystem
         return charactersInRange;
     }
 
-    public static List<List<string>> GetSides()
-    {
-        return _sides;
-    }
+    public static List<List<string>> GetSides() => _sides;
 }

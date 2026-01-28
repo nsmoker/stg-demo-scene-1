@@ -10,7 +10,7 @@ public partial class FadeToBlack : DialogueAction
         var stagfootScreen = ((Godot.Engine.GetMainLoop() as SceneTree)
            .CurrentScene as MasterScene).GetCurrentScreen();
         var tween = stagfootScreen.GetTree().CreateTween();
-        tween
+        _ = tween
             .TweenProperty(stagfootScreen, "modulate", new Color(0.0f, 0.0f, 0.0f, 1.0f), 1.0f)
             .SetTrans(Tween.TransitionType.Sine)
             .SetEase(Tween.EaseType.In);

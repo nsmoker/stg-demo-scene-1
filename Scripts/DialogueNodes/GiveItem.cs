@@ -1,15 +1,15 @@
-using System;
 using Godot;
+using System;
 
 [GlobalClass]
 [Tool]
 public partial class GiveItem : DialogueAction
 {
     [Export]
-    CharacterData Recipient;
+    private CharacterData Recipient;
 
     [Export]
-    Item ItemToGive;
+    private Item ItemToGive;
 
     public override void Execute(Action onComplete)
     {

@@ -1,16 +1,16 @@
-using System.Collections.Generic;
 using Godot;
+using System.Collections.Generic;
 
 namespace ArkhamHunters.Scripts;
 
-public partial class ContainerDisplay: ItemListDisplay
+public partial class ContainerDisplay : ItemListDisplay
 {
     private Button _getAllButton;
 
     private string _containerEntity = "";
     public string ContainerEntity
     {
-        get { return _containerEntity; }
+        get => _containerEntity;
         set
         {
             _containerEntity = value;
@@ -20,7 +20,7 @@ public partial class ContainerDisplay: ItemListDisplay
             }
         }
     }
-    
+
     public override void _Ready()
     {
         base._Ready();
@@ -36,11 +36,8 @@ public partial class ContainerDisplay: ItemListDisplay
             Visible = false;
         }
     }
-    
-    public bool GetAllPressed()
-    {
-        return _getAllButton.IsPressed();
-    }
+
+    public bool GetAllPressed() => _getAllButton.IsPressed();
 
     public void OnInventoryChangeEvent(string entity, Item item, bool added)
     {

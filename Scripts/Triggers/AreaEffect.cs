@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using ArkhamHunters.Scripts;
 using Godot;
+using System.Collections.Generic;
 
 public partial class AreaEffect : Area2D
 {
@@ -30,36 +30,18 @@ public partial class AreaEffect : Area2D
         }, _caster.CharacterData);
     }
 
-    public void PlayEndAnimation()
-    {
-        _anim.Play("end");
-    }
+    public void PlayEndAnimation() => _anim.Play("end");
 
-    public void SetDuration(int duration)
-    {
-        _duration = duration;
-    }
+    public void SetDuration(int duration) => _duration = duration;
 
-    public void SetCaster(Character caster)
-    {
-        _caster = caster;
-    }
+    public void SetCaster(Character caster) => _caster = caster;
 
-    public void SetDamageRoll(DamageRoll damageRoll)
-    {
-        _damageRoll = damageRoll;
-    }
+    public void SetDamageRoll(DamageRoll damageRoll) => _damageRoll = damageRoll;
 
 
-    public Character GetCaster()
-    {
-        return _caster;
-    }
+    public Character GetCaster() => _caster;
 
-    public void OnTurnBegin(List<string> side)
-    {
-        DealAreaDamage(side);
-    }
+    public void OnTurnBegin(List<string> side) => DealAreaDamage(side);
 
     public void DealAreaDamage(List<string> movingSide, bool manualShapecast = false)
     {

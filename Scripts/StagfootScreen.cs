@@ -6,14 +6,12 @@ using System.Linq;
 
 public partial class StagfootScreen : Node2D
 {
-    private Sprite2D _backdrop;
-    private NavigationRegion2D _navRegion;
     private Node2D _clearableProps;
     private Node2D _genericNpcRoot;
-    private List<Character> _genericNpcInstances = [];
+    private readonly List<Character> _genericNpcInstances = [];
 
-    public Sprite2D Backdrop { get => _backdrop; set => _backdrop = value; }
-    public NavigationRegion2D NavRegion { get => _navRegion; set => _navRegion = value; }
+    public Sprite2D Backdrop { get; set; }
+    public NavigationRegion2D NavRegion { get; set; }
 
     [Export]
     public int GenericNpcCount = 0;
@@ -34,7 +32,7 @@ public partial class StagfootScreen : Node2D
     public Vector2 GetRandomTraversablePoint()
     {
         // Generate a random point within the axis aligned bounding box of the nav mesh.
-        Rect2 navMeshAABB = _navRegion.GetBounds();
+        Rect2 navMeshAABB = NavRegion.GetBounds();
         Vector2 aabbTopLeft = navMeshAABB.Position;
         // We have to call .Abs because the Godot docs explicitly state that Rect2.Size is not always positive (?!?!?!?!?)
         Vector2 aabbExtent = navMeshAABB.Size.Abs();
@@ -58,14 +56,11 @@ public partial class StagfootScreen : Node2D
         NavigationServer2D.MapChanged += OnFirstNavMeshSync;
     }
 
-    public override void _Process(double delta)
-    {
-        GenericNpcDirector.Process(delta, this);
-    }
+    public override void _Process(double delta) => GenericNpcDirector.Process(delta, this);
 
     private void OnFirstNavMeshSync(Rid mapId)
     {
-        if (mapId.Equals(_navRegion.GetNavigationMap()) && GenericNpcCount > 0)
+        if (mapId.Equals(NavRegion.GetNavigationMap()) && GenericNpcCount > 0)
         {
             _genericNpcRoot = new Node2D
             {
@@ -102,20 +97,11 @@ public partial class StagfootScreen : Node2D
         }
     }
 
-    public void SetBackdropTexture(Texture2D texture)
-    {
-        Backdrop.Texture = texture;
-    }
+    public void SetBackdropTexture(Texture2D texture) => Backdrop.Texture = texture;
 
-    public IEnumerable<StaticBody2D> GetProps()
-    {
-        return _clearableProps.FindChildren("*", type: "StaticBody2D", recursive: true).Cast<StaticBody2D>();
-    }
+    public IEnumerable<StaticBody2D> GetProps() => _clearableProps.FindChildren("*", type: "StaticBody2D", recursive: true).Cast<StaticBody2D>();
 
-    public IEnumerable<StaticBody2D> GetUnnamedFurnitureProps()
-    {
-        return GetProps().Where(x => x is Prop prop && prop.IsSeat() && !prop.IsNamedProp());
-    }
+    public IEnumerable<StaticBody2D> GetUnnamedFurnitureProps() => GetProps().Where(x => x is Prop prop && prop.IsSeat() && !prop.IsNamedProp());
 
     public void DisableProps()
     {
@@ -147,13 +133,7 @@ public partial class StagfootScreen : Node2D
         }
     }
 
-    public bool CheckBounds(Vector2 position)
-    {
-        return _navRegion.GetBounds().HasPoint(position);
-    }
+    public bool CheckBounds(Vector2 position) => NavRegion.GetBounds().HasPoint(position);
 
-    public Vector2 GetEdge()
-    {
-        return _navRegion.GetBounds().Position + _navRegion.GetBounds().Size * new Vector2(0.0f, 0.5f);
-    }
+    public Vector2 GetEdge() => NavRegion.GetBounds().Position + NavRegion.GetBounds().Size * new Vector2(0.0f, 0.5f);
 }

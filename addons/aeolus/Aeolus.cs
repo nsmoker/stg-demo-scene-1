@@ -14,15 +14,9 @@ public partial class Aeolus : EditorPlugin
     private bool _controlPointInCreation = false;
 
 
-    public override void _EnablePlugin()
-    {
-        SceneChanged += OnSceneChanged;
-    }
+    public override void _EnablePlugin() => SceneChanged += OnSceneChanged;
 
-    public override bool _Handles(GodotObject @object)
-    {
-        return @object is FlowField;
-    }
+    public override bool _Handles(GodotObject @object) => @object is FlowField;
 
     public override void _Edit(GodotObject @object)
     {
@@ -151,19 +145,10 @@ public partial class Aeolus : EditorPlugin
         }
     }
 
-    public override void _Clear()
-    {
-        ZeroEditorFields();
-    }
+    public override void _Clear() => ZeroEditorFields();
 
-    public override void _DisablePlugin()
-    {
-        ZeroEditorFields();
-    }
+    public override void _DisablePlugin() => ZeroEditorFields();
 
-    private void ZeroEditorFields()
-    {
-        _editedField = null;
-    }
+    private void ZeroEditorFields() => _editedField = null;
 }
 #endif

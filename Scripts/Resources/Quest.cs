@@ -15,7 +15,7 @@ public partial class Quest : Resource
 
     [Export]
     public bool IsCompleted = false;
-    
+
     [Export]
     public int CurrentStage = 0;
 

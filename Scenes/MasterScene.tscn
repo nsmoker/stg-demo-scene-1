@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bj34uqmte0qf3" path="res://Scenes/AbilitiesMenu.tscn" id="9_j3g65"]
 [ext_resource type="PackedScene" uid="uid://bg7o07th2w4x1" path="res://Scenes/AbilityButton.tscn" id="10_vwrou"]
 [ext_resource type="Script" uid="uid://dwq4nn0he6m2m" path="res://Scripts/CombatController.cs" id="11_combat"]
+[ext_resource type="PackedScene" path="res://Scenes/area_transition.tscn" id="14_cpcg4"]
 
 [sub_resource type="Resource" id="Resource_fc6rv"]
 script = ExtResource("4_fc6rv")
@@ -63,6 +64,7 @@ GenericNpcDirector = SubResource("Resource_hqwvr")
 
 [node name="HallwaySceneTest" parent="." unique_id=1641833002 instance=ExtResource("2_4j3x6")]
 position = Vector2(0, 360)
+GenericNpcCount = 20
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1395092712]
 position = Vector2(0, 360)
@@ -151,3 +153,22 @@ ToHitFont = SubResource("SystemFont_oiltp")
 
 [node name="CombatController" type="Node" parent="." unique_id=1525944130]
 script = ExtResource("11_combat")
+
+[node name="AreaTransition" parent="." unique_id=1911315587 instance=ExtResource("14_cpcg4")]
+position = Vector2(-36, 217)
+scale = Vector2(0.19999939, 1)
+DestinationScene = ExtResource("1_smuqh")
+
+[node name="DestinationPoint" parent="AreaTransition" index="1"]
+position = Vector2(-40.000122, -109)
+
+[node name="AreaTransition2" parent="." unique_id=614434942 instance=ExtResource("14_cpcg4")]
+position = Vector2(-36, 154)
+scale = Vector2(0.19999939, 1)
+DestinationScene = ExtResource("2_4j3x6")
+
+[node name="DestinationPoint" parent="AreaTransition2" index="1"]
+position = Vector2(-10.0000305, 117)
+
+[editable path="AreaTransition"]
+[editable path="AreaTransition2"]

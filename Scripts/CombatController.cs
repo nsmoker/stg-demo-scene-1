@@ -1,7 +1,7 @@
+using ArkhamHunters.Scripts;
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
-using ArkhamHunters.Scripts;
 
 public partial class CombatController : Node
 {
@@ -32,7 +32,7 @@ public partial class CombatController : Node
         _inCombat = true;
         _playerMoving = false;
         _isOurTurn = CombatSystem.GetMovingSide().Contains(_player.CharacterData.ResourcePath);
-        _player.UpdateCoverState(_player.GetWorld2D().DirectSpaceState);
+        _ = _player.UpdateCoverState(_player.GetWorld2D().DirectSpaceState);
         _player.ActionPip1.Visible = true;
         _player.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_player.CharacterData) > 1;
         _player.Draw += OnPlayerDraw;
@@ -43,13 +43,17 @@ public partial class CombatController : Node
     private void OnCombatStarted(CombatStartEvent e)
     {
         if (e.participants.Contains(_player.CharacterData.ResourcePath))
+        {
             ActivateCombatControl();
+        }
     }
 
     private void OnCombatJoined(CharacterData joiner)
     {
         if (joiner.ResourcePath.Equals(_player.CharacterData.ResourcePath))
+        {
             ActivateCombatControl();
+        }
     }
 
     private void OnCombatEnded()
@@ -61,19 +65,16 @@ public partial class CombatController : Node
         _player.QueueRedraw();
     }
 
-    private void OnDialogueStarted(Conversation conversation, int entryPoint)
-    {
-        _inDialogue = true;
-    }
+    private void OnDialogueStarted(Conversation conversation, int entryPoint) => _inDialogue = true;
 
-    private void OnDialogueEnded()
-    {
-        _inDialogue = false;
-    }
+    private void OnDialogueEnded() => _inDialogue = false;
 
     public override void _PhysicsProcess(double delta)
     {
-        if (!IsActive || _playerTargetingAbility) return;
+        if (!IsActive || _playerTargetingAbility)
+        {
+            return;
+        }
 
         if (Input.IsActionJustPressed("Combat Interact") && CombatSystem.NavReady() && _isOurTurn)
         {
@@ -108,7 +109,10 @@ public partial class CombatController : Node
 
     private void OnPlayerDraw()
     {
-        if (!IsActive || _playerTargetingAbility) return;
+        if (!IsActive || _playerTargetingAbility)
+        {
+            return;
+        }
 
         if (_isOurTurn && !HoverSystem.AnyHovered())
         {
@@ -127,13 +131,18 @@ public partial class CombatController : Node
                     ? len / 16.0f
                     : _player.GlobalPosition.DistanceTo(_player.GetGlobalMousePosition()) / 16.0f;
                 var targetPoint = pathTransformed.Length > 1
-                    ? pathTransformed[pathTransformed.Length - 1]
+                    ? pathTransformed[^1]
                     : _player.GetLocalMousePosition();
                 Color lineColor = inRange ? new Color(1, 1, 1) : new Color(1, 0, 0);
                 if (pathTransformed.Length > 1)
+                {
                     _player.DrawPolyline(pathTransformed, lineColor);
+                }
                 else
+                {
                     _player.DrawLine(_player.ToLocal(_player.GlobalPosition), _player.GetLocalMousePosition(), lineColor);
+                }
+
                 _player.DrawString(_player.PathFont, targetPoint, $"{dist:0.00}m", fontSize: 8);
             }
         }

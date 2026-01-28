@@ -43,10 +43,7 @@ public partial class Targeting : Sprite2D
             c.IssueAttack(Ability.ContactDamage != null ? CharacterSystem.GetInstance(HoverSystem.Hovered).CharacterData : null,
             pos - c.GlobalPosition,
             // Note: this lambda is evil and Godot will rightly punish us for trying to do things this way if we are not very, very cautious about the lifetimes of the objects here.
-            () =>
-            {
-                Ability.Activate(c, hovered, c.GetProjectileSpawnPoint(), pos);
-            });
+            () => Ability.Activate(c, hovered, c.GetProjectileSpawnPoint(), pos));
 
             SceneSystem.GetMasterScene().GetCombatController().OnAbilityTargetingEnd(Ability);
             Free();

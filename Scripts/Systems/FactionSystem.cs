@@ -11,7 +11,7 @@ public enum Faction
 
 public static class FactionSystem
 {
-    private static Dictionary<string, Faction> _factionMap = [];
+    private static readonly Dictionary<string, Faction> _factionMap = [];
 
     private static FactionTable _relationTable;
 
@@ -23,10 +23,7 @@ public static class FactionSystem
 
     public static FactionRelationChangedEvent FactionRelationChangeHandlers;
 
-    public static void Initialize(FactionTable relations)
-    {
-        _relationTable = relations;
-    }
+    public static void Initialize(FactionTable relations) => _relationTable = relations;
 
     public static void SetFaction(string instance, Faction faction)
     {
@@ -34,10 +31,7 @@ public static class FactionSystem
         FactionChangeHandlers?.Invoke(instance, faction);
     }
 
-    public static bool TryGetFaction(string instance, out Faction faction)
-    {
-        return _factionMap.TryGetValue(instance, out faction);
-    }
+    public static bool TryGetFaction(string instance, out Faction faction) => _factionMap.TryGetValue(instance, out faction);
 
     public static bool GetFactionRelation(Faction faction1, Faction faction2)
     {

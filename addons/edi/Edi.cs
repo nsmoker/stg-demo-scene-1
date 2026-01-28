@@ -12,7 +12,7 @@ public partial class Edi : EditorPlugin
     {
         // Initialization of the plugin goes here.
         _dockContent = GD.Load<PackedScene>(ProjectSettings.GlobalizePath("res://addons/edi/Scenes/graph_edit.tscn")).Instantiate<Control>();
-        _editor = (DialogueEditor)_dockContent;
+        _editor = (DialogueEditor) _dockContent;
         _dock = new EditorDock
         {
             Title = "Dialogue Editor"
@@ -32,10 +32,7 @@ public partial class Edi : EditorPlugin
 
     }
 
-    public override bool _Handles(GodotObject @object)
-    {
-        return @object is Conversation;
-    }
+    public override bool _Handles(GodotObject @object) => @object is Conversation;
 
     public override void _SaveExternalData()
     {
@@ -53,9 +50,6 @@ public partial class Edi : EditorPlugin
         }
     }
 
-    public override void _Clear()
-    {
-        _editor.SetConversationResource(null, false);
-    }
+    public override void _Clear() => _editor.SetConversationResource(null, false);
 }
 #endif

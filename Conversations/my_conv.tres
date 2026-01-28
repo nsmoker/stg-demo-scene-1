@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Conversation" load_steps=8 format=3 uid="uid://0qbjqgvfqfeu"]
+[gd_resource type="Resource" script_class="Conversation" format=3 uid="uid://0qbjqgvfqfeu"]
 
 [ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="1_3fqfa"]
 [ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="2_oa5pc"]

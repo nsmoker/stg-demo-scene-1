@@ -41,19 +41,13 @@ public partial class MasterScene : Node2D
     {
         if (Input.IsActionJustPressed("Exit Menu"))
         {
-            ToggleExitMenu();
+            _ = ToggleExitMenu();
         }
     }
 
-    public StagfootScreen GetCurrentScreen()
-    {
-        return _currentScreen;
-    }
+    public StagfootScreen GetCurrentScreen() => _currentScreen;
 
-    public Label GetCombatStatusLabel()
-    {
-        return _combatStatusLabel;
-    }
+    public Label GetCombatStatusLabel() => _combatStatusLabel;
 
     public void SwitchScene(StagfootScreen destination)
     {
@@ -62,8 +56,8 @@ public partial class MasterScene : Node2D
         Camera2D camera = GetViewport().GetCamera2D();
 
         var tween = GetTree().CreateTween();
-        tween.TweenProperty(camera, "global_position", destination.GlobalPosition, 0.3f);
-        tween.SetEase(Tween.EaseType.InOut);
+        _ = tween.TweenProperty(camera, "global_position", destination.GlobalPosition, 0.3f);
+        _ = tween.SetEase(Tween.EaseType.InOut);
     }
 
     public bool ToggleJournalDisplay()
@@ -72,10 +66,7 @@ public partial class MasterScene : Node2D
         return _journalDisplay.Visible;
     }
 
-    public void SetJournalEntries(List<Quest> quests)
-    {
-        _journalDisplay.SetQuestEntries(quests);
-    }
+    public void SetJournalEntries(List<Quest> quests) => _journalDisplay.SetQuestEntries(quests);
 
     public bool ToggleExitMenu()
     {
@@ -83,15 +74,9 @@ public partial class MasterScene : Node2D
         return _exitMenu.Visible;
     }
 
-    public void OnExitPressed()
-    {
-        GetTree().Quit();
-    }
+    public void OnExitPressed() => GetTree().Quit();
 
-    public void SetAbilityBarVisible(bool visible)
-    {
-        _abilityBar.Visible = visible;
-    }
+    public void SetAbilityBarVisible(bool visible) => _abilityBar.Visible = visible;
 
     public void ActivateAbilityBarForCharacter(Character character)
     {
@@ -99,18 +84,9 @@ public partial class MasterScene : Node2D
         SetAbilityBarVisible(true);
     }
 
-    public void SetAbilityBarReceiveInput(bool receiveInput)
-    {
-        _abilityBar.ProcessMode = receiveInput ? ProcessModeEnum.Always : ProcessModeEnum.Disabled;
-    }
+    public void SetAbilityBarReceiveInput(bool receiveInput) => _abilityBar.ProcessMode = receiveInput ? ProcessModeEnum.Always : ProcessModeEnum.Disabled;
 
-    public Player GetPlayer()
-    {
-        return _player;
-    }
+    public Player GetPlayer() => _player;
 
-    public CombatController GetCombatController()
-    {
-        return _combatController;
-    }
+    public CombatController GetCombatController() => _combatController;
 }

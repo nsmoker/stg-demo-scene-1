@@ -41,7 +41,7 @@ public partial class DialogueNode : GraphNode
 
     public override void _Ready()
     {
-        if (NodeType != DialogueNodeType.ScriptAction && NodeType != DialogueNodeType.ScriptEntry)
+        if (NodeType is not DialogueNodeType.ScriptAction and not DialogueNodeType.ScriptEntry)
         {
             _speakerEdit = GetNode<LineEdit>("Speaker");
             _speakerEdit.Text = Speaker;
@@ -51,15 +51,18 @@ public partial class DialogueNode : GraphNode
             _contentEdit.Text = Content;
         }
 
-        _editorConditionPicker = new EditorResourcePicker();
-        _editorConditionPicker.CustomMinimumSize = new Vector2(400, 30);
-        _editorConditionPicker.BaseType = "DialogueCondition";
-        _editorConditionPicker.ResourceChanged += (Resource resource) =>
+        _editorConditionPicker = new EditorResourcePicker
         {
-            if (_editorConditionPicker.EditedResource != null && _editorConditionPicker.EditedResource is DialogueCondition condition)
+            CustomMinimumSize = new Vector2(400, 30),
+            BaseType = "DialogueCondition"
+        };
+        _editorConditionPicker.ResourceChanged += resource =>
+        {
+            if (_editorConditionPicker.EditedResource is not null and DialogueCondition condition)
             {
                 Condition = condition;
-            };
+            }
+            ;
         };
         _editorConditionPicker.ResourceSelected += OnResourceEditRequest;
 
@@ -73,15 +76,18 @@ public partial class DialogueNode : GraphNode
 
         if (NodeType == DialogueNodeType.ScriptAction)
         {
-            _editorActionPicker = new EditorResourcePicker();
-            _editorActionPicker.CustomMinimumSize = new Vector2(400, 30);
-            _editorActionPicker.BaseType = "DialogueAction";
-            _editorActionPicker.ResourceChanged += (Resource resource) =>
+            _editorActionPicker = new EditorResourcePicker
             {
-                if (_editorActionPicker.EditedResource != null && _editorActionPicker.EditedResource is DialogueAction action)
+                CustomMinimumSize = new Vector2(400, 30),
+                BaseType = "DialogueAction"
+            };
+            _editorActionPicker.ResourceChanged += resource =>
+            {
+                if (_editorActionPicker.EditedResource is not null and DialogueAction action)
                 {
                     Action = action;
-                };
+                }
+                ;
             };
             _editorActionPicker.ResourceSelected += OnResourceEditRequest;
 
@@ -101,10 +107,7 @@ public partial class DialogueNode : GraphNode
         AddChild(_editorConditionPicker);
     }
 
-    public void AddCondition()
-    {
-        _editorConditionPicker.Visible = true;
-    }
+    public void AddCondition() => _editorConditionPicker.Visible = true;
 
     public void RemoveCondition()
     {
@@ -141,7 +144,7 @@ public partial class DialogueNode : GraphNode
             EditorPos = PositionOffset,
             EditorSize = Size,
             Action = Action,
-            LinkDNodeId = _linkButton.Selected >= 0 ? (ulong)_linkButton.GetItemMetadata(_linkButton.Selected) : 0
+            LinkDNodeId = _linkButton.Selected >= 0 ? (ulong) _linkButton.GetItemMetadata(_linkButton.Selected) : 0
         };
     }
 
@@ -174,8 +177,5 @@ public partial class DialogueNode : GraphNode
         }
     }
 
-    public static void OnResourceEditRequest(Resource resource, bool _)
-    {
-        EditorInterface.Singleton.GetInspector().Edit(resource);
-    }
+    public static void OnResourceEditRequest(Resource resource, bool _) => EditorInterface.Singleton.GetInspector().Edit(resource);
 }

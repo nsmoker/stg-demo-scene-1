@@ -1,6 +1,6 @@
-using System;
 using ArkhamHunters.Scripts;
 using Godot;
+using System;
 
 [GlobalClass]
 [Tool]
@@ -22,16 +22,16 @@ public partial class ElementalStudiesDuelTransition : DialogueAction
     public override void Execute(Action onComplete)
     {
         var masterScene = (Godot.Engine.GetMainLoop() as SceneTree)
-			.CurrentScene as MasterScene;
+            .CurrentScene as MasterScene;
         StagfootScreen stagfootScreen = masterScene.GetCurrentScreen();
-		var tween = stagfootScreen.GetTree().CreateTween();
-		tween
-			.TweenProperty(masterScene, "modulate", new Color(0.0f, 0.0f, 0.0f, 1.0f), 1.0f)
-			.SetTrans(Tween.TransitionType.Sine)
-			.SetEase(Tween.EaseType.In);
-        tween.TweenCallback(Callable.From(stagfootScreen.DisableProps));
-        tween.TweenCallback(Callable.From(stagfootScreen.ClearNpcs));
-        tween.TweenCallback(Callable.From(() =>
+        var tween = stagfootScreen.GetTree().CreateTween();
+        _ = tween
+            .TweenProperty(masterScene, "modulate", new Color(0.0f, 0.0f, 0.0f, 1.0f), 1.0f)
+            .SetTrans(Tween.TransitionType.Sine)
+            .SetEase(Tween.EaseType.In);
+        _ = tween.TweenCallback(Callable.From(stagfootScreen.DisableProps));
+        _ = tween.TweenCallback(Callable.From(stagfootScreen.ClearNpcs));
+        _ = tween.TweenCallback(Callable.From(() =>
         {
             var marot = MarotScene.Instantiate<Character>();
             marot.GlobalPosition = MarotSpawnPosition;
@@ -40,11 +40,11 @@ public partial class ElementalStudiesDuelTransition : DialogueAction
             var player = CharacterSystem.GetInstance(PlayerData.ResourcePath);
             player.SetAnimState(Character.AnimState.Idle);
         }));
-		tween
-			.TweenProperty(masterScene, "modulate", new Color(1.0f, 1.0f, 1.0f, 1.0f), 1.0f)
-			.SetTrans(Tween.TransitionType.Sine)
-			.SetEase(Tween.EaseType.Out);
-		tween.TweenCallback(Callable.From(onComplete));
-		tween.Play();
+        _ = tween
+            .TweenProperty(masterScene, "modulate", new Color(1.0f, 1.0f, 1.0f, 1.0f), 1.0f)
+            .SetTrans(Tween.TransitionType.Sine)
+            .SetEase(Tween.EaseType.Out);
+        _ = tween.TweenCallback(Callable.From(onComplete));
+        tween.Play();
     }
 }

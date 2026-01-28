@@ -1,16 +1,16 @@
-using System;
 using EverydayDialogueEditor;
 using Godot;
+using System;
 
 [Tool]
 [GlobalClass]
 public partial class CreateProp : DialogueAction
 {
     [Export]
-    PropData propData;
+    private PropData propData;
 
     [Export]
-    Vector2 position;
+    private Vector2 position;
 
     public override void Execute(Action onComplete)
     {

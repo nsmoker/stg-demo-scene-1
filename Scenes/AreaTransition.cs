@@ -1,16 +1,17 @@
+using ArkhamHunters.Scripts;
 using Godot;
-using System;
-using System.Net.WebSockets;
-using System.Security.Cryptography.X509Certificates;
 
 public partial class AreaTransition : Area2D
 {
+    private Marker2D _destination;
+
     [Export]
-    PackedScene Destination;
+    public PackedScene DestinationScene;
 
     public override void _Ready()
     {
         BodyEntered += OnBodyEntered;
+        _destination = GetNode<Marker2D>("DestinationPoint");
     }
 
     public void OnBodyEntered(Node2D body)
@@ -18,7 +19,12 @@ public partial class AreaTransition : Area2D
         if (body is Player)
         {
             var masterScene = (MasterScene) GetTree().CurrentScene;
-            masterScene.SwitchScene(SceneSystem.GetInstance(Destination.ResourcePath));
+            masterScene.SwitchScene(SceneSystem.GetInstance(DestinationScene.ResourcePath));
+            body.GlobalPosition = _destination.GlobalPosition;
+        }
+        else if (body is Character)
+        {
+            body.QueueFree();
         }
     }
 }

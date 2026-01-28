@@ -1,5 +1,5 @@
-using System.Linq;
 using Godot;
+using System.Linq;
 
 [Tool]
 [GlobalClass]
@@ -18,18 +18,9 @@ public partial class MapCapture : EditorScript
 
         Node2D sceneDup = EditorInterface.Singleton.GetEditedSceneRoot().Duplicate() as Node2D;
         var sceneRect = new Rect2();
-        sceneDup.FindChildren("*", recursive: true).OfType<CollisionShape2D>().ToList().ForEach(n =>
-        {
-            n.Visible = false;
-        });
-        sceneDup.FindChildren("*", recursive: true).OfType<Camera2D>().ToList().ForEach(n =>
-        {
-            n.Visible = false;
-        });
-        sceneDup.FindChildren("*", recursive: true).OfType<CharacterBody2D>().ToList().ForEach(n =>
-        {
-            n.Visible = false;
-        });
+        sceneDup.FindChildren("*", recursive: true).OfType<CollisionShape2D>().ToList().ForEach(n => n.Visible = false);
+        sceneDup.FindChildren("*", recursive: true).OfType<Camera2D>().ToList().ForEach(n => n.Visible = false);
+        sceneDup.FindChildren("*", recursive: true).OfType<CharacterBody2D>().ToList().ForEach(n => n.Visible = false);
         sceneDup.FindChildren("*", recursive: true).ToList().ForEach(n =>
         {
             if (n is TileMapLayer layer)
@@ -39,8 +30,8 @@ public partial class MapCapture : EditorScript
             }
             if (n is Sprite2D spr)
             {
-                sceneRect.Expand(spr.ToGlobal(spr.GetRect().End));
-                sceneRect.Expand(spr.ToGlobal(spr.GetRect().Position));
+                _ = sceneRect.Expand(spr.ToGlobal(spr.GetRect().End));
+                _ = sceneRect.Expand(spr.ToGlobal(spr.GetRect().Position));
             }
         });
         mapCaptureViewport.AddChild(sceneDup);
@@ -52,13 +43,13 @@ public partial class MapCapture : EditorScript
         sceneDup.Scale = Vector2.One / (sceneRect.Size / visibleRect.Size);
         sceneRect.Position = visibleRect.Position;
 
-        await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw);
+        _ = await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw);
         var mapCaptureResource = new MapCaptureResource
         {
             MapImage = mapCaptureViewport.GetTexture().GetImage(),
             LocalTransform = sceneDup.Transform
         };
-        ResourceSaver.Save(mapCaptureResource, "res://map_capture.tres");
+        _ = ResourceSaver.Save(mapCaptureResource, "res://map_capture.tres");
 
         mapCaptureViewport.RemoveChild(sceneDup);
         EditorInterface.Singleton.GetEditedSceneRoot().RemoveChild(mapCaptureViewport);

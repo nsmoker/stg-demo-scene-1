@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public partial class StatusEffectContainer : HBoxContainer
 {
-    List<StatusEffectDisplay> _statusEffectDisplays = [];
+    private readonly List<StatusEffectDisplay> _statusEffectDisplays = [];
 
     [Export]
     public PackedScene StatusEffectDisplayScene;

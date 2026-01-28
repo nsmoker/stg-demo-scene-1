@@ -15,13 +15,7 @@ public partial class StatusEffect : Resource
     public int Duration;
     [Export]
     public Texture2D Icon;
-    public virtual bool OnStackAdd(Character target)
-    {
-        return true;
-    }
+    public virtual bool OnStackAdd(Character target) => true;
 
-    public virtual bool OnStackRemove(Character target)
-    {
-        return true;
-    }
+    public virtual bool OnStackRemove(Character target) => true;
 }

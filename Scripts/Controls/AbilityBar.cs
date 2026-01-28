@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using ArkhamHunters.Scripts;
 using Godot;
+using System.Collections.Generic;
 
 public partial class AbilityBar : HBoxContainer
 {

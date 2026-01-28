@@ -1,19 +1,19 @@
-using System.Collections.Generic;
 using ArkhamHunters.Scripts.Items;
 using Godot;
+using System.Collections.Generic;
 
 namespace ArkhamHunters.Scripts;
 
 public partial class ItemListDisplay : PanelContainer
 {
-    protected readonly List<ItemDisplay> _displayedItems = new();
-    
+    protected readonly List<ItemDisplay> _displayedItems = [];
+
     private VBoxContainer _container;
     private Button _closeButton;
 
-    [Export] 
+    [Export]
     public PackedScene ItemDisplayScene;
-    
+
     public ItemSelected OnItemSelected;
 
     public override void _Ready()
@@ -29,7 +29,7 @@ public partial class ItemListDisplay : PanelContainer
             Visible = false;
         }
     }
-    
+
     public void DisplayItemList(string entity)
     {
         Visible = true;
@@ -37,7 +37,7 @@ public partial class ItemListDisplay : PanelContainer
         {
             display.QueueFree();
         }
-        
+
         _displayedItems.Clear();
 
         var items = InventorySystem.RetrieveInventory(entity);
@@ -53,13 +53,7 @@ public partial class ItemListDisplay : PanelContainer
         }
     }
 
-    public bool ClosePressed()
-    {
-        return _closeButton.IsPressed();
-    }
+    public bool ClosePressed() => _closeButton.IsPressed();
 
-    private void OnChildSelected(Item item)
-    {
-        OnItemSelected?.Invoke(item);
-    }
+    private void OnChildSelected(Item item) => OnItemSelected?.Invoke(item);
 }

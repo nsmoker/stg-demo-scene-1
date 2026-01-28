@@ -5,11 +5,11 @@ using System;
 [GlobalClass]
 public partial class WalkCharToPointNonBlocking : DialogueAction
 {
-	[Export]
-	public CharacterData CharacterData;
+    [Export]
+    public CharacterData CharacterData;
 
-	[Export]
-	public Vector2 Point;
+    [Export]
+    public Vector2 Point;
 
     [Export]
     public Vector2 Facing;

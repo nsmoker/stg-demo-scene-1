@@ -51,7 +51,7 @@ public partial class DialogueEditor : Control
         {
             if (node is DialogueNode dnode)
             {
-                _selection.Remove(dnode);
+                _ = _selection.Remove(dnode);
             }
         };
 
@@ -61,35 +61,17 @@ public partial class DialogueEditor : Control
         var actionButton = _contextMenu.GetNode<Button>("VBoxContainer/ActionButton");
         var conditionButton = _contextMenu.GetNode<Button>("VBoxContainer/ConditionButton");
         var removeConditionButton = _contextMenu.GetNode<Button>("VBoxContainer/RemoveConditionButton");
-        dialogueButton.Pressed += () =>
-        {
-            AddNode("res://addons/edi/Scenes/dialogue_node.tscn", GetLocalMousePosition());
-        };
+        dialogueButton.Pressed += () => _ = AddNode("res://addons/edi/Scenes/dialogue_node.tscn", GetLocalMousePosition());
 
-        entryButton.Pressed += () =>
-        {
-            AddNode("res://addons/edi/Scenes/entry_node.tscn", GetLocalMousePosition());
-        };
+        entryButton.Pressed += () => _ = AddNode("res://addons/edi/Scenes/entry_node.tscn", GetLocalMousePosition());
 
-        responseButton.Pressed += () =>
-        {
-            AddNode("res://addons/edi/Scenes/response_node.tscn", GetLocalMousePosition());
-        };
+        responseButton.Pressed += () => _ = AddNode("res://addons/edi/Scenes/response_node.tscn", GetLocalMousePosition());
 
-        actionButton.Pressed += () =>
-        {
-            AddNode("res://addons/edi/Scenes/action_node.tscn", GetLocalMousePosition());
-        };
+        actionButton.Pressed += () => AddNode("res://addons/edi/Scenes/action_node.tscn", GetLocalMousePosition());
 
-        conditionButton.Pressed += () =>
-        {
-            _selection[0].AddCondition();
-        };
+        conditionButton.Pressed += () => _selection[0].AddCondition();
 
-        removeConditionButton.Pressed += () =>
-        {
-            _selection[0].RemoveCondition();
-        };
+        removeConditionButton.Pressed += () => _selection[0].RemoveCondition();
 
         EditorNode.ConnectionRequest += OnConnectionRequest;
         EditorNode.DisconnectionRequest += OnDisconnectionRequest;
@@ -105,10 +87,7 @@ public partial class DialogueEditor : Control
         EditorNode.PasteNodesRequest += OnPasteRequest;
     }
 
-    public void SetConversationResource(Conversation conversation, bool saveCurrent = true)
-    {
-        LoadConversation(conversation, saveCurrent);
-    }
+    public void SetConversationResource(Conversation conversation, bool saveCurrent = true) => LoadConversation(conversation, saveCurrent);
 
     private void LoadConversation(Conversation conversation, bool saveCurrent = true)
     {
@@ -179,7 +158,7 @@ public partial class DialogueEditor : Control
 
         foreach (var conn in conversation?.Connections)
         {
-            EditorNode.ConnectNode(nodes[conn.fromNode].Name, 0, nodes[conn.toNode].Name, 0);
+            _ = EditorNode.ConnectNode(nodes[conn.fromNode].Name, 0, nodes[conn.toNode].Name, 0);
         }
 
         _editedConversation = conversation;
@@ -358,14 +337,14 @@ public partial class DialogueEditor : Control
         foreach (var name in names)
         {
             var node = EditorNode.GetNode<GraphNode>(name.ToString());
-            var dnode = (DialogueNode)node;
+            var dnode = (DialogueNode) node;
             node.ProcessMode = ProcessModeEnum.Disabled;
             node.Visible = false;
 
             var conns = EditorNode.GetConnectionListFromNode(name);
             foreach (var conn in conns)
             {
-                EditorNode.DisconnectNode((StringName)conn["from_node"], (int)conn["from_port"], (StringName)conn["to_node"], (int)conn["to_port"]);
+                EditorNode.DisconnectNode((StringName) conn["from_node"], (int) conn["from_port"], (StringName) conn["to_node"], (int) conn["to_port"]);
             }
         }
 
@@ -378,13 +357,13 @@ public partial class DialogueEditor : Control
         {
             var node = EditorNode.GetNode(name.ToString());
             node.ProcessMode = ProcessModeEnum.Inherit;
-            ((GraphNode)node).Visible = true;
+            ((GraphNode) node).Visible = true;
         }
         foreach (var list in connectionLists)
         {
             foreach (var conn in list)
             {
-                EditorNode.ConnectNode((StringName)conn["from_node"], (int)conn["from_port"], (StringName)conn["to_node"], (int)conn["to_port"]);
+                _ = EditorNode.ConnectNode((StringName) conn["from_node"], (int) conn["from_port"], (StringName) conn["to_node"], (int) conn["to_port"]);
             }
         }
 
@@ -413,16 +392,16 @@ public partial class DialogueEditor : Control
     public void OnConnectionRequest(StringName from, long fromPort, StringName to, long toPort)
     {
         undoRedoManager.CreateAction($"Connect {from} to {to}");
-        undoRedoManager.AddDoMethod(EditorNode, GraphEdit.MethodName.ConnectNode, from, (int)fromPort, to, (int)toPort);
-        undoRedoManager.AddUndoMethod(EditorNode, GraphEdit.MethodName.DisconnectNode, from, (int)fromPort, to, (int)toPort);
+        undoRedoManager.AddDoMethod(EditorNode, GraphEdit.MethodName.ConnectNode, from, (int) fromPort, to, (int) toPort);
+        undoRedoManager.AddUndoMethod(EditorNode, GraphEdit.MethodName.DisconnectNode, from, (int) fromPort, to, (int) toPort);
         undoRedoManager.CommitAction();
     }
 
     public void OnDisconnectionRequest(StringName from, long fromPort, StringName to, long toPort)
     {
         undoRedoManager.CreateAction($"Disconnect {from} from {to}");
-        undoRedoManager.AddDoMethod(EditorNode, GraphEdit.MethodName.DisconnectNode, from, (int)fromPort, to, (int)toPort);
-        undoRedoManager.AddUndoMethod(EditorNode, GraphEdit.MethodName.ConnectNode, from, (int)fromPort, to, (int)toPort);
+        undoRedoManager.AddDoMethod(EditorNode, GraphEdit.MethodName.DisconnectNode, from, (int) fromPort, to, (int) toPort);
+        undoRedoManager.AddUndoMethod(EditorNode, GraphEdit.MethodName.ConnectNode, from, (int) fromPort, to, (int) toPort);
         undoRedoManager.CommitAction();
     }
 
@@ -446,7 +425,10 @@ public partial class DialogueEditor : Control
 
     private void OnPasteRequest()
     {
-        if (_clipboard.Count == 0) return;
+        if (_clipboard.Count == 0)
+        {
+            return;
+        }
 
         undoRedoManager.CreateAction("Paste Nodes");
         foreach (var node in _clipboard)
@@ -492,7 +474,7 @@ public partial class DialogueEditor : Control
 
     private void UpdateLinkOptions()
     {
-        var nodes = EditorNode.GetChildren().Where(x => x is DialogueNode).Select(x => (DialogueNode)x).ToList();
+        var nodes = EditorNode.GetChildren().Where(x => x is DialogueNode).Select(x => (DialogueNode) x).ToList();
         foreach (var node in nodes)
         {
             if (node.Visible && !node.IsQueuedForDeletion())
@@ -526,14 +508,14 @@ public partial class DialogueEditor : Control
             var connList = EditorNode.GetConnectionListFromNode(dialogueNode.Name);
             foreach (var conn in connList)
             {
-                var from = EditorNode.GetNode<DialogueNode>(((StringName)conn["from_node"]).ToString());
-                var child = EditorNode.GetNode<DialogueNode>(((StringName)conn["to_node"]).ToString());
+                var from = EditorNode.GetNode<DialogueNode>(((StringName) conn["from_node"]).ToString());
+                var child = EditorNode.GetNode<DialogueNode>(((StringName) conn["to_node"]).ToString());
 
                 var fromLoc = ret.IndexOf(dialogueGraphNode);
                 var toLoc = ret.FindIndex(x => x.DNodeId == child.DNodeId);
                 if (dialogueGraphNode.DNodeId == from.DNodeId)
                 {
-                    conns.Add(new DialogueConnection
+                    _ = conns.Add(new DialogueConnection
                     {
                         fromNode = fromLoc,
                         toNode = toLoc
@@ -561,7 +543,7 @@ public partial class DialogueEditor : Control
             _editedConversation.Nodes = conv.Nodes;
             _editedConversation.Connections = conv.Connections;
             _editedConversation.EntryPoints = conv.EntryPoints;
-            ResourceSaver.Save(_editedConversation);
+            _ = ResourceSaver.Save(_editedConversation);
         }
         else
         {
@@ -574,7 +556,7 @@ public partial class DialogueEditor : Control
             dialog.FileSelected += path =>
             {
                 conv.ResourceName = System.IO.Path.GetFileNameWithoutExtension(path);
-                ResourceSaver.Save(conv, path);
+                _ = ResourceSaver.Save(conv, path);
                 _statusLabel.Text = $"Dialogue Editor - Editing {conv.ResourcePath}";
                 dialog.Hide();
                 dialog.QueueFree();
@@ -591,10 +573,7 @@ public partial class DialogueEditor : Control
         {
             Text = "Regenerate Node IDs"
         };
-        button.Pressed += () =>
-        {
-            RegenerateNodeIds();
-        };
+        button.Pressed += RegenerateNodeIds;
         return button;
     }
 

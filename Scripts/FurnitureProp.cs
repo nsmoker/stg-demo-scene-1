@@ -14,13 +14,7 @@ public partial class FurnitureProp : Prop, IInteractable
         _badgeSprite = GetNode<Sprite2D>("BadgeSprite");
     }
 
-    public InteractionType GetInteractionType()
-    {
-        return InteractionType.Furniture;
-    }
+    public InteractionType GetInteractionType() => InteractionType.Furniture;
 
-    public void SetShowBadge(bool showBadge)
-    {
-        _badgeSprite.Visible = showBadge;
-    }
+    public void SetShowBadge(bool showBadge) => _badgeSprite.Visible = showBadge;
 }

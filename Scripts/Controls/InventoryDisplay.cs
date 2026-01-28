@@ -1,21 +1,21 @@
+using ArkhamHunters.Scripts.Items;
+using Godot;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ArkhamHunters.Scripts.Items;
-using Godot;
 
 namespace ArkhamHunters.Scripts;
 
-public partial class InventoryDisplay: Panel
+public partial class InventoryDisplay : Panel
 {
-    private readonly List<InventoryButton> _buttons = new();
-    
+    private readonly List<InventoryButton> _buttons = [];
+
     private ItemListDisplay _itemListDisplay;
 
     public string EquipmentId;
 
     private string _currentEntity = "";
-    public string CurrentEntity 
+    public string CurrentEntity
     {
         get => _currentEntity;
         set
@@ -31,17 +31,17 @@ public partial class InventoryDisplay: Panel
 
     private Label _attModLabel;
     private Label _skillModLabel;
-    
-    private string BuildPropDesc(string name, int val)
+
+    private static string BuildPropDesc(string name, int val)
     {
         var sb = new StringBuilder();
-        sb.Append($"{name}: ");
+        _ = sb.Append($"{name}: ");
         if (val != 0)
         {
-            sb.Append(val > 0 ? "+" : "-");
+            _ = sb.Append(val > 0 ? "+" : "-");
         }
 
-        sb.Append($"{val}");
+        _ = sb.Append($"{val}");
         return sb.ToString();
     }
 
@@ -115,14 +115,11 @@ public partial class InventoryDisplay: Panel
                 return button.ItemCategory;
             }
         }
-        
+
         return ItemType.None;
     }
 
-    private void OnSelection(Item item)
-    {
-        OnItemSelected?.Invoke(item);
-    }
+    private void OnSelection(Item item) => OnItemSelected?.Invoke(item);
 
     private void OnEquipSetChanged(string id, EquipmentSet equipmentSet)
     {
