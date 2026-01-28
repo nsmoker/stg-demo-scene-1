@@ -22,12 +22,12 @@ public static class CombatLog
         GD.Print($"{e.inflicter.Name} dealt {e.damage} damage to {e.recipient.Name}. {e.recipient.Name} has {recipientHp} HP remaining out of {e.recipient.CharacterData.MaxHitpoints}.");
     }
 
-    public static void OnAbilityUse(AttackEvent e) 
+    public static void OnAbilityUse(AttackEvent e)
     {
         GD.Print($"{e.attacker.Name} {(e.hit ? "hit" : "missed")} against {e.target.Name}.");
     }
 
-    public static void OnDeathEvent(DeathEvent e) 
+    public static void OnDeathEvent(DeathEvent e)
     {
         GD.Print($"{e.deceased.Name} {(e.killer.Name != null ? $"was killed by {e.killer.Name}!" : "died!")}");
     }

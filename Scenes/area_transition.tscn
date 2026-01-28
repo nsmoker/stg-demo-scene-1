@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwxrnre15blwk"]
+
+[ext_resource type="Script" uid="uid://cwhflap727bje" path="res://Scenes/AreaTransition.cs" id="1_yqqkp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7eedp"]
+size = Vector2(99, 34)
+
+[node name="AreaTransition" type="Area2D"]
+script = ExtResource("1_yqqkp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4.5, 7)
+shape = SubResource("RectangleShape2D_7eedp")
+
+[node name="DestinationPoint" type="Marker2D" parent="."]
