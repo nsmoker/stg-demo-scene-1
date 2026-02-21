@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Ability" format=3 uid="uid://b6nd1qemtfjj7"]
+
+[ext_resource type="Script" uid="uid://6s50muiotg4i" path="res://Scripts/Resources/Ability.cs" id="1_7kk0o"]
+[ext_resource type="Script" uid="uid://mxrfbr2ffrey" path="res://Scripts/Resources/DamageRoll.cs" id="1_st6ui"]
+[ext_resource type="Texture2D" uid="uid://bafdlmkvhng80" path="res://Sprites/Icons/spiral.png" id="2_eh0c1"]
+[ext_resource type="PackedScene" uid="uid://dwpb4ovkas1au" path="res://Scenes/Effects/VortexEffect.tscn" id="2_njm86"]
+
+[sub_resource type="Resource" id="Resource_eh0c1"]
+script = ExtResource("1_st6ui")
+Rolls = Array[int]([4])
+metadata/_custom_type_script = "uid://mxrfbr2ffrey"
+
+[resource]
+script = ExtResource("1_7kk0o")
+AbilityName = "Vortex"
+Description = "Summon a damaging vortex of interplanar forces."
+Cooldown = 3
+AreaDamage = SubResource("Resource_eh0c1")
+AreaDuration = 2
+Icon = ExtResource("2_eh0c1")
+AreaEffectScene = ExtResource("2_njm86")
+metadata/_custom_type_script = "uid://6s50muiotg4i"

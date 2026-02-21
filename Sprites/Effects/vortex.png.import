@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://e17fh1bkmp52"
-path="res://.godot/imported/Spell.png-5a328f8ef7c14aabd27ad16000b06259.ctex"
+uid="uid://b6wysxsnba3ti"
+path="res://.godot/imported/vortex.png-f2e108db1330ec230ed9911abcf5d7b9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Spell.png"
-dest_files=["res://.godot/imported/Spell.png-5a328f8ef7c14aabd27ad16000b06259.ctex"]
+source_file="res://Sprites/Effects/vortex.png"
+dest_files=["res://.godot/imported/vortex.png-f2e108db1330ec230ed9911abcf5d7b9.ctex"]
 
 [params]
 

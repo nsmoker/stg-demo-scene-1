@@ -265,23 +265,17 @@ public static class CombatSystem
             Vector2 targetVector = attackedInstance.GlobalPosition - attackerInstance.GlobalPosition;
             int hitThresh = attackedInstance.ComputeAc(targetVector);
 
-            int roll = 0;
-            for (int i = 0; i < damageRoll.Rolls.Count; i++)
-            {
-                roll += rand.Next(1, damageRoll.Rolls[i] + 1);
-            }
-            roll += damageRoll.Mod;
             bool hit = toHitRoll >= hitThresh;
             AttackHandlers?.Invoke(new AttackEvent
             {
                 attacker = attackerInstance,
                 target = attackedInstance,
                 hit = hit,
-                targetDamage = roll,
+                targetDamage = damageRoll.Roll(),
             });
             if (hit)
             {
-                HealthSystem.PostDamageEvent(attackerInstance, attackedInstance, roll);
+                HealthSystem.PostDamageEvent(attackerInstance, attackedInstance, damageRoll.Roll());
             }
         }
 

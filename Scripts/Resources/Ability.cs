@@ -18,11 +18,13 @@ public partial class Ability : Resource
     [Export]
     public DamageRoll AreaDamage;
     [Export]
-    public Shape2D AreaShape;
+    public int AreaDuration;
     [Export]
     public Texture2D Icon;
     [Export]
     public PackedScene ProjectileScene;
+    [Export]
+    public PackedScene AreaEffectScene;
 
     public void Activate(Character user, Character target, Vector2 SpawnPoint, Vector2 TargetPoint)
     {
@@ -43,15 +45,34 @@ public partial class Ability : Resource
 
     public void OnProjectileHit(Character user, Character target, Vector2 Position)
     {
-        CombatSystem.AttemptAttack(user.CharacterData, target.CharacterData, ContactDamage);
-        if (AreaShape != null)
+        if (ContactDamage != null)
         {
-            // Apply area damage to characters within the area shape.
-            var results = CombatSystem.GetCharactersInRange(Position, AreaShape);
-            foreach (var result in results)
+            CombatSystem.AttemptAttack(user.CharacterData, target.CharacterData, ContactDamage);
+        }
+
+        if (AreaEffectScene != null)
+        {
+            AreaEffect areaEffectInstance = AreaEffectScene.Instantiate<AreaEffect>();
+            areaEffectInstance.Position = Position;
+            areaEffectInstance.BodyEntered += (body) =>
             {
-                CombatSystem.AttemptAttack(user.CharacterData, result.CharacterData, AreaDamage);
-            }
+                if (body is Character)
+                {
+                    HealthSystem.PostDamageEvent(user, target, AreaDamage.Roll());
+                }
+            };
+            areaEffectInstance.SetCooldown(AreaDuration);
+            areaEffectInstance.SetCaster(user);
+            areaEffectInstance.SetDamageRoll(AreaDamage);
+            Timer t = new()
+            {
+                WaitTime = AreaDuration,
+                OneShot = true
+            };
+            t.Timeout += areaEffectInstance.QueueFree;
+            t.Autostart = true;
+            SceneSystem.GetMasterScene().AddChild(t);
+            SceneSystem.GetMasterScene().AddChild(areaEffectInstance);
         }
     }
 }

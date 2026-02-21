@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d00jp1qfhb7d0"]
 
-[ext_resource type="Texture2D" uid="uid://b7cagi1ul6i4w" path="res://Sprites/fireball.png" id="1_0f1nr"]
+[ext_resource type="Texture2D" uid="uid://b7cagi1ul6i4w" path="res://Sprites/Projectiles/fireball.png" id="1_0f1nr"]
 [ext_resource type="Script" uid="uid://cqequql2l3bke" path="res://Scripts/Triggers/Projectile.cs" id="1_siumb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_upyi0"]
