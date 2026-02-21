@@ -72,112 +72,12 @@ public partial class Player : Character
 		public void OnTransition(Character character) { }
 	}
 
-	private class PlayerCombatState : ICharacterState
+	// Controlled by CombatController when in combat
+	private class PlayerCombatPawnState : ICharacterState
 	{
-		private Player _player;
-		private bool _isOurTurn;
-		public PlayerCombatState(Player player)
-		{
-			_player = player;
-			player.Draw += OnPlayerDraw;
-			CombatSystem.TurnHandlers += OnTurnBegin;
-			_isOurTurn = CombatSystem.GetMovingSide().Contains(_player.CharacterData.ResourcePath);
-			player.UpdateCoverState(player.GetWorld2D().DirectSpaceState);
-			_player.ActionPip1.Visible = true;
-			_player.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_player.CharacterData) > 1;
-			player.QueueRedraw();
-		}
-
-		public void PhysicsProcess(double delta, Character character)
-		{
-			if (Input.IsActionJustPressed("Combat Interact") && CombatSystem.NavReady() && _isOurTurn)
-			{
-				if (HoverSystem.AnyHovered())
-				{
-					var hoveredChar = CharacterSystem.GetInstance(HoverSystem.Hovered);
-					character.SetAttackTarget(hoveredChar.CharacterData);
-					character.SetAttackAnimState(character.GlobalPosition.DirectionTo(hoveredChar.GlobalPosition));
-				}
-				else
-				{
-					var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), _player.GlobalPosition, _player.GetGlobalMousePosition(), true, 0x1u);
-					var len = ComputePathLength(path, character.GlobalPosition);
-					if (len <= _player.CharacterData.MovementRange)
-					{
-						if (path.Length > 0)
-						{
-							_player.ControllerState = new CombatNavState(_player, path);
-						}
-						else
-						{
-							_player.ControllerState = new CombatNavState(_player, [_player.GetGlobalMousePosition()]);
-						}
-					}
-				}
-			}
-			_player.QueueRedraw();
-		}
-
 		public void Process(double delta, Character character) { }
-
-		public void OnPlayerDraw()
-		{
-			if (_isOurTurn && !HoverSystem.AnyHovered())
-			{
-				_player.DrawCircle(new Vector2(0.0f, 2.0f), 8.0f, new Color(0.0f, 0.0f, 1.0f), filled: false);
-				// Draw the path to the player's hovered location.
-				if (CombatSystem.NavReady())
-				{
-					var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), _player.GlobalPosition, _player.GetGlobalMousePosition(), true, 0x1u);
-					var len = ComputePathLength(path, _player.GlobalPosition);
-					var inRange = len <= _player.CharacterData.MovementRange;
-					var pathTransformed = path.Select(_player.ToLocal).ToArray();
-					float dist = path.Length > 1 ? len / 16.0f : _player.GlobalPosition.DistanceTo(_player.GetGlobalMousePosition()) / 16.0f;
-					var targetPoint = pathTransformed.Length > 1 ? pathTransformed[pathTransformed.Length - 1] : _player.GetLocalMousePosition();
-					if (pathTransformed.Length > 1)
-					{
-						_player.DrawPolyline(pathTransformed, inRange ? new Color(1.0f, 1.0f, 1.0f) : new Color(1.0f, 0.0f, 0.0f));
-					}
-					else
-					{
-						_player.DrawLine(_player.ToLocal(_player.GlobalPosition), _player.GetLocalMousePosition(), inRange ? new Color(1.0f, 1.0f, 1.0f) : new Color(1.0f, 0.0f, 0.0f));
-					}
-					_player.DrawString(_player._pathFont, targetPoint, $"{dist:0.00}m", fontSize: 8);
-				}
-			}
-
-			if (HoverSystem.AnyHovered())
-			{
-				var hovered = CharacterSystem.GetInstance(HoverSystem.Hovered);
-				var chance = CombatSystem.ComputeToHitChance(_player.CharacterData, hovered.CharacterData) * 100.0f;
-				_player.DrawString(_player.ToHitFont, new Vector2(12.0f, 0.0f) + _player.GetLocalMousePosition(), $"{chance:0}%", fontSize: 8);
-			}
-		}
-
-		public void OnTurnBegin(List<string> sideMoving)
-		{
-			_isOurTurn = sideMoving.Contains(_player.CharacterData.ResourcePath);
-			if (_isOurTurn)
-			{
-				_player.ActionPip1.Visible = true;
-				_player.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_player.CharacterData) > 1;
-			}
-			else
-			{
-				_player.ActionPip1.Hide();
-				_player.ActionPip2.Hide();
-			}
-			_player.QueueRedraw();
-		}
-
-		public void OnTransition(Character character)
-		{
-			character.Draw -= OnPlayerDraw;
-			CombatSystem.TurnHandlers -= OnTurnBegin;
-			_player.ActionPip1.Visible = false;
-			_player.ActionPip2.Visible = false;
-			_player.QueueRedraw();
-		}
+		public void PhysicsProcess(double delta, Character character) { }
+		public void OnTransition(Character character) { }
 	}
 
 	private Area2D _interactableRange;
@@ -212,7 +112,7 @@ public partial class Player : Character
 	[Export]
 	private FactionTable _factionTable;
 	[Export]
-	private Font _pathFont;
+	public Font PathFont;
 
 	public override void _Ready()
 	{
@@ -236,7 +136,7 @@ public partial class Player : Character
 	{
 		if (e.participants.Contains(CharacterData.ResourcePath))
 		{
-			ControllerState = new PlayerCombatState(this);
+			ControllerState = new PlayerCombatPawnState();
 			_healthLabel.Show();
 		}
 	}
@@ -245,19 +145,19 @@ public partial class Player : Character
 	{
 		if (joiner.ResourcePath.Equals(CharacterData.ResourcePath))
 		{
-			ControllerState = new PlayerCombatState(this);
+			ControllerState = new PlayerCombatPawnState();
 			_healthLabel.Show();
 		}
 	}
 
 	public override ICharacterState GetCombatState()
 	{
-		return new PlayerCombatState(this);
+		return new PlayerCombatPawnState();
 	}
 
 	public override void OnCombatEnded()
 	{
-		if (ControllerState is PlayerCombatState || ControllerState is CombatNavState)
+		if (ControllerState is PlayerCombatPawnState || ControllerState is CombatNavState)
 		{
 			ControllerState = new NavigationState();
 		}
@@ -274,7 +174,7 @@ public partial class Player : Character
 	{
 		if (CombatSystem.IsInCombat(CharacterData))
 		{
-			ControllerState = new PlayerCombatState(this);
+			ControllerState = new PlayerCombatPawnState();
 		}
 		else
 		{

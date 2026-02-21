@@ -146,6 +146,7 @@ public partial class Character : CharacterBody2D
     protected Label _healthLabel;
 
     protected CharacterData _attackTarget;
+    private Action _onAttackComplete;
 
     protected class DialogueState : ICharacterState
     {
@@ -336,14 +337,16 @@ public partial class Character : CharacterBody2D
     protected class CombatNavState : ICharacterState
     {
         readonly Character _character;
+        readonly Action _onComplete;
 
         private Vector2[] _path;
         private int _currentPoint = 0;
 
-        public CombatNavState(Character character, Vector2[] path)
+        public CombatNavState(Character character, Vector2[] path, Action onComplete = null)
         {
             _character = character;
             _path = path;
+            _onComplete = onComplete;
             HoverSystem.SetUnhovered(character.CharacterData.ResourcePath);
             character.CoverBadge.Hide();
         }
@@ -366,6 +369,7 @@ public partial class Character : CharacterBody2D
                     character.UpdateCoverState(character.GetWorld2D().DirectSpaceState);
                     _character.SetAnimState(AnimState.Idle);
                     _character.ControllerState = _character.GetCombatState();
+                    _onComplete?.Invoke();
                 }
             }
             else
@@ -817,6 +821,8 @@ public partial class Character : CharacterBody2D
                 BasicAttackAbility.Activate(this, target, _projectileSpawnPoint.GlobalPosition, target.GlobalPosition);
             }
             SetAnimState(AnimState.Idle);
+            _onAttackComplete?.Invoke();
+            _onAttackComplete = null;
         }
     }
 
@@ -840,6 +846,18 @@ public partial class Character : CharacterBody2D
     public void SetAttackTarget(CharacterData c)
     {
         _attackTarget = c;
+    }
+
+    public void IssueAttack(CharacterData target, Vector2 direction, Action onComplete = null)
+    {
+        _onAttackComplete = onComplete;
+        SetAttackTarget(target);
+        SetAttackAnimState(direction);
+    }
+
+    public void IssueCombatMove(Vector2[] path, Action onComplete = null)
+    {
+        ControllerState = new CombatNavState(this, path, onComplete);
     }
 
     public void SitOn(Prop prop)
