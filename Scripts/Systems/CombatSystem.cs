@@ -266,16 +266,17 @@ public static class CombatSystem
             int hitThresh = attackedInstance.ComputeAc(targetVector);
 
             bool hit = toHitRoll >= hitThresh;
+            var roll = damageRoll.Roll();
             AttackHandlers?.Invoke(new AttackEvent
             {
                 attacker = attackerInstance,
                 target = attackedInstance,
                 hit = hit,
-                targetDamage = damageRoll.Roll(),
+                targetDamage = roll,
             });
             if (hit)
             {
-                HealthSystem.PostDamageEvent(attackerInstance, attackedInstance, damageRoll.Roll());
+                HealthSystem.PostDamageEvent(attackerInstance, attackedInstance, roll);
             }
         }
 

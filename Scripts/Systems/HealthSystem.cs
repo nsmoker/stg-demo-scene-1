@@ -36,7 +36,6 @@ public static class HealthSystem
 
     public static void PostDamageEvent(Character inflicter, Character recipient, int damage)
     {
-        recipient.CharacterData.CurrentHitpoints -= damage;
         var ret = new DamageEvent
         {
             inflicter = inflicter,

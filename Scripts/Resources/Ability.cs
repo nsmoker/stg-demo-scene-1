@@ -32,7 +32,7 @@ public partial class Ability : Resource
     [Export]
     public bool TargetingIsAnimated = false;
 
-    public void Activate(Character user, Character target, Vector2 SpawnPoint, Vector2 TargetPoint)
+    public virtual void Activate(Character user, Character target, Vector2 SpawnPoint, Vector2 TargetPoint)
     {
         if (ProjectileScene != null)
         {
@@ -49,7 +49,7 @@ public partial class Ability : Resource
         }
     }
 
-    public void OnProjectileHit(Character user, Character target, Vector2 Position)
+    public virtual void OnProjectileHit(Character user, Character target, Vector2 Position)
     {
         if (ContactDamage != null)
         {
@@ -60,13 +60,6 @@ public partial class Ability : Resource
         {
             AreaEffect areaEffectInstance = AreaEffectScene.Instantiate<AreaEffect>();
             areaEffectInstance.Position = Position;
-            areaEffectInstance.BodyEntered += (body) =>
-            {
-                if (body is Character)
-                {
-                    HealthSystem.PostDamageEvent(user, target, AreaDamage.Roll());
-                }
-            };
             areaEffectInstance.SetCooldown(AreaDuration);
             areaEffectInstance.SetCaster(user);
             areaEffectInstance.SetDamageRoll(AreaDamage);
