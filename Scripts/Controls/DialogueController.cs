@@ -19,6 +19,11 @@ public partial class DialogueController : ScrollContainer
     [Export]
     private float _typewriterSpeed;
 
+    [Export]
+    public Color HoveredColor;
+    [Export]
+    public Color NormalColor;
+
     public interface IDialogueControllerState
     {
         void Process(double delta, DialogueController controller);
@@ -65,7 +70,7 @@ public partial class DialogueController : ScrollContainer
                     return 1;
                 }
             }
-        } 
+        }
 
         if (continuations.Count > 0)
         {
@@ -84,7 +89,7 @@ public partial class DialogueController : ScrollContainer
                 }
             }
         }
-        
+
         return possibleContinuationCount;
     }
 
@@ -104,13 +109,13 @@ public partial class DialogueController : ScrollContainer
     private class EvalState : IDialogueControllerState
     {
         private DialogueGraphNode _node;
-        public EvalState(DialogueGraphNode node, DialogueController controller) 
-        { 
+        public EvalState(DialogueGraphNode node, DialogueController controller)
+        {
             _node = node;
-            
+
         }
 
-        public void Process(double delta, DialogueController controller) 
+        public void Process(double delta, DialogueController controller)
         {
             if (!controller.actionDone)
             {
@@ -156,7 +161,7 @@ public partial class DialogueController : ScrollContainer
         private DialogueGraphNode _node;
         private double _timeSinceLastWrite = 0;
 
-        public WriteState(DialogueController controller, DialogueGraphNode node) 
+        public WriteState(DialogueController controller, DialogueGraphNode node)
         {
             _node = node;
             controller._dialogueLabel.Visible = true;
@@ -205,34 +210,16 @@ public partial class DialogueController : ScrollContainer
 
         private void AddChoiceLabel(DialogueController controller, DialogueGraphNode choice, int number)
         {
-            var choiceLabel = new Label
+            var choiceLabel = new DialogueLabel
             {
-                Visible = true,
-                Text = $"{number + 1}. {choice.Content}",
                 CustomMinimumSize = controller._dialogueLabel.CustomMinimumSize,
-                LabelSettings = (LabelSettings) controller._dialogueLabel.LabelSettings.DuplicateDeep(),
-                AutowrapMode = TextServer.AutowrapMode.WordSmart,
-                JustificationFlags = TextServer.JustificationFlag.Kashida | TextServer.JustificationFlag.WordBound,
-                AutowrapTrimFlags = TextServer.LineBreakFlag.TrimStartEdgeSpaces | TextServer.LineBreakFlag.TrimEndEdgeSpaces,
-                ClipText = false,
-                TextOverrunBehavior = TextServer.OverrunBehavior.NoTrimming,
-                MouseFilter = MouseFilterEnum.Stop
+                LabelSettings = (LabelSettings)controller._dialogueLabel.LabelSettings.DuplicateDeep(),
+                NormalColor = controller.NormalColor,
+                HoveredColor = controller.HoveredColor
             };
-            choiceLabel.MouseEntered += () =>
-            {
-                choiceLabel.LabelSettings.FontColor = new Color(1, 1, 0, 1);
-            };
-            choiceLabel.MouseExited += () =>
-            {
-                choiceLabel.LabelSettings.FontColor = new Color(1, 1, 1, 1);
-            };
-            choiceLabel.GuiInput += (InputEvent e) =>
-            {
-                if (e is InputEventMouseButton mouseEvent && mouseEvent.IsPressed() && mouseEvent.ButtonIndex == MouseButton.Left)
-                {
-                    controller.State = new WriteState(controller, choice);
-                }
-            };
+            choiceLabel.SetIndex(number + 1);
+            choiceLabel.SetDialogue(choice.Content);
+            choiceLabel.SelectionCallback = () => controller.State = new WriteState(_controller, choice);
             controller._container.AddChild(choiceLabel);
             controller._choiceLabels.Add(choiceLabel);
         }
@@ -242,8 +229,8 @@ public partial class DialogueController : ScrollContainer
             _controller = controller;
             _node = node;
 
-            var choices = controller._conversation.GetContinuationsForNode(node).Where(x => 
-                {   
+            var choices = controller._conversation.GetContinuationsForNode(node).Where(x =>
+                {
                     return x.NodeType == EverydayDialogueEditor.DialogueNodeType.PlayerResponse && (x.Condition == null || x.Condition.Evaluate());
                 }).ToList();
             for (int i = 0; i < choices.Count; ++i)
