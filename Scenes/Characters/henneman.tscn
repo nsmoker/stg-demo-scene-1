@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=3 uid="uid://c7jepn55q3mxg"]
+[gd_scene format=3 uid="uid://c7jepn55q3mxg"]
 
 [ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character/Character.cs" id="1_bcfsq"]
 [ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/Resources/AttributeSet.cs" id="2_1cv77"]
@@ -324,58 +324,56 @@ _data = {
 [sub_resource type="LabelSettings" id="LabelSettings_dhkrs"]
 font_size = 8
 
-[node name="Henneman" type="CharacterBody2D"]
+[node name="Henneman" type="CharacterBody2D" unique_id=1522262602]
 z_index = 2
 script = ExtResource("1_bcfsq")
 CharacterData = SubResource("Resource_56vhr")
 ToHitFont = SubResource("SystemFont_tk7xo")
 metadata/_custom_type_script = "uid://bsrhat3n35udl"
 
-[node name="MainCollider" type="CollisionShape2D" parent="."]
+[node name="MainCollider" type="CollisionShape2D" parent="." unique_id=978018186]
 position = Vector2(0.5, 1.5)
 shape = SubResource("RectangleShape2D_ss715")
 
-[node name="SenseArea" type="Area2D" parent="."]
+[node name="SenseArea" type="Area2D" parent="." unique_id=314097517]
 visible = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea" unique_id=489668932]
 shape = SubResource("CircleShape2D_wxkh7")
 
-[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." unique_id=928624116]
 radius = 8.39
 affect_navigation_mesh = true
 
-[node name="CoverBadge" type="Sprite2D" parent="."]
+[node name="CoverBadge" type="Sprite2D" parent="." unique_id=447250159]
 visible = false
 texture_filter = 1
 position = Vector2(0, -21)
 scale = Vector2(0.5, 0.5)
 texture = SubResource("AtlasTexture_dhkrs")
 
-[node name="MainSprite" type="Sprite2D" parent="."]
+[node name="MainSprite" type="Sprite2D" parent="." unique_id=457673604]
 texture_filter = 1
 texture = ExtResource("18_ujab1")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_dhkrs")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1665305985]
+libraries/ = SubResource("AnimationLibrary_dhkrs")
 
-[node name="ActionPip" type="Sprite2D" parent="."]
+[node name="ActionPip" type="Sprite2D" parent="." unique_id=440137609]
 visible = false
 texture_filter = 1
 position = Vector2(-8, 16)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("19_k3hug")
 
-[node name="ActionPip2" type="Sprite2D" parent="."]
+[node name="ActionPip2" type="Sprite2D" parent="." unique_id=1730324512]
 visible = false
 texture_filter = 1
 position = Vector2(0, 16)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("19_k3hug")
 
-[node name="HealthLabel" type="Label" parent="."]
+[node name="HealthLabel" type="Label" parent="." unique_id=1770478507]
 visible = false
 offset_left = -7.0
 offset_top = -20.0
@@ -383,3 +381,6 @@ offset_right = 13.0
 offset_bottom = -8.833332
 text = "asd"
 label_settings = SubResource("LabelSettings_dhkrs")
+
+[node name="ProjectileSpawnPoint" type="Marker2D" parent="." unique_id=1697262471]
+position = Vector2(7, 1)

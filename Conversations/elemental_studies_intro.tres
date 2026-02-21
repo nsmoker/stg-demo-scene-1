@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="Conversation" load_steps=113 format=3 uid="uid://d0vtobfhyip5c"]
+[gd_resource type="Resource" script_class="Conversation" format=3 uid="uid://d0vtobfhyip5c"]
 
 [ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="1_8tbk4"]
 [ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="2_f2a17"]
 [ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/edi/Scripts/Conversation.cs" id="3_elssk"]
-[ext_resource type="PackedScene" uid="uid://dsawqshhjgquw" path="res://Scenes/marot.tscn" id="3_xxg7b"]
+[ext_resource type="PackedScene" uid="uid://dsawqshhjgquw" path="res://Scenes/Characters/marot.tscn" id="3_xxg7b"]
 [ext_resource type="Script" uid="uid://btnsdx8nl66l7" path="res://Scripts/DialogueNodes/ElementalStudiesDuelTransition.cs" id="5_i1b76"]
 [ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/Characters/player_data.tres" id="6_cak2s"]
 [ext_resource type="Script" uid="uid://bk0yjlafq7ee1" path="res://Scripts/DialogueNodes/WalkCharToPointNonBlocking.cs" id="9_ny82k"]
@@ -27,13 +27,13 @@ toNode = 14
 
 [sub_resource type="Resource" id="Resource_c4t4n"]
 script = ExtResource("1_8tbk4")
-fromNode = 39
-toNode = 40
+fromNode = 19
+toNode = 24
 
 [sub_resource type="Resource" id="Resource_1utpj"]
 script = ExtResource("1_8tbk4")
-fromNode = 19
-toNode = 24
+fromNode = 39
+toNode = 40
 
 [sub_resource type="Resource" id="Resource_vgrsl"]
 script = ExtResource("1_8tbk4")
@@ -233,7 +233,7 @@ script = ExtResource("2_f2a17")
 NodeType = 2
 DNodeId = 37
 EditorPos = Vector2(-3060, 640)
-EditorSize = Vector2(600.0039, 260.00122)
+EditorSize = Vector2(600.0039, 260.0014)
 
 [sub_resource type="Resource" id="Resource_cu5ln"]
 script = ExtResource("2_f2a17")
@@ -242,7 +242,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 1
 EditorPos = Vector2(4280, 860)
-EditorSize = Vector2(980.0078, 440.00073)
+EditorSize = Vector2(980.0078, 440.0008)
 
 [sub_resource type="Resource" id="Resource_7b1yb"]
 script = ExtResource("2_f2a17")
@@ -251,7 +251,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 2
 EditorPos = Vector2(6920, 860)
-EditorSize = Vector2(1000.00195, 480.0017)
+EditorSize = Vector2(1000.00195, 480.00177)
 
 [sub_resource type="Resource" id="Resource_52uwt"]
 script = ExtResource("2_f2a17")
@@ -260,7 +260,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 3
 EditorPos = Vector2(8280, 860)
-EditorSize = Vector2(1000.00586, 480.0017)
+EditorSize = Vector2(1000.00586, 480.00177)
 
 [sub_resource type="Resource" id="Resource_hfd72"]
 script = ExtResource("2_f2a17")
@@ -269,7 +269,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 4
 EditorPos = Vector2(12120, 880)
-EditorSize = Vector2(999.9927, 479.9983)
+EditorSize = Vector2(999.9912, 479.99847)
 
 [sub_resource type="Resource" id="Resource_j37rw"]
 script = ExtResource("2_f2a17")
@@ -278,7 +278,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 5
 EditorPos = Vector2(13400, 880)
-EditorSize = Vector2(1000.0044, 479.9983)
+EditorSize = Vector2(1000.00195, 479.99847)
 
 [sub_resource type="Resource" id="Resource_5whpo"]
 script = ExtResource("2_f2a17")
@@ -287,7 +287,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 6
 EditorPos = Vector2(14560, 880)
-EditorSize = Vector2(1000.0029, 479.9983)
+EditorSize = Vector2(1000.0029, 479.99847)
 
 [sub_resource type="Resource" id="Resource_2pn1o"]
 script = ExtResource("2_f2a17")
@@ -296,7 +296,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 7
 EditorPos = Vector2(18480, 940)
-EditorSize = Vector2(999.9873, 479.9989)
+EditorSize = Vector2(999.98535, 479.99927)
 
 [sub_resource type="Resource" id="Resource_vxc8s"]
 script = ExtResource("2_f2a17")
@@ -305,7 +305,7 @@ Speaker = "Darian"
 Addressee = "Player"
 DNodeId = 8
 EditorPos = Vector2(19800, 940)
-EditorSize = Vector2(999.97754, 479.9989)
+EditorSize = Vector2(999.97656, 479.99927)
 
 [sub_resource type="Resource" id="Resource_ijyfx"]
 script = ExtResource("2_f2a17")
@@ -314,7 +314,7 @@ Speaker = "Marot"
 Addressee = "Player"
 DNodeId = 9
 EditorPos = Vector2(21240, 940)
-EditorSize = Vector2(999.9883, 479.9984)
+EditorSize = Vector2(999.9883, 479.99878)
 
 [sub_resource type="Resource" id="Resource_aqq4w"]
 script = ExtResource("2_f2a17")
@@ -323,7 +323,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 10
 EditorPos = Vector2(10720, 880)
-EditorSize = Vector2(1000.01074, 479.9983)
+EditorSize = Vector2(1000.0117, 479.99847)
 
 [sub_resource type="Resource" id="Resource_lqhjj"]
 script = ExtResource("2_f2a17")
@@ -332,7 +332,7 @@ Speaker = "Darian"
 Addressee = "Player"
 DNodeId = 11
 EditorPos = Vector2(9520, 880)
-EditorSize = Vector2(999.99854, 479.99878)
+EditorSize = Vector2(999.999, 479.99896)
 
 [sub_resource type="Resource" id="Resource_1gktm"]
 script = ExtResource("2_f2a17")
@@ -341,7 +341,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 12
 EditorPos = Vector2(15860, 880)
-EditorSize = Vector2(999.9922, 479.9983)
+EditorSize = Vector2(999.9951, 479.99847)
 
 [sub_resource type="Resource" id="Resource_0p2lq"]
 script = ExtResource("2_f2a17")
@@ -350,7 +350,7 @@ Content = "<whispers> I'm screwed."
 Speaker = "Player"
 DNodeId = 13
 EditorPos = Vector2(17300, 1440)
-EditorSize = Vector2(740.00977, 400.0028)
+EditorSize = Vector2(740.00977, 400.0027)
 
 [sub_resource type="Resource" id="Resource_vjv3b"]
 script = ExtResource("2_f2a17")
@@ -359,7 +359,7 @@ Content = "<whispers> He must be joking! I don't even know any magic!"
 Speaker = "Player"
 DNodeId = 14
 EditorPos = Vector2(17280, 1020)
-EditorSize = Vector2(800.0039, 379.99927)
+EditorSize = Vector2(800.0029, 379.9989)
 
 [sub_resource type="Resource" id="Resource_5iqso"]
 script = ExtResource("2_f2a17")
@@ -368,7 +368,7 @@ Content = "<whispers> Maybe that's what he thinks..."
 Speaker = "Player"
 DNodeId = 15
 EditorPos = Vector2(17280, 480)
-EditorSize = Vector2(800.0117, 420.00226)
+EditorSize = Vector2(800.01074, 420.00214)
 
 [sub_resource type="Resource" id="Resource_50kl1"]
 script = ExtResource("2_f2a17")
@@ -377,7 +377,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 16
 EditorPos = Vector2(3160, 740)
-EditorSize = Vector2(979.9966, 440.00232)
+EditorSize = Vector2(979.99805, 440.00214)
 
 [sub_resource type="Resource" id="Resource_50ujf"]
 script = ExtResource("2_f2a17")
@@ -386,7 +386,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 17
 EditorPos = Vector2(5660, 880)
-EditorSize = Vector2(980.0039, 440.00317)
+EditorSize = Vector2(980.0039, 440.0031)
 
 [sub_resource type="Resource" id="Resource_31obe"]
 script = ExtResource("5_i1b76")
@@ -402,7 +402,7 @@ NodeType = 1
 DNodeId = 18
 Action = SubResource("Resource_31obe")
 EditorPos = Vector2(23740, 900)
-EditorSize = Vector2(779.9922, 340.00037)
+EditorSize = Vector2(779.9922, 340.0003)
 
 [sub_resource type="Resource" id="Resource_pqm48"]
 script = ExtResource("2_f2a17")
@@ -411,7 +411,7 @@ Speaker = "Darian"
 Addressee = "Player"
 DNodeId = 19
 EditorPos = Vector2(22520, 960)
-EditorSize = Vector2(1000.01074, 479.9972)
+EditorSize = Vector2(1000.0078, 479.99792)
 
 [sub_resource type="Resource" id="Resource_jrjvg"]
 script = ExtResource("2_f2a17")
@@ -420,7 +420,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 20
 EditorPos = Vector2(25600, 860)
-EditorSize = Vector2(840.001, 419.99707)
+EditorSize = Vector2(839.99805, 419.9969)
 
 [sub_resource type="Resource" id="Resource_fxuf6"]
 script = ExtResource("2_f2a17")
@@ -428,7 +428,7 @@ NodeType = 3
 Content = "I am."
 DNodeId = 21
 EditorPos = Vector2(26800, 1180)
-EditorSize = Vector2(600, 400.00073)
+EditorSize = Vector2(600, 400.0011)
 
 [sub_resource type="Resource" id="Resource_058vr"]
 script = ExtResource("2_f2a17")
@@ -437,7 +437,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 22
 EditorPos = Vector2(27740, 940)
-EditorSize = Vector2(879.9971, 539.9999)
+EditorSize = Vector2(879.99805, 540.00024)
 
 [sub_resource type="Resource" id="Resource_savnj"]
 script = ExtResource("2_f2a17")
@@ -446,7 +446,7 @@ Speaker = "Marot"
 Addressee = "Player"
 DNodeId = 23
 EditorPos = Vector2(28780, 940)
-EditorSize = Vector2(740.0039, 459.9989)
+EditorSize = Vector2(740.0078, 459.99927)
 
 [sub_resource type="Resource" id="Resource_5l782"]
 script = ExtResource("2_f2a17")
@@ -455,7 +455,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 24
 EditorPos = Vector2(29780, 920)
-EditorSize = Vector2(1000.0117, 479.99963)
+EditorSize = Vector2(1000.0117, 479.99915)
 
 [sub_resource type="Resource" id="Resource_pcub3"]
 script = ExtResource("2_f2a17")
@@ -464,7 +464,7 @@ Content = "Didn't have to give me away..."
 Speaker = "Player"
 DNodeId = 25
 EditorPos = Vector2(26820, 640)
-EditorSize = Vector2(559.9922, 400.00073)
+EditorSize = Vector2(559.99023, 400.00092)
 
 [sub_resource type="Resource" id="Resource_pxpfh"]
 script = ExtResource("9_ny82k")
@@ -479,7 +479,7 @@ NodeType = 1
 DNodeId = 26
 Action = SubResource("Resource_pxpfh")
 EditorPos = Vector2(24740, 800)
-EditorSize = Vector2(720.0029, 460.00024)
+EditorSize = Vector2(720.00586, 459.99994)
 
 [sub_resource type="Resource" id="Resource_cpfr5"]
 script = ExtResource("2_f2a17")
@@ -488,7 +488,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 27
 EditorPos = Vector2(32280, 920)
-EditorSize = Vector2(1000.00977, 479.99963)
+EditorSize = Vector2(1000.0117, 479.99915)
 
 [sub_resource type="Resource" id="Resource_j01su"]
 script = ExtResource("2_f2a17")
@@ -497,7 +497,7 @@ Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 28
 EditorPos = Vector2(30980, 940)
-EditorSize = Vector2(540, 459.9984)
+EditorSize = Vector2(540.0039, 459.99878)
 
 [sub_resource type="Resource" id="Resource_5jrai"]
 script = ExtResource("10_pa0kp")
@@ -512,7 +512,7 @@ NodeType = 1
 DNodeId = 29
 Action = SubResource("Resource_5jrai")
 EditorPos = Vector2(31620, 1000)
-EditorSize = Vector2(456.01074, 257.00122)
+EditorSize = Vector2(456.01172, 257.00146)
 
 [sub_resource type="Resource" id="Resource_3uc8f"]
 script = ExtResource("2_f2a17")
@@ -521,7 +521,7 @@ Speaker = "Darian"
 Addressee = "Player"
 DNodeId = 30
 EditorPos = Vector2(-120, 720)
-EditorSize = Vector2(860.00146, 479.99707)
+EditorSize = Vector2(860, 479.99725)
 
 [sub_resource type="Resource" id="Resource_18pu4"]
 script = ExtResource("11_5j8a2")
@@ -535,28 +535,28 @@ NodeType = 1
 DNodeId = 31
 Action = SubResource("Resource_18pu4")
 EditorPos = Vector2(38100, 840)
-EditorSize = Vector2(456, 257.00146)
+EditorSize = Vector2(456.00195, 257.00153)
 
 [sub_resource type="Resource" id="Resource_8dvhl"]
 script = ExtResource("2_f2a17")
 Content = "In combat, you can hover over opponents to see your chance of hitting them, and right click to attack them. "
 DNodeId = 32
 EditorPos = Vector2(33380, 880)
-EditorSize = Vector2(640, 679.9983)
+EditorSize = Vector2(640, 679.9985)
 
 [sub_resource type="Resource" id="Resource_4ud82"]
 script = ExtResource("2_f2a17")
 Content = "Hovering over the ground and right clicking moves your characters (the line showing your path will turn red if the point you tried to move to is outside your movement range. "
 DNodeId = 33
 EditorPos = Vector2(34120, 880)
-EditorSize = Vector2(740.0039, 619.9988)
+EditorSize = Vector2(740.00195, 619.99896)
 
 [sub_resource type="Resource" id="Resource_5e44m"]
 script = ExtResource("2_f2a17")
 Content = "On your turn, two pips will show beneath your character; these represent your remaining actions. When these are depleted, your turn ends. Attacking always consumes all remaining actions. "
 DNodeId = 34
 EditorPos = Vector2(35040, 880)
-EditorSize = Vector2(839.9922, 499.99878)
+EditorSize = Vector2(839.9922, 499.99896)
 
 [sub_resource type="Resource" id="Resource_4lycf"]
 script = ExtResource("21_7ojc4")
@@ -571,14 +571,14 @@ NodeType = 1
 DNodeId = 35
 Action = SubResource("Resource_4lycf")
 EditorPos = Vector2(37180, 880)
-EditorSize = Vector2(719.9922, 379.99512)
+EditorSize = Vector2(719.9922, 379.99506)
 
 [sub_resource type="Resource" id="Resource_ah0sh"]
 script = ExtResource("2_f2a17")
 Content = "Welcome to the demo! Out of dialogue, WASD moves. Press E to advance dialogue or interact with triggers (like the chair with a gold badge above it."
 DNodeId = 36
 EditorPos = Vector2(-1180, 740)
-EditorSize = Vector2(880.00085, 459.9984)
+EditorSize = Vector2(880.00195, 459.998)
 
 [sub_resource type="Resource" id="Resource_dkpp0"]
 script = ExtResource("14_6ts6t")
@@ -592,7 +592,7 @@ NodeType = 1
 DNodeId = 38
 Action = SubResource("Resource_dkpp0")
 EditorPos = Vector2(840, 920)
-EditorSize = Vector2(456.00073, 257.0006)
+EditorSize = Vector2(456.00195, 257.00037)
 
 [sub_resource type="Resource" id="Resource_dbtol"]
 script = ExtResource("2_f2a17")
@@ -601,7 +601,7 @@ Speaker = "Darian"
 Addressee = "Player"
 DNodeId = 39
 EditorPos = Vector2(2160, 740)
-EditorSize = Vector2(640, 399.99963)
+EditorSize = Vector2(640, 399.99945)
 
 [sub_resource type="Resource" id="Resource_nhqnd"]
 script = ExtResource("17_p6uxs")
@@ -615,14 +615,14 @@ NodeType = 1
 DNodeId = 40
 Action = SubResource("Resource_nhqnd")
 EditorPos = Vector2(1541, 794)
-EditorSize = Vector2(456, 257.00024)
+EditorSize = Vector2(456, 257.00037)
 
 [sub_resource type="Resource" id="Resource_xwjnb"]
 script = ExtResource("2_f2a17")
 NodeType = 2
 DNodeId = 37
 EditorPos = Vector2(-3060, 640)
-EditorSize = Vector2(600.0039, 260.00122)
+EditorSize = Vector2(600.0039, 260.0014)
 
 [sub_resource type="Resource" id="Resource_nrw4b"]
 script = ExtResource("19_vgrsl")
@@ -641,12 +641,12 @@ script = ExtResource("2_f2a17")
 NodeType = 1
 DNodeId = 41
 Action = SubResource("Resource_umq8s")
-EditorPos = Vector2(-2420, 580)
-EditorSize = Vector2(780, 360)
+EditorPos = Vector2(-2280, 640)
+EditorSize = Vector2(780, 360.00018)
 
 [resource]
 resource_name = "elemental_studies_intro"
 script = ExtResource("3_elssk")
-Nodes = [SubResource("Resource_cu5ln"), SubResource("Resource_7b1yb"), SubResource("Resource_52uwt"), SubResource("Resource_hfd72"), SubResource("Resource_j37rw"), SubResource("Resource_5whpo"), SubResource("Resource_2pn1o"), SubResource("Resource_vxc8s"), SubResource("Resource_ijyfx"), SubResource("Resource_aqq4w"), SubResource("Resource_lqhjj"), SubResource("Resource_1gktm"), SubResource("Resource_0p2lq"), SubResource("Resource_vjv3b"), SubResource("Resource_5iqso"), SubResource("Resource_50kl1"), SubResource("Resource_50ujf"), SubResource("Resource_6bco8"), SubResource("Resource_pqm48"), SubResource("Resource_jrjvg"), SubResource("Resource_fxuf6"), SubResource("Resource_058vr"), SubResource("Resource_savnj"), SubResource("Resource_5l782"), SubResource("Resource_pcub3"), SubResource("Resource_kyyvt"), SubResource("Resource_cpfr5"), SubResource("Resource_j01su"), SubResource("Resource_x03uv"), SubResource("Resource_3uc8f"), SubResource("Resource_spydj"), SubResource("Resource_8dvhl"), SubResource("Resource_4ud82"), SubResource("Resource_5e44m"), SubResource("Resource_e7664"), SubResource("Resource_ah0sh"), SubResource("Resource_lx675"), SubResource("Resource_dbtol"), SubResource("Resource_dgv3w"), SubResource("Resource_xwjnb"), SubResource("Resource_jcsn8")]
-EntryPoints = [SubResource("Resource_dpv4a")]
-Connections = [SubResource("Resource_qopdl"), SubResource("Resource_c4t4n"), SubResource("Resource_1utpj"), SubResource("Resource_vgrsl"), SubResource("Resource_y3wwa"), SubResource("Resource_657ee"), SubResource("Resource_h5a4k"), SubResource("Resource_5tu60"), SubResource("Resource_orib8"), SubResource("Resource_xekck"), SubResource("Resource_gaptk"), SubResource("Resource_oyxfj"), SubResource("Resource_isplk"), SubResource("Resource_iktt3"), SubResource("Resource_2wgn3"), SubResource("Resource_ysv8w"), SubResource("Resource_6lud2"), SubResource("Resource_5woq3"), SubResource("Resource_7ojc4"), SubResource("Resource_f3mu8"), SubResource("Resource_weujn"), SubResource("Resource_7rtni"), SubResource("Resource_farim"), SubResource("Resource_7v5sg"), SubResource("Resource_gk42a"), SubResource("Resource_cm013"), SubResource("Resource_8a3xy"), SubResource("Resource_626re"), SubResource("Resource_ro52a"), SubResource("Resource_o7l1v"), SubResource("Resource_3hoc7"), SubResource("Resource_uru26"), SubResource("Resource_fcrq5"), SubResource("Resource_3q4mf"), SubResource("Resource_fapgf"), SubResource("Resource_1bdhf"), SubResource("Resource_ybmnx"), SubResource("Resource_0f2vm"), SubResource("Resource_nqvo6"), SubResource("Resource_r2lop"), SubResource("Resource_pawly"), SubResource("Resource_41k6r")]
+Nodes = Array[ExtResource("2_f2a17")]([SubResource("Resource_cu5ln"), SubResource("Resource_7b1yb"), SubResource("Resource_52uwt"), SubResource("Resource_hfd72"), SubResource("Resource_j37rw"), SubResource("Resource_5whpo"), SubResource("Resource_2pn1o"), SubResource("Resource_vxc8s"), SubResource("Resource_ijyfx"), SubResource("Resource_aqq4w"), SubResource("Resource_lqhjj"), SubResource("Resource_1gktm"), SubResource("Resource_0p2lq"), SubResource("Resource_vjv3b"), SubResource("Resource_5iqso"), SubResource("Resource_50kl1"), SubResource("Resource_50ujf"), SubResource("Resource_6bco8"), SubResource("Resource_pqm48"), SubResource("Resource_jrjvg"), SubResource("Resource_fxuf6"), SubResource("Resource_058vr"), SubResource("Resource_savnj"), SubResource("Resource_5l782"), SubResource("Resource_pcub3"), SubResource("Resource_kyyvt"), SubResource("Resource_cpfr5"), SubResource("Resource_j01su"), SubResource("Resource_x03uv"), SubResource("Resource_3uc8f"), SubResource("Resource_spydj"), SubResource("Resource_8dvhl"), SubResource("Resource_4ud82"), SubResource("Resource_5e44m"), SubResource("Resource_e7664"), SubResource("Resource_ah0sh"), SubResource("Resource_lx675"), SubResource("Resource_dbtol"), SubResource("Resource_dgv3w"), SubResource("Resource_xwjnb"), SubResource("Resource_jcsn8")])
+EntryPoints = Array[ExtResource("2_f2a17")]([SubResource("Resource_dpv4a")])
+Connections = Array[ExtResource("1_8tbk4")]([SubResource("Resource_qopdl"), SubResource("Resource_c4t4n"), SubResource("Resource_1utpj"), SubResource("Resource_vgrsl"), SubResource("Resource_y3wwa"), SubResource("Resource_657ee"), SubResource("Resource_h5a4k"), SubResource("Resource_5tu60"), SubResource("Resource_orib8"), SubResource("Resource_xekck"), SubResource("Resource_gaptk"), SubResource("Resource_oyxfj"), SubResource("Resource_isplk"), SubResource("Resource_iktt3"), SubResource("Resource_2wgn3"), SubResource("Resource_ysv8w"), SubResource("Resource_6lud2"), SubResource("Resource_5woq3"), SubResource("Resource_7ojc4"), SubResource("Resource_f3mu8"), SubResource("Resource_weujn"), SubResource("Resource_7rtni"), SubResource("Resource_farim"), SubResource("Resource_7v5sg"), SubResource("Resource_gk42a"), SubResource("Resource_cm013"), SubResource("Resource_8a3xy"), SubResource("Resource_626re"), SubResource("Resource_ro52a"), SubResource("Resource_o7l1v"), SubResource("Resource_3hoc7"), SubResource("Resource_uru26"), SubResource("Resource_fcrq5"), SubResource("Resource_3q4mf"), SubResource("Resource_fapgf"), SubResource("Resource_1bdhf"), SubResource("Resource_ybmnx"), SubResource("Resource_0f2vm"), SubResource("Resource_nqvo6"), SubResource("Resource_r2lop"), SubResource("Resource_pawly"), SubResource("Resource_41k6r")])

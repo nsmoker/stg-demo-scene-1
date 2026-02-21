@@ -1,10 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://dsawqshhjgquw"]
+[gd_scene format=3 uid="uid://djslysixa4d0a"]
 
-[ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character/Character.cs" id="1_cw48i"]
-[ext_resource type="Resource" uid="uid://cx3eet0w6nlc3" path="res://Resources/Characters/marot.tres" id="2_322xl"]
-[ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="17_yaiay"]
-[ext_resource type="Texture2D" uid="uid://bxwkf6u5ijdho" path="res://Sprites/Characters/marot_ingame_placeholder.png" id="18_cw48i"]
-[ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="19_5aljl"]
+[ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character/Character.cs" id="1_p6ogr"]
+[ext_resource type="Resource" uid="uid://c0ev20u8e7nyu" path="res://Resources/Characters/darian.tres" id="2_p6ogr"]
+[ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="3_oxpus"]
+[ext_resource type="Texture2D" uid="uid://cusnf7nuh7o57" path="res://Sprites/Characters/pc_ingame_placeholder.png" id="4_p6ogr"]
+[ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="5_obedt"]
 
 [sub_resource type="SystemFont" id="SystemFont_tk7xo"]
 subpixel_positioning = 0
@@ -16,7 +16,7 @@ size = Vector2(14, 29)
 radius = 500.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dhkrs"]
-atlas = ExtResource("17_yaiay")
+atlas = ExtResource("3_oxpus")
 region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="LabelSettings" id="LabelSettings_dhkrs"]
@@ -66,6 +66,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [9]
+}
+
+[sub_resource type="Animation" id="Animation_p6ogr"]
+resource_name = "sit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [17]
 }
 
 [sub_resource type="Animation" id="Animation_h4iuc"]
@@ -124,59 +139,62 @@ _data = {
 &"RESET": SubResource("Animation_ukyrk"),
 &"attack": SubResource("Animation_322xl"),
 &"idle": SubResource("Animation_gymyn"),
+&"sit": SubResource("Animation_p6ogr"),
 &"walk_h": SubResource("Animation_h4iuc"),
 &"walk_north": SubResource("Animation_pu2lt"),
 &"walk_south": SubResource("Animation_7dp3o")
 }
 
-[node name="Marot" type="CharacterBody2D"]
-z_index = 1
-script = ExtResource("1_cw48i")
-CharacterData = ExtResource("2_322xl")
+[node name="Darian" type="CharacterBody2D" unique_id=1387554584]
+z_index = 4
+script = ExtResource("1_p6ogr")
+CharacterData = ExtResource("2_p6ogr")
 ToHitFont = SubResource("SystemFont_tk7xo")
 metadata/_custom_type_script = "uid://bsrhat3n35udl"
 
-[node name="MainCollider" type="CollisionShape2D" parent="."]
+[node name="MainCollider" type="CollisionShape2D" parent="." unique_id=446735959]
 z_index = 2
 position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_ss715")
 
-[node name="SenseArea" type="Area2D" parent="."]
+[node name="SenseArea" type="Area2D" parent="." unique_id=1921424375]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea" unique_id=208053360]
+visible = false
 shape = SubResource("CircleShape2D_wxkh7")
 
-[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
-radius = 8.39
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." unique_id=1130891696]
+radius = 12.0
 affect_navigation_mesh = true
 
-[node name="CoverBadge" type="Sprite2D" parent="."]
+[node name="CoverBadge" type="Sprite2D" parent="." unique_id=391321566]
 visible = false
 texture_filter = 1
 position = Vector2(0, -21)
 scale = Vector2(0.5, 0.5)
 texture = SubResource("AtlasTexture_dhkrs")
 
-[node name="MainSprite" type="Sprite2D" parent="."]
+[node name="MainSprite" type="Sprite2D" parent="." unique_id=290701819]
+modulate = Color(0.25565878, 0.25565878, 0.25565878, 1)
 texture_filter = 1
-texture = ExtResource("18_cw48i")
+texture = ExtResource("4_p6ogr")
 hframes = 18
 
-[node name="ActionPip" type="Sprite2D" parent="."]
+[node name="ActionPip" type="Sprite2D" parent="." unique_id=151377606]
 visible = false
 texture_filter = 1
 position = Vector2(-8, 16)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("19_5aljl")
+texture = ExtResource("5_obedt")
 
-[node name="ActionPip2" type="Sprite2D" parent="."]
+[node name="ActionPip2" type="Sprite2D" parent="." unique_id=1177450785]
 visible = false
 texture_filter = 1
 position = Vector2(0, 16)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("19_5aljl")
+texture = ExtResource("5_obedt")
 
-[node name="HealthLabel" type="Label" parent="."]
+[node name="HealthLabel" type="Label" parent="." unique_id=2146825894]
 visible = false
 offset_left = -7.0
 offset_top = -20.0
@@ -185,7 +203,8 @@ offset_bottom = -8.833332
 text = "asd"
 label_settings = SubResource("LabelSettings_dhkrs")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_ukyrk")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=591497742]
+libraries/ = SubResource("AnimationLibrary_ukyrk")
+
+[node name="ProjectileSpawnPoint" type="Marker2D" parent="." unique_id=1850722369]
+position = Vector2(7, 1)

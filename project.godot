@@ -8,11 +8,15 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="STG Demo Scene 1"
 run/main_scene="uid://bnrfgnbsigxmy"
-config/features=PackedStringArray("4.5", "C#", "Forward Plus")
+config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
@@ -26,11 +30,13 @@ project/assembly_name="Arkham Hunters"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/edi/plugin.cfg")
+enabled=PackedStringArray("res://addons/aeolus/plugin.cfg", "res://addons/edi/plugin.cfg")
 
 [global_group]
 
 NavObjects=""
+RequiredNpcSpawn=""
+DoorsGroup=""
 
 [gui]
 

@@ -41,10 +41,13 @@ public static class CombatSystem
 
     private static TurnHandler turnHandler;
 
-    public static NavigationRegion2D NavRegion { get => navRegion; set 
+    public static NavigationRegion2D NavRegion
     {
-        navRegion = value; 
-    }}
+        get => navRegion; set
+        {
+            navRegion = value;
+        }
+    }
 
     private static bool _pathingReady = true;
 
@@ -54,7 +57,7 @@ public static class CombatSystem
     public static TurnHandler TurnHandlers { get => turnHandler; set => turnHandler = value; }
     public static Action CombatEnded { get => combatEnded; set => combatEnded = value; }
 
-    private static System.Action combatEnded;
+    private static Action combatEnded;
 
     private static List<List<string>> _sides = [];
 
@@ -87,8 +90,7 @@ public static class CombatSystem
         _sides = [.. _sides.Where(x => x.Count > 0)];
         if (_sides.Count < 2)
         {
-            combatEnded?.Invoke();
-            _combatStatusLabel.Visible = false;
+            EndCombat();
         }
         else
         {
@@ -121,6 +123,17 @@ public static class CombatSystem
         }
     }
 
+    private static void EndCombat()
+    {
+        SceneSystem.GetMasterScene().SetAbilityBarVisible(false);
+        combatEnded?.Invoke();
+        _combatStatusLabel.Visible = false;
+        _currentCombatants.Clear();
+        _sides.Clear();
+        _sideMoving = 0;
+        NavRegion.BakeNavigationPolygon();
+    }
+
     public static void Initialize()
     {
         NavigationServer2D.MapChanged += OnNavRebakeFinished;
@@ -131,6 +144,7 @@ public static class CombatSystem
         var scene = (Godot.Engine.GetMainLoop() as SceneTree)
             .CurrentScene as MasterScene;
         _combatStatusLabel = scene.GetCombatStatusLabel();
+        scene.ActivateAbilityBarForCharacter(scene.GetPlayer());
         if (_currentCombatants.Count == 0)
         {
             _currentCombatants.Add(initiator.ResourcePath, new CombatantState { MovesRemaining = initiator.CombatMoves, ActionsRemaining = initiator.CombatActions });
@@ -145,7 +159,8 @@ public static class CombatSystem
             };
             var initiatiorInstance = CharacterSystem.GetInstance(initiator.ResourcePath);
             initiatiorInstance.NavObstacle.AffectNavigationMesh = false;
-            CharacterSystem.GetInstance(opponent.ResourcePath).NavObstacle.AffectNavigationMesh = true;
+            var opponentInstance = CharacterSystem.GetInstance(opponent.ResourcePath);
+            opponentInstance.NavObstacle.AffectNavigationMesh = true;
             _pathingReady = false;
             navRegion.BakeNavigationPolygon();
 
@@ -229,39 +244,44 @@ public static class CombatSystem
     }
 
 
-    public static void AttemptAttack(CharacterData attacker, CharacterData attacked)
+    public static void AttemptAttack(CharacterData attacker, CharacterData attacked, DamageRoll damageRoll)
     {
-        var attackerInstance = CharacterSystem.GetInstance(attacker.ResourcePath);
-        var attackedInstance = CharacterSystem.GetInstance(attacked.ResourcePath);
-        var attackerState = _currentCombatants[attacker.ResourcePath];
+        Character attackerInstance = CharacterSystem.GetInstance(attacker.ResourcePath);
+        Character attackedInstance = CharacterSystem.GetInstance(attacked.ResourcePath);
+        CombatantState attackerState = _currentCombatants[attacker.ResourcePath];
         var currentSide = _sides[_sideMoving];
         if (currentSide.Contains(attacker.ResourcePath) && attackerState.ActionsRemaining > 0 && attackerState.MovesRemaining > 0)
         {
-            var newAttackerState = new CombatantState
+            CombatantState newAttackerState = new()
             {
                 ActionsRemaining = attackerState.ActionsRemaining - 1,
                 MovesRemaining = attackerState.MovesRemaining - 1,
             };
             _currentCombatants[attacker.ResourcePath] = newAttackerState;
-            var rand = new Random();
-            var toHitMod = attackerInstance.ComputeToHitMod();
-            var toHitRoll = Math.Max(0, Math.Min(19, rand.Next(20) + toHitMod));
+            Random rand = new();
+            int toHitMod = attackerInstance.ComputeToHitMod();
+            int toHitRoll = Math.Max(0, Math.Min(19, rand.Next(20) + toHitMod));
 
-            var targetVector = attackedInstance.GlobalPosition - attackerInstance.GlobalPosition;
-            var hitThresh = attackedInstance.ComputeAc(targetVector);
+            Vector2 targetVector = attackedInstance.GlobalPosition - attackerInstance.GlobalPosition;
+            int hitThresh = attackedInstance.ComputeAc(targetVector);
 
-            var damageRoll = rand.Next(10);
-            var hit = toHitRoll >= hitThresh;
+            int roll = 0;
+            for (int i = 0; i < damageRoll.Rolls.Count; i++)
+            {
+                roll += rand.Next(1, damageRoll.Rolls[i] + 1);
+            }
+            roll += damageRoll.Mod;
+            bool hit = toHitRoll >= hitThresh;
             AttackHandlers?.Invoke(new AttackEvent
             {
                 attacker = attackerInstance,
                 target = attackedInstance,
                 hit = hit,
-                targetDamage = damageRoll,
+                targetDamage = roll,
             });
             if (hit)
             {
-                HealthSystem.PostDamageEvent(attackerInstance, attackedInstance, damageRoll);
+                HealthSystem.PostDamageEvent(attackerInstance, attackedInstance, roll);
             }
         }
 
@@ -278,7 +298,7 @@ public static class CombatSystem
             ActionsRemaining = 0,
             MovesRemaining = 0,
         };
-        
+
         if (TurnShouldEnd())
         {
             EndTurn();
@@ -308,5 +328,29 @@ public static class CombatSystem
     public static int GetMovesRemaining(CharacterData c)
     {
         return _currentCombatants[c.ResourcePath].MovesRemaining;
+    }
+
+    public static List<Character> GetCharactersInRange(Vector2 position, Shape2D shape)
+    {
+        var spaceState = navRegion.GetWorld2D().DirectSpaceState;
+        var transform = new Transform2D(0, position);
+        var shapeQuery = new PhysicsShapeQueryParameters2D()
+        {
+            Shape = shape,
+            Transform = transform,
+            CollideWithAreas = false,
+            CollideWithBodies = true,
+        };
+        var result = spaceState.IntersectShape(shapeQuery);
+        List<Character> charactersInRange = [];
+        foreach (var r in result)
+        {
+            var collider = r["collider"].As<Node>();
+            if (collider != null && collider is Character character)
+            {
+                charactersInRange.Add(character);
+            }
+        }
+        return charactersInRange;
     }
 }

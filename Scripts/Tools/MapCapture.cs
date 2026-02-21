@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Linq;
-using ArkhamHunters.Scripts;
 using Godot;
 
 [Tool]
@@ -16,9 +14,9 @@ public partial class MapCapture : EditorScript
             RenderTargetUpdateMode = SubViewport.UpdateMode.Once,
             Name = "MapCaptureViewport"
         };
-        GetScene().AddChild(mapCaptureViewport);
+        EditorInterface.Singleton.GetEditedSceneRoot().AddChild(mapCaptureViewport);
 
-        Node2D sceneDup = GetScene().Duplicate() as Node2D;
+        Node2D sceneDup = EditorInterface.Singleton.GetEditedSceneRoot().Duplicate() as Node2D;
         var sceneRect = new Rect2();
         sceneDup.FindChildren("*", recursive: true).OfType<CollisionShape2D>().ToList().ForEach(n =>
         {
@@ -63,7 +61,7 @@ public partial class MapCapture : EditorScript
         ResourceSaver.Save(mapCaptureResource, "res://map_capture.tres");
 
         mapCaptureViewport.RemoveChild(sceneDup);
-        GetScene().RemoveChild(mapCaptureViewport);
+        EditorInterface.Singleton.GetEditedSceneRoot().RemoveChild(mapCaptureViewport);
         sceneDup.QueueFree();
         mapCaptureViewport.QueueFree();
     }

@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Ability" format=3 uid="uid://tl0xaibe4km4"]
+
+[ext_resource type="Script" uid="uid://6s50muiotg4i" path="res://Scripts/Ability.cs" id="1_c0x6k"]
+[ext_resource type="Script" uid="uid://mxrfbr2ffrey" path="res://Scripts/Resources/DamageRoll.cs" id="1_r4j3u"]
+[ext_resource type="Texture2D" uid="uid://rrci8bft6xo0" path="res://Sprites/fireball_icon.png" id="2_bhf5c"]
+[ext_resource type="PackedScene" uid="uid://d00jp1qfhb7d0" path="res://Scenes/Projectiles/FireballProjectile.tscn" id="2_rrrm1"]
+
+[sub_resource type="Resource" id="Resource_bhf5c"]
+script = ExtResource("1_r4j3u")
+Rolls = Array[int]([6, 6])
+Mod = 2
+metadata/_custom_type_script = "uid://mxrfbr2ffrey"
+
+[resource]
+script = ExtResource("1_c0x6k")
+AbilityName = "Fireball"
+Description = "Launch a fireball"
+Cooldown = 2
+ContactDamage = SubResource("Resource_bhf5c")
+Icon = ExtResource("2_bhf5c")
+ProjectileScene = ExtResource("2_rrrm1")
+metadata/_custom_type_script = "uid://6s50muiotg4i"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://bgk5v73hj7cv0"]
+[gd_scene format=3 uid="uid://bgk5v73hj7cv0"]
 
 [ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_gokwg"]
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="1_ndsb5"]
@@ -8,7 +8,7 @@
 [ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/Characters/player_data.tres" id="4_hbowc"]
 [ext_resource type="Texture2D" uid="uid://b15gt320egkk8" path="res://Sprites/Characters/pc_ingame_npc_fc.png" id="4_su8nj"]
 [ext_resource type="Texture2D" uid="uid://cd7kmy7sbrwsy" path="res://Sprites/Characters/pc_ingame_player_ma.png" id="5_wqt3d"]
-[ext_resource type="PackedScene" uid="uid://c7jepn55q3mxg" path="res://Scenes/henneman.tscn" id="6_4iq4d"]
+[ext_resource type="PackedScene" uid="uid://c7jepn55q3mxg" path="res://Scenes/Characters/henneman.tscn" id="6_4iq4d"]
 [ext_resource type="Texture2D" uid="uid://c3xdtaspbe1s1" path="res://Sprites/Characters/pc_ingame_player_mb.png" id="6_r2l7g"]
 [ext_resource type="Texture2D" uid="uid://b6wph1kvjioyc" path="res://Sprites/Characters/pc_ingame_player_mc.png" id="7_qvvil"]
 [ext_resource type="Script" uid="uid://ub8tuk2mpv4d" path="res://Scripts/Triggers/ElementalStudiesTrigger.cs" id="10_713ei"]
@@ -22,7 +22,7 @@
 [ext_resource type="Script" uid="uid://b53uhtgi4ltn7" path="res://Scripts/DialogueNodes/WalkCharToPointBlocking.cs" id="16_j6uhh"]
 [ext_resource type="Texture2D" uid="uid://bjuufd0p1e57q" path="res://Sprites/Backdrops/classroom_test_duel.png" id="16_tmqtc"]
 [ext_resource type="PackedScene" uid="uid://nxmo2nmx88dw" path="res://Scenes/DeskProp.tscn" id="18_b5i2i"]
-[ext_resource type="PackedScene" uid="uid://djslysixa4d0a" path="res://Scenes/darian.tscn" id="18_tmqtc"]
+[ext_resource type="PackedScene" uid="uid://djslysixa4d0a" path="res://Scenes/Characters/darian.tscn" id="18_tmqtc"]
 [ext_resource type="PackedScene" uid="uid://bfngs83wkjeur" path="res://Scenes/DeskSet.tscn" id="19_h4iwy"]
 [ext_resource type="Resource" uid="uid://c60sxlkob5sq6" path="res://Resources/Named Props/darian_chair_elem_intro.tres" id="20_b5i2i"]
 [ext_resource type="Resource" uid="uid://cbhlbpdtrwxxy" path="res://Resources/Named Props/player_chair_elem_intro.tres" id="21_02uyx"]
@@ -172,18 +172,18 @@ metadata/_custom_type_script = "uid://cmw85ukaae1eh"
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f311p"]
 size = Vector2(640, 324)
 
-[node name="ClassroomSceneTest" type="Node2D"]
+[node name="ClassroomSceneTest" type="Node2D" unique_id=828485593]
 texture_filter = 1
 script = ExtResource("1_gokwg")
 GenericNpcCount = 5
 GenericNpcSprites = Array[Texture2D]([ExtResource("2_gokwg"), ExtResource("3_l4oaw"), ExtResource("4_su8nj"), ExtResource("5_wqt3d"), ExtResource("6_r2l7g"), ExtResource("7_qvvil")])
 GenericNpcScene = ExtResource("4_b5i2i")
 
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1450764174]
 navigation_polygon = SubResource("NavigationPolygon_02uyx")
 script = ExtResource("1_ndsb5")
 
-[node name="ElementalStudiesTrigger" type="Area2D" parent="."]
+[node name="ElementalStudiesTrigger" type="Area2D" parent="." unique_id=1903984240]
 script = ExtResource("10_713ei")
 IntroQuest = ExtResource("11_sw1uk")
 Player = ExtResource("4_hbowc")
@@ -192,63 +192,64 @@ CoverHelpConversation = ExtResource("13_b8mys")
 ForceGetBackConversation = SubResource("Resource_j6uhh")
 DeathConversation = SubResource("Resource_lh5eo")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ElementalStudiesTrigger"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ElementalStudiesTrigger" unique_id=542609678]
 position = Vector2(0, -18)
 shape = SubResource("RectangleShape2D_f311p")
 
-[node name="Darian" parent="." instance=ExtResource("18_tmqtc")]
+[node name="Darian" parent="." unique_id=1474250728 instance=ExtResource("18_tmqtc")]
 position = Vector2(-12, 158)
 
-[node name="Henneman" parent="." instance=ExtResource("6_4iq4d")]
+[node name="Henneman" parent="." unique_id=242483597 instance=ExtResource("6_4iq4d")]
 position = Vector2(0, -117)
 
-[node name="SceneBackdrop" type="Sprite2D" parent="."]
+[node name="SceneBackdrop" type="Sprite2D" parent="." unique_id=1067931957]
+z_index = -1
 texture = ExtResource("16_tmqtc")
 
-[node name="ClearableProps" type="Node2D" parent="."]
+[node name="ClearableProps" type="Node2D" parent="." unique_id=1309397710]
 
-[node name="DeskSet" parent="ClearableProps" instance=ExtResource("19_h4iwy")]
+[node name="DeskSet" parent="ClearableProps" unique_id=1461604005 instance=ExtResource("19_h4iwy")]
 position = Vector2(-112, -24)
 
-[node name="DeskSet2" parent="ClearableProps" instance=ExtResource("19_h4iwy")]
+[node name="DeskSet2" parent="ClearableProps" unique_id=1244537041 instance=ExtResource("19_h4iwy")]
 position = Vector2(-224, -24)
 
-[node name="DeskSet3" parent="ClearableProps" instance=ExtResource("19_h4iwy")]
+[node name="DeskSet3" parent="ClearableProps" unique_id=1229707156 instance=ExtResource("19_h4iwy")]
 position = Vector2(112, -24)
 
-[node name="DeskSet4" parent="ClearableProps" instance=ExtResource("19_h4iwy")]
+[node name="DeskSet4" parent="ClearableProps" unique_id=1479031855 instance=ExtResource("19_h4iwy")]
 position = Vector2(224, -24)
 
-[node name="DeskSet5" parent="ClearableProps" instance=ExtResource("19_h4iwy")]
+[node name="DeskSet5" parent="ClearableProps" unique_id=1030364959 instance=ExtResource("19_h4iwy")]
 position = Vector2(-112, 40)
 
-[node name="DeskSet6" parent="ClearableProps" instance=ExtResource("19_h4iwy")]
+[node name="DeskSet6" parent="ClearableProps" unique_id=630521645 instance=ExtResource("19_h4iwy")]
 position = Vector2(-224, 40)
 
-[node name="DeskSet7" parent="ClearableProps" instance=ExtResource("19_h4iwy")]
+[node name="DeskSet7" parent="ClearableProps" unique_id=1387529823 instance=ExtResource("19_h4iwy")]
 position = Vector2(112, 40)
 
-[node name="DeskSet9" parent="ClearableProps" instance=ExtResource("19_h4iwy")]
+[node name="DeskSet9" parent="ClearableProps" unique_id=1152991421 instance=ExtResource("19_h4iwy")]
 position = Vector2(-112, 112)
 
-[node name="DeskSet10" parent="ClearableProps" instance=ExtResource("19_h4iwy")]
+[node name="DeskSet10" parent="ClearableProps" unique_id=1694237759 instance=ExtResource("19_h4iwy")]
 position = Vector2(-224, 112)
 
-[node name="DeskSet11" parent="ClearableProps" instance=ExtResource("19_h4iwy")]
+[node name="DeskSet11" parent="ClearableProps" unique_id=989575720 instance=ExtResource("19_h4iwy")]
 position = Vector2(112, 112)
 
-[node name="DeskSet12" parent="ClearableProps" instance=ExtResource("19_h4iwy")]
+[node name="DeskSet12" parent="ClearableProps" unique_id=279293181 instance=ExtResource("19_h4iwy")]
 position = Vector2(224, 112)
 
-[node name="DeskSet8" type="Node2D" parent="ClearableProps"]
+[node name="DeskSet8" type="Node2D" parent="ClearableProps" unique_id=618888478]
 position = Vector2(224, 40)
 
-[node name="DeskProp" parent="ClearableProps/DeskSet8" instance=ExtResource("18_b5i2i")]
+[node name="DeskProp" parent="ClearableProps/DeskSet8" unique_id=1058844939 instance=ExtResource("18_b5i2i")]
 
-[node name="ChairProp" parent="ClearableProps/DeskSet8" instance=ExtResource("22_gokwg")]
+[node name="ChairProp" parent="ClearableProps/DeskSet8" unique_id=1272281032 instance=ExtResource("22_gokwg")]
 position = Vector2(-14, 9)
 _data = ExtResource("20_b5i2i")
 
-[node name="ChairProp2" parent="ClearableProps/DeskSet8" instance=ExtResource("22_gokwg")]
+[node name="ChairProp2" parent="ClearableProps/DeskSet8" unique_id=178042387 instance=ExtResource("22_gokwg")]
 position = Vector2(14, 9)
 _data = ExtResource("21_02uyx")

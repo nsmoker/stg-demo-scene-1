@@ -5,24 +5,30 @@ using System;
 [Tool]
 public partial class Edi : EditorPlugin
 {
-	private Control _dock;
+    private Control _dockContent;
     private DialogueEditor _editor;
-	public override void _EnterTree()
-	{
+    private EditorDock _dock;
+    public override void _EnterTree()
+    {
         // Initialization of the plugin goes here.
-        _dock = GD.Load<PackedScene>(ProjectSettings.GlobalizePath("res://addons/edi/Scenes/graph_edit.tscn")).Instantiate<Control>();
-        _editor = (DialogueEditor) _dock;
+        _dockContent = GD.Load<PackedScene>(ProjectSettings.GlobalizePath("res://addons/edi/Scenes/graph_edit.tscn")).Instantiate<Control>();
+        _editor = (DialogueEditor)_dockContent;
+        _dock = new EditorDock
+        {
+            Title = "Dialogue Editor"
+        };
+        _dock.AddChild(_dockContent);
+        AddDock(_dock);
         _editor.undoRedoManager = GetUndoRedo();
-        AddControlToDock(DockSlot.RightUr, _dock);
     }
 
     public override void _ExitTree()
-	{
+    {
         // Clean-up of the plugin goes here.
         // Remove the dock.
-        RemoveControlFromDocks(_dock);
+        RemoveDock(_dock);
         // Erase the control from the memory.
-        _dock.Free();
+        _dockContent.Free();
 
     }
 

@@ -41,7 +41,7 @@ public partial class Player : Character
 							}
 						case InteractionType.Furniture:
 							{
-								character.SitOn((Prop) closestInteractable);
+								character.SitOn((Prop)closestInteractable);
 								break;
 							}
 					}
@@ -69,34 +69,35 @@ public partial class Player : Character
 			player.MoveAndSlide();
 		}
 
-        public void OnTransition(Character character) { }
-    }
+		public void OnTransition(Character character) { }
+	}
 
-    private class PlayerCombatState : ICharacterState
-    {
+	private class PlayerCombatState : ICharacterState
+	{
 		private Player _player;
 		private bool _isOurTurn;
 		public PlayerCombatState(Player player)
-        {
+		{
 			_player = player;
-            player.Draw += OnPlayerDraw;
+			player.Draw += OnPlayerDraw;
 			CombatSystem.TurnHandlers += OnTurnBegin;
 			_isOurTurn = CombatSystem.GetMovingSide().Contains(_player.CharacterData.ResourcePath);
-            player.UpdateCoverState(player.GetWorld2D().DirectSpaceState);
+			player.UpdateCoverState(player.GetWorld2D().DirectSpaceState);
 			_player.ActionPip1.Visible = true;
 			_player.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_player.CharacterData) > 1;
-            player.QueueRedraw();
-        }
+			player.QueueRedraw();
+		}
 
-        public void PhysicsProcess(double delta, Character character)
-        {
+		public void PhysicsProcess(double delta, Character character)
+		{
 			if (Input.IsActionJustPressed("Combat Interact") && CombatSystem.NavReady() && _isOurTurn)
 			{
 				if (HoverSystem.AnyHovered())
 				{
-					character.SetAttackTarget(ResourceLoader.Load<CharacterData>(HoverSystem.Hovered));
-					character.SetAnimState(AnimState.Attack);
-                }
+					var hoveredChar = CharacterSystem.GetInstance(HoverSystem.Hovered);
+					character.SetAttackTarget(hoveredChar.CharacterData);
+					character.SetAttackAnimState(character.GlobalPosition.DirectionTo(hoveredChar.GlobalPosition));
+				}
 				else
 				{
 					var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), _player.GlobalPosition, _player.GetGlobalMousePosition(), true, 0x1u);
@@ -114,16 +115,16 @@ public partial class Player : Character
 					}
 				}
 			}
-            _player.QueueRedraw();
-        }
+			_player.QueueRedraw();
+		}
 
-        public void Process(double delta, Character character) { }
+		public void Process(double delta, Character character) { }
 
 		public void OnPlayerDraw()
-        {
+		{
 			if (_isOurTurn && !HoverSystem.AnyHovered())
 			{
-				_player.DrawCircle(new Vector2(0.0f, 2.0f), 8.0f, new Color(0.0f, 0.0f, 1.0f), filled: false);			
+				_player.DrawCircle(new Vector2(0.0f, 2.0f), 8.0f, new Color(0.0f, 0.0f, 1.0f), filled: false);
 				// Draw the path to the player's hovered location.
 				if (CombatSystem.NavReady())
 				{
@@ -133,9 +134,11 @@ public partial class Player : Character
 					var pathTransformed = path.Select(_player.ToLocal).ToArray();
 					float dist = path.Length > 1 ? len / 16.0f : _player.GlobalPosition.DistanceTo(_player.GetGlobalMousePosition()) / 16.0f;
 					var targetPoint = pathTransformed.Length > 1 ? pathTransformed[pathTransformed.Length - 1] : _player.GetLocalMousePosition();
-					if (pathTransformed.Length > 1) {
+					if (pathTransformed.Length > 1)
+					{
 						_player.DrawPolyline(pathTransformed, inRange ? new Color(1.0f, 1.0f, 1.0f) : new Color(1.0f, 0.0f, 0.0f));
-					} else
+					}
+					else
 					{
 						_player.DrawLine(_player.ToLocal(_player.GlobalPosition), _player.GetLocalMousePosition(), inRange ? new Color(1.0f, 1.0f, 1.0f) : new Color(1.0f, 0.0f, 0.0f));
 					}
@@ -146,14 +149,14 @@ public partial class Player : Character
 			if (HoverSystem.AnyHovered())
 			{
 				var hovered = CharacterSystem.GetInstance(HoverSystem.Hovered);
-                var chance = CombatSystem.ComputeToHitChance(_player.CharacterData, hovered.CharacterData) * 100.0f;
-                _player.DrawString(_player.ToHitFont, new Vector2(12.0f, 0.0f) + _player.GetLocalMousePosition(), $"{chance:0}%", fontSize: 8);
-            }
-        }
+				var chance = CombatSystem.ComputeToHitChance(_player.CharacterData, hovered.CharacterData) * 100.0f;
+				_player.DrawString(_player.ToHitFont, new Vector2(12.0f, 0.0f) + _player.GetLocalMousePosition(), $"{chance:0}%", fontSize: 8);
+			}
+		}
 
 		public void OnTurnBegin(List<string> sideMoving)
-        {
-            _isOurTurn = sideMoving.Contains(_player.CharacterData.ResourcePath);
+		{
+			_isOurTurn = sideMoving.Contains(_player.CharacterData.ResourcePath);
 			if (_isOurTurn)
 			{
 				_player.ActionPip1.Visible = true;
@@ -165,17 +168,17 @@ public partial class Player : Character
 				_player.ActionPip2.Hide();
 			}
 			_player.QueueRedraw();
-        }
+		}
 
-        public void OnTransition(Character character)
-        {
-            character.Draw -= OnPlayerDraw;
-            CombatSystem.TurnHandlers -= OnTurnBegin;
-            _player.ActionPip1.Visible = false;
-            _player.ActionPip2.Visible = false;
-            _player.QueueRedraw();
-        }
-    }
+		public void OnTransition(Character character)
+		{
+			character.Draw -= OnPlayerDraw;
+			CombatSystem.TurnHandlers -= OnTurnBegin;
+			_player.ActionPip1.Visible = false;
+			_player.ActionPip2.Visible = false;
+			_player.QueueRedraw();
+		}
+	}
 
 	private Area2D _interactableRange;
 	private IInteractable _lastBadgedInteractable;
@@ -211,7 +214,7 @@ public partial class Player : Character
 	[Export]
 	private Font _pathFont;
 
-    public override void _Ready()
+	public override void _Ready()
 	{
 		base._Ready();
 		CombatLog.Initialize();
@@ -226,46 +229,46 @@ public partial class Player : Character
 		ControllerState = new NavigationState();
 		DialogueSystem.OnDialogueComplete += OnConversationEnded;
 		DialogueSystem.OnDialogueStarted += OnConversationStarted;
-		_scene = (MasterScene) (GetTree().CurrentScene);
+		_scene = (MasterScene)GetTree().CurrentScene;
 	}
 
 	public override void OnCombatStarted(CombatStartEvent e)
-    {
-        if (e.participants.Contains(CharacterData.ResourcePath))
-        {
-            ControllerState = new PlayerCombatState(this);
+	{
+		if (e.participants.Contains(CharacterData.ResourcePath))
+		{
+			ControllerState = new PlayerCombatState(this);
 			_healthLabel.Show();
-        }
-    }
+		}
+	}
 
 	public override void OnCombatJoined(CharacterData joiner)
-    {
-        if (joiner.ResourcePath.Equals(CharacterData.ResourcePath))
-        {
-            ControllerState = new PlayerCombatState(this);
+	{
+		if (joiner.ResourcePath.Equals(CharacterData.ResourcePath))
+		{
+			ControllerState = new PlayerCombatState(this);
 			_healthLabel.Show();
-        }
-    }
+		}
+	}
 
-    public override ICharacterState GetCombatState()
-    {
-        return new PlayerCombatState(this);
-    }
+	public override ICharacterState GetCombatState()
+	{
+		return new PlayerCombatState(this);
+	}
 
-    public override void OnCombatEnded()
-    {
-        if (ControllerState is PlayerCombatState || ControllerState is CombatNavState)
+	public override void OnCombatEnded()
+	{
+		if (ControllerState is PlayerCombatState || ControllerState is CombatNavState)
 		{
 			ControllerState = new NavigationState();
 		}
 		if (ActionPip1 != null && ActionPip2 != null)
-        {
-            ActionPip1.Visible = false;
-            ActionPip2.Visible = false;
-        }
+		{
+			ActionPip1.Visible = false;
+			ActionPip2.Visible = false;
+		}
 		_healthLabel.Hide();
-        QueueRedraw();
-    }
+		QueueRedraw();
+	}
 
 	private void OnConversationEnded()
 	{
@@ -280,8 +283,8 @@ public partial class Player : Character
 	}
 
 	private void OnConversationStarted(Conversation conversation, int entryPoint)
-    {
-        ControllerState = new DialogueState();
+	{
+		ControllerState = new DialogueState();
 		_currentAnimState = AnimState.Idle;
-    }
+	}
 }

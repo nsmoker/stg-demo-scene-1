@@ -1,3 +1,4 @@
+using ArkhamHunters.Scripts;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ public partial class MasterScene : Node2D
     private Button _exitButton;
     private PanelContainer _exitMenu;
     private Player _player;
+    private AbilityBar _abilityBar;
     private StagfootScreen _currentScreen;
     private Label _combatStatusLabel;
 
@@ -24,6 +26,7 @@ public partial class MasterScene : Node2D
         _exitButton.Pressed += OnExitPressed;
         _exitMenu = GetNode<PanelContainer>("Camera2D/ExitMenu");
         _player = GetNode<Player>("Player");
+        _abilityBar = GetNode<AbilityBar>("Camera2D/AbilityBar");
         _currentScreen = SceneSystem.GetInstance(_startingScene.ResourcePath);
         _combatStatusLabel = GetNode<Label>("Camera2D/CombatStatusLabel");
         CombatSystem.Initialize();
@@ -81,4 +84,19 @@ public partial class MasterScene : Node2D
         GetTree().Quit();
     }
 
+    public void SetAbilityBarVisible(bool visible)
+    {
+        _abilityBar.Visible = visible;
+    }
+
+    public void ActivateAbilityBarForCharacter(Character character)
+    {
+        _abilityBar.ShowForCharacter(character);
+        SetAbilityBarVisible(true);
+    }
+
+    public Player GetPlayer()
+    {
+        return _player;
+    }
 }

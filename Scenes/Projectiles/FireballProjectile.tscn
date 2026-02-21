@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://d00jp1qfhb7d0"]
+
+[ext_resource type="Texture2D" uid="uid://b7cagi1ul6i4w" path="res://Sprites/fireball.png" id="1_0f1nr"]
+[ext_resource type="Script" uid="uid://cqequql2l3bke" path="res://Scripts/Triggers/Projectile.cs" id="1_siumb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_upyi0"]
+size = Vector2(11, 6)
+
+[node name="FireballProjectile" type="Area2D" unique_id=877181893]
+script = ExtResource("1_siumb")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1739501716]
+texture_filter = 1
+texture = ExtResource("1_0f1nr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1532686810]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_upyi0")

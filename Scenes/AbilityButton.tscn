@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bg7o07th2w4x1"]
+
+[ext_resource type="Script" uid="uid://rt6ufbyqbjlg" path="res://Scripts/Controls/AbilityButton.cs" id="1_r5a5u"]
+[ext_resource type="Texture2D" uid="uid://cym4euxsm0dbf" path="res://Sprites/crosshair.png" id="1_xcdh0"]
+
+[node name="AttackButton" type="Button" unique_id=1453717154]
+texture_filter = 1
+offset_right = 8.0
+offset_bottom = 8.0
+text = "1"
+icon = ExtResource("1_xcdh0")
+icon_alignment = 1
+vertical_icon_alignment = 0
+script = ExtResource("1_r5a5u")
