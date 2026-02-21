@@ -12,6 +12,10 @@ public static class CharacterSystem
 
     public static Character GetInstance(string id)
     {
+        if (id == null)
+        {
+            return null;
+        }
         return _characterMap[id];
     }
 

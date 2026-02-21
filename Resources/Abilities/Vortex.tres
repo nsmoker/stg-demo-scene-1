@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://mxrfbr2ffrey" path="res://Scripts/Resources/DamageRoll.cs" id="1_st6ui"]
 [ext_resource type="Texture2D" uid="uid://bafdlmkvhng80" path="res://Sprites/Icons/spiral.png" id="2_eh0c1"]
 [ext_resource type="PackedScene" uid="uid://dwpb4ovkas1au" path="res://Scenes/Effects/VortexEffect.tscn" id="2_njm86"]
+[ext_resource type="PackedScene" uid="uid://c03bv8tn38ctf" path="res://Scenes/Targeting/VortexTargeting.tscn" id="4_v44ja"]
 
 [sub_resource type="Resource" id="Resource_eh0c1"]
 script = ExtResource("1_st6ui")
@@ -19,4 +20,6 @@ AreaDamage = SubResource("Resource_eh0c1")
 AreaDuration = 2
 Icon = ExtResource("2_eh0c1")
 AreaEffectScene = ExtResource("2_njm86")
+TargetingScene = ExtResource("4_v44ja")
+TargetingIsAnimated = true
 metadata/_custom_type_script = "uid://6s50muiotg4i"

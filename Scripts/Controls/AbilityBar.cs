@@ -19,10 +19,9 @@ public partial class AbilityBar : HBoxContainer
             var ability = character.Abilities[i];
             var button = AbilityButtonScene.Instantiate<AbilityButton>();
             AddChild(button);
+            button.character = character;
             button.SetAbility(ability);
             button.SetIndex(AbilityButtons.Count + 1);
-            int index = i; // Capture the current index for the lambda
-            button.OnPressed += () => { };
             AbilityButtons.Add(button);
         }
     }

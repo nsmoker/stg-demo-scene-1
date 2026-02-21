@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://c6rvkh1ghayvh"]
+
+[ext_resource type="Texture2D" uid="uid://cfuedllumpruk" path="res://Sprites/Targeting/crosshairTargeting.png" id="1_h1oon"]
+
+[node name="SingleTargetTargeting" type="Sprite2D" unique_id=500046295]
+texture_filter = 1
+texture = ExtResource("1_h1oon")

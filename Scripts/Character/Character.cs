@@ -227,8 +227,10 @@ public partial class Character : CharacterBody2D
                     else if (!_attackedThisTurn)
                     {
                         // In range, attack.
-                        character.SetAttackTarget(closestEnemy.CharacterData);
-                        character.SetAttackAnimState(character.GlobalPosition.DirectionTo(closestEnemy.GlobalPosition));
+                        character.IssueAttack(closestEnemy.CharacterData, character.GlobalPosition.DirectionTo(closestEnemy.GlobalPosition), () =>
+                        {
+                            character.BasicAttackAbility.Activate(character, closestEnemy, character.GetProjectileSpawnPoint(), closestEnemy.GlobalPosition);
+                        });
                         _attackedThisTurn = true;
                     }
                 }
@@ -815,11 +817,6 @@ public partial class Character : CharacterBody2D
     {
         if (animationName.Equals("attack"))
         {
-            var target = CharacterSystem.GetInstance(_attackTarget.ResourcePath);
-            if (target != null)
-            {
-                BasicAttackAbility.Activate(this, target, _projectileSpawnPoint.GlobalPosition, target.GlobalPosition);
-            }
             SetAnimState(AnimState.Idle);
             _onAttackComplete?.Invoke();
             _onAttackComplete = null;
@@ -912,5 +909,10 @@ public partial class Character : CharacterBody2D
     public bool IsSeated()
     {
         return _sitting;
+    }
+
+    public Vector2 GetProjectileSpawnPoint()
+    {
+        return _projectileSpawnPoint.GlobalPosition;
     }
 }

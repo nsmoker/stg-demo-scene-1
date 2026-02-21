@@ -25,15 +25,21 @@ public partial class Ability : Resource
     public PackedScene ProjectileScene;
     [Export]
     public PackedScene AreaEffectScene;
+    [Export]
+    public PackedScene TargetingScene;
+    [Export]
+    public Texture2D TargetingSprite;
+    [Export]
+    public bool TargetingIsAnimated = false;
 
     public void Activate(Character user, Character target, Vector2 SpawnPoint, Vector2 TargetPoint)
     {
         if (ProjectileScene != null)
         {
             Projectile projectileInstance = ProjectileScene.Instantiate<Projectile>();
-            projectileInstance.Position = SpawnPoint;
-            Vector2 direction = TargetPoint - user.Position;
-            projectileInstance.Initialize(direction, target.GetInstanceId(), ProjectileSpeed);
+            projectileInstance.GlobalPosition = SpawnPoint;
+            Vector2 direction = TargetPoint - user.GlobalPosition;
+            projectileInstance.Initialize(direction, target != null ? target.GetInstanceId() : 0, ProjectileSpeed);
             user.GetParent().AddChild(projectileInstance);
             projectileInstance.OnHit += () => OnProjectileHit(user, target, TargetPoint);
         }
@@ -64,15 +70,8 @@ public partial class Ability : Resource
             areaEffectInstance.SetCooldown(AreaDuration);
             areaEffectInstance.SetCaster(user);
             areaEffectInstance.SetDamageRoll(AreaDamage);
-            Timer t = new()
-            {
-                WaitTime = AreaDuration,
-                OneShot = true
-            };
-            t.Timeout += areaEffectInstance.QueueFree;
-            t.Autostart = true;
-            SceneSystem.GetMasterScene().AddChild(t);
             SceneSystem.GetMasterScene().AddChild(areaEffectInstance);
+            CombatSystem.PassTurn(user.CharacterData);
         }
     }
 }

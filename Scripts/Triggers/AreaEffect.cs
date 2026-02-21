@@ -14,6 +14,10 @@ public partial class AreaEffect : Area2D
         _anim = GetNode<AnimationPlayer>("AnimationPlayer");
         _anim.Play("play");
         CombatSystem.TurnHandlers += OnTurnBegin;
+        foreach (var side in CombatSystem.GetSides())
+        {
+            DealAreaDamage(side);
+        }
     }
 
     public void PlayEndAnimation()
@@ -54,6 +58,18 @@ public partial class AreaEffect : Area2D
             {
                 CombatSystem.TurnHandlers -= OnTurnBegin;
                 QueueFree();
+            }
+        }
+        DealAreaDamage(side);
+    }
+
+    public void DealAreaDamage(List<string> movingSide)
+    {
+        foreach (var x in GetOverlappingBodies())
+        {
+            if (x is Character character && movingSide.Contains(character.CharacterData.ResourcePath))
+            {
+                HealthSystem.PostDamageEvent(_caster, character, _damageRoll.Roll());
             }
         }
     }

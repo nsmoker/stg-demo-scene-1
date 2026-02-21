@@ -1,15 +1,16 @@
+using ArkhamHunters.Scripts;
 using Godot;
 
 public partial class AbilityButton : Button
 {
     private Ability _ability;
 
-    public System.Action OnPressed;
+    public Character character;
 
     public override void _Ready()
     {
         base._Ready();
-        Pressed += () => OnPressed?.Invoke();
+        Pressed += OnPressed;
     }
 
     public void SetAbility(Ability ability)
@@ -21,5 +22,20 @@ public partial class AbilityButton : Button
     public void SetIndex(int index)
     {
         Text = index.ToString();
+        Shortcut = new Shortcut()
+        {
+            Events = [new InputEventKey() {
+                Pressed = true,
+                Keycode = Key.Key0 + index
+            }]
+        };
+    }
+
+    public void OnPressed()
+    {
+        if (_ability != null)
+        {
+            SceneSystem.GetMasterScene().GetCombatController().OnAbilityTargetingStart(_ability, character);
+        }
     }
 }

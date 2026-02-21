@@ -32,6 +32,7 @@ public partial class MasterScene : Node2D
         _abilityBar = GetNode<AbilityBar>("Camera2D/AbilityBar");
         _currentScreen = SceneSystem.GetInstance(_startingScene.ResourcePath);
         _combatStatusLabel = GetNode<Label>("Camera2D/CombatStatusLabel");
+        SceneSystem.SetMasterScene(this);
         CombatSystem.Initialize();
         SwitchScene(_currentScreen);
     }
@@ -98,8 +99,18 @@ public partial class MasterScene : Node2D
         SetAbilityBarVisible(true);
     }
 
+    public void SetAbilityBarReceiveInput(bool receiveInput)
+    {
+        _abilityBar.ProcessMode = receiveInput ? ProcessModeEnum.Always : ProcessModeEnum.Disabled;
+    }
+
     public Player GetPlayer()
     {
         return _player;
+    }
+
+    public CombatController GetCombatController()
+    {
+        return _combatController;
     }
 }

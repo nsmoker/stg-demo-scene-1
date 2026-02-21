@@ -347,4 +347,9 @@ public static class CombatSystem
         }
         return charactersInRange;
     }
+
+    public static List<List<string>> GetSides()
+    {
+        return _sides;
+    }
 }

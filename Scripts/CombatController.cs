@@ -11,6 +11,9 @@ public partial class CombatController : Node
     private bool _inDialogue;
     private bool _playerMoving;
     private bool _playerAttacking;
+    private bool _playerTargetingAbility = false;
+    private Ability _targetingAbility;
+    private Targeting _targetingCursor;
 
     public void SetPlayer(Player player)
     {
@@ -70,7 +73,7 @@ public partial class CombatController : Node
 
     public override void _PhysicsProcess(double delta)
     {
-        if (!IsActive) return;
+        if (!IsActive || _playerTargetingAbility) return;
 
         if (Input.IsActionJustPressed("Combat Interact") && CombatSystem.NavReady() && _isOurTurn)
         {
@@ -81,7 +84,7 @@ public partial class CombatController : Node
                 _player.IssueAttack(
                     hoveredChar.CharacterData,
                     _player.GlobalPosition.DirectionTo(hoveredChar.GlobalPosition),
-                    () => _playerAttacking = false);
+                    () => _player.BasicAttackAbility.Activate(_player, hoveredChar, _player.GetProjectileSpawnPoint(), hoveredChar.GlobalPosition));
             }
             else
             {
@@ -105,7 +108,7 @@ public partial class CombatController : Node
 
     private void OnPlayerDraw()
     {
-        if (!IsActive) return;
+        if (!IsActive || _playerTargetingAbility) return;
 
         if (_isOurTurn && !HoverSystem.AnyHovered())
         {
@@ -156,6 +159,33 @@ public partial class CombatController : Node
             _player.ActionPip1.Hide();
             _player.ActionPip2.Hide();
         }
+        _player.QueueRedraw();
+    }
+
+    public void OnAbilityTargetingStart(Ability ability, Character caster)
+    {
+        _targetingAbility = ability;
+        _playerTargetingAbility = true;
+        var masterScene = SceneSystem.GetMasterScene();
+        var swCursor = ability.TargetingScene != null ? ability.TargetingScene.Instantiate<Targeting>() : new Targeting();
+        swCursor.ShouldAnimate = ability.TargetingIsAnimated;
+        swCursor.Tex = ability.TargetingSprite;
+        swCursor.caster = caster;
+        swCursor.Ability = ability;
+        masterScene.AddChild(swCursor);
+        _targetingCursor = swCursor;
+
+        masterScene.SetAbilityBarReceiveInput(false);
+        _player.QueueRedraw();
+    }
+
+    public void OnAbilityTargetingEnd(Ability ability)
+    {
+        Input.SetCustomMouseCursor(null);
+        Input.MouseMode = Input.MouseModeEnum.Visible;
+        _targetingAbility = null;
+        _playerTargetingAbility = false;
+        SceneSystem.GetMasterScene().SetAbilityBarReceiveInput(true);
         _player.QueueRedraw();
     }
 }

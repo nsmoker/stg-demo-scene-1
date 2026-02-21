@@ -132,7 +132,7 @@ offset_right = 29.599998
 offset_bottom = 65.6
 
 [node name="AbilityBar" parent="Camera2D" unique_id=1544366748 instance=ExtResource("9_j3g65")]
-z_index = 4096
+z_index = 499
 offset_left = -17.0
 offset_top = 144.0
 offset_right = 15.0

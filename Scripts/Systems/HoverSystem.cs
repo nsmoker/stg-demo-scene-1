@@ -6,7 +6,7 @@ public static class HoverSystem
 {
     private static string _hovered = null;
 
-    public static string Hovered {  get { return _hovered; } }
+    public static string Hovered { get { return _hovered; } }
 
     public static void SetHovered(string hovered)
     {
@@ -24,5 +24,10 @@ public static class HoverSystem
     public static bool AnyHovered()
     {
         return _hovered != null;
+    }
+
+    public static bool IsCharacterHovered()
+    {
+        return CharacterSystem.GetInstance(_hovered) != null;
     }
 }
