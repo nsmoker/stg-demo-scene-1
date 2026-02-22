@@ -9,9 +9,9 @@ public partial class CharacterData : Resource
     [Export]
     public string CharacterName = "New Character";
 
-    [Export] 
+    [Export]
     public AttributeSet BaseAttributes = new();
-    [Export] 
+    [Export]
     public SkillSet BaseSkills = new();
 
     private int ComputeAttributeMod(int value)
@@ -27,10 +27,10 @@ public partial class CharacterData : Resource
     [Export]
     public Faction InitialFaction;
 
-    [Export] 
+    [Export]
     public float Speed = 300.0f;
 
-    [Export] 
+    [Export]
     public Godot.Collections.Array<PatrolLeg> PatrolLegs = [];
 
     [Export]

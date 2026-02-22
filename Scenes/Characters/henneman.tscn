@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="17_giusq"]
 [ext_resource type="Texture2D" uid="uid://c7gkusiwo0t5q" path="res://Sprites/Characters/henneman_ingame.png" id="18_ujab1"]
 [ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="19_k3hug"]
+[ext_resource type="PackedScene" uid="uid://cc3g2hp8txivb" path="res://Scenes/status_effect_container.tscn" id="21_aioks"]
 
 [sub_resource type="Resource" id="Resource_auwsv"]
 script = ExtResource("2_1cv77")
@@ -384,3 +385,11 @@ label_settings = SubResource("LabelSettings_dhkrs")
 
 [node name="ProjectileSpawnPoint" type="Marker2D" parent="." unique_id=1697262471]
 position = Vector2(7, 1)
+
+[node name="StatusEffectContainer" parent="." unique_id=5491049 instance=ExtResource("21_aioks")]
+offset_left = -4.0
+offset_top = -32.0
+offset_right = 28.0
+offset_bottom = 26.0
+scale = Vector2(0.25, 0.25)
+alignment = 1

@@ -4,11 +4,11 @@
 [ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/Characters/player_data.tres" id="2_pu2lt"]
 [ext_resource type="PackedScene" uid="uid://dmt32gtrfhfqp" path="res://Scenes/Projectiles/BasicAttackProjectile.tscn" id="3_gdgf0"]
 [ext_resource type="Resource" uid="uid://bnl26jpb4ux27" path="res://Resources/Abilities/BasicAttack.tres" id="4_8erm5"]
-[ext_resource type="Script" uid="uid://6s50muiotg4i" path="res://Scripts/Resources/Ability.cs" id="5_fcmex"]
+[ext_resource type="Script" uid="uid://6s50muiotg4i" path="res://Scripts/Resources/Abilities/Ability.cs" id="5_fcmex"]
 [ext_resource type="Resource" uid="uid://tl0xaibe4km4" path="res://Resources/Abilities/Fireball.tres" id="6_25bbb"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="7_3smsa"]
 [ext_resource type="Resource" uid="uid://b6nd1qemtfjj7" path="res://Resources/Abilities/Vortex.tres" id="7_25bbb"]
-[ext_resource type="PackedScene" uid="uid://brdmuedpkp0jn" path="res://Scenes/ability_menu.tscn" id="8_8erm5"]
+[ext_resource type="PackedScene" uid="uid://cc3g2hp8txivb" path="res://Scenes/status_effect_container.tscn" id="11_25bbb"]
 [ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="12_pu2lt"]
 [ext_resource type="Texture2D" uid="uid://cusnf7nuh7o57" path="res://Sprites/Characters/pc_ingame_placeholder.png" id="12_ukyrk"]
 
@@ -185,14 +185,6 @@ shape = SubResource("RectangleShape2D_gymyn")
 radius = 16.0
 affect_navigation_mesh = true
 
-[node name="CombatInteractionMenu" parent="." unique_id=1767751793 instance=ExtResource("8_8erm5")]
-visible = false
-offset_left = 10.0
-offset_top = -7.0
-offset_right = 42.0
-offset_bottom = 43.0
-scale = Vector2(0.5, 0.5)
-
 [node name="WeaponSprite" type="Sprite2D" parent="." unique_id=511097846]
 visible = false
 texture_filter = 1
@@ -240,3 +232,11 @@ label_settings = SubResource("LabelSettings_pu2lt")
 
 [node name="ProjectileSpawnPoint" type="Marker2D" parent="." unique_id=848169825]
 position = Vector2(7, 1)
+
+[node name="StatusEffectContainer" parent="." unique_id=5491049 instance=ExtResource("11_25bbb")]
+offset_left = -4.0
+offset_top = -32.0
+offset_right = 28.0
+offset_bottom = 26.0
+scale = Vector2(0.25, 0.25)
+alignment = 1

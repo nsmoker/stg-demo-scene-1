@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="1_ndsb5"]
 [ext_resource type="Texture2D" uid="uid://r2xchsyxvc4r" path="res://Sprites/Characters/pc_ingame_npc_fa.png" id="2_gokwg"]
 [ext_resource type="Texture2D" uid="uid://c6syadx2hm1cg" path="res://Sprites/Characters/pc_ingame_npc_fb.png" id="3_l4oaw"]
-[ext_resource type="PackedScene" uid="uid://cy27gk81ig72o" path="res://Scenes/generic_npc.tscn" id="4_b5i2i"]
+[ext_resource type="PackedScene" uid="uid://cy27gk81ig72o" path="res://Scenes/Characters/generic_npc.tscn" id="4_b5i2i"]
 [ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/Characters/player_data.tres" id="4_hbowc"]
 [ext_resource type="Texture2D" uid="uid://b15gt320egkk8" path="res://Sprites/Characters/pc_ingame_npc_fc.png" id="4_su8nj"]
 [ext_resource type="Texture2D" uid="uid://cd7kmy7sbrwsy" path="res://Sprites/Characters/pc_ingame_player_ma.png" id="5_wqt3d"]

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_nc75b"]
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="2_xfs0e"]
 [ext_resource type="Texture2D" uid="uid://r2xchsyxvc4r" path="res://Sprites/Characters/pc_ingame_npc_fa.png" id="4_1b7np"]
-[ext_resource type="PackedScene" uid="uid://cy27gk81ig72o" path="res://Scenes/generic_npc.tscn" id="4_l2y3h"]
+[ext_resource type="PackedScene" uid="uid://cy27gk81ig72o" path="res://Scenes/Characters/generic_npc.tscn" id="4_l2y3h"]
 [ext_resource type="Texture2D" uid="uid://cvobau2o6qy0n" path="res://Sprites/Backdrops/Hallway.png" id="4_xfs0e"]
 [ext_resource type="Script" uid="uid://bqhkr10ewh7xe" path="res://Scripts/AI/CrowdAITask.cs" id="5_2xnf6"]
 [ext_resource type="PackedScene" uid="uid://bgk5v73hj7cv0" path="res://Scenes/CombatGym.tscn" id="5_03dat"]

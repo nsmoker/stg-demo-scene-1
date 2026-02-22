@@ -94,7 +94,7 @@ public partial class CombatController : Node
                     _player.GetGlobalMousePosition(),
                     true, 0x1u);
                 var len = Character.ComputePathLength(path, _player.GlobalPosition);
-                if (len <= _player.CharacterData.MovementRange)
+                if (len <= _player.MovementRange)
                 {
                     _playerMoving = true;
                     _player.IssueCombatMove(
@@ -121,7 +121,7 @@ public partial class CombatController : Node
                     _player.GetGlobalMousePosition(),
                     true, 0x1u);
                 var len = Character.ComputePathLength(path, _player.GlobalPosition);
-                var inRange = len <= _player.CharacterData.MovementRange;
+                var inRange = len <= _player.MovementRange;
                 var pathTransformed = path.Select(_player.ToLocal).ToArray();
                 float dist = path.Length > 1
                     ? len / 16.0f

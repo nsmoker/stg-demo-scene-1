@@ -25,6 +25,18 @@ struct CombatantState
     public int ActionsRemaining;
 }
 
+public struct CombatTimerHandle
+{
+    internal int Index;
+    internal CombatTimerHandle(int index)
+    {
+        Index = index;
+        IsValid = true;
+    }
+
+    public bool IsValid;
+};
+
 public static class CombatSystem
 {
     private static readonly Dictionary<string, CombatantState> _currentCombatants = [];
@@ -60,6 +72,8 @@ public static class CombatSystem
     private static Action combatEnded;
 
     private static List<List<string>> _sides = [];
+
+    private static List<CombatTimer> _combatTimers = [];
 
     private static int _sideMoving = 0;
 
@@ -119,6 +133,7 @@ public static class CombatSystem
                 _currentCombatants[x] = state;
             });
             NavRegion.BakeNavigationPolygon();
+            TriggerTimers(currentSide);
             TurnHandlers?.Invoke(currentSide);
         }
     }
@@ -178,6 +193,53 @@ public static class CombatSystem
             _sideMoving = 0;
             TurnHandlers?.Invoke(_sides[0]);
         }
+    }
+
+    /// <summary>
+    ///  Create a timer based on a number of turns relative to a particular character. Timers will automatically be removed when they expire or when the character they are relative to
+    /// exits combat.
+    /// </summary>
+    /// <param name="duration">The duration in turns of the timer.</param>
+    /// <param name="onTimeout">A callback that will be invoked when the timer finishes.</param>
+    /// <param name="RelativeTo">The character the timer is relative to. The timer ticks when this character's turn starts.</param>
+    /// <returns>An opaque handle to the timer which can be passed to `RemoveTimer` for premature removal.</returns>
+    public static CombatTimerHandle CreateTimer(int duration, Action onTimeout, CharacterData RelativeTo)
+    {
+        var timer = new CombatTimer()
+        {
+            TurnsRemaining = duration,
+            Timeout = onTimeout,
+            RelativeToCharacter = RelativeTo,
+        };
+        _combatTimers.Add(timer);
+        return new CombatTimerHandle(_combatTimers.Count - 1);
+    }
+
+    /// <summary>
+    /// Removes the timer referred to by `handle`. It is an error to pass a handle to this function that was not returned by `CreateTimer` or that has already been removed.
+    /// </summary>
+    /// <param name="handle">A handle to the timer to clear.</param>
+    public static void RemoveTimer(CombatTimerHandle handle)
+    {
+        _combatTimers.RemoveAt(handle.Index);
+    }
+
+    private static void TriggerTimers(List<string> side)
+    {
+        for (int i = 0; i < _combatTimers.Count; ++i)
+        {
+            CombatTimer timer = _combatTimers[i];
+            if (side.Any(x => x == timer.RelativeToCharacter.ResourcePath))
+            {
+                timer.TurnsRemaining -= 1;
+                if (timer.TurnsRemaining <= 0)
+                {
+                    timer.Timeout?.Invoke();
+                }
+            }
+        }
+
+        _combatTimers = [.. _combatTimers.Where(x => x.TurnsRemaining > 0)];
     }
 
     public static void JoinCombat(CharacterData toJoin)

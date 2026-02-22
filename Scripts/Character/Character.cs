@@ -13,6 +13,12 @@ public struct CoverCheckResult
     public int CoverLevelWest;
 };
 
+public class StackStatus
+{
+    public int NumStacks;
+    public List<CombatTimerHandle> StackTimers = [];
+}
+
 [GlobalClass]
 public partial class Character : CharacterBody2D
 {
@@ -75,6 +81,17 @@ public partial class Character : CharacterBody2D
     Marker2D _projectileSpawnPoint;
 
     public Sprite2D CoverBadge;
+
+    private Dictionary<StatusEffect, StackStatus> _statusEffects = [];
+
+    private float _speed = 20.0f;
+
+    public float Speed { get => _speed; set => _speed = value; }
+
+    private float _movementRange = 20.0f;
+    public float MovementRange { get => _movementRange; set => _movementRange = value; }
+
+    private StatusEffectContainer _statusEffectContainer;
 
     public int Strength => CharacterData.BaseAttributes.Strength + GetEquipmentSet().ComputeAttributeBonus().StrengthBonus;
     public int Endurance => CharacterData.BaseAttributes.Endurance + GetEquipmentSet().ComputeAttributeBonus().EnduranceBonus;
@@ -173,7 +190,7 @@ public partial class Character : CharacterBody2D
                     currentPatrolLeg = character.CharacterData.PatrolLegs[character._patrolLegIndex];
                 }
 
-                character.Velocity = currentPatrolLeg.Direction * character.CharacterData.Speed;
+                character.Velocity = currentPatrolLeg.Direction * character.Speed;
                 character._patrolLegProgress += character.Velocity.Length();
                 character.MoveAndSlide();
                 character.SetWalkAnimState(character.Velocity);
@@ -217,11 +234,11 @@ public partial class Character : CharacterBody2D
                         if (path.Length == 0)
                         {
                             var targetVec = closestEnemy.GlobalPosition - character.GlobalPosition;
-                            character.ControllerState = new CombatNavState(character, [character.GlobalPosition + targetVec.Normalized() * character.CharacterData.MovementRange]);
+                            character.ControllerState = new CombatNavState(character, [character.GlobalPosition + targetVec.Normalized() * character._movementRange]);
                         }
                         else
                         {
-                            character.ControllerState = new CombatNavState(character, TrimPath(character.GlobalPosition, path, character.CharacterData.MovementRange));
+                            character.ControllerState = new CombatNavState(character, TrimPath(character.GlobalPosition, path, character._movementRange));
                         }
                     }
                     else if (!_attackedThisTurn)
@@ -327,7 +344,7 @@ public partial class Character : CharacterBody2D
             }
 
             var targetVector = targetPoint - character.GlobalPosition;
-            var vel = targetVector.Normalized() * (_speed > 0.0f ? _speed : character.CharacterData.Speed);
+            var vel = targetVector.Normalized() * (_speed > 0.0f ? _speed : character.Speed);
             character.Velocity = vel;
             character.SetWalkAnimState(vel);
             character.MoveAndSlide();
@@ -377,7 +394,7 @@ public partial class Character : CharacterBody2D
             else
             {
                 var targetVector = targetPoint - _character.Position;
-                var vel = targetVector.Normalized() * _character.CharacterData.Speed;
+                var vel = targetVector.Normalized() * _character.Speed;
                 _character.Velocity = vel;
                 _character.SetWalkAnimState(vel);
                 _character.MoveAndSlide();
@@ -443,6 +460,32 @@ public partial class Character : CharacterBody2D
         return CharacterData != null;
     }
 
+    public void AddStatusEffect(StatusEffect effect)
+    {
+        bool alreadyHas = _statusEffects.ContainsKey(effect);
+        if (!alreadyHas)
+        {
+            _statusEffects[effect] = new StackStatus();
+        }
+        effect.OnStackAdd(this);
+        _statusEffects[effect].NumStacks += 1;
+        if (!effect.IsPermanent)
+        {
+            _statusEffects[effect].StackTimers.Add(
+                CombatSystem.CreateTimer(effect.Duration, () =>
+                {
+                    effect.OnStackRemove(this);
+                    _statusEffects[effect].NumStacks -= 1;
+                }, CharacterData)
+            );
+        }
+    }
+
+    public void RemoveStatusEffect(StatusEffect effect)
+    {
+        _statusEffects[effect].NumStacks -= 1;
+    }
+
     public override void _Ready()
     {
         Anim = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -477,12 +520,22 @@ public partial class Character : CharacterBody2D
         }
 
         NavObstacle = GetNode<NavigationObstacle2D>("NavigationObstacle2D");
+
+        Speed = CharacterData?.Speed ?? Speed;
+        MovementRange = CharacterData?.MovementRange ?? MovementRange;
+        _statusEffectContainer = GetNode<StatusEffectContainer>("StatusEffectContainer");
     }
 
     public override void _Process(double delta)
     {
         ControllerState.Process(delta, this);
         UpdateAnimation();
+        UpdateUI();
+    }
+
+    public void UpdateUI()
+    {
+        _statusEffectContainer.SetStatusEffects(_statusEffects);
     }
 
     public virtual void UpdateAnimation()
@@ -782,11 +835,11 @@ public partial class Character : CharacterBody2D
         var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), GlobalPosition, point, true, 0x1u);
         if (path.Length == 0)
         {
-            ControllerState = new NavState([GlobalPosition, point], new PatrolState(), onComplete, speed > 0 ? speed : CharacterData.Speed);
+            ControllerState = new NavState([GlobalPosition, point], new PatrolState(), onComplete, speed > 0 ? speed : Speed);
         }
         else
         {
-            ControllerState = new NavState(path, new PatrolState(), onComplete, speed > 0 ? speed : CharacterData.Speed);
+            ControllerState = new NavState(path, new PatrolState(), onComplete, speed > 0 ? speed : Speed);
         }
     }
 

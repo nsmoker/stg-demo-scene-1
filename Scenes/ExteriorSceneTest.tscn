@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cd7kmy7sbrwsy" path="res://Sprites/Characters/pc_ingame_player_ma.png" id="5_f5hpu"]
 [ext_resource type="Texture2D" uid="uid://c3xdtaspbe1s1" path="res://Sprites/Characters/pc_ingame_player_mb.png" id="6_mmppx"]
 [ext_resource type="Texture2D" uid="uid://b6wph1kvjioyc" path="res://Sprites/Characters/pc_ingame_player_mc.png" id="7_kgxkn"]
-[ext_resource type="PackedScene" uid="uid://cy27gk81ig72o" path="res://Scenes/generic_npc.tscn" id="8_ktbq3"]
+[ext_resource type="PackedScene" uid="uid://cy27gk81ig72o" path="res://Scenes/Characters/generic_npc.tscn" id="8_ktbq3"]
 [ext_resource type="Script" uid="uid://bqhkr10ewh7xe" path="res://Scripts/AI/CrowdAITask.cs" id="9_r0axf"]
 [ext_resource type="Script" uid="uid://67g32ecjus0y" path="res://Scripts/AI/CrowdAIDirector.cs" id="10_r8flw"]
 [ext_resource type="Script" uid="uid://d2tkly6yb1huc" path="res://addons/aeolus/FlowField.cs" id="11_hus3k"]

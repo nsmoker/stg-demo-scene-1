@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://d00jp1qfhb7d0" path="res://Scenes/Projectiles/FireballProjectile.tscn" id="2_rrrm1"]
 [ext_resource type="Texture2D" uid="uid://rrci8bft6xo0" path="res://Sprites/Icons/fireball_icon.png" id="2_vojrl"]
 [ext_resource type="Texture2D" uid="uid://cfuedllumpruk" path="res://Sprites/Targeting/crosshairTargeting.png" id="4_vojrl"]
-[ext_resource type="Script" uid="uid://6s50muiotg4i" path="res://Scripts/Resources/Ability.cs" id="5_hlapp"]
+[ext_resource type="Script" uid="uid://6s50muiotg4i" path="res://Scripts/Resources/Abilities/Ability.cs" id="5_hlapp"]
 
 [sub_resource type="Resource" id="Resource_bhf5c"]
 script = ExtResource("1_r4j3u")

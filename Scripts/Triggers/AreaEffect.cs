@@ -5,10 +5,13 @@ using Godot;
 public partial class AreaEffect : Area2D
 {
     private AnimationPlayer _anim;
-    private int Cooldown;
+    private int _duration;
     private Character _caster;
     private DamageRoll _damageRoll;
     private Shape2D _shape;
+    private CombatTimerHandle _lifetimeHandle;
+
+    public System.Action<Character> ApplyToCharacter;
 
     public override void _Ready()
     {
@@ -20,6 +23,11 @@ public partial class AreaEffect : Area2D
         {
             DealAreaDamage(side, true);
         }
+        _lifetimeHandle = CombatSystem.CreateTimer(_duration, () =>
+        {
+            CombatSystem.TurnHandlers -= OnTurnBegin;
+            QueueFree();
+        }, _caster.CharacterData);
     }
 
     public void PlayEndAnimation()
@@ -27,9 +35,9 @@ public partial class AreaEffect : Area2D
         _anim.Play("end");
     }
 
-    public void SetCooldown(int cooldown)
+    public void SetDuration(int duration)
     {
-        Cooldown = cooldown;
+        _duration = duration;
     }
 
     public void SetCaster(Character caster)
@@ -50,18 +58,6 @@ public partial class AreaEffect : Area2D
 
     public void OnTurnBegin(List<string> side)
     {
-        if (side.Contains(_caster.CharacterData.ResourcePath))
-        {
-            if (Cooldown > 0)
-            {
-                Cooldown--;
-            }
-            else
-            {
-                CombatSystem.TurnHandlers -= OnTurnBegin;
-                QueueFree();
-            }
-        }
         DealAreaDamage(side);
     }
 
@@ -84,6 +80,7 @@ public partial class AreaEffect : Area2D
                 if (character != null && movingSide.Contains(character.CharacterData.ResourcePath))
                 {
                     HealthSystem.PostDamageEvent(_caster, character, _damageRoll.Roll());
+                    ApplyToCharacter?.Invoke(character);
                 }
             }
         }
@@ -94,6 +91,7 @@ public partial class AreaEffect : Area2D
                 if (x is Character character && movingSide.Contains(character.CharacterData.ResourcePath))
                 {
                     HealthSystem.PostDamageEvent(_caster, character, _damageRoll.Roll());
+                    ApplyToCharacter?.Invoke(character);
                 }
             }
         }
