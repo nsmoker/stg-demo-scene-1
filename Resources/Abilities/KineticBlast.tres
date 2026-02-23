@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="KineticBlast" format=3 uid="uid://b1c3i2wuae1p2"]
+
+[ext_resource type="Script" uid="uid://mxrfbr2ffrey" path="res://Scripts/Resources/DamageRoll.cs" id="1_drpme"]
+[ext_resource type="Script" uid="uid://r8b76uxgk31t" path="res://Scripts/Resources/Abilities/KineticBlast.cs" id="1_fdhxb"]
+[ext_resource type="Texture2D" uid="uid://e17fh1bkmp52" path="res://Sprites/Projectiles/Spell.png" id="2_sketo"]
+[ext_resource type="Texture2D" uid="uid://cfuedllumpruk" path="res://Sprites/Targeting/crosshairTargeting.png" id="3_850vv"]
+[ext_resource type="PackedScene" uid="uid://dmt32gtrfhfqp" path="res://Scenes/Projectiles/BasicAttackProjectile.tscn" id="3_yh5cq"]
+
+[sub_resource type="Resource" id="Resource_sketo"]
+script = ExtResource("1_drpme")
+Rolls = Array[int]([4])
+metadata/_custom_type_script = "uid://mxrfbr2ffrey"
+
+[resource]
+script = ExtResource("1_fdhxb")
+PushStrength = 200.0
+PushDuration = 0.5
+AbilityName = "Kinetic Blast"
+Description = "Push an enemy back."
+Cooldown = 2
+ProjectileSpeed = 250.0
+ContactDamage = SubResource("Resource_sketo")
+Icon = ExtResource("2_sketo")
+ProjectileScene = ExtResource("3_yh5cq")
+TargetingSprite = ExtResource("3_850vv")
+metadata/_custom_type_script = "uid://r8b76uxgk31t"

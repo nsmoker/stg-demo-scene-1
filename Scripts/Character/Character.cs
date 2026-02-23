@@ -19,6 +19,16 @@ public class StackStatus
     public List<CombatTimerHandle> StackTimers = [];
 }
 
+/// <summary>
+/// A fake, linear "push." These are not true physics forces, but just simple vectors we use to animate characters during combat.
+/// </summary>
+public class Push
+{
+    public Vector2 Velocity;
+    public double Duration;
+    public Action OnFinish;
+}
+
 [GlobalClass]
 public partial class Character : CharacterBody2D
 {
@@ -165,6 +175,8 @@ public partial class Character : CharacterBody2D
     protected CharacterData _attackTarget;
     private Action _onAttackComplete;
 
+    protected List<Push> _currentPushes = [];
+
     protected class DialogueState : ICharacterState
     {
         public void Process(double delta, Character character) { }
@@ -190,7 +202,7 @@ public partial class Character : CharacterBody2D
                     currentPatrolLeg = character.CharacterData.PatrolLegs[character._patrolLegIndex];
                 }
 
-                character.Velocity = currentPatrolLeg.Direction * character.Speed;
+                character.Velocity += currentPatrolLeg.Direction * character.Speed;
                 character._patrolLegProgress += character.Velocity.Length();
                 character.MoveAndSlide();
                 character.SetWalkAnimState(character.Velocity);
@@ -345,7 +357,7 @@ public partial class Character : CharacterBody2D
 
             var targetVector = targetPoint - character.GlobalPosition;
             var vel = targetVector.Normalized() * (_speed > 0.0f ? _speed : character.Speed);
-            character.Velocity = vel;
+            character.Velocity += vel;
             character.SetWalkAnimState(vel);
             character.MoveAndSlide();
         }
@@ -395,7 +407,7 @@ public partial class Character : CharacterBody2D
             {
                 var targetVector = targetPoint - _character.Position;
                 var vel = targetVector.Normalized() * _character.Speed;
-                _character.Velocity = vel;
+                _character.Velocity += vel;
                 _character.SetWalkAnimState(vel);
                 _character.MoveAndSlide();
             }
@@ -532,7 +544,6 @@ public partial class Character : CharacterBody2D
         UpdateAnimation();
         UpdateUI();
     }
-
     public void UpdateUI()
     {
         _statusEffectContainer.SetStatusEffects(_statusEffects);
@@ -582,6 +593,19 @@ public partial class Character : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
+        Velocity = Vector2.Zero;
+        foreach (var push in _currentPushes)
+        {
+            Velocity += push.Velocity;
+            push.Duration -= delta;
+            if (push.Duration <= 0)
+            {
+                push.OnFinish();
+            }
+        }
+        MoveAndSlide();
+        _currentPushes.RemoveAll(push => push.Duration <= 0);
+        Velocity = Vector2.Zero;
         ControllerState.PhysicsProcess(delta, this);
     }
 
@@ -967,5 +991,10 @@ public partial class Character : CharacterBody2D
     public Vector2 GetProjectileSpawnPoint()
     {
         return _projectileSpawnPoint.GlobalPosition;
+    }
+
+    public void AddPush(Push push)
+    {
+        _currentPushes.Add(push);
     }
 }

@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://tl0xaibe4km4" path="res://Resources/Abilities/Fireball.tres" id="6_25bbb"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="7_3smsa"]
 [ext_resource type="Resource" uid="uid://b6nd1qemtfjj7" path="res://Resources/Abilities/Vortex.tres" id="7_25bbb"]
+[ext_resource type="Resource" uid="uid://b1c3i2wuae1p2" path="res://Resources/Abilities/KineticBlast.tres" id="8_cueqf"]
 [ext_resource type="PackedScene" uid="uid://cc3g2hp8txivb" path="res://Scenes/status_effect_container.tscn" id="11_25bbb"]
 [ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="12_pu2lt"]
 [ext_resource type="Texture2D" uid="uid://cusnf7nuh7o57" path="res://Sprites/Characters/pc_ingame_placeholder.png" id="12_ukyrk"]
@@ -161,7 +162,7 @@ script = ExtResource("1_co212")
 CharacterData = ExtResource("2_pu2lt")
 ProjectileScene = ExtResource("3_gdgf0")
 BasicAttackAbility = ExtResource("4_8erm5")
-Abilities = Array[ExtResource("5_fcmex")]([ExtResource("6_25bbb"), ExtResource("7_25bbb")])
+Abilities = Array[ExtResource("5_fcmex")]([ExtResource("6_25bbb"), ExtResource("7_25bbb"), ExtResource("8_cueqf")])
 
 [node name="MainCollider" type="CollisionShape2D" parent="." unique_id=335113379]
 position = Vector2(0, 1.5)
