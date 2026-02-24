@@ -13,11 +13,7 @@ public partial class DialogueEditor : Control
     public GraphEdit EditorNode;
     private readonly List<DialogueNode> _selection = [];
     private readonly List<DialogueNode> _clipboard = [];
-    private ulong _entryCounter = 0;
     private ulong _nodeCounter = 0;
-    private ulong _responseCounter = 0;
-    private ulong _actionCounter = 0;
-
     private Conversation _editedConversation;
     private Label _statusLabel;
 
@@ -107,9 +103,6 @@ public partial class DialogueEditor : Control
         }
 
         _nodeCounter = 0;
-        _responseCounter = 0;
-        _actionCounter = 0;
-        _entryCounter = 0;
 
         if (conversation == null)
         {
@@ -266,35 +259,10 @@ public partial class DialogueEditor : Control
     private DialogueNode _AddNodeInternal(string localPath)
     {
         var newNode = GD.Load<PackedScene>(ProjectSettings.GlobalizePath(localPath)).Instantiate<DialogueNode>();
-        switch (newNode.NodeType)
-        {
-            case DialogueNodeType.Node:
-                {
-                    newNode.Title += $" {_nodeCounter}";
-                    _nodeCounter++;
-                    break;
-                }
-            case DialogueNodeType.PlayerResponse:
-                {
-                    newNode.Title += $" {_nodeCounter}";
-                    _nodeCounter++;
-                    break;
-                }
-            case DialogueNodeType.ScriptAction:
-                {
-                    newNode.Title += $" {_nodeCounter}";
-                    _nodeCounter++;
-                    break;
-                }
-            case DialogueNodeType.ScriptEntry:
-                {
-                    newNode.Title += $" {_nodeCounter}";
-                    _nodeCounter++;
-                    break;
-                }
-        }
 
+        newNode.Title += $" {_nodeCounter}";
         newNode.DNodeId = _nodeCounter;
+        _nodeCounter++;
 
         return newNode;
     }
@@ -437,33 +405,23 @@ public partial class DialogueEditor : Control
             {
                 switch (pastedNode.NodeType)
                 {
-                    case DialogueNodeType.Node:
-                        {
-                            pastedNode.Title = $"Node {_nodeCounter}";
-                            _nodeCounter++;
-                            break;
-                        }
                     case DialogueNodeType.PlayerResponse:
-                        {
-                            pastedNode.Title = $"Player Response {_responseCounter}";
-                            _responseCounter++;
-                            break;
-                        }
+                        pastedNode.Title = "Player Response";
+                        break;
                     case DialogueNodeType.ScriptAction:
-                        {
-                            pastedNode.Title = $"Script Action {_actionCounter}";
-                            _actionCounter++;
-                            break;
-                        }
+                        pastedNode.Title = "Script Action";
+                        break;
                     case DialogueNodeType.ScriptEntry:
-                        {
-                            pastedNode.Title += $"Script Entry {_entryCounter}";
-                            _entryCounter++;
-                            break;
-                        }
+                        pastedNode.Title = "Script Entry";
+                        break;
+                    default:
+                        pastedNode.Title = "Dialogue Node";
+                        break;
                 }
+                pastedNode.Title += $" {_nodeCounter}";
                 pastedNode.Name = pastedNode.Title;
                 pastedNode.DNodeId = _nodeCounter;
+                _nodeCounter++;
                 pastedNode.PositionOffset += new Vector2(50, 50); // Offset to avoid overlap
                 undoRedoManager.AddDoMethod(this, MethodName.AddAndEnableNode, pastedNode);
                 undoRedoManager.AddUndoMethod(this, MethodName.DisableNode, pastedNode);

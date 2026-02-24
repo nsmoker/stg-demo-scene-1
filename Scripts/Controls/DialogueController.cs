@@ -106,7 +106,7 @@ public partial class DialogueController : ScrollContainer
         public void Process(double delta, DialogueController controller) { }
     }
 
-    private class EvalState(DialogueGraphNode node, DialogueController controller) : IDialogueControllerState
+    private class EvalState(DialogueGraphNode node) : IDialogueControllerState
     {
         private readonly DialogueGraphNode _node = node;
 
@@ -134,10 +134,10 @@ public partial class DialogueController : ScrollContainer
                     case EverydayDialogueEditor.DialogueNodeType.ScriptAction:
                         controller.actionDone = false;
                         nodeOut.Action?.Execute(() => controller.actionDone = true);
-                        controller.State = new EvalState(nodeOut, controller);
+                        controller.State = new EvalState(nodeOut);
                         break;
                     case EverydayDialogueEditor.DialogueNodeType.ScriptEntry:
-                        controller.State = new EvalState(nodeOut, controller);
+                        controller.State = new EvalState(nodeOut);
                         break;
                     case EverydayDialogueEditor.DialogueNodeType.PlayerResponse:
                         controller.State = new WriteState(controller, nodeOut);
@@ -192,7 +192,7 @@ public partial class DialogueController : ScrollContainer
                 }
                 else
                 {
-                    controller.State = new EvalState(_node, controller);
+                    controller.State = new EvalState(_node);
                 }
             }
         }
@@ -254,7 +254,7 @@ public partial class DialogueController : ScrollContainer
         _dialogueLabel.Text = "";
         _speakerLabel.Text = "";
         Visible = true;
-        State = new EvalState(_conversation.EntryPoints[entryPoint], this);
+        State = new EvalState(_conversation.EntryPoints[entryPoint]);
 
         ProcessMode = ProcessModeEnum.Always;
     }
