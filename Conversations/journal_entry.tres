@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Conversation" load_steps=11 format=3 uid="uid://tnv8hnlijf3o"]
+[gd_resource type="Resource" script_class="Conversation" format=3 uid="uid://tnv8hnlijf3o"]
 
 [ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="1_cay0w"]
 [ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="2_ra1qc"]
@@ -47,6 +47,6 @@ EditorSize = Vector2(456.0041, 257.00104)
 
 [resource]
 script = ExtResource("3_g52o5")
-Nodes = [SubResource("Resource_01832"), SubResource("Resource_ba4j5"), SubResource("Resource_tsc2i")]
-EntryPoints = [SubResource("Resource_pv6v2")]
-Connections = [SubResource("Resource_ra1qc"), SubResource("Resource_g52o5")]
+Nodes = Array[ExtResource("2_ra1qc")]([SubResource("Resource_01832"), SubResource("Resource_ba4j5"), SubResource("Resource_tsc2i")])
+EntryPoints = Array[ExtResource("2_ra1qc")]([SubResource("Resource_pv6v2")])
+Connections = Array[ExtResource("1_cay0w")]([SubResource("Resource_ra1qc"), SubResource("Resource_g52o5")])
