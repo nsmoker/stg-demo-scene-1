@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://bg7o07th2w4x1" path="res://Scenes/AbilityButton.tscn" id="10_vwrou"]
 [ext_resource type="Script" uid="uid://dwq4nn0he6m2m" path="res://Scripts/CombatController.cs" id="11_combat"]
 [ext_resource type="PackedScene" uid="uid://bwxrnre15blwk" path="res://Scenes/area_transition.tscn" id="14_cpcg4"]
+[ext_resource type="Script" uid="uid://wt7kvyp0kbqf" path="res://Scripts/AreaTransition.cs" id="15_y3tuy"]
 
 [sub_resource type="Resource" id="Resource_fc6rv"]
 script = ExtResource("4_fc6rv")
@@ -158,7 +159,7 @@ script = ExtResource("11_combat")
 [node name="AreaTransition" parent="." unique_id=1911315587 instance=ExtResource("14_cpcg4")]
 position = Vector2(-36, 217)
 scale = Vector2(0.19999939, 1)
-DestinationScene = ExtResource("1_smuqh")
+script = ExtResource("15_y3tuy")
 
 [node name="DestinationPoint" parent="AreaTransition" index="1"]
 position = Vector2(-40.000122, -109)
@@ -166,7 +167,7 @@ position = Vector2(-40.000122, -109)
 [node name="AreaTransition2" parent="." unique_id=614434942 instance=ExtResource("14_cpcg4")]
 position = Vector2(-36, 154)
 scale = Vector2(0.19999939, 1)
-DestinationScene = ExtResource("2_4j3x6")
+script = ExtResource("15_y3tuy")
 
 [node name="DestinationPoint" parent="AreaTransition2" index="1"]
 position = Vector2(-10.0000305, 117)
