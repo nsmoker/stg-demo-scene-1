@@ -514,37 +514,44 @@ public partial class Character : CharacterBody2D
 
     public virtual void UpdateAnimation()
     {
+        string desiredAnim;
+
         switch (_currentAnimState)
         {
             case AnimState.Idle:
-                Anim.Play("idle");
+                desiredAnim = "idle";
                 break;
             case AnimState.WalkNorth:
-                Anim.Play("walk_north");
+                desiredAnim = "walk_north";
                 break;
             case AnimState.WalkSouth:
-                Anim.Play("walk_south");
+                desiredAnim = "walk_south";
                 break;
             case AnimState.WalkEast:
                 _mainSprite.FlipH = false;
-                Anim.Play("walk_h");
+                desiredAnim = "walk_h";
                 break;
             case AnimState.WalkWest:
                 _mainSprite.FlipH = true;
-                Anim.Play("walk_h");
+                desiredAnim = "walk_h";
                 break;
             case AnimState.Attack:
-                Anim.Play("attack");
+                desiredAnim = "attack";
                 break;
             case AnimState.Sitting:
-                Anim.Play("sit");
+                desiredAnim = "sit";
                 break;
             case AnimState.Talking:
-                Anim.Play("talking");
+                desiredAnim = "talking";
                 break;
             default:
-                Anim.Play("idle");
+                desiredAnim = "idle";
                 break;
+        }
+
+        if (desiredAnim != Anim.CurrentAnimation && Anim.HasAnimation(desiredAnim))
+        {
+            Anim.Play(desiredAnim);
         }
 
         if (_currentAnimState != AnimState.Sitting)
