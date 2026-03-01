@@ -1,6 +1,6 @@
-# STG Demo Scene 1
+# RPG Demo Scene
 
-This project is a tiny chunk of a scene for one of my settings. I primarily made it so I would have a place where I could make some simple content and experiment with getting a scene to play out in a reasonably fluid way. 
+This project is a playable slice of a tactical RPG with branching dialogue and turn-based combat. 
 
 The core of the project is a few key features, all of which I implemented in C#:
 
