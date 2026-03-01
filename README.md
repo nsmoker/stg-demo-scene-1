@@ -1,8 +1,8 @@
 # RPG Demo Scene
 
-This project is a playable slice of a tactical RPG with branching dialogue and turn-based combat. 
+This project is a playable slice of a tactical RPG with branching dialogue and turn-based combat. It was built in Godot 4 and C#. I drew most of the art as well - thanks to my friend Miles Hoyle for drawing a couple of the background NPC sprites!
 
-The core of the project is a few key features, all of which I implemented in C#:
+The core of the project is a few key features, all of which I implemented in C#. I developed all functionality and non-default tooling myself without the use of any external addons using vanilla Godot features. 
 
 * A flowchart-like branching dialogue editor, which supports arbitrary script invocations and condition checks, as well as a system for parsing and displaying the output of said tool.
 * A turn-based combat system with an action economy and action timings that respect animation.
