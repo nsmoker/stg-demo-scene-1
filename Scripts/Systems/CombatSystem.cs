@@ -27,19 +27,19 @@ internal struct CombatantState
 
 public struct CombatTimerHandle
 {
-    internal int Index;
-    internal CombatTimerHandle(int index)
+    internal ulong Id;
+    internal CombatTimerHandle(ulong id)
     {
-        Index = index;
-        IsValid = true;
+        Id = id;
     }
 
-    public bool IsValid;
 };
 
 public static class CombatSystem
 {
     private static readonly Dictionary<string, CombatantState> _currentCombatants = [];
+
+    private static ulong _timerCount = 0;
 
     public delegate void AttackEventHandler(AttackEvent e);
     public delegate void CombatStartHandler(CombatStartEvent e);
@@ -184,21 +184,23 @@ public static class CombatSystem
     /// <returns>An opaque handle to the timer which can be passed to `RemoveTimer` for premature removal.</returns>
     public static CombatTimerHandle CreateTimer(int duration, Action onTimeout, CharacterData RelativeTo)
     {
+        _timerCount += 1;
         var timer = new CombatTimer()
         {
             TurnsRemaining = duration,
             Timeout = onTimeout,
             RelativeToCharacter = RelativeTo,
+            Id = _timerCount
         };
         _combatTimers.Add(timer);
-        return new CombatTimerHandle(_combatTimers.Count - 1);
+        return new CombatTimerHandle(_timerCount);
     }
 
     /// <summary>
     /// Removes the timer referred to by `handle`. It is an error to pass a handle to this function that was not returned by `CreateTimer` or that has already been removed.
     /// </summary>
     /// <param name="handle">A handle to the timer to clear.</param>
-    public static void RemoveTimer(CombatTimerHandle handle) => _combatTimers.RemoveAt(handle.Index);
+    public static void RemoveTimer(CombatTimerHandle handle) => _combatTimers = [.. _combatTimers.Where(x => x.Id != handle.Id)];
 
     private static void TriggerTimers(List<string> side)
     {

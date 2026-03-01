@@ -14,7 +14,6 @@
 [ext_resource type="PackedScene" uid="uid://bg7o07th2w4x1" path="res://Scenes/AbilityButton.tscn" id="10_vwrou"]
 [ext_resource type="Script" uid="uid://dwq4nn0he6m2m" path="res://Scripts/CombatController.cs" id="11_combat"]
 [ext_resource type="PackedScene" uid="uid://bwxrnre15blwk" path="res://Scenes/area_transition.tscn" id="14_cpcg4"]
-[ext_resource type="Script" uid="uid://wt7kvyp0kbqf" path="res://Scripts/AreaTransition.cs" id="15_y3tuy"]
 
 [sub_resource type="Resource" id="Resource_fc6rv"]
 script = ExtResource("4_fc6rv")
@@ -54,6 +53,12 @@ font_size = 10
 
 [sub_resource type="SystemFont" id="SystemFont_oiltp"]
 subpixel_positioning = 0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cpcg4"]
+size = Vector2(99, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y3tuy"]
+size = Vector2(99, 8)
 
 [node name="MasterScene" type="Node2D" unique_id=666549229]
 y_sort_enabled = true
@@ -159,17 +164,24 @@ script = ExtResource("11_combat")
 [node name="AreaTransition" parent="." unique_id=1911315587 instance=ExtResource("14_cpcg4")]
 position = Vector2(-36, 217)
 scale = Vector2(0.19999939, 1)
-script = ExtResource("15_y3tuy")
+DestinationScene = ExtResource("1_smuqh")
 
-[node name="DestinationPoint" parent="AreaTransition" index="1"]
-position = Vector2(-40.000122, -109)
+[node name="CollisionShape2D" parent="AreaTransition" index="0" unique_id=357211240]
+shape = SubResource("RectangleShape2D_cpcg4")
+
+[node name="DestinationPoint" parent="AreaTransition" index="1" unique_id=1031622605]
+position = Vector2(-25.000076, -72)
 
 [node name="AreaTransition2" parent="." unique_id=614434942 instance=ExtResource("14_cpcg4")]
 position = Vector2(-36, 154)
 scale = Vector2(0.19999939, 1)
-script = ExtResource("15_y3tuy")
+DestinationScene = ExtResource("2_4j3x6")
 
-[node name="DestinationPoint" parent="AreaTransition2" index="1"]
+[node name="CollisionShape2D" parent="AreaTransition2" index="0" unique_id=357211240]
+position = Vector2(4.5, 20)
+shape = SubResource("RectangleShape2D_y3tuy")
+
+[node name="DestinationPoint" parent="AreaTransition2" index="1" unique_id=1031622605]
 position = Vector2(-10.0000305, 117)
 
 [editable path="AreaTransition"]
