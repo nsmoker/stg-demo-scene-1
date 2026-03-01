@@ -5,11 +5,11 @@ using System;
 [GlobalClass]
 public partial class WalkCharToPointBlocking : DialogueAction
 {
-	[Export]
-	public CharacterData CharacterData;
+    [Export]
+    public CharacterData CharacterData;
 
-	[Export]
-	public Vector2 Point;
+    [Export]
+    public Vector2 Point;
 
     [Export]
     public Vector2 Facing;
@@ -17,7 +17,7 @@ public partial class WalkCharToPointBlocking : DialogueAction
     public override void Execute(Action onComplete)
     {
         var character = CharacterSystem.GetInstance(CharacterData.ResourcePath);
-        character.WalkToPoint(Point, () => 
+        character.WalkToPoint(Point, () =>
         {
             character.SetFacing(Facing);
             onComplete?.Invoke();

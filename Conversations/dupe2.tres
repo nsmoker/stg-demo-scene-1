@@ -56,14 +56,14 @@ script = ExtResource("2_3wuwt")
 NodeType = 2
 DNodeId = 281474976710656
 EditorPos = Vector2(-260, 720)
-EditorSize = Vector2(352, 194.00006)
+EditorSize = Vector2(352, 194.00012)
 
 [sub_resource type="Resource" id="Resource_xotau"]
 script = ExtResource("2_3wuwt")
 NodeType = 2
 DNodeId = 281474976710656
 EditorPos = Vector2(-260, 720)
-EditorSize = Vector2(352, 194.00006)
+EditorSize = Vector2(352, 194.00012)
 
 [sub_resource type="Resource" id="Resource_esb6m"]
 script = ExtResource("2_3wuwt")
@@ -71,7 +71,7 @@ NodeType = 1
 DNodeId = 281474976776192
 Action = ExtResource("4_b5k08")
 EditorPos = Vector2(3760, -100)
-EditorSize = Vector2(456.00098, 257.00037)
+EditorSize = Vector2(456.0011, 257.00037)
 
 [sub_resource type="Resource" id="Resource_bosuw"]
 script = ExtResource("2_3wuwt")
@@ -95,7 +95,7 @@ NodeType = 1
 DNodeId = 281483566776320
 Action = ExtResource("5_sa5mi")
 EditorPos = Vector2(3740, 1280)
-EditorSize = Vector2(456.0005, 257.00024)
+EditorSize = Vector2(456.0006, 257.00024)
 
 [sub_resource type="Resource" id="Resource_xr1mr"]
 script = ExtResource("2_3wuwt")
@@ -104,7 +104,7 @@ Speaker = "Sign"
 Addressee = "Player"
 DNodeId = 281483566776321
 EditorPos = Vector2(340, -480)
-EditorSize = Vector2(659.9981, 360.0003)
+EditorSize = Vector2(659.9981, 360.00024)
 
 [sub_resource type="Resource" id="Resource_0bit8"]
 script = ExtResource("3_yb246")

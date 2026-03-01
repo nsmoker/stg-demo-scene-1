@@ -4,7 +4,7 @@ namespace ArkhamHunters.Scripts.Items;
 
 [Tool]
 [GlobalClass]
-public partial class AttributeRequirement: Resource
+public partial class AttributeRequirement : Resource
 {
     [Export]
     public int MinimumStrength;
@@ -21,13 +21,10 @@ public partial class AttributeRequirement: Resource
     [Export]
     public int MinimumWillpower;
 
-    public bool MeetsRequirements(AttributeSet attributes)
-    {
-        return attributes.Strength >= MinimumStrength && attributes.Dexterity >= MinimumDexterity 
+    public bool MeetsRequirements(AttributeSet attributes) => attributes.Strength >= MinimumStrength && attributes.Dexterity >= MinimumDexterity
             && attributes.Endurance >= MinimumEndurance
             && attributes.Intelligence >= MinimumIntelligence
             && attributes.Wisdom >= MinimumWisdom
             && attributes.Charisma >= MinimumCharisma
             && attributes.Willpower >= MinimumWillpower;
-    }
 }

@@ -1,14 +1,14 @@
+using ArkhamHunters.Scripts.Items;
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ArkhamHunters.Scripts.Items;
-using Godot;
 
 namespace ArkhamHunters.Scripts;
 
 [GlobalClass]
 [Tool]
-public partial class EquipmentSet: Resource
+public partial class EquipmentSet : Resource
 {
     private Item _armor = Item.NoneItem();
     [Export]
@@ -50,32 +50,17 @@ public partial class EquipmentSet: Resource
         }
     }
 
-    public AttributeBonus ComputeAttributeBonus()
-    {
-        return Armor.ArmorStats.AttributeBonuses 
-               + Weapon.WeaponStats.AttributeBonuses 
+    public AttributeBonus ComputeAttributeBonus() => Armor.ArmorStats.AttributeBonuses
+               + Weapon.WeaponStats.AttributeBonuses
                + Helmet.WearableStats.AttributeBonuses;
-    }
 
-    public SkillBonus ComputeSkillBonus()
-    {
-        return Armor.ArmorStats.SkillBonuses
+    public SkillBonus ComputeSkillBonus() => Armor.ArmorStats.SkillBonuses
             + Weapon.WeaponStats.SkillBonuses
             + Helmet.WearableStats.SkillBonuses;
-    }
 
-    public int ComputeAc()
-    {
-        return 9 + Armor.ArmorStats.Ac;
-    }
+    public int ComputeAc() => 9 + Armor.ArmorStats.Ac;
 
-    public DamageRoll GetDamageRolls()
-    {
-        return _weapon.WeaponStats.DamageRolls;
-    }
+    public DamageRoll GetDamageRolls() => _weapon.WeaponStats.DamageRolls;
 
-    public int ComputeToHitMod()
-    {
-        return _weapon.WeaponStats.ToHitMod;
-    }
+    public int ComputeToHitMod() => _weapon.WeaponStats.ToHitMod;
 }

@@ -2,7 +2,7 @@ using Godot;
 
 public partial class Plinth : InteractableCharacter
 {
-    bool _doneInitialDialogue = false;
+    private bool _doneInitialDialogue = false;
 
     public override void _Ready()
     {
@@ -12,7 +12,7 @@ public partial class Plinth : InteractableCharacter
 
     public void OnCharacterSensed(Node2D node)
     {
-        if (node is Player player && !_doneInitialDialogue)
+        if (node is Player && !_doneInitialDialogue)
         {
             _doneInitialDialogue = true;
             DialogueSystem.StartDialogue(Dialogue, EntryPoint);

@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using ArkhamHunters.Scripts;
+using System.Collections.Generic;
 
 public struct DamageEvent
 {
@@ -16,7 +16,7 @@ public struct DeathEvent
 
 public static class HealthSystem
 {
-    private static Dictionary<string, int> _characterHealthMap = [];
+    private static readonly Dictionary<string, int> _characterHealthMap = [];
 
     public delegate void DamageEventHandler(DamageEvent damageEvent);
     public delegate void DeathEventHandler(DeathEvent deathEvent);
@@ -24,19 +24,12 @@ public static class HealthSystem
     public static DamageEventHandler DamageEventHandlers;
     public static DeathEventHandler DeathEventHandlers;
 
-    public static void SetCurrentHitpoints(string characterId, int hitpoints)
-    {
-        _characterHealthMap[characterId] = hitpoints;
-    }
+    public static void SetCurrentHitpoints(string characterId, int hitpoints) => _characterHealthMap[characterId] = hitpoints;
 
-    public static int GetCurrentHitpoints(string characterId)
-    {
-        return _characterHealthMap.TryGetValue(characterId, out var hp) ? hp : 0;
-    }
+    public static int GetCurrentHitpoints(string characterId) => _characterHealthMap.TryGetValue(characterId, out var hp) ? hp : 0;
 
     public static void PostDamageEvent(Character inflicter, Character recipient, int damage)
     {
-        recipient.CharacterData.CurrentHitpoints -= damage;
         var ret = new DamageEvent
         {
             inflicter = inflicter,

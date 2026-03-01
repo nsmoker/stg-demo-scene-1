@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using ArkhamHunters.Scripts;
 using Godot;
+using System;
+using System.Collections.Generic;
 
 namespace ArkhamHunters.Scripts;
 
@@ -10,26 +10,27 @@ public enum InteractionType
     Dialogue,
     Container,
     Toggleable,
+    Furniture,
 }
 
 public interface IInteractable
 {
-    public void SetShowBadge(bool showBadge);
-    public InteractionType GetInteractionType();
+    void SetShowBadge(bool showBadge);
+    InteractionType GetInteractionType();
 }
 
 public interface IDialogueInteractable
 {
-    public Conversation GetDialogue();
-    public int GetEntryPoint();
+    Conversation GetDialogue();
+    int GetEntryPoint();
 }
 
 public interface IContainerInteractable
 {
-    public List<Item> GetItems();
+    List<Item> GetItems();
 }
 
 public interface IToggleableInteractable
 {
-    public void Toggle();
+    void Toggle();
 }

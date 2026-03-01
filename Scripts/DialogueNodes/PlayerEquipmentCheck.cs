@@ -18,7 +18,7 @@ public partial class PlayerEquipmentCheck : DialogueCondition
 
     public override bool Evaluate()
     {
-        EquipmentSystem.RetrieveEquipment(CharacterToCheck.ResourcePath, out EquipmentSet characterEquipment);
+        _ = EquipmentSystem.RetrieveEquipment(CharacterToCheck.ResourcePath, out EquipmentSet characterEquipment);
 
         if (characterEquipment == null)
         {

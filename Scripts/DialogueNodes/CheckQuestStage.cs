@@ -2,7 +2,7 @@ using Godot;
 
 [Tool]
 [GlobalClass]
-public partial class CheckQuestStage: DialogueCondition
+public partial class CheckQuestStage : DialogueCondition
 {
     [Export]
     public Quest Quest;
@@ -11,7 +11,7 @@ public partial class CheckQuestStage: DialogueCondition
     public int stage;
 
     [Export]
-    ArkhamHunters.Scripts.Util.ComparisonOperators Operator;
+    private ArkhamHunters.Scripts.Util.ComparisonOperators Operator;
 
     public override bool Evaluate()
     {

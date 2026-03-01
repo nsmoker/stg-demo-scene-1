@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public static class EquipmentSystem
 {
-    private static Dictionary<string, EquipmentSet> _equipmentMap = [];
+    private static readonly Dictionary<string, EquipmentSet> _equipmentMap = [];
 
     public delegate void EquipmentChangeEvent(string id, EquipmentSet equipmentSet);
 
@@ -18,13 +18,7 @@ public static class EquipmentSystem
         EquipmentChangeHandlers?.Invoke(id, equipmentSet);
     }
 
-    public static bool RetrieveEquipment(string id, out EquipmentSet equipmentSet)
-    {
-        return _equipmentMap.TryGetValue(id, out equipmentSet);
-    }
+    public static bool RetrieveEquipment(string id, out EquipmentSet equipmentSet) => _equipmentMap.TryGetValue(id, out equipmentSet);
 
-    public static void RemoveEquipment(string id)
-    {
-        _equipmentMap.Remove(id);
-    }
+    public static void RemoveEquipment(string id) => _equipmentMap.Remove(id);
 }

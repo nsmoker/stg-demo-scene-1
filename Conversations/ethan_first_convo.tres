@@ -1,0 +1,408 @@
+[gd_resource type="Resource" script_class="Conversation" format=3 uid="uid://cgdymiqk0pxte"]
+
+[ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="1_qj1yb"]
+[ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="2_yh3wi"]
+[ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/edi/Scripts/Conversation.cs" id="3_jqd38"]
+
+[sub_resource type="Resource" id="Resource_qj1yb"]
+script = ExtResource("1_qj1yb")
+fromNode = 20
+toNode = 21
+
+[sub_resource type="Resource" id="Resource_yh3wi"]
+script = ExtResource("1_qj1yb")
+fromNode = 4
+toNode = 5
+
+[sub_resource type="Resource" id="Resource_jqd38"]
+script = ExtResource("1_qj1yb")
+fromNode = 1
+toNode = 4
+
+[sub_resource type="Resource" id="Resource_x0p5h"]
+script = ExtResource("1_qj1yb")
+fromNode = 21
+toNode = 23
+
+[sub_resource type="Resource" id="Resource_nb1p2"]
+script = ExtResource("1_qj1yb")
+fromNode = 22
+toNode = 23
+
+[sub_resource type="Resource" id="Resource_nxxcc"]
+script = ExtResource("1_qj1yb")
+fromNode = 13
+toNode = 20
+
+[sub_resource type="Resource" id="Resource_2k5th"]
+script = ExtResource("1_qj1yb")
+fromNode = 15
+toNode = 13
+
+[sub_resource type="Resource" id="Resource_1yd3u"]
+script = ExtResource("1_qj1yb")
+fromNode = 20
+toNode = 22
+
+[sub_resource type="Resource" id="Resource_34gsf"]
+script = ExtResource("1_qj1yb")
+fromNode = 6
+toNode = 11
+
+[sub_resource type="Resource" id="Resource_no51h"]
+script = ExtResource("1_qj1yb")
+fromNode = 11
+toNode = 12
+
+[sub_resource type="Resource" id="Resource_nlccx"]
+script = ExtResource("1_qj1yb")
+fromNode = 12
+toNode = 15
+
+[sub_resource type="Resource" id="Resource_u8f6m"]
+script = ExtResource("1_qj1yb")
+fromNode = 15
+toNode = 14
+
+[sub_resource type="Resource" id="Resource_j6c5v"]
+script = ExtResource("1_qj1yb")
+fromNode = 14
+toNode = 16
+
+[sub_resource type="Resource" id="Resource_7cv8c"]
+script = ExtResource("1_qj1yb")
+fromNode = 16
+toNode = 17
+
+[sub_resource type="Resource" id="Resource_4nbyw"]
+script = ExtResource("1_qj1yb")
+fromNode = 17
+toNode = 18
+
+[sub_resource type="Resource" id="Resource_lv7jj"]
+script = ExtResource("1_qj1yb")
+fromNode = 18
+toNode = 19
+
+[sub_resource type="Resource" id="Resource_58xwa"]
+script = ExtResource("1_qj1yb")
+fromNode = 19
+toNode = 25
+
+[sub_resource type="Resource" id="Resource_k4gep"]
+script = ExtResource("1_qj1yb")
+toNode = 1
+
+[sub_resource type="Resource" id="Resource_sklke"]
+script = ExtResource("1_qj1yb")
+fromNode = 1
+toNode = 2
+
+[sub_resource type="Resource" id="Resource_8pi25"]
+script = ExtResource("1_qj1yb")
+fromNode = 2
+toNode = 6
+
+[sub_resource type="Resource" id="Resource_tbxjx"]
+script = ExtResource("1_qj1yb")
+fromNode = 24
+toNode = 26
+
+[sub_resource type="Resource" id="Resource_wruxy"]
+script = ExtResource("1_qj1yb")
+fromNode = 6
+toNode = 24
+
+[sub_resource type="Resource" id="Resource_oq5wi"]
+script = ExtResource("1_qj1yb")
+fromNode = 7
+toNode = 8
+
+[sub_resource type="Resource" id="Resource_nqdnf"]
+script = ExtResource("1_qj1yb")
+fromNode = 8
+toNode = 10
+
+[sub_resource type="Resource" id="Resource_etseg"]
+script = ExtResource("1_qj1yb")
+fromNode = 1
+toNode = 3
+
+[sub_resource type="Resource" id="Resource_w68hr"]
+script = ExtResource("1_qj1yb")
+fromNode = 3
+toNode = 7
+
+[sub_resource type="Resource" id="Resource_lassr"]
+script = ExtResource("1_qj1yb")
+fromNode = 7
+toNode = 9
+
+[sub_resource type="Resource" id="Resource_gyo17"]
+script = ExtResource("2_yh3wi")
+NodeType = 2
+DNodeId = 1
+EditorPos = Vector2(-1840, 480)
+EditorSize = Vector2(420, 280.00098)
+
+[sub_resource type="Resource" id="Resource_7p5f3"]
+script = ExtResource("2_yh3wi")
+NodeType = 2
+DNodeId = 1
+EditorPos = Vector2(-1840, 480)
+EditorSize = Vector2(420, 280.00098)
+
+[sub_resource type="Resource" id="Resource_k6mdv"]
+script = ExtResource("2_yh3wi")
+Content = "Oh hey P.C.! Did you have your first class yet?"
+Speaker = "Ethan Riggs"
+Addressee = "Player"
+DNodeId = 2
+EditorPos = Vector2(-1060, 480)
+EditorSize = Vector2(679.99963, 420.00024)
+
+[sub_resource type="Resource" id="Resource_2axwi"]
+script = ExtResource("2_yh3wi")
+NodeType = 3
+Content = "Not yet, no. Did you, Ethan?"
+Speaker = "Player"
+Addressee = "Ethan Riggs"
+DNodeId = 3
+EditorPos = Vector2(140, 480)
+EditorSize = Vector2(719.99963, 380.00024)
+
+[sub_resource type="Resource" id="Resource_6fqhg"]
+script = ExtResource("2_yh3wi")
+NodeType = 3
+Content = "Out of my way! I'm late. "
+Speaker = "Player"
+Addressee = "Ethan Riggs"
+DNodeId = 4
+EditorPos = Vector2(180, 1980)
+EditorSize = Vector2(660, 380.0005)
+
+[sub_resource type="Resource" id="Resource_m0n1h"]
+script = ExtResource("2_yh3wi")
+NodeType = 3
+Content = "Have you seen the elemental studies classroom?"
+Speaker = "Player"
+Addressee = "Ethan Riggs"
+DNodeId = 5
+EditorPos = Vector2(160, -900)
+EditorSize = Vector2(719.9999, 399.99902)
+
+[sub_resource type="Resource" id="Resource_8dm7v"]
+script = ExtResource("2_yh3wi")
+Content = "Oh! I believe I do. Er, have. Do. It's there, off to the side of the hall."
+Speaker = "Ethan"
+Addressee = "Player"
+DNodeId = 6
+EditorPos = Vector2(1240, -940)
+EditorSize = Vector2(820.00195, 420.00006)
+
+[sub_resource type="Resource" id="Resource_tk7i4"]
+script = ExtResource("2_yh3wi")
+Content = "I did! Never thought magic would be this easy. Never thought magic existed at all, to be honest."
+Speaker = "Ethan Riggs"
+Addressee = "Player"
+DNodeId = 7
+EditorPos = Vector2(1260, 480)
+EditorSize = Vector2(780.0009, 380.00073)
+
+[sub_resource type="Resource" id="Resource_cioib"]
+script = ExtResource("2_yh3wi")
+Content = "Oh! Which class is it?"
+Speaker = "Ethan Riggs"
+Addressee = "Player"
+DNodeId = 8
+EditorPos = Vector2(1200, 1980)
+EditorSize = Vector2(720.00024, 400)
+
+[sub_resource type="Resource" id="Resource_5lg6w"]
+script = ExtResource("2_yh3wi")
+NodeType = 3
+Content = "I just said I'm late..."
+Speaker = "Player"
+Addressee = "Ethan Riggs"
+DNodeId = 9
+EditorPos = Vector2(2220, 1560)
+EditorSize = Vector2(419.9984, 359.99902)
+
+[sub_resource type="Resource" id="Resource_qh5me"]
+script = ExtResource("2_yh3wi")
+NodeType = 3
+Content = "Elemental Studies, with Henneman. Have you seen it?"
+Speaker = "Player"
+Addressee = "Ethan Riggs"
+DNodeId = 10
+LinkDNodeId = 6
+EditorPos = Vector2(2200, 2300)
+EditorSize = Vector2(539.99915, 380)
+
+[sub_resource type="Resource" id="Resource_7fxov"]
+script = ExtResource("2_yh3wi")
+Content = "Oh right, my bad... uh, hope you find it ok!"
+Speaker = "Ethan Riggs"
+Addressee = "Player"
+DNodeId = 11
+EditorPos = Vector2(2900, 1560)
+EditorSize = Vector2(579.9988, 359.99902)
+
+[sub_resource type="Resource" id="Resource_s2aln"]
+script = ExtResource("2_yh3wi")
+NodeType = 3
+Content = "Easy? Didn't you just start?"
+Speaker = "Player"
+Addressee = "Ethan Riggs"
+DNodeId = 12
+EditorPos = Vector2(2320, -380)
+EditorSize = Vector2(619.99976, 400.00122)
+
+[sub_resource type="Resource" id="Resource_tpj21"]
+script = ExtResource("2_yh3wi")
+Content = "Yes! But in my elemental studies class, they asked me to summon fire, and I was able to light a candle within the minute!"
+Speaker = "Ethan Riggs"
+Addressee = "Player"
+DNodeId = 13
+EditorPos = Vector2(3140, -380)
+EditorSize = Vector2(759.99976, 420.00165)
+
+[sub_resource type="Resource" id="Resource_b046i"]
+script = ExtResource("2_yh3wi")
+NodeType = 3
+Content = "Yes. You must be the fastest 18 year old to learn to light a candle in history. "
+Speaker = "Player"
+Addressee = "Ethan Riggs"
+DNodeId = 14
+EditorPos = Vector2(5020, -620)
+EditorSize = Vector2(640.0005, 400.00006)
+
+[sub_resource type="Resource" id="Resource_p4vbk"]
+script = ExtResource("2_yh3wi")
+NodeType = 3
+Content = "Don't you think that's a bit... excessive?"
+Speaker = "Player"
+Addressee = "Ethan Riggs"
+DNodeId = 15
+EditorPos = Vector2(5040, -80)
+EditorSize = Vector2(620.0005, 380.00024)
+
+[sub_resource type="Resource" id="Resource_lb5ub"]
+script = ExtResource("2_yh3wi")
+Content = "Do you think I'm a prodigy?"
+Speaker = "Ethan Riggs"
+Addressee = "Player"
+DNodeId = 16
+EditorPos = Vector2(4060, -380)
+EditorSize = Vector2(639.99963, 440.0014)
+
+[sub_resource type="Resource" id="Resource_3yp12"]
+script = ExtResource("2_yh3wi")
+Content = "Excessive?? What do you mean? It's a candle, what else was I supposed to do with it? Do you think it got hurt?"
+Speaker = "Ethan Riggs"
+Addressee = "Player"
+DNodeId = 17
+EditorPos = Vector2(6280, -60)
+EditorSize = Vector2(639.9995, 439.99976)
+
+[sub_resource type="Resource" id="Resource_8n8kl"]
+script = ExtResource("2_yh3wi")
+NodeType = 3
+Content = "I just mean it's only a candle, you know?"
+Speaker = "Player"
+Addressee = "Ethan Riggs"
+DNodeId = 18
+EditorPos = Vector2(7180, -40)
+EditorSize = Vector2(720.00146, 419.99945)
+
+[sub_resource type="Resource" id="Resource_2nhr1"]
+script = ExtResource("2_yh3wi")
+Content = "..."
+Speaker = "Ethan Riggs"
+Addressee = "Player"
+DNodeId = 19
+EditorPos = Vector2(8200, -40)
+EditorSize = Vector2(780, 379.99994)
+
+[sub_resource type="Resource" id="Resource_nuoro"]
+script = ExtResource("2_yh3wi")
+Content = "Man, you're probably right. I bet some of these kids can summon fireballs already. "
+Speaker = "Ethan Riggs"
+Addressee = "Player"
+DNodeId = 20
+EditorPos = Vector2(9168.223, -11.578133)
+EditorSize = Vector2(799.999, 399.9992)
+
+[sub_resource type="Resource" id="Resource_oi27n"]
+script = ExtResource("2_yh3wi")
+Content = "Must be, must be. God, I shouldn't be saying it so loud, should I? People might hear, get the wrong idea."
+Speaker = "Ethan Riggs"
+Addressee = "Player"
+DNodeId = 21
+EditorPos = Vector2(5940, -800)
+EditorSize = Vector2(839.9995, 419.99994)
+
+[sub_resource type="Resource" id="Resource_8q8yw"]
+script = ExtResource("2_yh3wi")
+NodeType = 3
+Content = "What's the wron- look Ethan, I really have to go."
+Speaker = "Player"
+Addressee = "Ethan Riggs"
+DNodeId = 22
+EditorPos = Vector2(7040, -1100)
+EditorSize = Vector2(740, 400)
+
+[sub_resource type="Resource" id="Resource_26x2i"]
+script = ExtResource("2_yh3wi")
+NodeType = 3
+Content = "You're exactly right. It's for the best if you shut up."
+Speaker = "Player"
+Addressee = "Ethan Riggs"
+DNodeId = 23
+EditorPos = Vector2(7060, -580)
+EditorSize = Vector2(699.9995, 400.00018)
+
+[sub_resource type="Resource" id="Resource_qelh4"]
+script = ExtResource("2_yh3wi")
+Content = "Right you are. Thanks for everything, friend. I won't forget you, you know."
+Speaker = "Ethan Riggs"
+Addressee = "Player"
+DNodeId = 24
+EditorPos = Vector2(8320, -820)
+EditorSize = Vector2(680, 400.00006)
+
+[sub_resource type="Resource" id="Resource_cxnoq"]
+script = ExtResource("2_yh3wi")
+NodeType = 3
+Content = "Yeah, pretty easy isn't it? You just throw your wand around and make some lights show up."
+Speaker = "Player"
+Addressee = "Ethan Riggs"
+DNodeId = 25
+EditorPos = Vector2(2300, 1000)
+EditorSize = Vector2(639.999, 400.00012)
+
+[sub_resource type="Resource" id="Resource_pjlen"]
+script = ExtResource("2_yh3wi")
+Content = "I have a lot to learn, don't I? I have to go. Thanks for talking!"
+Speaker = "Ethan Riggs"
+Addressee = "Player"
+DNodeId = 26
+EditorPos = Vector2(10500, 120)
+EditorSize = Vector2(740.0005, 420.00012)
+
+[sub_resource type="Resource" id="Resource_ql655"]
+script = ExtResource("2_yh3wi")
+Content = "Exactly."
+Speaker = "Ethan Riggs"
+Addressee = "Player"
+DNodeId = 27
+LinkDNodeId = 16
+EditorPos = Vector2(3360, 860)
+EditorSize = Vector2(385.00122, 420)
+
+[resource]
+script = ExtResource("3_jqd38")
+Nodes = Array[ExtResource("2_yh3wi")]([SubResource("Resource_7p5f3"), SubResource("Resource_k6mdv"), SubResource("Resource_2axwi"), SubResource("Resource_6fqhg"), SubResource("Resource_m0n1h"), SubResource("Resource_8dm7v"), SubResource("Resource_tk7i4"), SubResource("Resource_cioib"), SubResource("Resource_5lg6w"), SubResource("Resource_qh5me"), SubResource("Resource_7fxov"), SubResource("Resource_s2aln"), SubResource("Resource_tpj21"), SubResource("Resource_b046i"), SubResource("Resource_p4vbk"), SubResource("Resource_lb5ub"), SubResource("Resource_3yp12"), SubResource("Resource_8n8kl"), SubResource("Resource_2nhr1"), SubResource("Resource_nuoro"), SubResource("Resource_oi27n"), SubResource("Resource_8q8yw"), SubResource("Resource_26x2i"), SubResource("Resource_qelh4"), SubResource("Resource_cxnoq"), SubResource("Resource_pjlen"), SubResource("Resource_ql655")])
+EntryPoints = Array[ExtResource("2_yh3wi")]([SubResource("Resource_gyo17")])
+Connections = Array[ExtResource("1_qj1yb")]([SubResource("Resource_qj1yb"), SubResource("Resource_yh3wi"), SubResource("Resource_jqd38"), SubResource("Resource_x0p5h"), SubResource("Resource_nb1p2"), SubResource("Resource_nxxcc"), SubResource("Resource_2k5th"), SubResource("Resource_1yd3u"), SubResource("Resource_34gsf"), SubResource("Resource_no51h"), SubResource("Resource_nlccx"), SubResource("Resource_u8f6m"), SubResource("Resource_j6c5v"), SubResource("Resource_7cv8c"), SubResource("Resource_4nbyw"), SubResource("Resource_lv7jj"), SubResource("Resource_58xwa"), SubResource("Resource_k4gep"), SubResource("Resource_sklke"), SubResource("Resource_8pi25"), SubResource("Resource_tbxjx"), SubResource("Resource_wruxy"), SubResource("Resource_oq5wi"), SubResource("Resource_nqdnf"), SubResource("Resource_etseg"), SubResource("Resource_w68hr"), SubResource("Resource_lassr")])
+metadata/_custom_type_script = "uid://cmw85ukaae1eh"

@@ -6,19 +6,19 @@ using System.Collections.Generic;
 public partial class Conversation : Resource
 {
     [Export]
-    public Godot.Collections.Array<DialogueGraphNode> Nodes = new();
+    public Godot.Collections.Array<DialogueGraphNode> Nodes = [];
 
     [Export]
-    public Godot.Collections.Array<DialogueGraphNode> EntryPoints = new();
+    public Godot.Collections.Array<DialogueGraphNode> EntryPoints = [];
 
     [Export]
-    public Godot.Collections.Array<DialogueConnection> Connections = new();
+    public Godot.Collections.Array<DialogueConnection> Connections = [];
 
     public Conversation() { }
 
     public List<DialogueGraphNode> GetNodeConnections(int i)
     {
-        List<DialogueGraphNode> ret = new();
+        List<DialogueGraphNode> ret = [];
         foreach (var connection in Connections)
         {
             if (connection.fromNode == i)

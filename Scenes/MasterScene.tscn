@@ -1,0 +1,176 @@
+[gd_scene format=3 uid="uid://bnrfgnbsigxmy"]
+
+[ext_resource type="Script" uid="uid://dr6pqcp3wddx8" path="res://Scripts/MasterScene.cs" id="1_l444q"]
+[ext_resource type="PackedScene" uid="uid://bgk5v73hj7cv0" path="res://Scenes/ClassroomSceneTest.tscn" id="1_smuqh"]
+[ext_resource type="PackedScene" uid="uid://fq7wp3pxnthf" path="res://Scenes/HallwaySceneTest.tscn" id="2_4j3x6"]
+[ext_resource type="Script" uid="uid://bqhkr10ewh7xe" path="res://Scripts/AI/CrowdAITask.cs" id="4_fc6rv"]
+[ext_resource type="PackedScene" uid="uid://gedp1qirf71n" path="res://Scenes/Characters/player.tscn" id="4_scu8i"]
+[ext_resource type="Resource" uid="uid://vbjq48kype7r" path="res://Resources/Constants/faction_table.tres" id="5_8vkpp"]
+[ext_resource type="Script" uid="uid://67g32ecjus0y" path="res://Scripts/AI/CrowdAIDirector.cs" id="5_j3g65"]
+[ext_resource type="Script" uid="uid://4wgqj3gknq04" path="res://Scripts/Controls/DialogueController.cs" id="6_oiltp"]
+[ext_resource type="PackedScene" uid="uid://bahvdxf74e24c" path="res://Scenes/journal_display.tscn" id="7_7eedp"]
+[ext_resource type="PackedScene" uid="uid://m8tbjngrrk7x" path="res://Scenes/ExitMenu.tscn" id="8_fc6rv"]
+[ext_resource type="PackedScene" uid="uid://bj34uqmte0qf3" path="res://Scenes/AbilitiesMenu.tscn" id="9_j3g65"]
+[ext_resource type="PackedScene" uid="uid://bg7o07th2w4x1" path="res://Scenes/AbilityButton.tscn" id="10_vwrou"]
+[ext_resource type="Script" uid="uid://dwq4nn0he6m2m" path="res://Scripts/CombatController.cs" id="11_combat"]
+[ext_resource type="PackedScene" uid="uid://bwxrnre15blwk" path="res://Scenes/area_transition.tscn" id="14_cpcg4"]
+[ext_resource type="Script" uid="uid://wt7kvyp0kbqf" path="res://Scripts/AreaTransition.cs" id="15_y3tuy"]
+
+[sub_resource type="Resource" id="Resource_fc6rv"]
+script = ExtResource("4_fc6rv")
+Type = 2
+Duration = 10000.0
+Probability = 0.05
+metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
+
+[sub_resource type="Resource" id="Resource_j3g65"]
+script = ExtResource("4_fc6rv")
+Type = 3
+Duration = 10.0
+Probability = 0.95
+metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
+
+[sub_resource type="Resource" id="Resource_hqwvr"]
+script = ExtResource("5_j3g65")
+_possibleTasks = Array[ExtResource("4_fc6rv")]([SubResource("Resource_fc6rv"), SubResource("Resource_j3g65")])
+WalkSpeed = 40.0
+
+[sub_resource type="SystemFont" id="SystemFont_8fl2o"]
+font_names = PackedStringArray("Arial")
+disable_embedded_bitmaps = false
+allow_system_fallback = false
+subpixel_positioning = 0
+msdf_size = 16
+oversampling = 10.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_j3g65"]
+font = SubResource("SystemFont_8fl2o")
+font_size = 10
+font_color = Color(0.16470589, 0.29411766, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_vwrou"]
+font = SubResource("SystemFont_8fl2o")
+font_size = 10
+
+[sub_resource type="SystemFont" id="SystemFont_oiltp"]
+subpixel_positioning = 0
+
+[node name="MasterScene" type="Node2D" unique_id=666549229]
+y_sort_enabled = true
+script = ExtResource("1_l444q")
+_startingScene = ExtResource("2_4j3x6")
+
+[node name="ClassroomSceneTest" parent="." unique_id=36786777 instance=ExtResource("1_smuqh")]
+GenericNpcCount = 22
+GenericNpcDirector = SubResource("Resource_hqwvr")
+
+[node name="HallwaySceneTest" parent="." unique_id=1641833002 instance=ExtResource("2_4j3x6")]
+position = Vector2(0, 360)
+GenericNpcCount = 10
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1395092712]
+position = Vector2(0, 360)
+zoom = Vector2(3, 3)
+
+[node name="DialogueDisplay" type="ScrollContainer" parent="Camera2D" unique_id=768658981]
+process_mode = 3
+visible = false
+z_index = 500
+offset_left = -166.0
+offset_top = 91.0
+offset_right = 163.0
+offset_bottom = 180.0
+script = ExtResource("6_oiltp")
+_typewriterSpeed = 0.1
+HoveredColor = Color(1, 1, 0, 1)
+NormalColor = Color(1, 1, 1, 1)
+
+[node name="PanelContainer" type="PanelContainer" parent="Camera2D/DialogueDisplay" unique_id=1165180826]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Camera2D/DialogueDisplay/PanelContainer" unique_id=637831723]
+layout_mode = 2
+
+[node name="SpeakerLabel" type="Label" parent="Camera2D/DialogueDisplay/PanelContainer/VBoxContainer" unique_id=1782762547]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+mouse_filter = 0
+label_settings = SubResource("LabelSettings_j3g65")
+autowrap_mode = 3
+justification_flags = 131
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="DialogueLabel" type="Label" parent="Camera2D/DialogueDisplay/PanelContainer/VBoxContainer" unique_id=285245326]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+mouse_filter = 0
+label_settings = SubResource("LabelSettings_vwrou")
+autowrap_mode = 3
+justification_flags = 131
+
+[node name="CombatStatusLabel" type="Label" parent="Camera2D" unique_id=2062287628]
+visible = false
+z_index = 500
+custom_minimum_size = Vector2(128, 32)
+offset_left = -48.0
+offset_top = 99.0
+offset_right = 80.0
+offset_bottom = 131.0
+text = "YOUR TURN"
+
+[node name="JournalDisplay" parent="Camera2D" unique_id=950560337 instance=ExtResource("7_7eedp")]
+z_index = 500
+offset_left = -136.0
+offset_top = -48.0
+offset_right = 144.0
+offset_bottom = 112.0
+
+[node name="ExitMenu" parent="Camera2D" unique_id=249040216 instance=ExtResource("8_fc6rv")]
+visible = false
+top_level = false
+z_index = 500
+offset_left = -84.0
+offset_top = -102.0
+offset_right = 29.599998
+offset_bottom = 65.6
+
+[node name="AbilityBar" parent="Camera2D" unique_id=1544366748 instance=ExtResource("9_j3g65")]
+z_index = 499
+offset_left = -17.0
+offset_top = 144.0
+offset_right = 15.0
+offset_bottom = 210.0
+scale = Vector2(0.5, 0.5)
+AbilityButtonScene = ExtResource("10_vwrou")
+
+[node name="Player" parent="." unique_id=943866917 instance=ExtResource("4_scu8i")]
+z_index = 1
+position = Vector2(-15, 448)
+_factionTable = ExtResource("5_8vkpp")
+PathFont = SubResource("SystemFont_oiltp")
+ToHitFont = SubResource("SystemFont_oiltp")
+
+[node name="CombatController" type="Node" parent="." unique_id=1525944130]
+script = ExtResource("11_combat")
+
+[node name="AreaTransition" parent="." unique_id=1911315587 instance=ExtResource("14_cpcg4")]
+position = Vector2(-36, 217)
+scale = Vector2(0.19999939, 1)
+script = ExtResource("15_y3tuy")
+
+[node name="DestinationPoint" parent="AreaTransition" index="1"]
+position = Vector2(-40.000122, -109)
+
+[node name="AreaTransition2" parent="." unique_id=614434942 instance=ExtResource("14_cpcg4")]
+position = Vector2(-36, 154)
+scale = Vector2(0.19999939, 1)
+script = ExtResource("15_y3tuy")
+
+[node name="DestinationPoint" parent="AreaTransition2" index="1"]
+position = Vector2(-10.0000305, 117)
+
+[editable path="AreaTransition"]
+[editable path="AreaTransition2"]

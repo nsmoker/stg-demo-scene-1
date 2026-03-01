@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c0tkttpscp2h5"]
+[gd_scene load_steps=10 format=3 uid="uid://c0tkttpscp2h5"]
 
 [ext_resource type="Script" uid="uid://bcyi1tcfc373q" path="res://Scripts/Prop.cs" id="1_hvgce"]
 [ext_resource type="Texture2D" uid="uid://j5c2lrwtwqhv" path="res://Sprites/Props/trunk.png" id="1_hyryu"]
@@ -69,10 +69,14 @@ tracks/0/keys = {
 "values": [Vector2(0, 0), Vector2(0, -12)]
 }
 
+[sub_resource type="Animation" id="Animation_s3xms"]
+resource_name = "idle"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hvgce"]
 _data = {
 &"RESET": SubResource("Animation_hvgce"),
 &"hover": SubResource("Animation_hyryu"),
+&"idle": SubResource("Animation_s3xms"),
 &"land": SubResource("Animation_2s0bl"),
 &"takeoff": SubResource("Animation_r8e0v")
 }

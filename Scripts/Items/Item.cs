@@ -1,10 +1,10 @@
-using Godot;
 using ArkhamHunters.Scripts.Items;
+using Godot;
 
 namespace ArkhamHunters.Scripts.Items
 {
     public delegate void ItemSelected(Item displayedItem);
-    
+
     public enum ItemType
     {
         Weapon,
@@ -43,43 +43,40 @@ public partial class Item : Resource
 {
     [Export]
     public ItemType ItemType { get; private set; }
-    
+
     [Export]
     public AttributeRequirement AttributeRequirements = new();
     [Export]
     public SkillRequirement SkillRequirements = new();
 
-    [Export] 
+    [Export]
     public ConsumableStats ConsumableStats { get; private set; } = new();
 
-    [Export] 
+    [Export]
     public WearableStats WearableStats { get; private set; } = new();
 
-    [Export] 
+    [Export]
     public ArmorStats ArmorStats { get; private set; } = new();
 
-    [Export] 
+    [Export]
     public WeaponStats WeaponStats { get; private set; } = new();
 
     [Export]
     public string Name;
 
-    [Export] 
+    [Export]
     public string Description;
 
-    [Export] 
+    [Export]
     public Texture2D Icon;
-    
+
     [Export]
     public Texture2D OutlineIcon;
 
     public bool Equipped = false;
 
-    public static Item NoneItem()
+    public static Item NoneItem() => new Item
     {
-        return new Item
-        {
-            ItemType = ItemType.None
-        };
-    }
+        ItemType = ItemType.None
+    };
 }

@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using ArkhamHunters.Scripts;
 using Godot;
+using System.Collections.Generic;
 
 [Tool]
 [GlobalClass]
@@ -9,15 +9,12 @@ public partial class CharacterData : Resource
     [Export]
     public string CharacterName = "New Character";
 
-    [Export] 
+    [Export]
     public AttributeSet BaseAttributes = new();
-    [Export] 
+    [Export]
     public SkillSet BaseSkills = new();
 
-    private int ComputeAttributeMod(int value)
-    {
-        return (int)System.Math.Floor((value - 10.0) / 2.0);
-    }
+    private static int ComputeAttributeMod(int value) => (int) System.Math.Floor((value - 10.0) / 2.0);
 
     [Export]
     public int MaxHitpoints = 100;
@@ -27,10 +24,10 @@ public partial class CharacterData : Resource
     [Export]
     public Faction InitialFaction;
 
-    [Export] 
+    [Export]
     public float Speed = 300.0f;
 
-    [Export] 
+    [Export]
     public Godot.Collections.Array<PatrolLeg> PatrolLegs = [];
 
     [Export]

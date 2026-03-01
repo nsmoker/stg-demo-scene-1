@@ -4,25 +4,19 @@ using System;
 // TODO: DON'T SHIP
 public static class HoverSystem
 {
-    private static string _hovered = null;
+    public static string Hovered { get; private set; } = null;
 
-    public static string Hovered {  get { return _hovered; } }
-
-    public static void SetHovered(string hovered)
-    {
-        _hovered = hovered;
-    }
+    public static void SetHovered(string hovered) => Hovered = hovered;
 
     public static void SetUnhovered(string unhovered)
     {
-        if (_hovered != null && _hovered.Equals(unhovered))
+        if (Hovered != null && Hovered.Equals(unhovered))
         {
-            _hovered = null;
+            Hovered = null;
         }
     }
 
-    public static bool AnyHovered()
-    {
-        return _hovered != null;
-    }
+    public static bool AnyHovered() => Hovered != null;
+
+    public static bool IsCharacterHovered() => CharacterSystem.GetInstance(Hovered) != null;
 }

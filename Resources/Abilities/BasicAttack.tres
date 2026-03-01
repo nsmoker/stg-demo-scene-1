@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Ability" format=3 uid="uid://bnl26jpb4ux27"]
+
+[ext_resource type="Script" uid="uid://mxrfbr2ffrey" path="res://Scripts/Resources/DamageRoll.cs" id="1_ih20b"]
+[ext_resource type="Texture2D" uid="uid://cym4euxsm0dbf" path="res://Sprites/Icons/crosshair.png" id="2_s1o1d"]
+[ext_resource type="PackedScene" uid="uid://dmt32gtrfhfqp" path="res://Scenes/Projectiles/BasicAttackProjectile.tscn" id="3_juar3"]
+[ext_resource type="Texture2D" uid="uid://cfuedllumpruk" path="res://Sprites/Targeting/crosshairTargeting.png" id="4_s1o1d"]
+[ext_resource type="Script" uid="uid://6s50muiotg4i" path="res://Scripts/Resources/Abilities/Ability.cs" id="5_ijswq"]
+
+[sub_resource type="Resource" id="Resource_ih20b"]
+script = ExtResource("1_ih20b")
+Rolls = Array[int]([8])
+Mod = 1
+metadata/_custom_type_script = "uid://mxrfbr2ffrey"
+
+[resource]
+script = ExtResource("5_ijswq")
+AbilityName = "Attack"
+Description = "Launch a simple spell"
+ContactDamage = SubResource("Resource_ih20b")
+Icon = ExtResource("2_s1o1d")
+ProjectileScene = ExtResource("3_juar3")
+TargetingSprite = ExtResource("4_s1o1d")
+metadata/_custom_type_script = "uid://6s50muiotg4i"

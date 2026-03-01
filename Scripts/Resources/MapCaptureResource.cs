@@ -2,7 +2,7 @@ using Godot;
 
 [GlobalClass]
 [Tool]
-public partial class MapCaptureResource: Resource
+public partial class MapCaptureResource : Resource
 {
     [Export]
     public Image MapImage;

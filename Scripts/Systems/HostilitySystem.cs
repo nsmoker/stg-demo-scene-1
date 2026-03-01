@@ -4,29 +4,29 @@ using System.Collections.Generic;
 
 public static class HostilitySystem
 {
-    private static Dictionary<string, HashSet<string>> _hostilityOverrides = [];
+    private static readonly Dictionary<string, HashSet<string>> _hostilityOverrides = [];
 
     public delegate void HostilityChangedEvent(string entity1, string entity2, bool newHostility);
 
     public static HostilityChangedEvent HostilityChangeHandlers;
 
-    public static void SetHostilityOverride(string entity1,  string entity2, bool hostile)
+    public static void SetHostilityOverride(string entity1, string entity2, bool hostile)
     {
         if (_hostilityOverrides.TryGetValue(entity1, out var overrides))
         {
             if (hostile)
             {
-                overrides.Add(entity2);
+                _ = overrides.Add(entity2);
             }
             else
             {
-                overrides.Remove(entity2);
+                _ = overrides.Remove(entity2);
             }
         }
         else if (hostile)
         {
             _hostilityOverrides[entity1] = [];
-            _hostilityOverrides[entity1].Add(entity2);
+            _ = _hostilityOverrides[entity1].Add(entity2);
         }
         else
         {

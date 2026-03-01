@@ -4,7 +4,7 @@ namespace ArkhamHunters.Scripts.Items;
 
 [Tool]
 [GlobalClass]
-public partial class AttributeBonus: Resource
+public partial class AttributeBonus : Resource
 {
     [Export]
     public int StrengthBonus;
@@ -23,25 +23,24 @@ public partial class AttributeBonus: Resource
 
     public static AttributeBonus operator +(AttributeBonus a, AttributeBonus b)
     {
-        var ret = new AttributeBonus();
-        ret.StrengthBonus = a.StrengthBonus + b.StrengthBonus;
-        ret.DexterityBonus = a.DexterityBonus + b.DexterityBonus;
-        ret.EnduranceBonus = a.EnduranceBonus + b.EnduranceBonus;
-        ret.IntelligenceBonus = a.IntelligenceBonus + b.IntelligenceBonus;
-        ret.WisdomBonus = a.WisdomBonus + b.WisdomBonus;
-        ret.CharismaBonus = a.CharismaBonus + b.CharismaBonus;
-        ret.WillpowerBonus = a.WillpowerBonus + b.WillpowerBonus;
+        var ret = new AttributeBonus
+        {
+            StrengthBonus = a.StrengthBonus + b.StrengthBonus,
+            DexterityBonus = a.DexterityBonus + b.DexterityBonus,
+            EnduranceBonus = a.EnduranceBonus + b.EnduranceBonus,
+            IntelligenceBonus = a.IntelligenceBonus + b.IntelligenceBonus,
+            WisdomBonus = a.WisdomBonus + b.WisdomBonus,
+            CharismaBonus = a.CharismaBonus + b.CharismaBonus,
+            WillpowerBonus = a.WillpowerBonus + b.WillpowerBonus
+        };
         return ret;
     }
 
-    public bool IsSignificant()
-    {
-        return StrengthBonus != 0 
-               || DexterityBonus != 0 
-               || EnduranceBonus != 0 
-               || IntelligenceBonus != 0 
+    public bool IsSignificant() => StrengthBonus != 0
+               || DexterityBonus != 0
+               || EnduranceBonus != 0
+               || IntelligenceBonus != 0
                || WisdomBonus != 0
                || CharismaBonus != 0
                || WillpowerBonus != 0;
-    }
 }

@@ -13,11 +13,7 @@ public partial class DialogueEditor : Control
     public GraphEdit EditorNode;
     private readonly List<DialogueNode> _selection = [];
     private readonly List<DialogueNode> _clipboard = [];
-    private ulong _entryCounter = 0;
     private ulong _nodeCounter = 0;
-    private ulong _responseCounter = 0;
-    private ulong _actionCounter = 0;
-
     private Conversation _editedConversation;
     private Label _statusLabel;
 
@@ -51,7 +47,7 @@ public partial class DialogueEditor : Control
         {
             if (node is DialogueNode dnode)
             {
-                _selection.Remove(dnode);
+                _ = _selection.Remove(dnode);
             }
         };
 
@@ -61,35 +57,17 @@ public partial class DialogueEditor : Control
         var actionButton = _contextMenu.GetNode<Button>("VBoxContainer/ActionButton");
         var conditionButton = _contextMenu.GetNode<Button>("VBoxContainer/ConditionButton");
         var removeConditionButton = _contextMenu.GetNode<Button>("VBoxContainer/RemoveConditionButton");
-        dialogueButton.Pressed += () =>
-        {
-            AddNode("res://addons/edi/Scenes/dialogue_node.tscn", GetLocalMousePosition());
-        };
+        dialogueButton.Pressed += () => _ = AddNode("res://addons/edi/Scenes/dialogue_node.tscn", GetLocalMousePosition());
 
-        entryButton.Pressed += () =>
-        {
-            AddNode("res://addons/edi/Scenes/entry_node.tscn", GetLocalMousePosition());
-        };
+        entryButton.Pressed += () => _ = AddNode("res://addons/edi/Scenes/entry_node.tscn", GetLocalMousePosition());
 
-        responseButton.Pressed += () =>
-        {
-            AddNode("res://addons/edi/Scenes/response_node.tscn", GetLocalMousePosition());
-        };
+        responseButton.Pressed += () => _ = AddNode("res://addons/edi/Scenes/response_node.tscn", GetLocalMousePosition());
 
-        actionButton.Pressed += () =>
-        {
-            AddNode("res://addons/edi/Scenes/action_node.tscn", GetLocalMousePosition());
-        };
+        actionButton.Pressed += () => AddNode("res://addons/edi/Scenes/action_node.tscn", GetLocalMousePosition());
 
-        conditionButton.Pressed += () =>
-        {
-            _selection[0].AddCondition();
-        };
+        conditionButton.Pressed += () => _selection[0].AddCondition();
 
-        removeConditionButton.Pressed += () =>
-        {
-            _selection[0].RemoveCondition();
-        };
+        removeConditionButton.Pressed += () => _selection[0].RemoveCondition();
 
         EditorNode.ConnectionRequest += OnConnectionRequest;
         EditorNode.DisconnectionRequest += OnDisconnectionRequest;
@@ -105,10 +83,7 @@ public partial class DialogueEditor : Control
         EditorNode.PasteNodesRequest += OnPasteRequest;
     }
 
-    public void SetConversationResource(Conversation conversation, bool saveCurrent = true)
-    {
-        LoadConversation(conversation, saveCurrent);
-    }
+    public void SetConversationResource(Conversation conversation, bool saveCurrent = true) => LoadConversation(conversation, saveCurrent);
 
     private void LoadConversation(Conversation conversation, bool saveCurrent = true)
     {
@@ -128,9 +103,6 @@ public partial class DialogueEditor : Control
         }
 
         _nodeCounter = 0;
-        _responseCounter = 0;
-        _actionCounter = 0;
-        _entryCounter = 0;
 
         if (conversation == null)
         {
@@ -179,7 +151,7 @@ public partial class DialogueEditor : Control
 
         foreach (var conn in conversation?.Connections)
         {
-            EditorNode.ConnectNode(nodes[conn.fromNode].Name, 0, nodes[conn.toNode].Name, 0);
+            _ = EditorNode.ConnectNode(nodes[conn.fromNode].Name, 0, nodes[conn.toNode].Name, 0);
         }
 
         _editedConversation = conversation;
@@ -274,7 +246,7 @@ public partial class DialogueEditor : Control
                 _contextMenu.Position = GetLocalMousePosition();
 
                 _contextMenu.GetNode<Button>("VBoxContainer/ConditionButton").Visible = _selection.Count == 1 && _selection.Where(x => x.NodeType != DialogueNodeType.ScriptEntry).Count() == 1;
-                _contextMenu.GetNode<Button>("VBoxContainer/RemoveConditionButton").Visible = 
+                _contextMenu.GetNode<Button>("VBoxContainer/RemoveConditionButton").Visible =
                     _selection.Count == 1 && _selection.Where(x => x.NodeType != DialogueNodeType.ScriptEntry && x.Condition != null).Count() == 1;
             }
             else if (mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.IsPressed())
@@ -287,40 +259,15 @@ public partial class DialogueEditor : Control
     private DialogueNode _AddNodeInternal(string localPath)
     {
         var newNode = GD.Load<PackedScene>(ProjectSettings.GlobalizePath(localPath)).Instantiate<DialogueNode>();
-        switch (newNode.NodeType)
-        {
-            case DialogueNodeType.Node:
-                {
-                    newNode.Title += $" {_nodeCounter}";
-                    _nodeCounter++;
-                    break;
-                }
-            case DialogueNodeType.PlayerResponse:
-                {
-                    newNode.Title += $" {_nodeCounter}";
-                    _nodeCounter++;
-                    break;
-                }
-            case DialogueNodeType.ScriptAction:
-                {
-                    newNode.Title += $" {_nodeCounter}";
-                    _nodeCounter++;
-                    break;
-                }
-            case DialogueNodeType.ScriptEntry:
-                {
-                    newNode.Title += $" {_nodeCounter}";
-                    _nodeCounter++;
-                    break;
-                }
-        }
 
+        newNode.Title += $" {_nodeCounter}";
         newNode.DNodeId = _nodeCounter;
+        _nodeCounter++;
 
         return newNode;
     }
 
-    public DialogueNode AddNode(string localPath, Vector2 pos = new Vector2() )
+    public DialogueNode AddNode(string localPath, Vector2 pos = new Vector2())
     {
         var newNode = _AddNodeInternal(localPath);
         newNode.PositionOffset = (EditorNode.ScrollOffset + EditorNode.Size / 2) / EditorNode.Zoom - newNode.Size / 2;
@@ -384,7 +331,7 @@ public partial class DialogueEditor : Control
         {
             foreach (var conn in list)
             {
-                EditorNode.ConnectNode((StringName) conn["from_node"], (int) conn["from_port"], (StringName) conn["to_node"], (int) conn["to_port"]);
+                _ = EditorNode.ConnectNode((StringName) conn["from_node"], (int) conn["from_port"], (StringName) conn["to_node"], (int) conn["to_port"]);
             }
         }
 
@@ -446,7 +393,10 @@ public partial class DialogueEditor : Control
 
     private void OnPasteRequest()
     {
-        if (_clipboard.Count == 0) return;
+        if (_clipboard.Count == 0)
+        {
+            return;
+        }
 
         undoRedoManager.CreateAction("Paste Nodes");
         foreach (var node in _clipboard)
@@ -455,33 +405,23 @@ public partial class DialogueEditor : Control
             {
                 switch (pastedNode.NodeType)
                 {
-                    case DialogueNodeType.Node:
-                        {
-                            pastedNode.Title = $"Node {_nodeCounter}";
-                            _nodeCounter++;
-                            break;
-                        }
                     case DialogueNodeType.PlayerResponse:
-                        {
-                            pastedNode.Title = $"Player Response {_responseCounter}";
-                            _responseCounter++;
-                            break;
-                        }
+                        pastedNode.Title = "Player Response";
+                        break;
                     case DialogueNodeType.ScriptAction:
-                        {
-                            pastedNode.Title = $"Script Action {_actionCounter}";
-                            _actionCounter++;
-                            break;
-                        }
+                        pastedNode.Title = "Script Action";
+                        break;
                     case DialogueNodeType.ScriptEntry:
-                        {
-                            pastedNode.Title += $"Script Entry {_entryCounter}";
-                            _entryCounter++;
-                            break;
-                        }
+                        pastedNode.Title = "Script Entry";
+                        break;
+                    default:
+                        pastedNode.Title = "Dialogue Node";
+                        break;
                 }
+                pastedNode.Title += $" {_nodeCounter}";
                 pastedNode.Name = pastedNode.Title;
                 pastedNode.DNodeId = _nodeCounter;
+                _nodeCounter++;
                 pastedNode.PositionOffset += new Vector2(50, 50); // Offset to avoid overlap
                 undoRedoManager.AddDoMethod(this, MethodName.AddAndEnableNode, pastedNode);
                 undoRedoManager.AddUndoMethod(this, MethodName.DisableNode, pastedNode);
@@ -533,7 +473,7 @@ public partial class DialogueEditor : Control
                 var toLoc = ret.FindIndex(x => x.DNodeId == child.DNodeId);
                 if (dialogueGraphNode.DNodeId == from.DNodeId)
                 {
-                    conns.Add(new DialogueConnection
+                    _ = conns.Add(new DialogueConnection
                     {
                         fromNode = fromLoc,
                         toNode = toLoc
@@ -551,9 +491,9 @@ public partial class DialogueEditor : Control
 
         var conv = new Conversation
         {
-            Nodes = [..ret],
+            Nodes = [.. ret],
             Connections = connsRet,
-            EntryPoints = [..entrysRet],
+            EntryPoints = [.. entrysRet],
         };
 
         if (_editedConversation != null && _editedConversation.ResourcePath != null)
@@ -561,7 +501,7 @@ public partial class DialogueEditor : Control
             _editedConversation.Nodes = conv.Nodes;
             _editedConversation.Connections = conv.Connections;
             _editedConversation.EntryPoints = conv.EntryPoints;
-            ResourceSaver.Save(_editedConversation);
+            _ = ResourceSaver.Save(_editedConversation);
         }
         else
         {
@@ -569,12 +509,12 @@ public partial class DialogueEditor : Control
             {
                 FileMode = FileDialog.FileModeEnum.SaveFile,
                 Access = FileDialog.AccessEnum.Filesystem,
-                Filters = [ "*.tres;TRES Resource", "*.res;RES Resource" ],
+                Filters = ["*.tres;TRES Resource", "*.res;RES Resource"],
             };
             dialog.FileSelected += path =>
             {
                 conv.ResourceName = System.IO.Path.GetFileNameWithoutExtension(path);
-                ResourceSaver.Save(conv, path);
+                _ = ResourceSaver.Save(conv, path);
                 _statusLabel.Text = $"Dialogue Editor - Editing {conv.ResourcePath}";
                 dialog.Hide();
                 dialog.QueueFree();
@@ -591,10 +531,7 @@ public partial class DialogueEditor : Control
         {
             Text = "Regenerate Node IDs"
         };
-        button.Pressed += () =>
-        {
-            RegenerateNodeIds();
-        };
+        button.Pressed += RegenerateNodeIds;
         return button;
     }
 

@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bj34uqmte0qf3"]
+
+[ext_resource type="Script" uid="uid://csrn4ws4sa1my" path="res://Scripts/Controls/AbilityBar.cs" id="1_xj7ge"]
+
+[node name="AbilitiesMenu" type="HBoxContainer" unique_id=1544366748]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -1080.0
+offset_right = -928.0
+offset_bottom = -1014.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_xj7ge")

@@ -16,23 +16,11 @@ public partial class DialogueTriggerProp : StaticBody2D, IInteractable, IDialogu
         _badgeSprite = GetNode<Sprite2D>("BadgeSprite");
     }
 
-    public void SetShowBadge(bool showBadge)
-    {
-        _badgeSprite.Visible = showBadge;
-    }
+    public void SetShowBadge(bool showBadge) => _badgeSprite.Visible = showBadge;
 
-    public InteractionType GetInteractionType()
-    {
-        return InteractionType.Dialogue;
-    }
+    public InteractionType GetInteractionType() => InteractionType.Dialogue;
 
-    public Conversation GetDialogue()
-    {
-        return _conversation;
-    }
+    public Conversation GetDialogue() => _conversation;
 
-    public int GetEntryPoint()
-    {
-        return _entryPoint;
-    }
+    public int GetEntryPoint() => _entryPoint;
 }

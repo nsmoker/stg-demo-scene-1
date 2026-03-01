@@ -6,13 +6,13 @@ using System;
 public partial class FactionRelationChange : DialogueAction
 {
     [Export]
-    Faction Hater;
+    private Faction Hater;
 
     [Export]
-    Faction Hatee;
+    private Faction Hatee;
 
     [Export]
-    bool Relation;
+    private bool Relation;
 
     public override void Execute(Action onComplete)
     {

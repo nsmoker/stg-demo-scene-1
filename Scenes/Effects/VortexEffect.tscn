@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://dwpb4ovkas1au"]
+
+[ext_resource type="Script" uid="uid://dlfjm6hwxqtbu" path="res://Scripts/Triggers/AreaEffect.cs" id="1_gnkvf"]
+[ext_resource type="Texture2D" uid="uid://b6wysxsnba3ti" path="res://Sprites/Effects/vortex.png" id="1_vtq82"]
+
+[sub_resource type="Animation" id="Animation_gnkvf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_vtq82"]
+resource_name = "play"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gnkvf"]
+_data = {
+&"RESET": SubResource("Animation_gnkvf"),
+&"play": SubResource("Animation_vtq82")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vtq82"]
+radius = 15.0
+
+[node name="VortexEffect" type="Area2D" unique_id=86274276]
+script = ExtResource("1_gnkvf")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2050823815]
+texture_filter = 1
+texture = ExtResource("1_vtq82")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=182967881]
+libraries/ = SubResource("AnimationLibrary_gnkvf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=782521268]
+shape = SubResource("CircleShape2D_vtq82")

@@ -4,7 +4,7 @@ namespace ArkhamHunters.Scripts.Items;
 
 [Tool]
 [GlobalClass]
-public partial class ConsumableStats: Resource
+public partial class ConsumableStats : Resource
 {
     [Export]
     public Godot.Collections.Array<DamageType> DamageRolls;

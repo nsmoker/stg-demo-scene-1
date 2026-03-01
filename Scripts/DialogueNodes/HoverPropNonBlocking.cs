@@ -1,24 +1,24 @@
-using System;
 using Godot;
+using System;
 
 [Tool]
 [GlobalClass]
 public partial class HoverPropNonBlocking : DialogueAction
 {
     [Export]
-    PropData propData;
+    private PropData propData;
 
     [Export]
-    Vector2 position;
+    private Vector2 position;
 
     [Export]
-    float duration;
+    private float duration;
 
 
     public override void Execute(Action onComplete)
     {
         Prop instance = PropSystem.GetInstance(propData);
-        instance.HoverToPoint(position, duration, () => {});
+        instance.HoverToPoint(position, duration, () => { });
         onComplete?.Invoke();
     }
 }

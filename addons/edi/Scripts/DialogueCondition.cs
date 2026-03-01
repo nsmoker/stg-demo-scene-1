@@ -6,8 +6,5 @@ using Godot;
 
 public partial class DialogueCondition : Resource
 {
-    public virtual bool Evaluate()
-    {
-        return true;
-    }
+    public virtual bool Evaluate() => true;
 }

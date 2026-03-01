@@ -12,12 +12,17 @@ public partial class DialogueController : ScrollContainer
     private Label _dialogueLabel;
     private Label _speakerLabel;
     private VBoxContainer _container;
-    private List<Label> _choiceLabels = [];
+    private readonly List<Label> _choiceLabels = [];
 
     private bool actionDone = true;
 
     [Export]
     private float _typewriterSpeed;
+
+    [Export]
+    public Color HoveredColor;
+    [Export]
+    public Color NormalColor;
 
     public interface IDialogueControllerState
     {
@@ -34,7 +39,7 @@ public partial class DialogueController : ScrollContainer
 
     public static bool TryGetContinuation(Conversation conversation, ulong rootId, int i, out DialogueGraphNode node)
     {
-        var contained = TryGetNodeById(conversation, rootId, out var n);
+        _ = TryGetNodeById(conversation, rootId, out var n);
         var continuations = conversation.GetContinuationsForNode(n);
         if (continuations.Count > i)
         {
@@ -65,7 +70,7 @@ public partial class DialogueController : ScrollContainer
                     return 1;
                 }
             }
-        } 
+        }
 
         if (continuations.Count > 0)
         {
@@ -84,7 +89,7 @@ public partial class DialogueController : ScrollContainer
                 }
             }
         }
-        
+
         return possibleContinuationCount;
     }
 
@@ -101,16 +106,11 @@ public partial class DialogueController : ScrollContainer
         public void Process(double delta, DialogueController controller) { }
     }
 
-    private class EvalState : IDialogueControllerState
+    private class EvalState(DialogueGraphNode node) : IDialogueControllerState
     {
-        private DialogueGraphNode _node;
-        public EvalState(DialogueGraphNode node, DialogueController controller) 
-        { 
-            _node = node;
-            
-        }
+        private readonly DialogueGraphNode _node = node;
 
-        public void Process(double delta, DialogueController controller) 
+        public void Process(double delta, DialogueController controller)
         {
             if (!controller.actionDone)
             {
@@ -134,10 +134,10 @@ public partial class DialogueController : ScrollContainer
                     case EverydayDialogueEditor.DialogueNodeType.ScriptAction:
                         controller.actionDone = false;
                         nodeOut.Action?.Execute(() => controller.actionDone = true);
-                        controller.State = new EvalState(nodeOut, controller);
+                        controller.State = new EvalState(nodeOut);
                         break;
                     case EverydayDialogueEditor.DialogueNodeType.ScriptEntry:
-                        controller.State = new EvalState(nodeOut, controller);
+                        controller.State = new EvalState(nodeOut);
                         break;
                     case EverydayDialogueEditor.DialogueNodeType.PlayerResponse:
                         controller.State = new WriteState(controller, nodeOut);
@@ -153,10 +153,10 @@ public partial class DialogueController : ScrollContainer
 
     private class WriteState : IDialogueControllerState
     {
-        private DialogueGraphNode _node;
+        private readonly DialogueGraphNode _node;
         private double _timeSinceLastWrite = 0;
 
-        public WriteState(DialogueController controller, DialogueGraphNode node) 
+        public WriteState(DialogueController controller, DialogueGraphNode node)
         {
             _node = node;
             controller._dialogueLabel.Visible = true;
@@ -192,7 +192,7 @@ public partial class DialogueController : ScrollContainer
                 }
                 else
                 {
-                    controller.State = new EvalState(_node, controller);
+                    controller.State = new EvalState(_node);
                 }
             }
         }
@@ -200,39 +200,21 @@ public partial class DialogueController : ScrollContainer
 
     private class ChoiceState : IDialogueControllerState
     {
-        private DialogueController _controller;
-        private DialogueGraphNode _node;
+        private readonly DialogueController _controller;
+        private readonly DialogueGraphNode _node;
 
         private void AddChoiceLabel(DialogueController controller, DialogueGraphNode choice, int number)
         {
-            var choiceLabel = new Label
+            var choiceLabel = new DialogueLabel
             {
-                Visible = true,
-                Text = $"{number + 1}. {choice.Content}",
                 CustomMinimumSize = controller._dialogueLabel.CustomMinimumSize,
                 LabelSettings = (LabelSettings) controller._dialogueLabel.LabelSettings.DuplicateDeep(),
-                AutowrapMode = TextServer.AutowrapMode.WordSmart,
-                JustificationFlags = TextServer.JustificationFlag.Kashida | TextServer.JustificationFlag.WordBound,
-                AutowrapTrimFlags = TextServer.LineBreakFlag.TrimStartEdgeSpaces | TextServer.LineBreakFlag.TrimEndEdgeSpaces,
-                ClipText = false,
-                TextOverrunBehavior = TextServer.OverrunBehavior.NoTrimming,
-                MouseFilter = MouseFilterEnum.Stop
+                NormalColor = controller.NormalColor,
+                HoveredColor = controller.HoveredColor
             };
-            choiceLabel.MouseEntered += () =>
-            {
-                choiceLabel.LabelSettings.FontColor = new Color(1, 1, 0, 1);
-            };
-            choiceLabel.MouseExited += () =>
-            {
-                choiceLabel.LabelSettings.FontColor = new Color(1, 1, 1, 1);
-            };
-            choiceLabel.GuiInput += (InputEvent e) =>
-            {
-                if (e is InputEventMouseButton mouseEvent && mouseEvent.IsPressed() && mouseEvent.ButtonIndex == MouseButton.Left)
-                {
-                    controller.State = new WriteState(controller, choice);
-                }
-            };
+            choiceLabel.SetIndex(number + 1);
+            choiceLabel.SetDialogue(choice.Content);
+            choiceLabel.SelectionCallback = () => controller.State = new WriteState(_controller, choice);
             controller._container.AddChild(choiceLabel);
             controller._choiceLabels.Add(choiceLabel);
         }
@@ -242,10 +224,7 @@ public partial class DialogueController : ScrollContainer
             _controller = controller;
             _node = node;
 
-            var choices = controller._conversation.GetContinuationsForNode(node).Where(x => 
-                {   
-                    return x.NodeType == EverydayDialogueEditor.DialogueNodeType.PlayerResponse && (x.Condition == null || x.Condition.Evaluate());
-                }).ToList();
+            var choices = controller._conversation.GetContinuationsForNode(node).Where(x => x.NodeType == EverydayDialogueEditor.DialogueNodeType.PlayerResponse && (x.Condition == null || x.Condition.Evaluate())).ToList();
             for (int i = 0; i < choices.Count; ++i)
             {
                 AddChoiceLabel(controller, choices[i], i);
@@ -267,10 +246,7 @@ public partial class DialogueController : ScrollContainer
         State = new IdleState(this);
     }
 
-    public override void _Process(double delta)
-    {
-        State.Process(delta, this);
-    }
+    public override void _Process(double delta) => State.Process(delta, this);
 
     public void BeginConversation(Conversation conversation, int entryPoint)
     {
@@ -278,7 +254,7 @@ public partial class DialogueController : ScrollContainer
         _dialogueLabel.Text = "";
         _speakerLabel.Text = "";
         Visible = true;
-        State = new EvalState(_conversation.EntryPoints[entryPoint], this);
+        State = new EvalState(_conversation.EntryPoints[entryPoint]);
 
         ProcessMode = ProcessModeEnum.Always;
     }

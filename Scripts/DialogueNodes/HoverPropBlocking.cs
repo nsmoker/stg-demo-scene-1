@@ -1,18 +1,18 @@
-using System;
 using Godot;
+using System;
 
 [Tool]
 [GlobalClass]
 public partial class HoverPropBlocking : DialogueAction
 {
     [Export]
-    PropData propData;
+    private PropData propData;
 
     [Export]
-    Vector2 position;
+    private Vector2 position;
 
     [Export]
-    float duration;
+    private float duration;
 
 
     public override void Execute(Action onComplete)

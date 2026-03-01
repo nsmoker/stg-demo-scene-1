@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CharacterData" load_steps=63 format=3 uid="uid://bsymeb5yuv4bp"]
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://bsymeb5yuv4bp"]
 
 [ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/Resources/AttributeSet.cs" id="1_2brja"]
 [ext_resource type="Script" uid="uid://cgng01q8ok4ba" path="res://Scripts/Resources/SkillSet.cs" id="2_t3gvy"]

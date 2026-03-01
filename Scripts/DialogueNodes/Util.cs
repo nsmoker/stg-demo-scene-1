@@ -1,11 +1,10 @@
-namespace ArkhamHunters.Scripts.Util
+namespace ArkhamHunters.Scripts.Util;
+
+public enum ComparisonOperators
 {
-    public enum ComparisonOperators
-    {
-        Less,
-        Greater,
-        GreaterEqual,
-        LessEqual,
-        Equal
-    }
+    Less,
+    Greater,
+    GreaterEqual,
+    LessEqual,
+    Equal
 }

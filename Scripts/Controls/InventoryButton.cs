@@ -3,15 +3,15 @@ using Godot;
 
 namespace ArkhamHunters.Scripts;
 
-public partial class InventoryButton: TextureButton
+public partial class InventoryButton : TextureButton
 {
     [Export]
     public ItemType ItemCategory;
 
-    [Export] 
+    [Export]
     public Texture2D NoneTexture;
-    
-    [Export] 
+
+    [Export]
     public Texture2D NoneHoverTexture;
 
     public void SetItem(Item item)
