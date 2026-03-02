@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dolf38tlsle5r" path="res://Scripts/Character/InteractableCharacter.cs" id="1_tfeqm"]
 [ext_resource type="Resource" uid="uid://dlk4dagyikfmo" path="res://Conversations/plinth_dialogue.tres" id="2_tfeqm"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="5_md0fr"]
-[ext_resource type="PackedScene" uid="uid://brdmuedpkp0jn" path="res://Scenes/ability_menu.tscn" id="6_seppa"]
+[ext_resource type="PackedScene" uid="uid://brdmuedpkp0jn" path="res://Scenes/Controls/ability_menu.tscn" id="6_seppa"]
 [ext_resource type="Resource" uid="uid://c8fgn0cc87fhy" path="res://Resources/Characters/herald.tres" id="8_egnrh"]
 [ext_resource type="Texture2D" uid="uid://brtd8lp0vlo0u" path="res://SpritesPlaceholder/Images/Characters/char_04.png" id="18_duc1p"]
 

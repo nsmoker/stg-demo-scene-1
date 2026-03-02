@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://wt7kvyp0kbqf" path="res://Scripts/AreaTransition.cs" id="1_yqqkp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7eedp"]
-size = Vector2(99, 32)
+size = Vector2(24.5, 32)
 
 [node name="AreaTransition" type="Area2D" unique_id=1260791113]
 script = ExtResource("1_yqqkp")

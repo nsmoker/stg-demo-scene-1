@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="7_3smsa"]
 [ext_resource type="Resource" uid="uid://b6nd1qemtfjj7" path="res://Resources/Abilities/Vortex.tres" id="7_25bbb"]
 [ext_resource type="Resource" uid="uid://b1c3i2wuae1p2" path="res://Resources/Abilities/KineticBlast.tres" id="8_cueqf"]
-[ext_resource type="PackedScene" uid="uid://cc3g2hp8txivb" path="res://Scenes/status_effect_container.tscn" id="11_25bbb"]
+[ext_resource type="PackedScene" uid="uid://cc3g2hp8txivb" path="res://Scenes/Controls/status_effect_container.tscn" id="11_25bbb"]
 [ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="12_pu2lt"]
 [ext_resource type="Texture2D" uid="uid://cusnf7nuh7o57" path="res://Sprites/Characters/pc_ingame_placeholder.png" id="12_ukyrk"]
 

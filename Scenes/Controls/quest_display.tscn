@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b5xivkohc45aw"]
 
-[ext_resource type="PackedScene" uid="uid://02j1x8f0h41u" path="res://Scenes/quest_stage_display.tscn" id="1_03hs2"]
+[ext_resource type="PackedScene" uid="uid://02j1x8f0h41u" path="res://Scenes/Controls/quest_stage_display.tscn" id="1_03hs2"]
 [ext_resource type="Script" uid="uid://b5gh50grg7167" path="res://Scripts/Controls/QuestDisplay.cs" id="1_yw2kk"]
 
 [sub_resource type="SystemFont" id="SystemFont_3smsa"]

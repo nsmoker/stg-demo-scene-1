@@ -20,7 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="17_giusq"]
 [ext_resource type="Texture2D" uid="uid://c7gkusiwo0t5q" path="res://Sprites/Characters/henneman_ingame.png" id="18_ujab1"]
 [ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="19_k3hug"]
-[ext_resource type="PackedScene" uid="uid://cc3g2hp8txivb" path="res://Scenes/status_effect_container.tscn" id="21_aioks"]
+[ext_resource type="PackedScene" uid="uid://cc3g2hp8txivb" path="res://Scenes/Controls/status_effect_container.tscn" id="21_aioks"]
 
 [sub_resource type="Resource" id="Resource_auwsv"]
 script = ExtResource("2_1cv77")

@@ -22,7 +22,7 @@ public partial class AreaTransition : Area2D
         if (body is Player)
         {
             var masterScene = (MasterScene) GetTree().CurrentScene;
-            masterScene.SwitchScene(SceneSystem.GetInstance(DestinationScene.ResourcePath));
+            masterScene.SwitchScene(SceneSystem.GetInstance(DestinationScene.ResourcePath), true);
             body.GlobalPosition = _destination.GlobalPosition;
         }
         else if (body is Character)

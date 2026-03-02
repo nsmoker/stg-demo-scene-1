@@ -37,7 +37,7 @@ public partial class MasterScene : Node2D
         _combatStatusLabel = GetNode<Label>("Camera2D/CombatStatusLabel");
         SceneSystem.SetMasterScene(this);
         CombatSystem.Initialize();
-        SwitchScene(_currentScreen);
+        SwitchScene(_currentScreen, false);
     }
 
     public override void _Process(double delta)
@@ -52,15 +52,22 @@ public partial class MasterScene : Node2D
 
     public Label GetCombatStatusLabel() => _combatStatusLabel;
 
-    public void SwitchScene(StagfootScreen destination)
+    public void SwitchScene(StagfootScreen destination, bool fade)
     {
         _currentScreen = destination;
         CombatSystem.NavRegion = destination.NavRegion;
         Camera2D camera = GetViewport().GetCamera2D();
 
-        var tween = GetTree().CreateTween();
-        _ = tween.TweenProperty(camera, "global_position", destination.GlobalPosition, 0.3f);
-        _ = tween.SetEase(Tween.EaseType.InOut);
+        if (fade)
+        {
+            var tween = GetTree().CreateTween();
+            _ = tween.TweenProperty(camera, "global_position", destination.GlobalPosition, 0.3f);
+            _ = tween.SetEase(Tween.EaseType.InOut);
+        }
+        else
+        {
+            camera.GlobalPosition = destination.GlobalPosition;
+        }
     }
 
     public bool ToggleJournalDisplay()

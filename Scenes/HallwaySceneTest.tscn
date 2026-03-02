@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://c6syadx2hm1cg" path="res://Sprites/Characters/pc_ingame_npc_fb.png" id="5_fdiyx"]
 [ext_resource type="Texture2D" uid="uid://b15gt320egkk8" path="res://Sprites/Characters/pc_ingame_npc_fc.png" id="6_gkcab"]
 [ext_resource type="Script" uid="uid://67g32ecjus0y" path="res://Scripts/AI/CrowdAIDirector.cs" id="6_osk5m"]
-[ext_resource type="PackedScene" uid="uid://b02trvpappmbg" path="res://Scenes/BrazierProp.tscn" id="7_21ohs"]
+[ext_resource type="PackedScene" uid="uid://b02trvpappmbg" path="res://Scenes/Props/BrazierProp.tscn" id="7_21ohs"]
 [ext_resource type="Texture2D" uid="uid://cd7kmy7sbrwsy" path="res://Sprites/Characters/pc_ingame_player_ma.png" id="7_bsrby"]
 [ext_resource type="Texture2D" uid="uid://c3xdtaspbe1s1" path="res://Sprites/Characters/pc_ingame_player_mb.png" id="8_cmmxr"]
 [ext_resource type="Texture2D" uid="uid://b6wph1kvjioyc" path="res://Sprites/Characters/pc_ingame_player_mc.png" id="9_ixlj7"]
@@ -281,7 +281,7 @@ size = Vector2(272, 54)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k3e6v"]
 size = Vector2(317, 59)
 
-[node name="HallwaySceneTest" type="Node2D" unique_id=1743947183]
+[node name="HallwaySceneTest2" type="Node2D" unique_id=1743947183]
 texture_filter = 1
 script = ExtResource("1_nc75b")
 GenericNpcCount = 60

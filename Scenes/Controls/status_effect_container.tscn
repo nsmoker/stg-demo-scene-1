@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cc3g2hp8txivb"]
 
 [ext_resource type="Script" uid="uid://tgw2nrela4fe" path="res://Scripts/Controls/StatusEffectContainer.cs" id="1_2jckb"]
-[ext_resource type="PackedScene" uid="uid://b2x60toj1745j" path="res://Scenes/status_effect_display.tscn" id="2_yd8el"]
+[ext_resource type="PackedScene" uid="uid://b2x60toj1745j" path="res://Scenes/Controls/status_effect_display.tscn" id="2_yd8el"]
 
 [node name="StatusEffectContainer" type="HBoxContainer" unique_id=5491049]
 script = ExtResource("1_2jckb")

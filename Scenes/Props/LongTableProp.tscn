@@ -1,10 +1,10 @@
-[gd_scene format=3 uid="uid://b02trvpappmbg"]
+[gd_scene format=3 uid="uid://cr45wippmxvqd"]
 
-[ext_resource type="Script" uid="uid://bcyi1tcfc373q" path="res://Scripts/Prop.cs" id="1_onwmm"]
-[ext_resource type="Texture2D" uid="uid://lp8ya3es836c" path="res://Sprites/Props/brazier.png" id="2_onwmm"]
+[ext_resource type="Script" uid="uid://bcyi1tcfc373q" path="res://Scripts/Prop.cs" id="1_7pp7j"]
+[ext_resource type="Texture2D" uid="uid://bss28e4mihw1e" path="res://Sprites/Props/long-table.png" id="2_7pp7j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hvgce"]
-size = Vector2(16, 32)
+size = Vector2(31, 192)
 
 [sub_resource type="Animation" id="Animation_hvgce"]
 length = 0.001
@@ -57,7 +57,7 @@ loop_mode = 1
 step = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
-tracks/0/enabled = true
+tracks/0/enabled = false
 tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
@@ -108,19 +108,18 @@ _data = {
 &"takeoff": SubResource("Animation_r8e0v")
 }
 
-[node name="CoverProp" type="StaticBody2D" groups=["NavObjects"]]
+[node name="LongTableProp" type="StaticBody2D" unique_id=1927370995 groups=["NavObjects"]]
+z_index = 1
 collision_layer = 2097153
-script = ExtResource("1_onwmm")
+script = ExtResource("1_7pp7j")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1885226724]
+position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_hvgce")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1165687899]
 texture_filter = 1
-texture = ExtResource("2_onwmm")
-hframes = 8
+texture = ExtResource("2_7pp7j")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_hvgce")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=415219499]
+libraries/ = SubResource("AnimationLibrary_hvgce")

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bfngs83wkjeur"]
 
-[ext_resource type="PackedScene" uid="uid://nxmo2nmx88dw" path="res://Scenes/DeskProp.tscn" id="1_37sht"]
-[ext_resource type="PackedScene" uid="uid://cmpn1crr0je53" path="res://Scenes/ChairProp.tscn" id="2_bc1vk"]
+[ext_resource type="PackedScene" uid="uid://nxmo2nmx88dw" path="res://Scenes/Props/DeskProp.tscn" id="1_37sht"]
+[ext_resource type="PackedScene" uid="uid://cmpn1crr0je53" path="res://Scenes/Props/ChairProp.tscn" id="2_bc1vk"]
 
 [node name="DeskSet" type="Node2D"]
 
