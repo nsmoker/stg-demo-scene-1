@@ -19,9 +19,6 @@ public partial class MasterScene : Node2D
     private Label _combatStatusLabel;
     private CombatController _combatController;
 
-    [Export]
-    private PackedScene _startingScene;
-
     public override void _Ready()
     {
         base._Ready();
@@ -33,11 +30,9 @@ public partial class MasterScene : Node2D
         _combatController = GetNode<CombatController>("CombatController");
         _combatController.SetPlayer(_player);
         _abilityBar = GetNode<AbilityBar>("Camera2D/AbilityBar");
-        _currentScreen = SceneSystem.GetInstance(_startingScene.ResourcePath);
         _combatStatusLabel = GetNode<Label>("Camera2D/CombatStatusLabel");
         SceneSystem.SetMasterScene(this);
         CombatSystem.Initialize();
-        SwitchScene(_currentScreen, false);
     }
 
     public override void _Process(double delta)

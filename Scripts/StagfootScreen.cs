@@ -14,6 +14,7 @@ public partial class StagfootScreen : Node2D
     private Node2D _clearableProps;
     private Node2D _genericNpcRoot;
     private readonly List<Character> _genericNpcInstances = [];
+    private Area2D _screenArea;
 
     public Sprite2D Backdrop { get; set; }
     public NavigationRegion2D NavRegion { get; set; }
@@ -57,8 +58,19 @@ public partial class StagfootScreen : Node2D
         NavRegion = GetNode<NavigationRegion2D>("NavigationRegion2D");
         Backdrop = GetNode<Sprite2D>("SceneBackdrop");
         SceneSystem.Register(SceneFilePath, this);
-        _clearableProps = GetNodeOrNull<Node2D>("ClearableProps");
+        _clearableProps = GetNode<Node2D>("ClearableProps");
+        _screenArea = GetNode<Area2D>("ScreenArea");
         NavigationServer2D.MapChanged += OnFirstNavMeshSync;
+    }
+
+    public void OnSceneSystemReady()
+    {
+        // Trigger body entered for nodes already in the area.
+        foreach (Node2D body in _screenArea.GetOverlappingBodies())
+        {
+            OnBodyEntered(body);
+        }
+        _screenArea.BodyEntered += OnBodyEntered;
     }
 
     public override void _Process(double delta) => GenericNpcDirector.Process(delta, this);
@@ -135,6 +147,14 @@ public partial class StagfootScreen : Node2D
                 child.AddToGroup("NavObjects");
             }
             CombatSystem.NavRegion.BakeNavigationPolygon();
+        }
+    }
+
+    private void OnBodyEntered(Node2D body)
+    {
+        if (body is Player)
+        {
+            SceneSystem.GetMasterScene().SwitchScene(this, true);
         }
     }
 

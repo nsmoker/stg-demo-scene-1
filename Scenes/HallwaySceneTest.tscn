@@ -281,6 +281,9 @@ size = Vector2(272, 54)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k3e6v"]
 size = Vector2(317, 59)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2impm"]
+size = Vector2(640, 360)
+
 [node name="HallwaySceneTest2" type="Node2D" unique_id=1743947183]
 texture_filter = 1
 script = ExtResource("1_nc75b")
@@ -347,3 +350,10 @@ z_as_relative = false
 [node name="Ethan" parent="." unique_id=1370574117 instance=ExtResource("16_ew4ci")]
 position = Vector2(-220, -64)
 Dialogue = ExtResource("17_2impm")
+
+[node name="ScreenArea" type="Area2D" parent="." unique_id=1004241158]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenArea" unique_id=659525941]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_2impm")

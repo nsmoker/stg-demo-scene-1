@@ -172,6 +172,9 @@ metadata/_custom_type_script = "uid://cmw85ukaae1eh"
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f311p"]
 size = Vector2(640, 324)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0kudf"]
+size = Vector2(640, 360)
+
 [node name="ClassroomSceneTest" type="Node2D" unique_id=828485593]
 texture_filter = 1
 script = ExtResource("1_gokwg")
@@ -253,3 +256,10 @@ _data = ExtResource("20_b5i2i")
 [node name="ChairProp2" parent="ClearableProps/DeskSet8" unique_id=178042387 instance=ExtResource("22_gokwg")]
 position = Vector2(14, 9)
 _data = ExtResource("21_02uyx")
+
+[node name="ScreenArea" type="Area2D" parent="." unique_id=1491864735]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenArea" unique_id=1099199140]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_0kudf")

@@ -158,6 +158,8 @@ _data = {
 font_size = 8
 
 [node name="Player" type="CharacterBody2D" unique_id=1509721738]
+z_index = 4
+y_sort_enabled = true
 script = ExtResource("1_co212")
 CharacterData = ExtResource("2_pu2lt")
 ProjectileScene = ExtResource("3_gdgf0")

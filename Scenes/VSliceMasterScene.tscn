@@ -35,7 +35,6 @@ subpixel_positioning = 0
 [node name="MasterScene" type="Node2D" unique_id=666549229]
 y_sort_enabled = true
 script = ExtResource("1_euyus")
-_startingScene = ExtResource("14_1nsqu")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1395092712]
 position = Vector2(0, 360)
@@ -116,9 +115,7 @@ scale = Vector2(0.5, 0.5)
 AbilityButtonScene = ExtResource("10_ko0ge")
 
 [node name="Player" parent="." unique_id=943866917 instance=ExtResource("11_xluw3")]
-z_index = 1
 position = Vector2(3, 378)
-scale = Vector2(1.5, 1.5)
 _factionTable = ExtResource("12_42x8o")
 PathFont = SubResource("SystemFont_oiltp")
 ToHitFont = SubResource("SystemFont_oiltp")
@@ -129,14 +126,7 @@ script = ExtResource("13_kv3ts")
 [node name="DiningEntrywaySceneTest" parent="." unique_id=1608461539 instance=ExtResource("14_1nsqu")]
 position = Vector2(0, 360)
 
-[node name="AreaTransition" parent="DiningEntrywaySceneTest" index="3" unique_id=1260791113]
-DestinationScene = null
-
-[node name="DestinationPoint" parent="DiningEntrywaySceneTest/AreaTransition" index="1" unique_id=1031622605]
-position = Vector2(-32, -105)
-
 [node name="DiningHallSceneTest" parent="." unique_id=1743947183 instance=ExtResource("12_aysf6")]
 GenericNpcCount = 0
 
 [editable path="DiningEntrywaySceneTest"]
-[editable path="DiningEntrywaySceneTest/AreaTransition"]

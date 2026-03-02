@@ -11,7 +11,18 @@ public static class SceneSystem
 
     public static StagfootScreen GetInstance(string resourcePath) => s_screens[resourcePath];
 
-    public static void SetMasterScene(MasterScene masterScene) => s_masterScene = masterScene;
+    public static void SetMasterScene(MasterScene masterScene)
+    {
+        var oldScene = s_masterScene;
+        s_masterScene = masterScene;
+        if (oldScene == null)
+        {
+            foreach (var (_, screen) in s_screens)
+            {
+                screen.OnSceneSystemReady();
+            }
+        }
+    }
 
     public static MasterScene GetMasterScene() => s_masterScene;
 }

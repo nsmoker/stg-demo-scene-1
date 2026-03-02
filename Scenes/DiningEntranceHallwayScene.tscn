@@ -14,9 +14,7 @@
 [ext_resource type="Script" uid="uid://cno40qs5solb3" path="res://addons/aeolus/FlowFieldControlPoint.cs" id="12_prl3u"]
 [ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="13_ywg3d"]
 [ext_resource type="Texture2D" uid="uid://dbbkelulqxlly" path="res://Sprites/Backdrops/DiningEntranceHallway.png" id="14_oux8e"]
-[ext_resource type="PackedScene" uid="uid://bwxrnre15blwk" path="res://Scenes/area_transition.tscn" id="15_awjue"]
 [ext_resource type="PackedScene" uid="uid://b02trvpappmbg" path="res://Scenes/Props/BrazierProp.tscn" id="15_nabcb"]
-[ext_resource type="PackedScene" uid="uid://fq7wp3pxnthf" path="res://Scenes/HallwaySceneTest.tscn" id="16_eimcn"]
 
 [sub_resource type="Resource" id="Resource_2xnf6"]
 script = ExtResource("9_krf63")
@@ -191,9 +189,10 @@ size = Vector2(5.25, 63)
 size = Vector2(277.5, 11.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a8isf"]
-size = Vector2(24, 32)
+size = Vector2(640, 360)
 
 [node name="DiningEntranceSceneTest" type="Node2D" unique_id=1743947183]
+y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_awjue")
 GenericNpcCount = 10
@@ -203,27 +202,32 @@ GenericNpcDirector = SubResource("Resource_e0fpw")
 FlowFields = Array[ExtResource("11_fxc5w")]([SubResource("Resource_hqq43"), SubResource("Resource_ugcpv")])
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=883372911]
+visible = false
 z_as_relative = false
 navigation_polygon = SubResource("NavigationPolygon_2impm")
 script = ExtResource("13_ywg3d")
 
 [node name="SceneBackdrop" type="Sprite2D" parent="." unique_id=872680555]
 z_index = -1
+y_sort_enabled = true
 texture = ExtResource("14_oux8e")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="SceneBackdrop" unique_id=502039529 groups=["NavObjects"]]
+visible = false
 position = Vector2(-85, -148)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/StaticBody2D" unique_id=688824723]
 shape = SubResource("RectangleShape2D_oux8e")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="SceneBackdrop" unique_id=70598628 groups=["NavObjects"]]
+visible = false
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="SceneBackdrop/StaticBody2D2" unique_id=1115903352]
 position = Vector2(85, -148)
 shape = SubResource("RectangleShape2D_0oai3")
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="SceneBackdrop" unique_id=1352153789 groups=["NavObjects"]]
+visible = false
 position = Vector2(-129, -171)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/StaticBody2D3" unique_id=839513753]
@@ -231,6 +235,7 @@ position = Vector2(-100.75, 171.25)
 shape = SubResource("RectangleShape2D_awjue")
 
 [node name="StaticBody2D4" type="StaticBody2D" parent="SceneBackdrop" unique_id=1048849585 groups=["NavObjects"]]
+visible = false
 position = Vector2(331, -171)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/StaticBody2D4" unique_id=20942290]
@@ -238,6 +243,7 @@ position = Vector2(-100.75, 171.25)
 shape = SubResource("RectangleShape2D_awjue")
 
 [node name="StaticBody2D5" type="StaticBody2D" parent="SceneBackdrop" unique_id=655730687 groups=["NavObjects"]]
+visible = false
 position = Vector2(52, -148)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/StaticBody2D5" unique_id=1397833016]
@@ -245,6 +251,7 @@ position = Vector2(-38.25, 0)
 shape = SubResource("RectangleShape2D_eimcn")
 
 [node name="StaticBody2D6" type="StaticBody2D" parent="SceneBackdrop" unique_id=1100196064 groups=["NavObjects"]]
+visible = false
 position = Vector2(52, -148)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/StaticBody2D6" unique_id=1170947990]
@@ -252,6 +259,7 @@ position = Vector2(-81.625, 0)
 shape = SubResource("RectangleShape2D_g8uog")
 
 [node name="StaticBody2D7" type="StaticBody2D" parent="SceneBackdrop" unique_id=875297722 groups=["NavObjects"]]
+visible = false
 position = Vector2(-85, 200)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/StaticBody2D7" unique_id=362896843]
@@ -285,12 +293,9 @@ position = Vector2(120, -26)
 [node name="CoverProp8" parent="ClearableProps" unique_id=177257272 instance=ExtResource("15_nabcb")]
 position = Vector2(120, 94)
 
-[node name="AreaTransition" parent="." unique_id=1260791113 instance=ExtResource("15_awjue")]
-position = Vector2(8, -95)
-DestinationScene = ExtResource("16_eimcn")
+[node name="ScreenArea" type="Area2D" parent="." unique_id=58897177]
+visible = false
 
-[node name="CollisionShape2D" parent="AreaTransition" index="0" unique_id=357211240]
-position = Vector2(-22, -49)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenArea" unique_id=1312183813]
+position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_a8isf")
-
-[editable path="AreaTransition"]
