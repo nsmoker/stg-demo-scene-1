@@ -2,6 +2,14 @@ using Godot;
 
 namespace STGDemoScene1.Addons.Edi.Scripts;
 
+public enum DialogueNodeType
+{
+    Node,
+    ScriptAction,
+    ScriptEntry,
+    PlayerResponse,
+}
+
 [Tool]
 [GlobalClass]
 public partial class DialogueGraphNode : Resource

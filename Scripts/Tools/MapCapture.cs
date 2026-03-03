@@ -1,3 +1,4 @@
+#if TOOLS
 using Godot;
 using STGDemoScene1.Scripts.Resources;
 using System.Linq;
@@ -60,3 +61,4 @@ public partial class MapCapture : EditorScript
         mapCaptureViewport.QueueFree();
     }
 }
+#endif

@@ -1,14 +1,7 @@
+#if TOOLS
 using Godot;
 
 namespace STGDemoScene1.Addons.Edi.Scripts;
-
-public enum DialogueNodeType
-{
-    Node,
-    ScriptAction,
-    ScriptEntry,
-    PlayerResponse,
-}
 
 [GlobalClass]
 [Tool]
@@ -178,3 +171,4 @@ public partial class DialogueNode : GraphNode
 
     public static void OnResourceEditRequest(Resource resource, bool _) => EditorInterface.Singleton.GetInspector().Edit(resource);
 }
+#endif
