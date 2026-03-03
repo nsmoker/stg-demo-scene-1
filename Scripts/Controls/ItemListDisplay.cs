@@ -1,8 +1,9 @@
-using ArkhamHunters.Scripts.Items;
 using Godot;
+using STGDemoScene1.Scripts.Items;
+using STGDemoScene1.Scripts.Systems;
 using System.Collections.Generic;
 
-namespace ArkhamHunters.Scripts;
+namespace STGDemoScene1.Scripts.Controls;
 
 public partial class ItemListDisplay : PanelContainer
 {

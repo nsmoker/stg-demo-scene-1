@@ -1,5 +1,7 @@
-using ArkhamHunters.Scripts;
 using Godot;
+using STGDemoScene1.Addons.Edi.Scripts;
+
+namespace STGDemoScene1.Scripts;
 
 public partial class DialogueTriggerProp : StaticBody2D, IInteractable, IDialogueInteractable
 {

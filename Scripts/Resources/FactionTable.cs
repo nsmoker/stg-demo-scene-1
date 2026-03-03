@@ -1,5 +1,7 @@
 using Godot;
-using System;
+using STGDemoScene1.Scripts.Systems;
+
+namespace STGDemoScene1.Scripts.Resources;
 
 [GlobalClass]
 public partial class FactionTable : Resource

@@ -1,10 +1,10 @@
-using EverydayDialogueEditor;
+
 using Godot;
-using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Resources;
+
+namespace STGDemoScene1.Addons.Edi.Scripts;
 
 [Tool]
 public partial class DialogueEditor : Control
@@ -115,22 +115,14 @@ public partial class DialogueEditor : Control
         List<DialogueNode> nodes = [];
         foreach (var node in conversation?.Nodes)
         {
-            var nodePath = "";
-            switch (node.NodeType)
+            var nodePath = node.NodeType switch
             {
-                case DialogueNodeType.Node:
-                    nodePath = "res://addons/edi/Scenes/dialogue_node.tscn";
-                    break;
-                case DialogueNodeType.PlayerResponse:
-                    nodePath = "res://addons/edi/Scenes/response_node.tscn";
-                    break;
-                case DialogueNodeType.ScriptAction:
-                    nodePath = "res://addons/edi/Scenes/action_node.tscn";
-                    break;
-                case DialogueNodeType.ScriptEntry:
-                    nodePath = "res://addons/edi/Scenes/entry_node.tscn";
-                    break;
-            }
+                DialogueNodeType.Node => "res://addons/edi/Scenes/dialogue_node.tscn",
+                DialogueNodeType.PlayerResponse => "res://addons/edi/Scenes/response_node.tscn",
+                DialogueNodeType.ScriptAction => "res://addons/edi/Scenes/action_node.tscn",
+                DialogueNodeType.ScriptEntry => "res://addons/edi/Scenes/entry_node.tscn",
+                _ => "",
+            };
             var editorNode = _AddNodeInternal(nodePath);
             editorNode.Speaker = node.Speaker;
             editorNode.NodeType = node.NodeType;
@@ -267,7 +259,7 @@ public partial class DialogueEditor : Control
         return newNode;
     }
 
-    public DialogueNode AddNode(string localPath, Vector2 pos = new Vector2())
+    public DialogueNode AddNode(string localPath, Vector2 _ = new Vector2())
     {
         var newNode = _AddNodeInternal(localPath);
         newNode.PositionOffset = (EditorNode.ScrollOffset + EditorNode.Size / 2) / EditorNode.Zoom - newNode.Size / 2;
@@ -403,21 +395,13 @@ public partial class DialogueEditor : Control
         {
             if (node.Duplicate() is DialogueNode pastedNode)
             {
-                switch (pastedNode.NodeType)
+                pastedNode.Title = pastedNode.NodeType switch
                 {
-                    case DialogueNodeType.PlayerResponse:
-                        pastedNode.Title = "Player Response";
-                        break;
-                    case DialogueNodeType.ScriptAction:
-                        pastedNode.Title = "Script Action";
-                        break;
-                    case DialogueNodeType.ScriptEntry:
-                        pastedNode.Title = "Script Entry";
-                        break;
-                    default:
-                        pastedNode.Title = "Dialogue Node";
-                        break;
-                }
+                    DialogueNodeType.PlayerResponse => "Player Response",
+                    DialogueNodeType.ScriptAction => "Script Action",
+                    DialogueNodeType.ScriptEntry => "Script Entry",
+                    _ => "Dialogue Node",
+                };
                 pastedNode.Title += $" {_nodeCounter}";
                 pastedNode.Name = pastedNode.Title;
                 pastedNode.DNodeId = _nodeCounter;
@@ -548,3 +532,4 @@ public partial class DialogueEditor : Control
         }
     }
 }
+

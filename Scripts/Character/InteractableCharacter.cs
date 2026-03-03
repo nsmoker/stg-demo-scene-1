@@ -1,5 +1,7 @@
-using ArkhamHunters.Scripts;
 using Godot;
+using STGDemoScene1.Addons.Edi.Scripts;
+
+namespace STGDemoScene1.Scripts.Characters;
 
 [GlobalClass]
 public partial class InteractableCharacter : Character, IDialogueInteractable, IInteractable
@@ -29,3 +31,4 @@ public partial class InteractableCharacter : Character, IDialogueInteractable, I
 
     public InteractionType GetInteractionType() => InteractionType.Dialogue;
 }
+

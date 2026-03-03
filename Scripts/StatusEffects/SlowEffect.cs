@@ -1,5 +1,7 @@
-using ArkhamHunters.Scripts;
 using Godot;
+using STGDemoScene1.Scripts.Characters;
+
+namespace STGDemoScene1.Scripts.StatusEffects;
 
 [Tool]
 [GlobalClass]
@@ -19,3 +21,4 @@ public partial class SlowEffect : StatusEffect
         return true;
     }
 }
+

@@ -1,6 +1,8 @@
-using ArkhamHunters.Scripts;
 using Godot;
+using STGDemoScene1.Scripts.Characters;
 using System.Collections.Generic;
+
+namespace STGDemoScene1.Scripts.Controls;
 
 public partial class AbilityBar : HBoxContainer
 {
@@ -35,3 +37,4 @@ public partial class AbilityBar : HBoxContainer
         AbilityButtons.Clear();
     }
 }
+

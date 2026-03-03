@@ -1,6 +1,6 @@
 using Godot;
 
-namespace ArkhamHunters.Scripts;
+namespace STGDemoScene1.Scripts.Resources;
 
 [GlobalClass]
 public partial class PatrolLeg : Resource

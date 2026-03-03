@@ -1,5 +1,8 @@
-using ArkhamHunters.Scripts;
+
 using Godot;
+using STGDemoScene1.Scripts.Characters;
+
+namespace STGDemoScene1.Scripts.Triggers;
 
 public partial class Projectile : Area2D
 {
@@ -45,3 +48,4 @@ public partial class Projectile : Area2D
         }
     }
 }
+

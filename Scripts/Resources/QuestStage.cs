@@ -1,5 +1,7 @@
 using Godot;
 
+namespace STGDemoScene1.Scripts.Resources;
+
 [Tool]
 [GlobalClass]
 public partial class QuestStage : Resource

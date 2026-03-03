@@ -1,5 +1,6 @@
 using Godot;
-using System;
+
+namespace STGDemoScene1.Addons.Edi.Scripts;
 
 [Tool]
 [GlobalClass]

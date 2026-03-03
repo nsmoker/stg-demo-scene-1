@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ybqbrpd6jk4p"]
+[gd_scene format=3 uid="uid://ybqbrpd6jk4p"]
 
 [ext_resource type="Script" uid="uid://dolf38tlsle5r" path="res://Scripts/Character/InteractableCharacter.cs" id="1_tfeqm"]
 [ext_resource type="Resource" uid="uid://dlk4dagyikfmo" path="res://Conversations/plinth_dialogue.tres" id="2_tfeqm"]

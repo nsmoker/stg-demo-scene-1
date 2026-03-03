@@ -1,7 +1,14 @@
-using ArkhamHunters.Scripts;
 using Godot;
+using STGDemoScene1.Addons.Edi.Scripts;
+using STGDemoScene1.Scripts.Characters;
+using STGDemoScene1.Scripts.Resources;
+using STGDemoScene1.Scripts.Resources.Abilities;
+using STGDemoScene1.Scripts.Systems;
 using System.Collections.Generic;
 using System.Linq;
+using Character = STGDemoScene1.Scripts.Characters.Character;
+
+namespace STGDemoScene1.Scripts;
 
 public partial class CombatController : Node
 {
@@ -65,7 +72,7 @@ public partial class CombatController : Node
         _player.QueueRedraw();
     }
 
-    private void OnDialogueStarted(Conversation conversation, int entryPoint) => _inDialogue = true;
+    private void OnDialogueStarted(Conversation _1, int _2) => _inDialogue = true;
 
     private void OnDialogueEnded() => _inDialogue = false;
 
@@ -188,7 +195,7 @@ public partial class CombatController : Node
         _player.QueueRedraw();
     }
 
-    public void OnAbilityTargetingEnd(Ability ability)
+    public void OnAbilityTargetingEnd(Ability _)
     {
         Input.SetCustomMouseCursor(null);
         Input.MouseMode = Input.MouseModeEnum.Visible;
@@ -198,3 +205,4 @@ public partial class CombatController : Node
         _player.QueueRedraw();
     }
 }
+

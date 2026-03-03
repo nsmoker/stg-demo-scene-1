@@ -1,10 +1,11 @@
-using ArkhamHunters.Scripts.Items;
 using Godot;
+using STGDemoScene1.Scripts.Items;
+using STGDemoScene1.Scripts.Resources;
+using STGDemoScene1.Scripts.Systems;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-namespace ArkhamHunters.Scripts;
+namespace STGDemoScene1.Scripts.Controls;
 
 public partial class InventoryDisplay : Panel
 {
@@ -45,7 +46,7 @@ public partial class InventoryDisplay : Panel
         return sb.ToString();
     }
 
-    private string BuildSkillModDesc(SkillBonus skillMods)
+    private static string BuildSkillModDesc(SkillBonus skillMods)
     {
         if (skillMods.IsSignificant())
         {
@@ -62,7 +63,7 @@ public partial class InventoryDisplay : Panel
         }
     }
 
-    private string BuildAttModDesc(AttributeBonus attributeMods)
+    private static string BuildAttModDesc(AttributeBonus attributeMods)
     {
         if (attributeMods.IsSignificant())
         {
@@ -134,7 +135,7 @@ public partial class InventoryDisplay : Panel
         }
     }
 
-    private void OnInventoryChanged(string entity, Item item, bool added)
+    private void OnInventoryChanged(string entity, Item _1, bool _2)
     {
         if (entity == CurrentEntity)
         {

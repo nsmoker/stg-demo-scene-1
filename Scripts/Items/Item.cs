@@ -1,40 +1,38 @@
-using ArkhamHunters.Scripts.Items;
 using Godot;
 
-namespace ArkhamHunters.Scripts.Items
+namespace STGDemoScene1.Scripts.Items;
+
+public delegate void ItemSelected(Item displayedItem);
+
+public enum ItemType
 {
-    public delegate void ItemSelected(Item displayedItem);
+    Weapon,
+    Armor,
+    Wearable,
+    Consumable,
+    None
+}
 
-    public enum ItemType
-    {
-        Weapon,
-        Armor,
-        Wearable,
-        Consumable,
-        None
-    }
+public enum WeaponProficiency
+{
+    Shank0,
+    Shank1,
+    Shank2,
+    Guns0,
+    Guns1,
+    Guns2,
+    Staff0,
+    Staff1,
+    Staff2,
+}
 
-    public enum WeaponProficiency
-    {
-        Shank0,
-        Shank1,
-        Shank2,
-        Guns0,
-        Guns1,
-        Guns2,
-        Staff0,
-        Staff1,
-        Staff2,
-    }
-
-    public enum DamageType
-    {
-        D4,
-        D6,
-        D8,
-        D10,
-        D12
-    }
+public enum DamageType
+{
+    D4,
+    D6,
+    D8,
+    D10,
+    D12
 }
 
 [GlobalClass]
@@ -75,7 +73,7 @@ public partial class Item : Resource
 
     public bool Equipped = false;
 
-    public static Item NoneItem() => new Item
+    public static Item NoneItem() => new()
     {
         ItemType = ItemType.None
     };

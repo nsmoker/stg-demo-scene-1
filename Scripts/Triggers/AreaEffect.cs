@@ -1,6 +1,11 @@
-using ArkhamHunters.Scripts;
+
 using Godot;
+using STGDemoScene1.Scripts.Characters;
+using STGDemoScene1.Scripts.Resources;
+using STGDemoScene1.Scripts.Systems;
 using System.Collections.Generic;
+
+namespace STGDemoScene1.Scripts.Triggers;
 
 public partial class AreaEffect : Area2D
 {
@@ -45,7 +50,7 @@ public partial class AreaEffect : Area2D
 
     public void DealAreaDamage(List<string> movingSide, bool manualShapecast = false)
     {
-        // Due to a bug in Godot's area initialization, we cannot rely on GetOverlappingBodies or signals to 
+        // Due to a bug in Godot's area initialization, we cannot rely on GetOverlappingBodies or signals to
         // report intersections with bodies that start inside the area, even if we wait for the next physics update.
         // As such, we have to do a manual shapecast at initialization.
         if (manualShapecast)
@@ -79,3 +84,4 @@ public partial class AreaEffect : Area2D
         }
     }
 }
+

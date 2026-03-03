@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cmpn1crr0je53"]
+[gd_scene format=3 uid="uid://cmpn1crr0je53"]
 
 [ext_resource type="Script" uid="uid://tlag86dnnlf8" path="res://Scripts/FurnitureProp.cs" id="1_qvr8u"]
 [ext_resource type="Texture2D" uid="uid://dkv1adercf2v7" path="res://Sprites/Props/chair_back.png" id="2_j0p0k"]

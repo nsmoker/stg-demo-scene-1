@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dvydi4qxrxfyp"]
+[gd_scene format=3 uid="uid://dvydi4qxrxfyp"]
 
 [ext_resource type="Script" uid="uid://cjx202eumaw51" path="res://Scripts/Container.cs" id="1_0558v"]
 [ext_resource type="Texture2D" uid="uid://drfjfexp0haqi" path="res://SpritesPlaceholder/Images/ts_interiorDecorations.png" id="4_rrlx5"]

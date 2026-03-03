@@ -1,6 +1,6 @@
-using ArkhamHunters.Scripts;
 using Godot;
-using System;
+
+namespace STGDemoScene1.Scripts;
 
 public partial class FurnitureProp : Prop, IInteractable
 {

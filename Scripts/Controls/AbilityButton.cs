@@ -1,5 +1,9 @@
-using ArkhamHunters.Scripts;
 using Godot;
+using STGDemoScene1.Scripts.Characters;
+using STGDemoScene1.Scripts.Resources.Abilities;
+using STGDemoScene1.Scripts.Systems;
+
+namespace STGDemoScene1.Scripts.Controls;
 
 public partial class AbilityButton : Button
 {
@@ -39,3 +43,4 @@ public partial class AbilityButton : Button
         }
     }
 }
+

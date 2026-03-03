@@ -1,6 +1,10 @@
 using Godot;
+using STGDemoScene1.Addons.Edi.Scripts;
+using STGDemoScene1.Scripts.Systems;
 using System.Collections.Generic;
 using System.Linq;
+
+namespace STGDemoScene1.Scripts.Controls;
 
 public partial class DialogueController : ScrollContainer
 {
@@ -14,7 +18,7 @@ public partial class DialogueController : ScrollContainer
     private VBoxContainer _container;
     private readonly List<Label> _choiceLabels = [];
 
-    private bool actionDone = true;
+    private bool _actionDone = true;
 
     [Export]
     private float _typewriterSpeed;
@@ -76,7 +80,7 @@ public partial class DialogueController : ScrollContainer
         {
             foreach (var continuation in continuations)
             {
-                if (continuation.NodeType == EverydayDialogueEditor.DialogueNodeType.PlayerResponse && (continuation.Condition == null || continuation.Condition.Evaluate()))
+                if (continuation.NodeType == DialogueNodeType.PlayerResponse && (continuation.Condition == null || continuation.Condition.Evaluate()))
                 {
                     nodeOut = continuation;
                     possibleContinuationCount += 1;
@@ -112,7 +116,7 @@ public partial class DialogueController : ScrollContainer
 
         public void Process(double delta, DialogueController controller)
         {
-            if (!controller.actionDone)
+            if (!controller._actionDone)
             {
                 return;
             }
@@ -128,18 +132,18 @@ public partial class DialogueController : ScrollContainer
             {
                 switch (nodeOut.NodeType)
                 {
-                    case EverydayDialogueEditor.DialogueNodeType.Node:
+                    case DialogueNodeType.Node:
                         controller.State = new WriteState(controller, nodeOut);
                         break;
-                    case EverydayDialogueEditor.DialogueNodeType.ScriptAction:
-                        controller.actionDone = false;
-                        nodeOut.Action?.Execute(() => controller.actionDone = true);
+                    case DialogueNodeType.ScriptAction:
+                        controller._actionDone = false;
+                        nodeOut.Action?.Execute(() => controller._actionDone = true);
                         controller.State = new EvalState(nodeOut);
                         break;
-                    case EverydayDialogueEditor.DialogueNodeType.ScriptEntry:
+                    case DialogueNodeType.ScriptEntry:
                         controller.State = new EvalState(nodeOut);
                         break;
-                    case EverydayDialogueEditor.DialogueNodeType.PlayerResponse:
+                    case DialogueNodeType.PlayerResponse:
                         controller.State = new WriteState(controller, nodeOut);
                         break;
                 }
@@ -224,7 +228,7 @@ public partial class DialogueController : ScrollContainer
             _controller = controller;
             _node = node;
 
-            var choices = controller._conversation.GetContinuationsForNode(node).Where(x => x.NodeType == EverydayDialogueEditor.DialogueNodeType.PlayerResponse && (x.Condition == null || x.Condition.Evaluate())).ToList();
+            var choices = controller._conversation.GetContinuationsForNode(node).Where(x => x.NodeType == DialogueNodeType.PlayerResponse && (x.Condition == null || x.Condition.Evaluate())).ToList();
             for (int i = 0; i < choices.Count; ++i)
             {
                 AddChoiceLabel(controller, choices[i], i);

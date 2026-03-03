@@ -1,6 +1,9 @@
-using ArkhamHunters.Scripts;
 using Godot;
-using System;
+using STGDemoScene1.Scripts.Resources.Abilities;
+using STGDemoScene1.Scripts.Systems;
+using Character = STGDemoScene1.Scripts.Characters.Character;
+
+namespace STGDemoScene1.Scripts;
 
 public partial class Targeting : Sprite2D
 {
@@ -55,3 +58,4 @@ public partial class Targeting : Sprite2D
         }
     }
 }
+

@@ -1,12 +1,13 @@
 using Godot;
-using System;
+
+namespace STGDemoScene1.Addons.Edi.Scripts;
 
 [Tool]
 [GlobalClass]
 public partial class DialogueGraphNode : Resource
 {
     [Export]
-    public EverydayDialogueEditor.DialogueNodeType NodeType;
+    public DialogueNodeType NodeType;
     [Export]
     public string Content;
     [Export]

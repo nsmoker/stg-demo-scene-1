@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b02trvpappmbg"]
+[gd_scene format=3 uid="uid://b02trvpappmbg"]
 
 [ext_resource type="Script" uid="uid://bcyi1tcfc373q" path="res://Scripts/Prop.cs" id="1_onwmm"]
 [ext_resource type="Texture2D" uid="uid://lp8ya3es836c" path="res://Sprites/Props/brazier.png" id="2_onwmm"]

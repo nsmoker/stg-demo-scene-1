@@ -1,4 +1,7 @@
 using Godot;
+using STGDemoScene1.Scripts.Systems;
+
+namespace STGDemoScene1.Scripts.Characters.CharacterScripts;
 
 public partial class Plinth : InteractableCharacter
 {
@@ -19,3 +22,4 @@ public partial class Plinth : InteractableCharacter
         }
     }
 }
+

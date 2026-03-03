@@ -2,102 +2,93 @@
 
 [ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="1_olrtd"]
 [ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="2_i15d2"]
-[ext_resource type="Texture2D" uid="uid://j5c2lrwtwqhv" path="res://Sprites/Props/trunk.png" id="3_g0tx8"]
 [ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/edi/Scripts/Conversation.cs" id="3_mr82h"]
-[ext_resource type="PackedScene" uid="uid://c0tkttpscp2h5" path="res://Scenes/CoverProp.tscn" id="3_xcxv4"]
-[ext_resource type="Script" uid="uid://cplotlk0gi8v" path="res://Scripts/Resources/PropData.cs" id="4_xcxv4"]
+[ext_resource type="Resource" uid="uid://bhkk3ehctq0ve" path="res://Resources/Named Props/tut_cover_prop.tres" id="3_runr5"]
 [ext_resource type="Script" uid="uid://bli6vlvra72l3" path="res://Scripts/DialogueNodes/CreateProp.cs" id="5_b1lut"]
 [ext_resource type="Script" uid="uid://cqpvvgn7ryfvm" path="res://Scripts/DialogueNodes/HoverPropNonBlocking.cs" id="6_3swjm"]
 
-[sub_resource type="Resource" id="Resource_xcxv4"]
+[sub_resource type="Resource" id="Resource_runr5"]
 script = ExtResource("1_olrtd")
 fromNode = 2
 toNode = 3
 
-[sub_resource type="Resource" id="Resource_b1lut"]
+[sub_resource type="Resource" id="Resource_g0tx8"]
 script = ExtResource("1_olrtd")
 fromNode = 1
 toNode = 2
 
-[sub_resource type="Resource" id="Resource_3swjm"]
+[sub_resource type="Resource" id="Resource_xcxv4"]
 script = ExtResource("1_olrtd")
 fromNode = 4
 toNode = 1
 
-[sub_resource type="Resource" id="Resource_kjmuy"]
+[sub_resource type="Resource" id="Resource_b1lut"]
 script = ExtResource("1_olrtd")
 fromNode = 3
 
-[sub_resource type="Resource" id="Resource_apt3x"]
+[sub_resource type="Resource" id="Resource_3swjm"]
 script = ExtResource("2_i15d2")
 NodeType = 2
 DNodeId = 5
 EditorPos = Vector2(1300, 700)
-EditorSize = Vector2(300.0005, 194.00024)
+EditorSize = Vector2(316, 198)
 
-[sub_resource type="Resource" id="Resource_ufvau"]
+[sub_resource type="Resource" id="Resource_kjmuy"]
 script = ExtResource("2_i15d2")
 Content = "Position a character next to a cover object to take cover, making it harder for your opponents to hit you."
 Speaker = "Tutorial"
 DNodeId = 1
 EditorPos = Vector2(4160, 780)
-EditorSize = Vector2(659.9966, 439.99512)
-
-[sub_resource type="Resource" id="Resource_ibqq7"]
-script = ExtResource("4_xcxv4")
-Name = "Trunk"
-Sprite = ExtResource("3_g0tx8")
-BaseScene = ExtResource("3_xcxv4")
-metadata/_custom_type_script = "uid://cplotlk0gi8v"
+EditorSize = Vector2(659.9968, 439.99512)
 
 [sub_resource type="Resource" id="Resource_4ihu1"]
 script = ExtResource("5_b1lut")
-propData = SubResource("Resource_ibqq7")
-position = Vector2(400, 50)
+_propData = ExtResource("3_runr5")
+_position = Vector2(350, 0)
 metadata/_custom_type_script = "uid://bli6vlvra72l3"
 
-[sub_resource type="Resource" id="Resource_v7wqc"]
+[sub_resource type="Resource" id="Resource_apt3x"]
 script = ExtResource("2_i15d2")
 NodeType = 1
 DNodeId = 2
 Action = SubResource("Resource_4ihu1")
 EditorPos = Vector2(1880, 740)
-EditorSize = Vector2(456.00092, 257.00012)
+EditorSize = Vector2(456.00085, 257.00012)
 
 [sub_resource type="Resource" id="Resource_xg0d3"]
 script = ExtResource("6_3swjm")
-propData = SubResource("Resource_ibqq7")
-position = Vector2(150, 50)
-duration = 5.0
+_propData = ExtResource("3_runr5")
+_position = Vector2(250, 0)
+_duration = 2.5
 metadata/_custom_type_script = "uid://cqpvvgn7ryfvm"
 
-[sub_resource type="Resource" id="Resource_t1mp5"]
+[sub_resource type="Resource" id="Resource_ufvau"]
 script = ExtResource("2_i15d2")
 NodeType = 1
 DNodeId = 3
 Action = SubResource("Resource_xg0d3")
 EditorPos = Vector2(2540, 720)
-EditorSize = Vector2(456.00024, 257.00116)
+EditorSize = Vector2(456.00024, 257.0011)
 
-[sub_resource type="Resource" id="Resource_7m7c5"]
+[sub_resource type="Resource" id="Resource_v7wqc"]
 script = ExtResource("2_i15d2")
 Content = "Mr. Tines! I encourage you to make use of your environment to avoid your opponent's spells. It will help a great deal."
 Speaker = "Henneman"
 Addressee = "Player"
 DNodeId = 4
 EditorPos = Vector2(3240, 700)
-EditorSize = Vector2(800.00195, 479.99738)
+EditorSize = Vector2(800.00195, 479.99744)
 
-[sub_resource type="Resource" id="Resource_g6hk4"]
+[sub_resource type="Resource" id="Resource_t1mp5"]
 script = ExtResource("2_i15d2")
 NodeType = 2
 DNodeId = 5
 EditorPos = Vector2(1300, 700)
-EditorSize = Vector2(300.0005, 194.00024)
+EditorSize = Vector2(316, 198)
 
 [resource]
 script = ExtResource("3_mr82h")
-Nodes = Array[ExtResource("2_i15d2")]([SubResource("Resource_ufvau"), SubResource("Resource_v7wqc"), SubResource("Resource_t1mp5"), SubResource("Resource_7m7c5"), SubResource("Resource_g6hk4")])
-EntryPoints = Array[ExtResource("2_i15d2")]([SubResource("Resource_apt3x")])
-Connections = Array[ExtResource("1_olrtd")]([SubResource("Resource_xcxv4"), SubResource("Resource_b1lut"), SubResource("Resource_3swjm"), SubResource("Resource_kjmuy")])
+Nodes = Array[ExtResource("2_i15d2")]([SubResource("Resource_kjmuy"), SubResource("Resource_apt3x"), SubResource("Resource_ufvau"), SubResource("Resource_v7wqc"), SubResource("Resource_t1mp5")])
+EntryPoints = Array[ExtResource("2_i15d2")]([SubResource("Resource_3swjm")])
+Connections = Array[ExtResource("1_olrtd")]([SubResource("Resource_runr5"), SubResource("Resource_g0tx8"), SubResource("Resource_xcxv4"), SubResource("Resource_b1lut")])
 metadata/_custom_type_script = "uid://cmw85ukaae1eh"

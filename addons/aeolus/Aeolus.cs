@@ -1,6 +1,7 @@
 #if TOOLS
 using Godot;
-using System;
+
+namespace STGDemoScene1.Addons.Aeolus;
 
 [Tool]
 public partial class Aeolus : EditorPlugin

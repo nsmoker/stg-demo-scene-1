@@ -1,5 +1,10 @@
 using Godot;
-using System;
+using STGDemoScene1.Addons.Edi.Scripts;
+using STGDemoScene1.Scripts.Characters;
+using STGDemoScene1.Scripts.Resources;
+using STGDemoScene1.Scripts.Systems;
+
+namespace STGDemoScene1.Scripts.Triggers;
 
 public partial class ElementalStudiesTrigger : Area2D
 {

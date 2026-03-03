@@ -1,5 +1,7 @@
 using Godot;
 
+namespace STGDemoScene1.Addons.Edi.Scripts;
+
 // TODO: Make common base class for dialogue scripts.
 [Tool]
 [GlobalClass]

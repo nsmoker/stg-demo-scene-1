@@ -1,7 +1,6 @@
 using Godot;
-using System;
 
-namespace EverydayDialogueEditor;
+namespace STGDemoScene1.Addons.Edi.Scripts;
 
 public enum DialogueNodeType
 {

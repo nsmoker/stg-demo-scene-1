@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bt4uh756ddpxy"]
+[gd_scene format=3 uid="uid://bt4uh756ddpxy"]
 
 [ext_resource type="Script" uid="uid://d31xijw3tfna4" path="res://Scripts/DialogueTriggerProp.cs" id="1_it0bl"]
 [ext_resource type="Resource" uid="uid://d0vtobfhyip5c" path="res://Conversations/elemental_studies_intro.tres" id="2_6ge7v"]

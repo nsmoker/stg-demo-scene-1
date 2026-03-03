@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://bfngs83wkjeur"]
+[gd_scene format=3 uid="uid://bfngs83wkjeur"]
 
 [ext_resource type="PackedScene" uid="uid://nxmo2nmx88dw" path="res://Scenes/DeskProp.tscn" id="1_37sht"]
 [ext_resource type="PackedScene" uid="uid://cmpn1crr0je53" path="res://Scenes/ChairProp.tscn" id="2_bc1vk"]

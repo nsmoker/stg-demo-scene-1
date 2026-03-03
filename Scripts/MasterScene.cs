@@ -1,8 +1,11 @@
-using ArkhamHunters.Scripts;
 using Godot;
-using System;
+using STGDemoScene1.Scripts.Characters;
+using STGDemoScene1.Scripts.Controls;
+using STGDemoScene1.Scripts.Resources;
+using STGDemoScene1.Scripts.Systems;
 using System.Collections.Generic;
-using static AreaTransition;
+
+namespace STGDemoScene1.Scripts;
 
 public partial class MasterScene : Node2D
 {
@@ -90,3 +93,4 @@ public partial class MasterScene : Node2D
 
     public CombatController GetCombatController() => _combatController;
 }
+

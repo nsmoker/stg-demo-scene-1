@@ -1,9 +1,15 @@
 using Godot;
+using STGDemoScene1.Scripts.Controls;
+using STGDemoScene1.Scripts.Items;
+using STGDemoScene1.Scripts.Resources;
+using STGDemoScene1.Scripts.Resources.Abilities;
+using STGDemoScene1.Scripts.StatusEffects;
+using STGDemoScene1.Scripts.Systems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ArkhamHunters.Scripts;
+namespace STGDemoScene1.Scripts.Characters;
 
 public struct CoverCheckResult
 {
@@ -71,7 +77,7 @@ public partial class Character : CharacterBody2D
     public NavigationObstacle2D NavObstacle;
 
     [Export]
-    private Godot.Collections.Array<Item> InitialInventory = [];
+    private Godot.Collections.Array<Item> _initialInventory = [];
 
     [Export]
     public CharacterData CharacterData;
@@ -483,7 +489,7 @@ public partial class Character : CharacterBody2D
             _healthLabel.Text = $"{CharacterData.CurrentHitpoints} / {CharacterData.MaxHitpoints}";
             EquipmentSystem.SetEquipment(CharacterData.ResourcePath, CharacterData.StartingEquipment);
             FactionSystem.SetFaction(CharacterData.ResourcePath, CharacterData.InitialFaction);
-            InventorySystem.SetInventory(CharacterData.ResourcePath, [.. InitialInventory]);
+            InventorySystem.SetInventory(CharacterData.ResourcePath, [.. _initialInventory]);
             CharacterSystem.SetInstance(CharacterData.ResourcePath, this);
             HealthSystem.SetCurrentHitpoints(CharacterData.ResourcePath, CharacterData.CurrentHitpoints);
             CombatSystem.CombatStartHandlers += OnCombatStarted;
@@ -932,3 +938,4 @@ public partial class Character : CharacterBody2D
 
     public void AddPush(Push push) => _currentPushes.Add(push);
 }
+

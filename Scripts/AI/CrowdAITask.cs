@@ -1,5 +1,6 @@
 using Godot;
-using System;
+
+namespace STGDemoScene1.Scripts.AI;
 
 public enum CrowdAITaskType
 {

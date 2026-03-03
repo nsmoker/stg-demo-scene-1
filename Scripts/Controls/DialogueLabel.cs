@@ -1,8 +1,10 @@
 using Godot;
 
+namespace STGDemoScene1.Scripts.Controls;
+
 public partial class DialogueLabel : Label
 {
-    private Shortcut Shortcut;
+    private Shortcut _shortcut;
     private int _index;
     private string _dialogue;
 
@@ -32,7 +34,7 @@ public partial class DialogueLabel : Label
     {
         _index = i;
         Text = $"{_index}. {_dialogue}";
-        Shortcut = new Shortcut()
+        _shortcut = new Shortcut()
         {
             Events = [
                 new InputEventKey()
@@ -45,11 +47,11 @@ public partial class DialogueLabel : Label
 
     public override void _ShortcutInput(InputEvent @event)
     {
-        if (Shortcut.MatchesEvent(@event) && @event.IsReleased())
+        if (_shortcut.MatchesEvent(@event) && @event.IsReleased())
         {
             SelectionCallback?.Invoke();
         }
-        else if (Shortcut.MatchesEvent(@event) && @event.IsPressed())
+        else if (_shortcut.MatchesEvent(@event) && @event.IsPressed())
         {
             LabelSettings.FontColor = HoveredColor;
         }

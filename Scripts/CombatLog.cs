@@ -1,7 +1,10 @@
 using Godot;
-using System;
+using STGDemoScene1.Scripts.Resources;
+using STGDemoScene1.Scripts.Systems;
 using System.Collections.Generic;
 using System.Linq;
+
+namespace STGDemoScene1.Scripts;
 
 public static class CombatLog
 {

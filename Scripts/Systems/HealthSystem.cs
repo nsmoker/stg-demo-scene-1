@@ -1,5 +1,7 @@
-using ArkhamHunters.Scripts;
+using STGDemoScene1.Scripts.Characters;
 using System.Collections.Generic;
+
+namespace STGDemoScene1.Scripts.Systems;
 
 public struct DamageEvent
 {
@@ -16,17 +18,17 @@ public struct DeathEvent
 
 public static class HealthSystem
 {
-    private static readonly Dictionary<string, int> _characterHealthMap = [];
+    private static readonly Dictionary<string, int> s_characterHealthMap = [];
 
     public delegate void DamageEventHandler(DamageEvent damageEvent);
     public delegate void DeathEventHandler(DeathEvent deathEvent);
 
-    public static DamageEventHandler DamageEventHandlers;
-    public static DeathEventHandler DeathEventHandlers;
+    public static event DamageEventHandler DamageEventHandlers;
+    public static event DeathEventHandler DeathEventHandlers;
 
-    public static void SetCurrentHitpoints(string characterId, int hitpoints) => _characterHealthMap[characterId] = hitpoints;
+    public static void SetCurrentHitpoints(string characterId, int hitpoints) => s_characterHealthMap[characterId] = hitpoints;
 
-    public static int GetCurrentHitpoints(string characterId) => _characterHealthMap.TryGetValue(characterId, out var hp) ? hp : 0;
+    public static int GetCurrentHitpoints(string characterId) => s_characterHealthMap.TryGetValue(characterId, out var hp) ? hp : 0;
 
     public static void PostDamageEvent(Character inflicter, Character recipient, int damage)
     {
@@ -36,10 +38,10 @@ public static class HealthSystem
             recipient = recipient,
             damage = damage,
         };
-        _characterHealthMap[recipient.CharacterData.ResourcePath] -= damage;
+        s_characterHealthMap[recipient.CharacterData.ResourcePath] -= damage;
         DamageEventHandlers?.Invoke(ret);
 
-        if (_characterHealthMap[recipient.CharacterData.ResourcePath] <= 0)
+        if (s_characterHealthMap[recipient.CharacterData.ResourcePath] <= 0)
         {
             PostDeathEvent(recipient, inflicter);
         }
@@ -56,3 +58,4 @@ public static class HealthSystem
         DeathEventHandlers?.Invoke(ret);
     }
 }
+

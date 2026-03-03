@@ -1,6 +1,6 @@
-using ArkhamHunters.Scripts;
 using Godot;
-using System;
+
+namespace STGDemoScene1.Scripts;
 
 public partial class Toggleable : StaticBody2D, IInteractable, IToggleableInteractable
 {
@@ -33,3 +33,4 @@ public partial class Toggleable : StaticBody2D, IInteractable, IToggleableIntera
         _sprite.Play();
     }
 }
+
