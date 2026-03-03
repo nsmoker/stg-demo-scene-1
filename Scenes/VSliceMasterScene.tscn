@@ -128,5 +128,3 @@ position = Vector2(0, 360)
 
 [node name="DiningHallSceneTest" parent="." unique_id=1743947183 instance=ExtResource("12_aysf6")]
 GenericNpcCount = 0
-
-[editable path="DiningEntrywaySceneTest"]

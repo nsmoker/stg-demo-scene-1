@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ba8osjn6upyym" path="res://Sprites/Props/long-bench.png" id="2_3tjkk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hvgce"]
-size = Vector2(16, 160)
+size = Vector2(16, 158)
 
 [sub_resource type="Animation" id="Animation_hvgce"]
 length = 0.001
@@ -109,15 +109,17 @@ _data = {
 }
 
 [node name="LongBenchProp" type="StaticBody2D" unique_id=1927370995 groups=["NavObjects"]]
-z_index = 1
+y_sort_enabled = true
 collision_layer = 2097153
 script = ExtResource("1_3tjkk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1885226724]
+position = Vector2(0, -52)
 shape = SubResource("RectangleShape2D_hvgce")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1165687899]
 texture_filter = 1
+position = Vector2(0, -53)
 texture = ExtResource("2_3tjkk")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=415219499]

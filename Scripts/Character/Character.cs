@@ -563,7 +563,6 @@ public partial class Character : CharacterBody2D
         if (_currentAnimState != AnimState.Sitting)
         {
             SetCollision(true);
-            _mainSprite.ZIndex = 4;
         }
     }
 
@@ -903,7 +902,6 @@ public partial class Character : CharacterBody2D
             _occupiedProp = furniture;
             GlobalPosition = seatBottomLeft;
             SetCollision(false);
-            _mainSprite.ZIndex = 2;
             _sitting = true;
         }
     }

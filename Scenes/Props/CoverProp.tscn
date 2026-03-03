@@ -38,6 +38,9 @@ tracks/0/keys = {
 "values": [Vector2(0, -12), Vector2(0, -2), Vector2(0, -12)]
 }
 
+[sub_resource type="Animation" id="Animation_s3xms"]
+resource_name = "idle"
+
 [sub_resource type="Animation" id="Animation_2s0bl"]
 resource_name = "land"
 length = 0.5
@@ -69,9 +72,6 @@ tracks/0/keys = {
 "values": [Vector2(0, 0), Vector2(0, -12)]
 }
 
-[sub_resource type="Animation" id="Animation_s3xms"]
-resource_name = "idle"
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hvgce"]
 _data = {
 &"RESET": SubResource("Animation_hvgce"),
@@ -81,19 +81,20 @@ _data = {
 &"takeoff": SubResource("Animation_r8e0v")
 }
 
-[node name="CoverProp" type="StaticBody2D" groups=["NavObjects"]]
+[node name="CoverProp" type="StaticBody2D" unique_id=1163830056 groups=["NavObjects"]]
+z_index = 1
+y_sort_enabled = true
 collision_layer = 2097153
 script = ExtResource("1_hvgce")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 0.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1755966948]
+position = Vector2(0, -5.5)
 shape = SubResource("RectangleShape2D_hvgce")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1070403309]
 texture_filter = 1
+position = Vector2(0, -6)
 texture = ExtResource("1_hyryu")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_hvgce")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=225322172]
+libraries/ = SubResource("AnimationLibrary_hvgce")

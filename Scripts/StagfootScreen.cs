@@ -81,7 +81,8 @@ public partial class StagfootScreen : Node2D
         {
             _genericNpcRoot = new Node2D
             {
-                Name = "GenericNpcRoot"
+                Name = "GenericNpcRoot",
+                YSortEnabled = true
             };
             AddChild(_genericNpcRoot);
             var random = new Random();

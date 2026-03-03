@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://bcyi1tcfc373q" path="res://Scripts/Prop.cs" id="1_moab7"]
 [ext_resource type="Texture2D" uid="uid://bss28e4mihw1e" path="res://Sprites/Props/long-table.png" id="2_avknf"]
-[ext_resource type="Texture2D" uid="uid://ba8osjn6upyym" path="res://Sprites/Props/long-bench.png" id="3_t2gry"]
+[ext_resource type="PackedScene" uid="uid://iit8y16ddbn3" path="res://Scenes/Props/LongBenchProp.tscn" id="3_moab7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hvgce"]
-size = Vector2(31, 192)
+size = Vector2(31, 185)
 
 [sub_resource type="Animation" id="Animation_hvgce"]
 length = 0.001
@@ -109,118 +109,14 @@ _data = {
 &"takeoff": SubResource("Animation_r8e0v")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_381sw"]
-size = Vector2(16, 160)
-
-[sub_resource type="Animation" id="Animation_grbg0"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_jxh04"]
-resource_name = "hover"
-length = 2.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:offset")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1, 2),
-"transitions": PackedFloat32Array(0.75, 0.75, 1),
-"update": 0,
-"values": [Vector2(0, -12), Vector2(0, -2), Vector2(0, -12)]
-}
-
-[sub_resource type="Animation" id="Animation_sov8u"]
-resource_name = "idle"
-length = 4.0
-loop_mode = 1
-step = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = false
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7]
-}
-
-[sub_resource type="Animation" id="Animation_bexra"]
-resource_name = "land"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.05831472, 1),
-"update": 0,
-"values": [Vector2(0, -2), Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_fxry6"]
-resource_name = "takeoff"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -12)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_t4xat"]
-_data = {
-&"RESET": SubResource("Animation_grbg0"),
-&"hover": SubResource("Animation_jxh04"),
-&"idle": SubResource("Animation_sov8u"),
-&"land": SubResource("Animation_bexra"),
-&"takeoff": SubResource("Animation_fxry6")
-}
-
 [node name="LongTableProp" type="StaticBody2D" unique_id=371659490 groups=["NavObjects"]]
 z_index = 1
+y_sort_enabled = true
 collision_layer = 2097153
 script = ExtResource("1_moab7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2063925449]
-position = Vector2(-0.5, 0)
+position = Vector2(-0.5, 3.5)
 shape = SubResource("RectangleShape2D_hvgce")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1303382488]
@@ -230,34 +126,8 @@ texture = ExtResource("2_avknf")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=28696825]
 libraries/ = SubResource("AnimationLibrary_hvgce")
 
-[node name="LongBenchProp" type="StaticBody2D" parent="." unique_id=954104115 groups=["NavObjects"]]
-z_index = 1
-position = Vector2(26, 0)
-collision_layer = 2097153
-script = ExtResource("1_moab7")
+[node name="LongBenchProp3" parent="." unique_id=1927370995 instance=ExtResource("3_moab7")]
+position = Vector2(26, 52)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LongBenchProp" unique_id=1181722541]
-shape = SubResource("RectangleShape2D_381sw")
-
-[node name="Sprite2D" type="Sprite2D" parent="LongBenchProp" unique_id=1494442605]
-texture_filter = 1
-texture = ExtResource("3_t2gry")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="LongBenchProp" unique_id=595367587]
-libraries/ = SubResource("AnimationLibrary_t4xat")
-
-[node name="LongBenchProp2" type="StaticBody2D" parent="." unique_id=1276558626 groups=["NavObjects"]]
-z_index = 1
-position = Vector2(-26, 0)
-collision_layer = 2097153
-script = ExtResource("1_moab7")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LongBenchProp2" unique_id=1483768528]
-shape = SubResource("RectangleShape2D_381sw")
-
-[node name="Sprite2D" type="Sprite2D" parent="LongBenchProp2" unique_id=1585078263]
-texture_filter = 1
-texture = ExtResource("3_t2gry")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="LongBenchProp2" unique_id=1740132327]
-libraries/ = SubResource("AnimationLibrary_t4xat")
+[node name="LongBenchProp" parent="." unique_id=1279581129 instance=ExtResource("3_moab7")]
+position = Vector2(-26, 52)

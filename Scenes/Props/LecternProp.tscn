@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://chawy0boxius5" path="res://Sprites/Props/lectern.png" id="2_iyxhk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hvgce"]
-size = Vector2(24, 48)
+size = Vector2(24, 24)
 
 [sub_resource type="Animation" id="Animation_hvgce"]
 length = 0.001
@@ -110,14 +110,17 @@ _data = {
 
 [node name="LecternProp" type="StaticBody2D" unique_id=1927370995 groups=["NavObjects"]]
 z_index = 1
+y_sort_enabled = true
 collision_layer = 2097153
 script = ExtResource("1_iyxhk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1885226724]
+position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_hvgce")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1165687899]
 texture_filter = 1
+position = Vector2(0, -16)
 texture = ExtResource("2_iyxhk")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=415219499]

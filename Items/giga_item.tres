@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Item" load_steps=28 format=3 uid="uid://vuejdeymb45b"]
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://vuejdeymb45b"]
 
 [ext_resource type="Script" uid="uid://5hcjkamye5ns" path="res://Scripts/Items/AttributeBonus.cs" id="1_tdf5l"]
 [ext_resource type="Script" uid="uid://c54dlxcx6qrkd" path="res://Scripts/Items/SkillBonus.cs" id="2_e4vmd"]

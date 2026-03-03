@@ -113,28 +113,28 @@ _data = {
 atlas = ExtResource("3_qvr8u")
 region = Rect2(0, 64, 16, 16)
 
-[node name="ChairProp" type="StaticBody2D"]
-z_index = 3
+[node name="ChairProp" type="StaticBody2D" unique_id=942591783]
+z_index = 1
+y_sort_enabled = true
 collision_layer = 2097154
 script = ExtResource("1_qvr8u")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1816575283]
+position = Vector2(0, -7.5)
 shape = SubResource("RectangleShape2D_hvgce")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1261149789]
 texture_filter = 1
+position = Vector2(0, -6)
 texture = ExtResource("2_j0p0k")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_hvgce")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=500443605]
+libraries/ = SubResource("AnimationLibrary_hvgce")
 
-[node name="SeatMarker" type="Marker2D" parent="."]
-position = Vector2(0, -3)
+[node name="SeatMarker" type="Marker2D" parent="." unique_id=1949927795]
+position = Vector2(0, -9)
 
-[node name="BadgeSprite" type="Sprite2D" parent="."]
+[node name="BadgeSprite" type="Sprite2D" parent="." unique_id=2096954151]
 visible = false
 z_index = 500
 texture_filter = 1

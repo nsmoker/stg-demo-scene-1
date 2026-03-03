@@ -31,31 +31,33 @@ region = Rect2(0, 64, 16, 16)
 [sub_resource type="CircleShape2D" id="CircleShape2D_u6bny"]
 radius = 66.11
 
-[node name="Sign" type="CharacterBody2D"]
+[node name="Sign" type="CharacterBody2D" unique_id=533283543]
 script = ExtResource("1_55kfr")
 Dialogue = ExtResource("2_qwoug")
 metadata/_custom_type_script = "uid://bsrhat3n35udl"
 
-[node name="MainCollider" type="CollisionShape2D" parent="."]
-position = Vector2(0, -0.5)
+[node name="MainCollider" type="CollisionShape2D" parent="." unique_id=525660039]
+position = Vector2(0, -7.5)
 shape = SubResource("RectangleShape2D_ntfr8")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=172569486]
 texture_filter = 1
+position = Vector2(0, -7)
 sprite_frames = SubResource("SpriteFrames_qwoug")
 
-[node name="BadgeSprite" type="Sprite2D" parent="."]
+[node name="BadgeSprite" type="Sprite2D" parent="." unique_id=1670852947]
 visible = false
 texture_filter = 1
 position = Vector2(0, -15.44)
 texture = SubResource("AtlasTexture_sonf1")
 
-[node name="SenseArea" type="Area2D" parent="."]
+[node name="SenseArea" type="Area2D" parent="." unique_id=165021931]
+position = Vector2(0, -7)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea" unique_id=100299437]
 shape = SubResource("CircleShape2D_u6bny")
 
-[node name="CombatInteractionMenu" parent="." instance=ExtResource("7_qwoug")]
+[node name="CombatInteractionMenu" parent="." unique_id=2096173863 instance=ExtResource("7_qwoug")]
 visible = false
 offset_left = 8.0
 offset_top = -7.0

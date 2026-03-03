@@ -42,26 +42,33 @@ script = ExtResource("10_xg88x")
 _possibleTasks = Array[Object]([SubResource("Resource_xnvdo"), SubResource("Resource_0jtuf"), SubResource("Resource_7iskm")])
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_2impm"]
-vertices = PackedVector2Array(-32, -112, -32, -152, -22, -152, -22, -116, 22, -116, 22, -152, 38, -152, 38, -112, 32, -59, 294, -112, 294, -152, 295, -152, 295, -105, 273, -105, 273, -41, 295, -41, 295, -32, 273, -32, 273, 32, 295, 32, 295, 37, 273, 37, 273, 101, 295, 101, 295, 104, 273, 104, 273, 152.5, 213, 152.5, 213, 149, 232, 149, 232, -43, 213, -59, 213, -43, 150, -59, 150, -43, 132, -43, 132, 149, 150, 149, 150, 152.5, 95, 152.5, 95, 149, 114, 149, 114, -43, 95, -59, 95, -43, 32, -43, 14, -43, 14, 149, 32, 149, 32, 152.5, -49, 152.5, -49, 149, -30, 149, -30, -43, -49, -43, -49, -59, -112, -59, -112, -43, -130, -43, -130, 149, -112, 149, -112, 152.5, -167, 152.5, -167, 149, -148, 149, -148, -43, -167, -43, -167, -59, -230, -59, -230, -43, -248, -43, -269, -105, -248, 149, -230, 149, -230, 152.5, -269, 152.5, -269, 104, -296, 104, -296, 101, -269, 101, -269, 37, -296, 37, -296, 32, -269, 32, -269, -32, -296, -32, -296, -41, -269, -41, -296, -105, -296, -152, -288, -152, -288, -112)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7, 8), PackedInt32Array(9, 10, 11, 12), PackedInt32Array(9, 12, 13, 7), PackedInt32Array(14, 15, 16, 17), PackedInt32Array(18, 19, 20, 21), PackedInt32Array(22, 23, 24, 25), PackedInt32Array(26, 27, 28, 29), PackedInt32Array(25, 26, 29, 30), PackedInt32Array(22, 25, 30), PackedInt32Array(21, 22, 30), PackedInt32Array(18, 21, 30), PackedInt32Array(17, 18, 30), PackedInt32Array(14, 17, 30), PackedInt32Array(13, 14, 30, 31), PackedInt32Array(30, 32, 31), PackedInt32Array(7, 13, 31, 33), PackedInt32Array(33, 34, 35, 7), PackedInt32Array(36, 37, 38, 39), PackedInt32Array(39, 40, 41), PackedInt32Array(36, 39, 41), PackedInt32Array(35, 36, 41, 42), PackedInt32Array(7, 35, 42, 43), PackedInt32Array(42, 44, 43), PackedInt32Array(7, 43, 8), PackedInt32Array(8, 45, 46, 3, 4), PackedInt32Array(47, 48, 49, 50), PackedInt32Array(50, 51, 52), PackedInt32Array(47, 50, 52), PackedInt32Array(46, 47, 52, 53, 3), PackedInt32Array(3, 53, 54, 55, 0), PackedInt32Array(56, 57, 58), PackedInt32Array(59, 60, 61, 62), PackedInt32Array(62, 63, 64), PackedInt32Array(59, 62, 64), PackedInt32Array(58, 59, 64, 65), PackedInt32Array(65, 66, 67, 0, 56), PackedInt32Array(68, 69, 70, 71), PackedInt32Array(72, 73, 74, 75), PackedInt32Array(72, 75, 76, 70), PackedInt32Array(76, 77, 78, 79), PackedInt32Array(70, 76, 79), PackedInt32Array(70, 79, 80), PackedInt32Array(80, 81, 82, 83), PackedInt32Array(70, 80, 83), PackedInt32Array(70, 83, 84), PackedInt32Array(84, 85, 86, 87), PackedInt32Array(70, 84, 87), PackedInt32Array(70, 87, 71), PackedInt32Array(88, 89, 90, 91), PackedInt32Array(71, 88, 91, 0), PackedInt32Array(68, 71, 0, 67), PackedInt32Array(0, 55, 56), PackedInt32Array(65, 56, 58)])
+vertices = PackedVector2Array(25, -96, 60, -106.25, 260, -106.25, 213, -56, 150, -56, 32, 161, 31, 161, -30, 144, 14, 144, 302, -162, 302, -73, 273, -73, 260, -154, -303, -162, 60, -154, 25, -146, -49, -56, -61.117188, -106.296875, -61.117188, -153.84375, -25, -146, -25, -96, -30, -46, 31, 164.38281, -31, 163.60156, -31, 162, -49, 144, -49, 161, -159.79688, 162, -112, 161, -148, 144, -130, 144, -167, 144, -167, 161, 273, -31, 302, -31, 302, 0, 273, 0, 273, 42, 302, 42, 302, 69, 273, 69, 273, 111, 302, 111, 302, 136, 273, 136, 273, 161, 213, 161, 232, 144, 213, 144, 232, -46, 213, -46, 150, -46, 132, -46, 132, 144, 150, 144, 150, 161, 95, 161, 95, 144, 114, 144, 114, -46, 95, -46, 95, -56, 32, -56, 32, -46, 14, -46, 32, 144, -49, -46, -112, -56, -112, -46, -130, -46, -258.8828, -106.296875, -112, 144, -148, -46, -167, -46, -167, -56, -230, -56, -230, -46, -248, -46, -269, -73, -248, 144, -230, 144, -230, 161, -269, 160.63281, -269, 136, -303, 136, -303, 111, -269, 111, -269, 69, -303, 69, -303, 42, -269, 42, -269, 0, -303, 0, -303, -31, -269, -31, -303, -73, -258.8828, -153.84375)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 8), PackedInt32Array(9, 10, 11, 2, 12), PackedInt32Array(13, 9, 12, 14), PackedInt32Array(1, 0, 15, 14), PackedInt32Array(16, 17, 18, 19, 20, 21), PackedInt32Array(7, 6, 22, 23, 24), PackedInt32Array(25, 7, 24, 26), PackedInt32Array(26, 24, 27, 28), PackedInt32Array(28, 27, 29, 30), PackedInt32Array(31, 29, 27, 32), PackedInt32Array(33, 34, 35, 36), PackedInt32Array(37, 38, 39, 40), PackedInt32Array(41, 42, 43, 44), PackedInt32Array(44, 45, 46, 47), PackedInt32Array(46, 48, 47), PackedInt32Array(44, 47, 49, 41), PackedInt32Array(40, 41, 49), PackedInt32Array(37, 40, 49), PackedInt32Array(36, 37, 49), PackedInt32Array(33, 36, 49), PackedInt32Array(2, 11, 33, 49, 3), PackedInt32Array(49, 50, 3), PackedInt32Array(4, 51, 52, 0), PackedInt32Array(53, 54, 55, 56), PackedInt32Array(56, 57, 58), PackedInt32Array(53, 56, 58), PackedInt32Array(52, 53, 58, 59), PackedInt32Array(59, 60, 61), PackedInt32Array(62, 63, 64, 20, 0), PackedInt32Array(8, 65, 5), PackedInt32Array(64, 8, 7, 21, 20), PackedInt32Array(21, 66, 16), PackedInt32Array(67, 68, 69, 70), PackedInt32Array(30, 71, 28), PackedInt32Array(69, 30, 29, 72), PackedInt32Array(72, 73, 74), PackedInt32Array(70, 75, 76, 77, 78), PackedInt32Array(79, 80, 81, 82), PackedInt32Array(83, 84, 85, 86), PackedInt32Array(87, 88, 89, 90), PackedInt32Array(91, 92, 93, 94), PackedInt32Array(78, 95, 13, 96, 70), PackedInt32Array(0, 52, 59, 61), PackedInt32Array(0, 61, 62), PackedInt32Array(17, 16, 67, 70), PackedInt32Array(70, 69, 72, 74), PackedInt32Array(70, 74, 75), PackedInt32Array(14, 15, 19, 18), PackedInt32Array(13, 14, 18, 96), PackedInt32Array(94, 78, 77, 79), PackedInt32Array(91, 94, 79), PackedInt32Array(90, 91, 79), PackedInt32Array(87, 90, 79), PackedInt32Array(86, 87, 79), PackedInt32Array(83, 86, 79), PackedInt32Array(82, 83, 79), PackedInt32Array(27, 82, 81), PackedInt32Array(27, 81, 32)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-320, 176, -320, -184, 320, -184, 320, 184)])
 source_geometry_mode = 1
 source_geometry_group_name = &"NavObjects"
 agent_radius = 16.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0jtuf"]
-size = Vector2(274, 11.5)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7rgrq"]
+size = Vector2(274, 2.625)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7iskm"]
-size = Vector2(9, 347.5)
+size = Vector2(2, 347.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ais2"]
+size = Vector2(2, 347.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m6gf6"]
-size = Vector2(638, 11.5)
+size = Vector2(638, 1.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0jtuf"]
+size = Vector2(274, 2)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bjgu5"]
 size = Vector2(640, 360)
 
 [node name="DiningHallSceneTest" type="Node2D" unique_id=1743947183]
+y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_qln41")
 GenericNpcCount = 10
@@ -76,96 +83,100 @@ navigation_polygon = SubResource("NavigationPolygon_2impm")
 script = ExtResource("13_grbg0")
 
 [node name="SceneBackdrop" type="Sprite2D" parent="." unique_id=872680555]
-z_index = -1
+y_sort_enabled = true
 texture = ExtResource("14_bwlby")
 
 [node name="StaticBody2D7" type="StaticBody2D" parent="SceneBackdrop" unique_id=1958005409 groups=["NavObjects"]]
 position = Vector2(-85, 200)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/StaticBody2D7" unique_id=834027463]
-position = Vector2(269, -25.75)
-shape = SubResource("RectangleShape2D_0jtuf")
+position = Vector2(269, -21.6875)
+shape = SubResource("RectangleShape2D_7rgrq")
 
 [node name="StaticBody2D8" type="StaticBody2D" parent="SceneBackdrop" unique_id=917660336 groups=["NavObjects"]]
 position = Vector2(-85, -148)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/StaticBody2D8" unique_id=1374510153]
-position = Vector2(-231.5, 142.25)
+position = Vector2(-235, 142.25)
 shape = SubResource("RectangleShape2D_7iskm")
 
 [node name="StaticBody2D9" type="StaticBody2D" parent="SceneBackdrop" unique_id=2071909884 groups=["NavObjects"]]
 position = Vector2(547, -148)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/StaticBody2D9" unique_id=2040374011]
-position = Vector2(-231.5, 142.25)
-shape = SubResource("RectangleShape2D_7iskm")
+position = Vector2(-228, 142)
+shape = SubResource("RectangleShape2D_3ais2")
 
 [node name="StaticBody2D10" type="StaticBody2D" parent="SceneBackdrop" unique_id=1818045889 groups=["NavObjects"]]
 position = Vector2(-85, -148)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/StaticBody2D10" unique_id=1355460400]
-position = Vector2(84, -25.75)
+position = Vector2(84, -30.75)
 shape = SubResource("RectangleShape2D_m6gf6")
 
 [node name="StaticBody2D11" type="StaticBody2D" parent="SceneBackdrop" unique_id=1802342654 groups=["NavObjects"]]
 position = Vector2(-453, 200)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneBackdrop/StaticBody2D11" unique_id=1863773619]
-position = Vector2(269, -25.75)
+position = Vector2(269, -21)
 shape = SubResource("RectangleShape2D_0jtuf")
 
 [node name="ClearableProps" type="Node2D" parent="." unique_id=874014556]
-z_as_relative = false
+y_sort_enabled = true
 
 [node name="Braziers" type="Node2D" parent="ClearableProps" unique_id=1561537423]
+y_sort_enabled = true
 
 [node name="CoverProp" parent="ClearableProps/Braziers" unique_id=376805651 instance=ExtResource("15_sov8u")]
-position = Vector2(-293, -73)
+position = Vector2(-293, -52)
 
 [node name="CoverProp2" parent="ClearableProps/Braziers" unique_id=623147556 instance=ExtResource("15_sov8u")]
-position = Vector2(-293, 0)
+position = Vector2(-293, 21)
 
 [node name="CoverProp3" parent="ClearableProps/Braziers" unique_id=400017364 instance=ExtResource("15_sov8u")]
-position = Vector2(-293, 69)
+position = Vector2(-293, 90)
 
 [node name="CoverProp4" parent="ClearableProps/Braziers" unique_id=1919635864 instance=ExtResource("15_sov8u")]
-position = Vector2(-293, 136)
+position = Vector2(-293, 157)
 
 [node name="CoverProp5" parent="ClearableProps/Braziers" unique_id=1049576645 instance=ExtResource("15_sov8u")]
-position = Vector2(297, -73)
+position = Vector2(297, -52)
 
 [node name="CoverProp6" parent="ClearableProps/Braziers" unique_id=1682605034 instance=ExtResource("15_sov8u")]
-position = Vector2(297, 0)
+position = Vector2(297, 21)
 
 [node name="CoverProp7" parent="ClearableProps/Braziers" unique_id=1914445530 instance=ExtResource("15_sov8u")]
-position = Vector2(297, 69)
+position = Vector2(297, 90)
 
 [node name="CoverProp8" parent="ClearableProps/Braziers" unique_id=653574826 instance=ExtResource("15_sov8u")]
-position = Vector2(297, 136)
+position = Vector2(297, 157)
 
 [node name="Furniture" type="Node2D" parent="ClearableProps" unique_id=558566600]
+y_sort_enabled = true
 
 [node name="LongTableProp" parent="ClearableProps/Furniture" unique_id=371659490 instance=ExtResource("16_7rgrq")]
-position = Vector2(-198, 53)
+position = Vector2(-198, 49)
 
 [node name="StaffTableProp" parent="ClearableProps/Furniture" unique_id=1931084239 instance=ExtResource("17_7rgrq")]
-position = Vector2(-160, -144)
+position = Vector2(-160, -126)
+scale = Vector2(0.74, 0.74)
 
 [node name="LecternProp" parent="ClearableProps/Furniture" unique_id=1918438010 instance=ExtResource("17_m6gf6")]
-position = Vector2(0, -144)
-scale = Vector2(0.5, 0.5)
+position = Vector2(0, -118)
+scale = Vector2(0.75, 0.75)
 
 [node name="StaffTableProp2" parent="ClearableProps/Furniture" unique_id=458710936 instance=ExtResource("17_7rgrq")]
-position = Vector2(166, -144)
+position = Vector2(160, -126)
+scale = Vector2(0.75, 0.75)
 
 [node name="LongTableProp5" parent="ClearableProps/Furniture" unique_id=836387700 instance=ExtResource("16_7rgrq")]
-position = Vector2(-80, 53)
+position = Vector2(-80, 49)
 
 [node name="LongTableProp6" parent="ClearableProps/Furniture" unique_id=1853408053 instance=ExtResource("16_7rgrq")]
-position = Vector2(64, 53)
+position = Vector2(64, 49)
 
 [node name="LongTableProp7" parent="ClearableProps/Furniture" unique_id=1881223102 instance=ExtResource("16_7rgrq")]
-position = Vector2(182, 53)
+position = Vector2(182, 49)
 
 [node name="ScreenArea" type="Area2D" parent="." unique_id=526517413]
 visible = false

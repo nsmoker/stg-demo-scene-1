@@ -13,7 +13,7 @@
 subpixel_positioning = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ss715"]
-size = Vector2(14, 29)
+size = Vector2(14, 5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wxkh7"]
 radius = 500.0
@@ -134,6 +134,7 @@ _data = {
 
 [node name="Marot" type="CharacterBody2D" unique_id=1512459789]
 z_index = 1
+y_sort_enabled = true
 script = ExtResource("1_cw48i")
 CharacterData = ExtResource("2_322xl")
 ToHitFont = SubResource("SystemFont_tk7xo")
@@ -143,15 +144,17 @@ metadata/_custom_type_script = "uid://bsrhat3n35udl"
 
 [node name="MainCollider" type="CollisionShape2D" parent="." unique_id=1265714290]
 z_index = 2
-position = Vector2(0, 1.5)
+position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_ss715")
 
 [node name="SenseArea" type="Area2D" parent="." unique_id=660295556]
+position = Vector2(0, -11)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea" unique_id=949522603]
 shape = SubResource("CircleShape2D_wxkh7")
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." unique_id=543871803]
+position = Vector2(0, -11)
 radius = 8.39
 affect_navigation_mesh = true
 
@@ -164,6 +167,7 @@ texture = SubResource("AtlasTexture_dhkrs")
 
 [node name="MainSprite" type="Sprite2D" parent="." unique_id=1870433887]
 texture_filter = 1
+position = Vector2(0, -11)
 texture = ExtResource("18_cw48i")
 hframes = 18
 
@@ -194,12 +198,12 @@ label_settings = SubResource("LabelSettings_dhkrs")
 libraries/ = SubResource("AnimationLibrary_ukyrk")
 
 [node name="ProjectileSpawnPoint" type="Marker2D" parent="." unique_id=99369641]
-position = Vector2(7, 1)
+position = Vector2(7, -10)
 
 [node name="StatusEffectContainer" parent="." unique_id=5491049 instance=ExtResource("8_mh6cb")]
 offset_left = -4.0
-offset_top = -32.0
+offset_top = -43.0
 offset_right = 28.0
-offset_bottom = 26.0
+offset_bottom = 15.0
 scale = Vector2(0.25, 0.25)
 alignment = 1
