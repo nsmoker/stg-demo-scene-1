@@ -1,6 +1,8 @@
 #if TOOLS
 using Godot;
-using System;
+using STGDemoScene1.Addons.Edi.Scripts;
+
+namespace STGDemoScene1.Addons.Edi;
 
 [Tool]
 public partial class Edi : EditorPlugin

@@ -1,12 +1,14 @@
 using Godot;
-using System;
+using STGDemoScene1.Scripts.Resources;
 using System.Collections.Generic;
+
+namespace STGDemoScene1.Scripts.Controls;
 
 public partial class QuestDisplay : FoldableContainer
 {
     private readonly List<QuestStageDisplay> _questStageDisplays = [];
     private VBoxContainer _vbox;
-    private Label _DescriptionLabel;
+    private Label _descriptionLabel;
 
     [Export]
     public PackedScene QuestStageDisplayScene;
@@ -14,7 +16,7 @@ public partial class QuestDisplay : FoldableContainer
     public override void _Ready()
     {
         _vbox = GetNode<VBoxContainer>("VBoxContainer");
-        _DescriptionLabel = GetNode<Label>("VBoxContainer/DescriptionLabel");
+        _descriptionLabel = GetNode<Label>("VBoxContainer/DescriptionLabel");
     }
 
     public void SetQuest(Quest quest)
@@ -22,7 +24,7 @@ public partial class QuestDisplay : FoldableContainer
         Clear();
 
         Title = quest.Title;
-        _DescriptionLabel.Text = quest.Description;
+        _descriptionLabel.Text = quest.Description;
         var questStages = quest.Stages;
         var currentStage = quest.GetCurrentStage();
         foreach (var stage in questStages)

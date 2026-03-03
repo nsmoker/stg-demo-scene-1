@@ -1,7 +1,11 @@
-using ArkhamHunters.Scripts;
 using Godot;
+using STGDemoScene1.Addons.Edi.Scripts;
+using STGDemoScene1.Scripts.Resources;
+using STGDemoScene1.Scripts.Systems;
 using System.Collections.Generic;
 using System.Linq;
+
+namespace STGDemoScene1.Scripts.Characters;
 
 public partial class Player : Character
 {
@@ -176,9 +180,10 @@ public partial class Player : Character
         }
     }
 
-    private void OnConversationStarted(Conversation conversation, int entryPoint)
+    private void OnConversationStarted(Conversation _1, int _2)
     {
         ControllerState = new DialogueState();
         _currentAnimState = AnimState.Idle;
     }
 }
+

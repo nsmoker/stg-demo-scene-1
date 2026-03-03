@@ -1,18 +1,19 @@
-using Godot;
-using System;
+using STGDemoScene1.Scripts.Items;
 using System.Collections.Generic;
+
+namespace STGDemoScene1.Scripts.Systems;
 
 public static class InventorySystem
 {
-    private static readonly Dictionary<string, List<Item>> _invMap = [];
+    private static readonly Dictionary<string, List<Item>> s_invMap = [];
 
     public delegate void InventoryChangeEvent(string entity, Item item, bool added);
 
-    public static InventoryChangeEvent InventoryChangeHandlers;
+    public static event InventoryChangeEvent InventoryChangeHandlers;
 
-    public static void SetInventory(string entity, List<Item> initialInventory) => _invMap.Add(entity, initialInventory);
+    public static void SetInventory(string entity, List<Item> initialInventory) => s_invMap.Add(entity, initialInventory);
 
-    public static void Remove(string entity) => _invMap.Remove(entity);
+    public static void Remove(string entity) => s_invMap.Remove(entity);
 
     public static void Transfer(string fromEntity, string toEntity, Item itemToTransfer)
     {
@@ -22,19 +23,19 @@ public static class InventorySystem
 
     public static void AddItem(string entity, Item item)
     {
-        _invMap[entity].Add(item);
+        s_invMap[entity].Add(item);
         InventoryChangeHandlers?.Invoke(entity, item, true);
     }
 
     public static void RemoveItem(string entity, Item item)
     {
-        _ = _invMap[entity].Remove(item);
+        _ = s_invMap[entity].Remove(item);
         InventoryChangeHandlers?.Invoke(entity, item, false);
     }
 
     public static List<Item> RetrieveInventory(string entity)
     {
-        if (!_invMap.TryGetValue(entity, out List<Item> value))
+        if (!s_invMap.TryGetValue(entity, out List<Item> value))
         {
             return [];
         }

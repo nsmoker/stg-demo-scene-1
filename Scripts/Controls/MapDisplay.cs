@@ -1,5 +1,8 @@
 using Godot;
-using System;
+using STGDemoScene1.Scripts.Resources;
+using STGDemoScene1.Scripts.Systems;
+
+namespace STGDemoScene1.Scripts.Controls;
 
 public partial class MapDisplay : PanelContainer
 {

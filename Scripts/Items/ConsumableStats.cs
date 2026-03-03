@@ -1,6 +1,6 @@
 using Godot;
 
-namespace ArkhamHunters.Scripts.Items;
+namespace STGDemoScene1.Scripts.Items;
 
 [Tool]
 [GlobalClass]

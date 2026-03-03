@@ -1,9 +1,8 @@
-using ArkhamHunters.Scripts;
-using Godot;
-using System;
+using STGDemoScene1.Addons.Edi.Scripts;
+using STGDemoScene1.Scripts.Items;
 using System.Collections.Generic;
 
-namespace ArkhamHunters.Scripts;
+namespace STGDemoScene1.Scripts;
 
 public enum InteractionType
 {

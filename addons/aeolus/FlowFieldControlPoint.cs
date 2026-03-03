@@ -1,5 +1,7 @@
 using Godot;
 
+namespace STGDemoScene1.Addons.Aeolus;
+
 [Tool]
 [GlobalClass]
 public partial class FlowFieldControlPoint : Resource

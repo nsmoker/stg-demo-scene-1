@@ -1,5 +1,6 @@
 using Godot;
-using System.Collections.Generic;
+
+namespace STGDemoScene1.Scripts.Controls;
 
 public partial class AbilityMenu : Control
 {

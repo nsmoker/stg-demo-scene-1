@@ -1,18 +1,18 @@
-using Godot;
-using System;
 using System.Collections.Generic;
+
+namespace STGDemoScene1.Scripts.Systems;
 
 public static class HostilitySystem
 {
-    private static readonly Dictionary<string, HashSet<string>> _hostilityOverrides = [];
+    private static readonly Dictionary<string, HashSet<string>> s_hostilityOverrides = [];
 
     public delegate void HostilityChangedEvent(string entity1, string entity2, bool newHostility);
 
-    public static HostilityChangedEvent HostilityChangeHandlers;
+    public static event HostilityChangedEvent HostilityChangeHandlers;
 
     public static void SetHostilityOverride(string entity1, string entity2, bool hostile)
     {
-        if (_hostilityOverrides.TryGetValue(entity1, out var overrides))
+        if (s_hostilityOverrides.TryGetValue(entity1, out var overrides))
         {
             if (hostile)
             {
@@ -25,8 +25,8 @@ public static class HostilitySystem
         }
         else if (hostile)
         {
-            _hostilityOverrides[entity1] = [];
-            _ = _hostilityOverrides[entity1].Add(entity2);
+            s_hostilityOverrides[entity1] = [];
+            _ = s_hostilityOverrides[entity1].Add(entity2);
         }
         else
         {
@@ -38,7 +38,7 @@ public static class HostilitySystem
 
     public static bool GetHostility(string entity1, string entity2)
     {
-        if (_hostilityOverrides.TryGetValue(entity1, out var value))
+        if (s_hostilityOverrides.TryGetValue(entity1, out var value))
         {
             return value.Contains(entity2);
         }

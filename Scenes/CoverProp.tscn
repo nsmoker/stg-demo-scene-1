@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c0tkttpscp2h5"]
+[gd_scene format=3 uid="uid://c0tkttpscp2h5"]
 
 [ext_resource type="Script" uid="uid://bcyi1tcfc373q" path="res://Scripts/Prop.cs" id="1_hvgce"]
 [ext_resource type="Texture2D" uid="uid://j5c2lrwtwqhv" path="res://Sprites/Props/trunk.png" id="1_hyryu"]

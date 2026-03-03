@@ -1,7 +1,9 @@
-using ArkhamHunters.Scripts;
 using Godot;
-using System;
+using STGDemoScene1.Scripts.Characters;
+using STGDemoScene1.Scripts.StatusEffects;
 using System.Collections.Generic;
+
+namespace STGDemoScene1.Scripts.Controls;
 
 public partial class StatusEffectContainer : HBoxContainer
 {
@@ -31,3 +33,4 @@ public partial class StatusEffectContainer : HBoxContainer
         }
     }
 }
+

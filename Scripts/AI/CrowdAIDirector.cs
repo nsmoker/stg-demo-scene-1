@@ -1,10 +1,10 @@
-using ArkhamHunters.Scripts;
 using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+using Character = STGDemoScene1.Scripts.Characters.Character;
+
+namespace STGDemoScene1.Scripts.AI;
 
 [GlobalClass]
 [Tool]
@@ -95,7 +95,7 @@ public partial class CrowdAIDirector : Resource
 
     public CrowdAICharacterState GetState(ulong instanceId) => _states[instanceId];
 
-    public void StartTask(CrowdAITask task, Character character, StagfootScreen area, double duration)
+    public void StartTask(CrowdAITask task, Character character, StagfootScreen area)
     {
         var state = new CrowdAICharacterState
         {
@@ -184,7 +184,7 @@ public partial class CrowdAIDirector : Resource
                             Type = CrowdAITaskType.FollowCrowdFlow,
                             Duration = state.RemainingDuration,
                             Tag = task.Tag
-                        }, character, area, state.RemainingDuration);
+                        }, character, area);
                         if (!area.CheckBounds(character.Position))
                         {
                             character.GlobalPosition = area.ToGlobal(area.GetEdge() + new Vector2(0.0f, -100.0f + _random.NextSingle() * 200.0f));
@@ -210,7 +210,7 @@ public partial class CrowdAIDirector : Resource
             {
                 state.Task = DrawRandomTask();
                 state.RemainingDuration = state.Task.Duration;
-                StartTask(state.Task, c, area, state.Task.Duration);
+                StartTask(state.Task, c, area);
             }
             else
             {
@@ -219,3 +219,4 @@ public partial class CrowdAIDirector : Resource
         }
     }
 }
+

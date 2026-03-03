@@ -1,8 +1,10 @@
 using Godot;
+using STGDemoScene1.Scripts.Items;
+using STGDemoScene1.Scripts.Resources;
+using STGDemoScene1.Scripts.Systems;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace ArkhamHunters.Scripts;
+namespace STGDemoScene1.Scripts;
 
 public partial class Container : StaticBody2D, IInteractable, IContainerInteractable
 {

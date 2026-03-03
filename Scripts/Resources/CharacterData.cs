@@ -1,6 +1,7 @@
-using ArkhamHunters.Scripts;
 using Godot;
-using System.Collections.Generic;
+using STGDemoScene1.Scripts.Systems;
+
+namespace STGDemoScene1.Scripts.Resources;
 
 [Tool]
 [GlobalClass]

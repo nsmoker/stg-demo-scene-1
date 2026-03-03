@@ -1,6 +1,8 @@
-using EverydayDialogueEditor;
 using Godot;
+using STGDemoScene1.Addons.Edi.Scripts;
 using System;
+
+namespace STGDemoScene1.Scripts.DialogueNodes;
 
 [GlobalClass]
 [Tool]

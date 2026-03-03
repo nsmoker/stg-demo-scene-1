@@ -1,5 +1,4 @@
-using Godot;
-using System;
+namespace STGDemoScene1.Scripts.Systems;
 
 // TODO: DON'T SHIP
 public static class HoverSystem

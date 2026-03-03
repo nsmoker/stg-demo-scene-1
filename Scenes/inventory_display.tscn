@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dheqe5k157l3j"]
+[gd_scene format=3 uid="uid://dheqe5k157l3j"]
 
 [ext_resource type="Script" uid="uid://b1ldx2g05u1jp" path="res://Scripts/Controls/InventoryDisplay.cs" id="1_2s17u"]
 [ext_resource type="Texture2D" uid="uid://r8utc0oomgmk" path="res://SpritesPlaceholder/Images/spr_itemsncolectables-black.png" id="2_aoa24"]

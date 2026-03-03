@@ -1,5 +1,7 @@
 using Godot;
 
+namespace STGDemoScene1.Scripts.Resources;
+
 [GlobalClass]
 [Tool]
 public partial class MapCaptureResource : Resource

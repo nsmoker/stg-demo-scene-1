@@ -1,5 +1,6 @@
-using Godot;
-using System;
+using STGDemoScene1.Addons.Edi.Scripts;
+
+namespace STGDemoScene1.Scripts.Systems;
 
 public static class DialogueSystem
 {

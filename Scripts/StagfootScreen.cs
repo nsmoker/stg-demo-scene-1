@@ -1,8 +1,13 @@
-using ArkhamHunters.Scripts;
 using Godot;
+using STGDemoScene1.Addons.Aeolus;
+using STGDemoScene1.Scripts.AI;
+using STGDemoScene1.Scripts.Characters;
+using STGDemoScene1.Scripts.Systems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+namespace STGDemoScene1.Scripts;
 
 public partial class StagfootScreen : Node2D
 {

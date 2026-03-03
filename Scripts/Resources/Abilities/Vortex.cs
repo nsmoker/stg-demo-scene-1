@@ -1,5 +1,10 @@
-using ArkhamHunters.Scripts;
 using Godot;
+using STGDemoScene1.Scripts.Characters;
+using STGDemoScene1.Scripts.StatusEffects;
+using STGDemoScene1.Scripts.Systems;
+using STGDemoScene1.Scripts.Triggers;
+
+namespace STGDemoScene1.Scripts.Resources.Abilities;
 
 public partial class Vortex : Ability
 {
@@ -20,3 +25,4 @@ public partial class Vortex : Ability
         }
     }
 }
+

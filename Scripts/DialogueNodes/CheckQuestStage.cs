@@ -1,4 +1,9 @@
 using Godot;
+using STGDemoScene1.Addons.Edi.Scripts;
+using STGDemoScene1.Scripts.Resources;
+using STGDemoScene1.Scripts.Systems;
+
+namespace STGDemoScene1.Scripts.DialogueNodes;
 
 [Tool]
 [GlobalClass]
@@ -8,23 +13,23 @@ public partial class CheckQuestStage : DialogueCondition
     public Quest Quest;
 
     [Export]
-    public int stage;
+    public int _stage;
 
     [Export]
-    private ArkhamHunters.Scripts.Util.ComparisonOperators Operator;
+    private ComparisonOperators _operator;
 
     public override bool Evaluate()
     {
         if (QuestSystem.TryGetQuest(Quest.ResourcePath, out var instance))
         {
             var activeStage = instance.CurrentStage;
-            return Operator switch
+            return _operator switch
             {
-                ArkhamHunters.Scripts.Util.ComparisonOperators.Less => activeStage < stage,
-                ArkhamHunters.Scripts.Util.ComparisonOperators.Greater => activeStage > stage,
-                ArkhamHunters.Scripts.Util.ComparisonOperators.GreaterEqual => activeStage >= stage,
-                ArkhamHunters.Scripts.Util.ComparisonOperators.LessEqual => activeStage <= stage,
-                ArkhamHunters.Scripts.Util.ComparisonOperators.Equal => activeStage == stage,
+                ComparisonOperators.Less => activeStage < _stage,
+                ComparisonOperators.Greater => activeStage > _stage,
+                ComparisonOperators.GreaterEqual => activeStage >= _stage,
+                ComparisonOperators.LessEqual => activeStage <= _stage,
+                ComparisonOperators.Equal => activeStage == _stage,
                 _ => false,
             };
         }

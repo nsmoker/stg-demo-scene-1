@@ -1,4 +1,4 @@
-namespace ArkhamHunters.Scripts.Util;
+namespace STGDemoScene1.Scripts.DialogueNodes;
 
 public enum ComparisonOperators
 {

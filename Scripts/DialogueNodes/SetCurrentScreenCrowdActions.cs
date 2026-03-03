@@ -1,5 +1,9 @@
 using Godot;
+using STGDemoScene1.Addons.Edi.Scripts;
+using STGDemoScene1.Scripts.AI;
 using System;
+
+namespace STGDemoScene1.Scripts.DialogueNodes;
 
 [GlobalClass]
 [Tool]

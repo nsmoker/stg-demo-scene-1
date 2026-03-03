@@ -1,4 +1,7 @@
 using Godot;
+using STGDemoScene1.Scripts.Items;
+
+namespace STGDemoScene1.Scripts.Resources;
 
 [Tool]
 [GlobalClass]

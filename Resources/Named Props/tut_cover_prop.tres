@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PropData" format=3 uid="uid://bhkk3ehctq0ve"]
+
+[ext_resource type="PackedScene" uid="uid://c0tkttpscp2h5" path="res://Scenes/CoverProp.tscn" id="1_c8k2l"]
+[ext_resource type="Texture2D" uid="uid://j5c2lrwtwqhv" path="res://Sprites/Props/trunk.png" id="2_j06e8"]
+[ext_resource type="Script" uid="uid://cplotlk0gi8v" path="res://Scripts/Resources/PropData.cs" id="3_oqxo8"]
+
+[resource]
+script = ExtResource("3_oqxo8")
+Name = "TutProp"
+Sprite = ExtResource("2_j06e8")
+BaseScene = ExtResource("1_c8k2l")
+metadata/_custom_type_script = "uid://cplotlk0gi8v"

@@ -1,5 +1,7 @@
 using Godot;
-using System;
+using STGDemoScene1.Scripts.StatusEffects;
+
+namespace STGDemoScene1.Scripts.Controls;
 
 public partial class StatusEffectDisplay : PanelContainer
 {

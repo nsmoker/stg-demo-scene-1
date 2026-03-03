@@ -1,5 +1,8 @@
 using Godot;
+using STGDemoScene1.Scripts.Characters;
 using System;
+
+namespace STGDemoScene1.Addons.Edi.Scripts;
 
 [Tool]
 [GlobalClass]

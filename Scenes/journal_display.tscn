@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://bahvdxf74e24c"]
+[gd_scene format=3 uid="uid://bahvdxf74e24c"]
 
 [ext_resource type="Script" uid="uid://csqcftmamld0r" path="res://Scripts/Controls/JournalDisplay.cs" id="1_7th66"]
 [ext_resource type="PackedScene" uid="uid://b5xivkohc45aw" path="res://Scenes/quest_display.tscn" id="2_qi6uy"]

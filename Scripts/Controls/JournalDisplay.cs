@@ -1,6 +1,8 @@
 using Godot;
-using System;
+using STGDemoScene1.Scripts.Resources;
 using System.Collections.Generic;
+
+namespace STGDemoScene1.Scripts.Controls;
 
 public partial class JournalDisplay : ScrollContainer
 {

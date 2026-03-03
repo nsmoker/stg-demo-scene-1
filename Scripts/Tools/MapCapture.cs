@@ -1,5 +1,8 @@
 using Godot;
+using STGDemoScene1.Scripts.Resources;
 using System.Linq;
+
+namespace STGDemoScene1.Scripts.Tools;
 
 [Tool]
 [GlobalClass]

@@ -140,6 +140,7 @@ csharp_style_conditional_delegate_call = true:suggestion
 csharp_style_prefer_index_operator = true:suggestion
 csharp_style_prefer_range_operator = true:suggestion
 csharp_style_pattern_local_over_anonymous_function = false:none
+dotnet_diagnostic.IDE0005.severity = warning
 
 ###############################
 # C# Formatting Rules         #

@@ -1,7 +1,8 @@
 using Godot;
-using System.Collections.Generic;
+using STGDemoScene1.Scripts.Items;
+using STGDemoScene1.Scripts.Systems;
 
-namespace ArkhamHunters.Scripts;
+namespace STGDemoScene1.Scripts.Controls;
 
 public partial class ContainerDisplay : ItemListDisplay
 {
@@ -39,7 +40,7 @@ public partial class ContainerDisplay : ItemListDisplay
 
     public bool GetAllPressed() => _getAllButton.IsPressed();
 
-    public void OnInventoryChangeEvent(string entity, Item item, bool added)
+    public void OnInventoryChangeEvent(string entity, Item _1, bool _2)
     {
         if (entity == ContainerEntity)
         {

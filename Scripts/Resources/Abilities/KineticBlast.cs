@@ -1,5 +1,8 @@
-using ArkhamHunters.Scripts;
 using Godot;
+using STGDemoScene1.Scripts.Characters;
+using STGDemoScene1.Scripts.Systems;
+
+namespace STGDemoScene1.Scripts.Resources.Abilities;
 
 [Tool]
 [GlobalClass]
@@ -22,3 +25,4 @@ public partial class KineticBlast : Ability
         target.AddPush(push);
     }
 }
+

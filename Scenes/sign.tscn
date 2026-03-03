@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c0t4mgxxnb428"]
+[gd_scene format=3 uid="uid://c0t4mgxxnb428"]
 
 [ext_resource type="Script" uid="uid://dolf38tlsle5r" path="res://Scripts/Character/InteractableCharacter.cs" id="1_55kfr"]
 [ext_resource type="Texture2D" uid="uid://b54j5wdw56gj0" path="res://SpritesPlaceholder/Images/ts_outerworld.png" id="2_a1n6o"]

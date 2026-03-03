@@ -1,5 +1,8 @@
-using ArkhamHunters.Scripts;
 using Godot;
+using STGDemoScene1.Scripts.Characters;
+using STGDemoScene1.Scripts.Systems;
+
+namespace STGDemoScene1.Scripts;
 
 public partial class AreaTransition : Area2D
 {
@@ -28,3 +31,4 @@ public partial class AreaTransition : Area2D
         }
     }
 }
+
