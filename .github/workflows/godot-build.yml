@@ -1,5 +1,9 @@
 name: "godot-ci export"
-on: push
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 # NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
 
@@ -88,27 +92,3 @@ jobs:
         with:
           name: mac
           path: build/mac
-
-  deploy:
-    name: Deploy to Itch.io
-    runs-on: ubuntu-latest
-    needs: [export-windows, export-linux, export-mac]
-    if: github.ref == 'refs/heads/master'
-    strategy:
-      matrix:
-        platform: [windows, linux, mac]
-    steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ matrix.platform }}
-          path: build/${{ matrix.platform }}
-
-      - name: Publish to Itch.io
-        uses: XanatosX/butler-publish-itchio-action@master
-        env:
-          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
-          CHANNEL: ${{ matrix.platform }}
-          ITCH_GAME: ${{ secrets.ITCHIO_GAME }}
-          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
-          PACKAGE: build/${{ matrix.platform }}
