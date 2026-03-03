@@ -20,4 +20,4 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Format
-      run: dotnet format '.\STG Demo Scene 1.csproj' --verify-no-changes --verbosity minimal --severity info
+      run: dotnet format './STG Demo Scene 1.csproj' --verify-no-changes --verbosity minimal --severity info
