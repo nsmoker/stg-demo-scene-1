@@ -105,9 +105,9 @@ jobs:
           path: build/${{ matrix.platform }}
 
       - name: Publish to Itch.io
-        uses: manleyj/butler-publish-action@master
+        uses: yeslayla/butler-publish-itchio-action@master
         env:
-          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
           CHANNEL: ${{ matrix.platform }}
           ITCH_GAME: ${{ secrets.ITCHIO_GAME }}
           ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
