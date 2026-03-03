@@ -105,7 +105,7 @@ jobs:
           path: build/${{ matrix.platform }}
 
       - name: Publish to Itch.io
-        uses: yeslayla/butler-publish-itchio-action@master
+        uses: XanatosX/butler-publish-itchio-action@master
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
           CHANNEL: ${{ matrix.platform }}
