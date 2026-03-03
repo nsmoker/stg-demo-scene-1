@@ -88,3 +88,27 @@ jobs:
         with:
           name: mac
           path: build/mac
+
+  deploy:
+    name: Deploy to Itch.io
+    runs-on: ubuntu-latest
+    needs: [export-windows, export-linux, export-mac]
+    if: github.ref == 'refs/heads/master'
+    strategy:
+      matrix:
+        platform: [windows, linux, mac]
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.platform }}
+          path: build/${{ matrix.platform }}
+
+      - name: Publish to Itch.io
+        uses: manleyj/butler-publish-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          CHANNEL: ${{ matrix.platform }}
+          ITCH_GAME: ${{ secrets.ITCHIO_GAME }}
+          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
+          PACKAGE: build/${{ matrix.platform }}
