@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://lp8ya3es836c" path="res://Sprites/Props/brazier.png" id="2_onwmm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hvgce"]
-size = Vector2(16, 10)
+size = Vector2(16, 4)
 
 [sub_resource type="Animation" id="Animation_hvgce"]
 length = 0.001
@@ -111,12 +111,12 @@ _data = {
 [node name="BrazierProp" type="StaticBody2D" unique_id=242201632 groups=["NavObjects"]]
 z_index = 1
 y_sort_enabled = true
-collision_layer = 2097153
 script = ExtResource("1_onwmm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=244312983]
 z_index = 1
 y_sort_enabled = true
+position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_hvgce")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1729233518]

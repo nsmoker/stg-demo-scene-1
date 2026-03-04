@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://chawy0boxius5" path="res://Sprites/Props/lectern.png" id="2_iyxhk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hvgce"]
-size = Vector2(24, 24)
+size = Vector2(24, 16)
 
 [sub_resource type="Animation" id="Animation_hvgce"]
 length = 0.001
@@ -115,7 +115,6 @@ collision_layer = 2097153
 script = ExtResource("1_iyxhk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1885226724]
-position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_hvgce")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1165687899]

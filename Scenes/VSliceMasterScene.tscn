@@ -6,8 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://m8tbjngrrk7x" path="res://Scenes/Controls/ExitMenu.tscn" id="8_q7eja"]
 [ext_resource type="PackedScene" uid="uid://bj34uqmte0qf3" path="res://Scenes/Controls/AbilitiesMenu.tscn" id="9_waam2"]
 [ext_resource type="PackedScene" uid="uid://bg7o07th2w4x1" path="res://Scenes/Controls/AbilityButton.tscn" id="10_ko0ge"]
+[ext_resource type="Script" uid="uid://bqhkr10ewh7xe" path="res://Scripts/AI/CrowdAITask.cs" id="11_euyus"]
 [ext_resource type="PackedScene" uid="uid://gedp1qirf71n" path="res://Scenes/Characters/player.tscn" id="11_xluw3"]
+[ext_resource type="Script" uid="uid://67g32ecjus0y" path="res://Scripts/AI/CrowdAIDirector.cs" id="12_1nsqu"]
 [ext_resource type="Resource" uid="uid://vbjq48kype7r" path="res://Resources/Constants/faction_table.tres" id="12_42x8o"]
+[ext_resource type="PackedScene" uid="uid://bgk5v73hj7cv0" path="res://Scenes/ClassroomSceneTest.tscn" id="12_482ib"]
 [ext_resource type="PackedScene" uid="uid://c1uq7y0hjwsl3" path="res://Scenes/DiningHallSceneTest.tscn" id="12_aysf6"]
 [ext_resource type="Script" uid="uid://dwq4nn0he6m2m" path="res://Scripts/CombatController.cs" id="13_kv3ts"]
 [ext_resource type="PackedScene" uid="uid://wqa42iuow1t4" path="res://Scenes/DiningEntranceHallwayScene.tscn" id="14_1nsqu"]
@@ -31,6 +34,66 @@ font_size = 10
 
 [sub_resource type="SystemFont" id="SystemFont_oiltp"]
 subpixel_positioning = 0
+
+[sub_resource type="Resource" id="Resource_nuc5r"]
+script = ExtResource("11_euyus")
+Type = 1
+Duration = 5.0
+Probability = 0.5
+metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
+
+[sub_resource type="Resource" id="Resource_ade8f"]
+script = ExtResource("11_euyus")
+Type = 3
+Duration = 10.0
+Probability = 0.5
+metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
+
+[sub_resource type="Resource" id="Resource_rbe05"]
+script = ExtResource("12_1nsqu")
+_possibleTasks = Array[Object]([SubResource("Resource_nuc5r"), SubResource("Resource_ade8f")])
+
+[sub_resource type="Resource" id="Resource_qln41"]
+script = ExtResource("11_euyus")
+Type = 3
+Duration = 60.0
+Probability = 0.2
+metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
+
+[sub_resource type="Resource" id="Resource_0jtuf"]
+script = ExtResource("11_euyus")
+Type = 1
+Duration = 5.0
+Probability = 0.6
+metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
+
+[sub_resource type="Resource" id="Resource_7iskm"]
+script = ExtResource("11_euyus")
+Duration = 5.0
+Probability = 0.2
+metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
+
+[sub_resource type="Resource" id="Resource_euyus"]
+script = ExtResource("12_1nsqu")
+_possibleTasks = Array[Object]([SubResource("Resource_qln41"), SubResource("Resource_0jtuf"), SubResource("Resource_7iskm")])
+
+[sub_resource type="Resource" id="Resource_qi8ur"]
+script = ExtResource("11_euyus")
+Type = 1
+Duration = 5.0
+Probability = 0.5
+metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
+
+[sub_resource type="Resource" id="Resource_u4tfm"]
+script = ExtResource("11_euyus")
+Type = 3
+Duration = 10.0
+Probability = 0.5
+metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
+
+[sub_resource type="Resource" id="Resource_1nsqu"]
+script = ExtResource("12_1nsqu")
+_possibleTasks = Array[Object]([SubResource("Resource_qi8ur"), SubResource("Resource_u4tfm")])
 
 [node name="MasterScene" type="Node2D" unique_id=666549229]
 y_sort_enabled = true
@@ -125,6 +188,12 @@ script = ExtResource("13_kv3ts")
 
 [node name="DiningEntrywaySceneTest" parent="." unique_id=1608461539 instance=ExtResource("14_1nsqu")]
 position = Vector2(0, 360)
+GenericNpcDirector = SubResource("Resource_rbe05")
 
 [node name="DiningHallSceneTest" parent="." unique_id=1743947183 instance=ExtResource("12_aysf6")]
 GenericNpcCount = 0
+GenericNpcDirector = SubResource("Resource_euyus")
+
+[node name="ClassroomSceneTest" parent="." unique_id=828485593 instance=ExtResource("12_482ib")]
+position = Vector2(0, 720)
+GenericNpcDirector = SubResource("Resource_1nsqu")
