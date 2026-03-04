@@ -107,11 +107,29 @@ public partial class CombatController : Node
                     _playerMoving = true;
                     _player.IssueCombatMove(
                         path.Length > 0 ? path : [_player.GetGlobalMousePosition()],
-                        () => _playerMoving = false);
+                        () =>
+                    {
+                        _playerMoving = false;
+                        SetPipVisibility();
+                    });
                 }
             }
         }
         _player.QueueRedraw();
+    }
+
+    private void SetPipVisibility()
+    {
+        if (_isOurTurn)
+        {
+            _player.ActionPip1.Visible = true;
+            _player.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_player.CharacterData) > 1;
+        }
+        else
+        {
+            _player.ActionPip1.Hide();
+            _player.ActionPip2.Hide();
+        }
     }
 
     private void OnPlayerDraw()
@@ -165,16 +183,7 @@ public partial class CombatController : Node
     private void OnTurnBegin(List<string> sideMoving)
     {
         _isOurTurn = sideMoving.Contains(_player.CharacterData.ResourcePath);
-        if (_isOurTurn)
-        {
-            _player.ActionPip1.Visible = true;
-            _player.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_player.CharacterData) > 1;
-        }
-        else
-        {
-            _player.ActionPip1.Hide();
-            _player.ActionPip2.Hide();
-        }
+        SetPipVisibility();
         _player.QueueRedraw();
     }
 

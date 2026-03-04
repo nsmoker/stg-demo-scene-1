@@ -68,8 +68,9 @@ public partial class Ability : Resource
             areaEffectInstance.SetDamageRoll(AreaDamage);
             areaEffectInstance.SetDuration(AreaDuration);
             SceneSystem.GetMasterScene().AddChild(areaEffectInstance);
-            CombatSystem.PassTurn(user.CharacterData);
         }
+
+        CombatSystem.PassTurn(user.CharacterData);
     }
 }
 
