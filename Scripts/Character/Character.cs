@@ -255,7 +255,11 @@ public partial class Character : CharacterBody2D
                     else if (!_attackedThisTurn)
                     {
                         // In range, attack.
-                        character.IssueAttack(closestEnemy.CharacterData, character.GlobalPosition.DirectionTo(closestEnemy.GlobalPosition), () => character.BasicAttackAbility.Activate(character, closestEnemy, character.GetProjectileSpawnPoint(), closestEnemy.GlobalPosition));
+                        character.IssueAttack(
+                            closestEnemy.CharacterData,
+                            character.GlobalPosition.DirectionTo(closestEnemy.GlobalPosition),
+                            () => character.BasicAttackAbility.Activate(character, closestEnemy, character.GetProjectileSpawnPoint(), closestEnemy.GlobalPosition)
+                        );
                         _attackedThisTurn = true;
                     }
                 }
@@ -310,7 +314,7 @@ public partial class Character : CharacterBody2D
         }
     }
 
-    protected class NavState(Vector2[] path, Character.ICharacterState nextState, Action onComplete = null, float speed = -1, float tolerance = 1.0f) : ICharacterState
+    protected class NavState(Vector2[] path, ICharacterState nextState, Action onComplete = null, float speed = -1, float tolerance = 1.0f) : ICharacterState
     {
         private readonly ICharacterState _nextState = nextState;
 
@@ -375,9 +379,9 @@ public partial class Character : CharacterBody2D
         public void PhysicsProcess(double delta, Character character)
         {
             var targetPoint = _path[_currentPoint];
-            if (_character.Position.DistanceTo(targetPoint) <= 1.0f)
+            if (_character.GlobalPosition.DistanceTo(targetPoint) <= 1.0f)
             {
-                _character.Position = targetPoint;
+                _character.GlobalPosition = targetPoint;
                 if (_currentPoint + 1 < _path.Length)
                 {
                     _currentPoint += 1;
@@ -393,7 +397,7 @@ public partial class Character : CharacterBody2D
             }
             else
             {
-                var targetVector = targetPoint - _character.Position;
+                var targetVector = targetPoint - _character.GlobalPosition;
                 var vel = targetVector.Normalized() * _character.Speed;
                 _character.Velocity += vel;
                 _character.SetWalkAnimState(vel);
@@ -404,7 +408,7 @@ public partial class Character : CharacterBody2D
         public void Process(double delta, Character character) { }
     }
 
-    protected class NavToCharacterState(Character self, Character target, Character.ICharacterState prevState, Action onComplete, float speed, float tolerance) : ICharacterState
+    protected class NavToCharacterState(Character self, Character target, ICharacterState prevState, Action onComplete, float speed, float tolerance) : ICharacterState
     {
         private readonly Character _target = target;
         private readonly Character _self = self;

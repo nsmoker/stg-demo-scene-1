@@ -43,13 +43,16 @@ public partial class Targeting : Sprite2D
             var pos = GetGlobalMousePosition();
             var hovered = CharacterSystem.GetInstance(HoverSystem.Hovered);
             var c = caster;
-            c.IssueAttack(Ability.ContactDamage != null ? CharacterSystem.GetInstance(HoverSystem.Hovered).CharacterData : null,
-            pos - c.GlobalPosition,
-            // Note: this lambda is evil and Godot will rightly punish us for trying to do things this way if we are not very, very cautious about the lifetimes of the objects here.
-            () => Ability.Activate(c, hovered, c.GetProjectileSpawnPoint(), pos));
+            if (HoverSystem.AnyHovered() || Ability.ContactDamage == null)
+            {
+                c.IssueAttack(Ability.ContactDamage != null ? CharacterSystem.GetInstance(HoverSystem.Hovered).CharacterData : null,
+                pos - c.GlobalPosition,
+                // Note: this lambda is evil and Godot will rightly punish us for trying to do things this way if we are not very, very cautious about the lifetimes of the objects here.
+                () => Ability.Activate(c, hovered, c.GetProjectileSpawnPoint(), pos));
 
-            SceneSystem.GetMasterScene().GetCombatController().OnAbilityTargetingEnd(Ability);
-            Free();
+                SceneSystem.GetMasterScene().GetCombatController().OnAbilityTargetingEnd(Ability);
+                Free();
+            }
         }
         else if (Input.IsActionJustReleased("Targeting Back"))
         {
