@@ -254,12 +254,15 @@ public partial class DialogueController : ScrollContainer
 
     public void BeginConversation(Conversation conversation, int entryPoint)
     {
-        _conversation = conversation;
-        _dialogueLabel.Text = "";
-        _speakerLabel.Text = "";
-        Visible = true;
-        State = new EvalState(_conversation.EntryPoints[entryPoint]);
+        if (conversation != null)
+        {
+            _conversation = conversation;
+            _dialogueLabel.Text = "";
+            _speakerLabel.Text = "";
+            Visible = true;
+            State = new EvalState(_conversation.EntryPoints[entryPoint]);
 
-        ProcessMode = ProcessModeEnum.Always;
+            ProcessMode = ProcessModeEnum.Always;
+        }
     }
 }

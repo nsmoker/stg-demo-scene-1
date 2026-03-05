@@ -156,6 +156,9 @@ _data = {
 [sub_resource type="LabelSettings" id="LabelSettings_pu2lt"]
 font_size = 8
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_25bbb"]
+size = Vector2(14, 29)
+
 [node name="Player" type="CharacterBody2D" unique_id=1509721738]
 z_index = 1
 y_sort_enabled = true
@@ -244,3 +247,11 @@ offset_right = 28.0
 offset_bottom = 16.0
 scale = Vector2(0.25, 0.25)
 alignment = 1
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=2099563998]
+collision_layer = 262144
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1939523]
+position = Vector2(0, -8.5)
+shape = SubResource("RectangleShape2D_25bbb")
