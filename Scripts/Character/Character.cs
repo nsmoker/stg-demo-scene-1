@@ -3,6 +3,7 @@ using STGDemoScene1.Scripts.Controls;
 using STGDemoScene1.Scripts.Items;
 using STGDemoScene1.Scripts.Resources;
 using STGDemoScene1.Scripts.Resources.Abilities;
+using STGDemoScene1.Scripts.Resources.Factions;
 using STGDemoScene1.Scripts.StatusEffects;
 using STGDemoScene1.Scripts.Systems;
 using System;
@@ -84,9 +85,6 @@ public partial class Character : CharacterBody2D
 
     [Export]
     public Font ToHitFont;
-
-    [Export]
-    public PackedScene ProjectileScene;
 
     [Export]
     public Ability BasicAttackAbility;
@@ -658,7 +656,10 @@ public partial class Character : CharacterBody2D
 
     public virtual void OnBodyEnteredSenseArea(Node2D body)
     {
-        if (body is Character character && character.IsNamedCharacter() && HostilitySystem.GetHostility(character.CharacterData.ResourcePath, CharacterData.ResourcePath))
+        if (body is Character character &&
+            character.IsNamedCharacter() &&
+            character.CharacterData.ResourcePath != CharacterData.ResourcePath &&
+            HostilitySystem.GetHostility(character.CharacterData.ResourcePath, CharacterData.ResourcePath))
         {
             if (CombatSystem.IsInCombat(CharacterData))
             {
@@ -760,26 +761,9 @@ public partial class Character : CharacterBody2D
         }
     }
 
-    public virtual void OnHostilityChanged(string characterA, string characterB, bool areHostile)
-    {
-        if (characterA.Equals(CharacterData.ResourcePath) && areHostile && !CombatSystem.IsInCombat(CharacterData))
-        {
-            _senseArea.GetOverlappingBodies().ToList().ForEach(body =>
-            {
-                if (body is Character character && HostilitySystem.GetHostility(CharacterData.ResourcePath, character.CharacterData.ResourcePath))
-                {
-                    if (CombatSystem.IsInCombat(character.CharacterData))
-                    {
-                        CombatSystem.JoinCombat(CharacterData);
-                    }
-                    else
-                    {
-                        CombatSystem.BeginCombat(CharacterData, character.CharacterData);
-                    }
-                }
-            });
-        }
-    }
+    public virtual void OnHostilityChanged(string characterA, string characterB, bool areHostile) => _senseArea.GetOverlappingBodies().ToList().ForEach(OnBodyEnteredSenseArea);
+
+    public virtual void OnFactionChange(Faction faction1, Faction faction2) => _senseArea.GetOverlappingBodies().ToList().ForEach(OnBodyEnteredSenseArea);
 
     public void SetWalkAnimState(Vector2 direction)
     {

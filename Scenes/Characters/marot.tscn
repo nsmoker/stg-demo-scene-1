@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character/Character.cs" id="1_cw48i"]
 [ext_resource type="Resource" uid="uid://cx3eet0w6nlc3" path="res://Resources/Characters/marot.tres" id="2_322xl"]
-[ext_resource type="PackedScene" uid="uid://dmt32gtrfhfqp" path="res://Scenes/Projectiles/BasicAttackProjectile.tscn" id="3_uvfcp"]
 [ext_resource type="Resource" uid="uid://bnl26jpb4ux27" path="res://Resources/Abilities/BasicAttack.tres" id="4_cytio"]
 [ext_resource type="PackedScene" uid="uid://cc3g2hp8txivb" path="res://Scenes/Controls/status_effect_container.tscn" id="8_mh6cb"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="17_yaiay"]
@@ -16,7 +15,7 @@ subpixel_positioning = 0
 size = Vector2(14, 5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wxkh7"]
-radius = 500.0
+radius = 250.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dhkrs"]
 atlas = ExtResource("17_yaiay")
@@ -138,7 +137,6 @@ y_sort_enabled = true
 script = ExtResource("1_cw48i")
 CharacterData = ExtResource("2_322xl")
 ToHitFont = SubResource("SystemFont_tk7xo")
-ProjectileScene = ExtResource("3_uvfcp")
 BasicAttackAbility = ExtResource("4_cytio")
 metadata/_custom_type_script = "uid://bsrhat3n35udl"
 

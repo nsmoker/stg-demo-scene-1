@@ -110,14 +110,10 @@ public partial class Player : Character
         return closestInteractable;
     }
 
-    [Export]
-    private FactionTable _factionTable;
-
     public override void _Ready()
     {
         base._Ready();
         CombatLog.Initialize();
-        FactionSystem.Initialize(_factionTable);
         _interactableRange = GetNode<Area2D>("InteractableRange");
         _senseArea = GetNode<Area2D>("SenseArea");
         foreach (Quest q in CharacterData.Journal)

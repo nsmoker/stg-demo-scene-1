@@ -1,20 +1,15 @@
 using Godot.Collections;
 using STGDemoScene1.Scripts.Resources;
+using STGDemoScene1.Scripts.Resources.Factions;
+using System.Linq;
 
 namespace STGDemoScene1.Scripts.Systems;
-
-public enum Faction
-{
-    Player = 0,
-    Enemies = 1,
-    Friendlies = 2,
-}
 
 public static class FactionSystem
 {
     private static readonly Dictionary<string, Faction> s_factionMap = [];
 
-    private static FactionTable s_relationTable;
+    private static readonly FactionTable s_relationTable = new();
 
     public delegate void FactionChangeEvent(string instance, Faction faction);
 
@@ -24,7 +19,13 @@ public static class FactionSystem
 
     public static event FactionRelationChangedEvent FactionRelationChangeHandlers;
 
-    public static void Initialize(FactionTable relations) => s_relationTable = relations;
+    public static void Initialize(FactionTable relations)
+    {
+        foreach (var relation in relations.FactionRelations)
+        {
+            SetFactionRelation(relation.FactionA, relation.FactionB, relation.IsHostile);
+        }
+    }
 
     public static void SetFaction(string instance, Faction faction)
     {
@@ -34,29 +35,19 @@ public static class FactionSystem
 
     public static bool TryGetFaction(string instance, out Faction faction) => s_factionMap.TryGetValue(instance, out faction);
 
-    public static bool GetFactionRelation(Faction faction1, Faction faction2)
-    {
-        if (s_relationTable.Factions.TryGetValue(faction1, out var value) && value.TryGetValue(faction2, out var relation))
-        {
-            return relation;
-        }
-        else
-        {
-            return false;
-        }
-    }
+    public static bool GetFactionRelation(Faction faction1, Faction faction2) => s_relationTable.FactionRelations.Any(x =>
+        x.FactionA == faction1 && x.FactionB == faction2 && x.IsHostile);
 
     public static void SetFactionRelation(Faction faction1, Faction faction2, bool relation)
     {
-        if (s_relationTable.Factions.TryGetValue(faction1, out var relations))
+        s_relationTable.FactionRelations = [.. s_relationTable.FactionRelations
+            .Where(x => (x.FactionA != faction1) || (x.FactionA != faction2))];
+        s_relationTable.FactionRelations.Add(new()
         {
-            relations[faction2] = relation;
-        }
-        else
-        {
-            s_relationTable.Factions[faction1] = [];
-            s_relationTable.Factions[faction1][faction2] = relation;
-        }
+            FactionA = faction1,
+            FactionB = faction2,
+            IsHostile = relation
+        });
 
         FactionRelationChangeHandlers?.Invoke(faction1, faction2);
     }

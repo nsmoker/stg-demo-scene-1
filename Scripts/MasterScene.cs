@@ -19,6 +19,9 @@ public partial class MasterScene : Node2D
     private Label _combatStatusLabel;
     private CombatController _combatController;
 
+    [Export]
+    private FactionTable _factionTable;
+
     public override void _Ready()
     {
         base._Ready();
@@ -30,6 +33,7 @@ public partial class MasterScene : Node2D
         _combatController = GetNode<CombatController>("CombatController");
         _abilityBar = GetNode<AbilityBar>("Camera2D/AbilityBar");
         _combatStatusLabel = GetNode<Label>("Camera2D/CombatStatusLabel");
+        FactionSystem.Initialize(_factionTable);
         SceneSystem.SetMasterScene(this);
         CombatSystem.Initialize();
     }

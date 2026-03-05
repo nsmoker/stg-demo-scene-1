@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://04a5i0tk15gy" path="res://Scripts/Character/Player.cs" id="1_co212"]
 [ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/Characters/player_data.tres" id="2_pu2lt"]
-[ext_resource type="PackedScene" uid="uid://dmt32gtrfhfqp" path="res://Scenes/Projectiles/BasicAttackProjectile.tscn" id="3_gdgf0"]
 [ext_resource type="Resource" uid="uid://bnl26jpb4ux27" path="res://Resources/Abilities/BasicAttack.tres" id="4_8erm5"]
 [ext_resource type="Script" uid="uid://6s50muiotg4i" path="res://Scripts/Resources/Abilities/Ability.cs" id="5_fcmex"]
 [ext_resource type="Resource" uid="uid://tl0xaibe4km4" path="res://Resources/Abilities/Fireball.tres" id="6_25bbb"]
@@ -20,7 +19,7 @@ size = Vector2(14, 7)
 radius = 50.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gymyn"]
-size = Vector2(306, 163)
+size = Vector2(50, 50)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8erm5"]
 atlas = ExtResource("7_3smsa")
@@ -162,7 +161,6 @@ z_index = 1
 y_sort_enabled = true
 script = ExtResource("1_co212")
 CharacterData = ExtResource("2_pu2lt")
-ProjectileScene = ExtResource("3_gdgf0")
 BasicAttackAbility = ExtResource("4_8erm5")
 Abilities = Array[ExtResource("5_fcmex")]([ExtResource("6_25bbb"), ExtResource("7_25bbb"), ExtResource("8_cueqf")])
 
@@ -178,7 +176,7 @@ collision_mask = 3
 shape = SubResource("CircleShape2D_o8msw")
 
 [node name="SenseArea" type="Area2D" parent="." unique_id=1729865072]
-visible = false
+position = Vector2(2, -6)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea" unique_id=1343863313]
 position = Vector2(-2, -1.5)
@@ -199,7 +197,7 @@ texture = SubResource("AtlasTexture_8erm5")
 [node name="CoverBadge" type="Sprite2D" parent="." unique_id=1450505466]
 visible = false
 texture_filter = 1
-position = Vector2(0, -22)
+position = Vector2(0, -50)
 scale = Vector2(0.5, 0.5)
 texture = SubResource("AtlasTexture_gymyn")
 
@@ -229,10 +227,10 @@ hframes = 18
 
 [node name="HealthLabel" type="Label" parent="." unique_id=1654969021]
 visible = false
-offset_left = -7.0
-offset_top = -20.0
-offset_right = 13.0
-offset_bottom = -8.833332
+offset_left = -8.0
+offset_top = -36.0
+offset_right = 12.0
+offset_bottom = -24.833332
 text = "asd"
 label_settings = SubResource("LabelSettings_pu2lt")
 

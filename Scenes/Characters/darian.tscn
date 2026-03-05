@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://djslysixa4d0a"]
 
-[ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character/Character.cs" id="1_p6ogr"]
+[ext_resource type="Script" uid="uid://dolf38tlsle5r" path="res://Scripts/Character/InteractableCharacter.cs" id="1_2jieg"]
 [ext_resource type="Resource" uid="uid://c0ev20u8e7nyu" path="res://Resources/Characters/darian.tres" id="2_p6ogr"]
+[ext_resource type="Resource" uid="uid://btc6ofwhdmhx" path="res://Conversations/combat_trigger_conv.tres" id="2_qoc2n"]
+[ext_resource type="Resource" uid="uid://bnl26jpb4ux27" path="res://Resources/Abilities/BasicAttack.tres" id="3_o5t7d"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="3_oxpus"]
 [ext_resource type="Texture2D" uid="uid://cusnf7nuh7o57" path="res://Sprites/Characters/pc_ingame_placeholder.png" id="4_p6ogr"]
 [ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="5_obedt"]
@@ -14,7 +16,7 @@ subpixel_positioning = 0
 size = Vector2(14, 5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wxkh7"]
-radius = 500.0
+radius = 100.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dhkrs"]
 atlas = ExtResource("3_oxpus")
@@ -146,12 +148,18 @@ _data = {
 &"walk_south": SubResource("Animation_7dp3o")
 }
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_2jieg"]
+atlas = ExtResource("3_oxpus")
+region = Rect2(0, 64, 16, 16)
+
 [node name="Darian" type="CharacterBody2D" unique_id=1387554584]
 z_index = 1
 y_sort_enabled = true
-script = ExtResource("1_p6ogr")
+script = ExtResource("1_2jieg")
+Dialogue = ExtResource("2_qoc2n")
 CharacterData = ExtResource("2_p6ogr")
 ToHitFont = SubResource("SystemFont_tk7xo")
+BasicAttackAbility = ExtResource("3_o5t7d")
 metadata/_custom_type_script = "uid://bsrhat3n35udl"
 
 [node name="MainCollider" type="CollisionShape2D" parent="." unique_id=446735959]
@@ -163,7 +171,6 @@ shape = SubResource("RectangleShape2D_ss715")
 position = Vector2(0, -11)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea" unique_id=208053360]
-visible = false
 shape = SubResource("CircleShape2D_wxkh7")
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." unique_id=1130891696]
@@ -221,3 +228,9 @@ offset_right = 28.0
 offset_bottom = 15.0
 scale = Vector2(0.25, 0.25)
 alignment = 1
+
+[node name="BadgeSprite" type="Sprite2D" parent="." unique_id=1791801556]
+visible = false
+texture_filter = 1
+position = Vector2(0, -21)
+texture = SubResource("AtlasTexture_2jieg")

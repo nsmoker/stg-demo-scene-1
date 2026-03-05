@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://crdtmq1ban6qv"]
 
 [ext_resource type="Script" uid="uid://dr6pqcp3wddx8" path="res://Scripts/MasterScene.cs" id="1_euyus"]
+[ext_resource type="Script" uid="uid://x2cwkvtiybtp" path="res://Scripts/Resources/Factions/FactionRelation.cs" id="2_1nsqu"]
+[ext_resource type="Script" uid="uid://c1b50cgacwuvh" path="res://Scripts/Resources/Factions/FactionTable.cs" id="3_1nsqu"]
 [ext_resource type="Script" uid="uid://4wgqj3gknq04" path="res://Scripts/Controls/DialogueController.cs" id="6_annar"]
 [ext_resource type="PackedScene" uid="uid://bahvdxf74e24c" path="res://Scenes/Controls/journal_display.tscn" id="7_evxep"]
 [ext_resource type="PackedScene" uid="uid://m8tbjngrrk7x" path="res://Scenes/Controls/ExitMenu.tscn" id="8_q7eja"]
@@ -9,11 +11,27 @@
 [ext_resource type="Script" uid="uid://bqhkr10ewh7xe" path="res://Scripts/AI/CrowdAITask.cs" id="11_euyus"]
 [ext_resource type="PackedScene" uid="uid://gedp1qirf71n" path="res://Scenes/Characters/player.tscn" id="11_xluw3"]
 [ext_resource type="Script" uid="uid://67g32ecjus0y" path="res://Scripts/AI/CrowdAIDirector.cs" id="12_1nsqu"]
-[ext_resource type="Resource" uid="uid://vbjq48kype7r" path="res://Resources/Constants/faction_table.tres" id="12_42x8o"]
 [ext_resource type="PackedScene" uid="uid://bgk5v73hj7cv0" path="res://Scenes/ClassroomSceneTest.tscn" id="12_482ib"]
 [ext_resource type="PackedScene" uid="uid://c1uq7y0hjwsl3" path="res://Scenes/DiningHallSceneTest.tscn" id="12_aysf6"]
 [ext_resource type="Script" uid="uid://dwq4nn0he6m2m" path="res://Scripts/CombatController.cs" id="13_kv3ts"]
 [ext_resource type="PackedScene" uid="uid://wqa42iuow1t4" path="res://Scenes/DiningEntranceHallwayScene.tscn" id="14_1nsqu"]
+
+[sub_resource type="Resource" id="Resource_5hl87"]
+script = ExtResource("2_1nsqu")
+FactionB = 2
+IsHostile = true
+metadata/_custom_type_script = "uid://x2cwkvtiybtp"
+
+[sub_resource type="Resource" id="Resource_annar"]
+script = ExtResource("2_1nsqu")
+FactionA = 2
+IsHostile = true
+metadata/_custom_type_script = "uid://x2cwkvtiybtp"
+
+[sub_resource type="Resource" id="Resource_dxrhf"]
+script = ExtResource("3_1nsqu")
+FactionRelations = Array[ExtResource("2_1nsqu")]([SubResource("Resource_5hl87"), SubResource("Resource_annar")])
+metadata/_custom_type_script = "uid://c1b50cgacwuvh"
 
 [sub_resource type="SystemFont" id="SystemFont_8fl2o"]
 font_names = PackedStringArray("Arial")
@@ -101,6 +119,7 @@ _possibleTasks = Array[Object]([SubResource("Resource_qi8ur"), SubResource("Reso
 [node name="MasterScene" type="Node2D" unique_id=666549229]
 y_sort_enabled = true
 script = ExtResource("1_euyus")
+_factionTable = SubResource("Resource_dxrhf")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1395092712]
 position = Vector2(0, 360)
@@ -182,7 +201,6 @@ AbilityButtonScene = ExtResource("10_ko0ge")
 
 [node name="Player" parent="." unique_id=943866917 instance=ExtResource("11_xluw3")]
 position = Vector2(3, 378)
-_factionTable = ExtResource("12_42x8o")
 ToHitFont = SubResource("SystemFont_oiltp")
 
 [node name="CombatController" type="Node" parent="." unique_id=1525944130]

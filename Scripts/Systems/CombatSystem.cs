@@ -136,7 +136,7 @@ public static class CombatSystem
 
     public static void BeginCombat(CharacterData initiator, CharacterData opponent)
     {
-        var scene = (Godot.Engine.GetMainLoop() as SceneTree)
+        var scene = (Engine.GetMainLoop() as SceneTree)
             .CurrentScene as MasterScene;
         s_combatStatusLabel = scene.GetCombatStatusLabel();
         scene.ActivateAbilityBarForCharacter(scene.GetPlayer());
@@ -347,7 +347,7 @@ public static class CombatSystem
 
     public static bool IsInCombat(CharacterData c) => s_currentCombatants.ContainsKey(c.ResourcePath);
 
-    public static int GetActionsRemianing(CharacterData c) => s_currentCombatants[c.ResourcePath].ActionsRemaining;
+    public static int GetActionsRemaining(CharacterData c) => s_currentCombatants[c.ResourcePath].ActionsRemaining;
 
     public static int GetMovesRemaining(CharacterData c) => s_currentCombatants[c.ResourcePath].MovesRemaining;
 

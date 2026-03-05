@@ -1,0 +1,80 @@
+[gd_resource type="Resource" script_class="Conversation" format=3 uid="uid://btc6ofwhdmhx"]
+
+[ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="1_oow6w"]
+[ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="2_lon5u"]
+[ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/edi/Scripts/Conversation.cs" id="3_xsl1o"]
+[ext_resource type="Resource" uid="uid://cx3eet0w6nlc3" path="res://Resources/Characters/marot.tres" id="4_6dtpj"]
+[ext_resource type="Script" uid="uid://cwtgl1fc7t2gp" path="res://Scripts/DialogueNodes/SetFaction.cs" id="4_xsl1o"]
+
+[sub_resource type="Resource" id="Resource_nn37d"]
+script = ExtResource("1_oow6w")
+toNode = 2
+
+[sub_resource type="Resource" id="Resource_6dtpj"]
+script = ExtResource("1_oow6w")
+fromNode = 2
+toNode = 3
+
+[sub_resource type="Resource" id="Resource_gwqdb"]
+script = ExtResource("1_oow6w")
+fromNode = 4
+
+[sub_resource type="Resource" id="Resource_jrxsd"]
+script = ExtResource("1_oow6w")
+toNode = 1
+
+[sub_resource type="Resource" id="Resource_vlm5h"]
+script = ExtResource("2_lon5u")
+NodeType = 2
+EditorPos = Vector2(-1340, -580)
+EditorSize = Vector2(500, 300.00024)
+
+[sub_resource type="Resource" id="Resource_f52hs"]
+script = ExtResource("2_lon5u")
+Content = "Start combat?"
+DNodeId = 2
+EditorPos = Vector2(-640, -620)
+EditorSize = Vector2(440, 379.99994)
+
+[sub_resource type="Resource" id="Resource_2addt"]
+script = ExtResource("2_lon5u")
+NodeType = 3
+Content = "No"
+DNodeId = 3
+EditorPos = Vector2(280, -440)
+EditorSize = Vector2(366.99988, 316)
+
+[sub_resource type="Resource" id="Resource_ffo5n"]
+script = ExtResource("2_lon5u")
+NodeType = 3
+Content = "Yes"
+DNodeId = 4
+EditorPos = Vector2(220, -1100)
+EditorSize = Vector2(367, 316.00006)
+
+[sub_resource type="Resource" id="Resource_2de30"]
+script = ExtResource("4_xsl1o")
+Character = ExtResource("4_6dtpj")
+Faction = 1
+metadata/_custom_type_script = "uid://cwtgl1fc7t2gp"
+
+[sub_resource type="Resource" id="Resource_ygkw6"]
+script = ExtResource("2_lon5u")
+NodeType = 1
+DNodeId = 5
+Action = SubResource("Resource_2de30")
+EditorPos = Vector2(940, -1100)
+EditorSize = Vector2(456, 257.00006)
+
+[sub_resource type="Resource" id="Resource_d7nhx"]
+script = ExtResource("2_lon5u")
+NodeType = 2
+EditorPos = Vector2(-1340, -580)
+EditorSize = Vector2(500, 300.00024)
+
+[resource]
+script = ExtResource("3_xsl1o")
+Nodes = Array[ExtResource("2_lon5u")]([SubResource("Resource_f52hs"), SubResource("Resource_2addt"), SubResource("Resource_ffo5n"), SubResource("Resource_ygkw6"), SubResource("Resource_d7nhx")])
+EntryPoints = Array[ExtResource("2_lon5u")]([SubResource("Resource_vlm5h")])
+Connections = Array[ExtResource("1_oow6w")]([SubResource("Resource_nn37d"), SubResource("Resource_6dtpj"), SubResource("Resource_gwqdb"), SubResource("Resource_jrxsd")])
+metadata/_custom_type_script = "uid://cmw85ukaae1eh"

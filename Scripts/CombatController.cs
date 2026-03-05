@@ -12,6 +12,7 @@ namespace STGDemoScene1.Scripts;
 public partial class CombatController : Node
 {
     private Character _character;
+    private List<string> _side;
     private bool _isOurTurn;
     private bool _inCombat;
     private bool _inDialogue;
@@ -49,6 +50,12 @@ public partial class CombatController : Node
         _isOurTurn = CombatSystem.GetMovingSide().Contains(_character.CharacterData.ResourcePath);
         DialogueSystem.OnDialogueStarted += OnDialogueStarted;
         DialogueSystem.OnDialogueComplete += OnDialogueEnded;
+    }
+
+    private Character GetNextCharacter()
+    {
+        var i = _side.IndexOf(_character.CharacterData.ResourcePath);
+        return CharacterSystem.GetInstance(_side[(i + 1) % _side.Count]);
     }
 
     private void OnCombatStarted(CombatStartEvent e)
@@ -95,6 +102,19 @@ public partial class CombatController : Node
         if (!IsActive || _pawnTargetingAbility)
         {
             return;
+        }
+
+        if (IsActive && _isOurTurn && CombatSystem.GetActionsRemaining(_character.CharacterData) == 0)
+        {
+            Character next = GetNextCharacter();
+            int charsChecked = 0;
+            while (CombatSystem.GetActionsRemaining(next.CharacterData) == 0 && charsChecked < _side.Count)
+            {
+                charsChecked += 1;
+                next = GetNextCharacter();
+            }
+
+            SetCharacter(next);
         }
 
         if (Input.IsActionJustPressed("Combat Interact") && CombatSystem.NavReady() && _isOurTurn)
@@ -196,7 +216,11 @@ public partial class CombatController : Node
 
     private void OnTurnBegin(List<string> sideMoving)
     {
-        _isOurTurn = sideMoving.Contains(_character.CharacterData.ResourcePath);
+        if (sideMoving.Contains(_character.CharacterData.ResourcePath))
+        {
+            _isOurTurn = true;
+            _side = sideMoving;
+        }
         SetPipVisibility();
         _character.QueueRedraw();
     }

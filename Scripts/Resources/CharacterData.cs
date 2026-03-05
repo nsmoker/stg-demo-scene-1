@@ -1,5 +1,5 @@
 using Godot;
-using STGDemoScene1.Scripts.Systems;
+using STGDemoScene1.Scripts.Resources.Factions;
 
 namespace STGDemoScene1.Scripts.Resources;
 
