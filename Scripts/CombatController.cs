@@ -26,12 +26,18 @@ public partial class CombatController : Node
 
     public void SetCharacter(Character character)
     {
+        if (_character != null)
+        {
+            _character.Draw -= OnPawnDraw;
+            _character.ActionPip1.Visible = _character.ActionPip2.Visible = false;
+            _character.QueueRedraw();
+        }
         _character = character;
-        CombatSystem.CombatStartHandlers += OnCombatStarted;
-        CombatSystem.CharacterJoinedCombatHandlers += OnCombatJoined;
-        CombatSystem.CombatEnded += OnCombatEnded;
-        DialogueSystem.OnDialogueStarted += OnDialogueStarted;
-        DialogueSystem.OnDialogueComplete += OnDialogueEnded;
+        _ = _character.UpdateCoverState(_character.GetWorld2D().DirectSpaceState);
+        _character.ActionPip1.Visible = true;
+        _character.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_character.CharacterData) > 1;
+        _character.Draw += OnPawnDraw;
+        _character.QueueRedraw();
     }
 
     private bool IsActive => _inCombat && !_inDialogue && !_pawnMoving && !_pawnAttacking;
@@ -41,18 +47,16 @@ public partial class CombatController : Node
         _inCombat = true;
         _pawnMoving = false;
         _isOurTurn = CombatSystem.GetMovingSide().Contains(_character.CharacterData.ResourcePath);
-        _ = _character.UpdateCoverState(_character.GetWorld2D().DirectSpaceState);
-        _character.ActionPip1.Visible = true;
-        _character.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_character.CharacterData) > 1;
-        _character.Draw += OnPawnDraw;
-        CombatSystem.TurnHandlers += OnTurnBegin;
-        _character.QueueRedraw();
+        DialogueSystem.OnDialogueStarted += OnDialogueStarted;
+        DialogueSystem.OnDialogueComplete += OnDialogueEnded;
     }
 
     private void OnCombatStarted(CombatStartEvent e)
     {
-        if (e.participants.Contains(_character.CharacterData.ResourcePath))
+        var player = SceneSystem.GetMasterScene().GetPlayer();
+        if (e.participants.Contains(player.CharacterData.ResourcePath))
         {
+            SetCharacter(player);
             ActivateCombatControl();
         }
     }
@@ -77,6 +81,14 @@ public partial class CombatController : Node
     private void OnDialogueStarted(Conversation _1, int _2) => _inDialogue = true;
 
     private void OnDialogueEnded() => _inDialogue = false;
+
+    public override void _Ready()
+    {
+        CombatSystem.CombatStartHandlers += OnCombatStarted;
+        CombatSystem.CharacterJoinedCombatHandlers += OnCombatJoined;
+        CombatSystem.CombatEnded += OnCombatEnded;
+        CombatSystem.TurnHandlers += OnTurnBegin;
+    }
 
     public override void _PhysicsProcess(double delta)
     {

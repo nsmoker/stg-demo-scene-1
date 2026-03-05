@@ -28,7 +28,6 @@ public partial class MasterScene : Node2D
         _exitMenu = GetNode<PanelContainer>("Camera2D/ExitMenu");
         _player = GetNode<Player>("Player");
         _combatController = GetNode<CombatController>("CombatController");
-        _combatController.SetCharacter(_player);
         _abilityBar = GetNode<AbilityBar>("Camera2D/AbilityBar");
         _combatStatusLabel = GetNode<Label>("Camera2D/CombatStatusLabel");
         SceneSystem.SetMasterScene(this);
