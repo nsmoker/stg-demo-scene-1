@@ -73,7 +73,7 @@ public partial class Character : CharacterBody2D
         return len;
     }
 
-    public CollisionShape2D collider;
+    public CollisionShape2D Collider;
     protected AnimationPlayer Anim;
     public NavigationObstacle2D NavObstacle;
 
@@ -209,11 +209,16 @@ public partial class Character : CharacterBody2D
         public void OnTransition(Character c) { }
     }
 
+    private class PawnState : ICharacterState
+    {
+        public void OnTransition(Character character) { }
+        public void PhysicsProcess(double delta, Character character) { }
+        public void Process(double delta, Character character) { }
+    }
+
     private class CombatState : ICharacterState
     {
         private readonly Character _c;
-        private bool _isOurTurn;
-        private bool _attackedThisTurn = false;
         private bool _hovered = false;
         public CombatState(Character character)
         {
@@ -222,15 +227,13 @@ public partial class Character : CharacterBody2D
             _c.InputPickable = true;
             _c.MouseEntered += OnHover;
             _c.MouseExited += OnHoverEnd;
-            CombatSystem.TurnHandlers += OnTurnBegin;
             _c.QueueRedraw();
-            _isOurTurn = CombatSystem.GetMovingSide().Contains(character.CharacterData.ResourcePath);
             _ = _c.UpdateCoverState(_c.GetWorld2D().DirectSpaceState);
         }
 
         public void PhysicsProcess(double delta, Character character)
         {
-            if (_isOurTurn && CombatSystem.NavReady())
+            if (CombatSystem.NavReady() && CombatSystem.GetMovesRemaining(character.CharacterData) > 0)
             {
                 List<Character> enemiesInSense = [.. character.GetSenseArea().GetOverlappingBodies().Where(body => body is Character).Cast<Character>().Where(c => HostilitySystem.GetHostility(character.CharacterData.ResourcePath, c.CharacterData.ResourcePath))];
                 var closestEnemy = enemiesInSense.OrderBy(c => c.GlobalPosition.DistanceTo(character.GlobalPosition)).FirstOrDefault();
@@ -250,15 +253,14 @@ public partial class Character : CharacterBody2D
                             character.ControllerState = new CombatNavState(character, TrimPath(character.GlobalPosition, path, character.MovementRange));
                         }
                     }
-                    else if (!_attackedThisTurn)
+                    else if (character._currentAnimState != AnimState.Attack)
                     {
                         // In range, attack.
                         character.IssueAttack(
                             closestEnemy.CharacterData,
-                            character.GlobalPosition.DirectionTo(closestEnemy.GlobalPosition),
-                            () => character.BasicAttackAbility.Activate(character, closestEnemy, character.GetProjectileSpawnPoint(), closestEnemy.GlobalPosition)
+                            character.GlobalPosition.DirectionTo(closestEnemy.Collider.GlobalPosition),
+                            () => character.BasicAttackAbility.Activate(character, closestEnemy, character.GetProjectileSpawnPoint(), closestEnemy.Collider.GlobalPosition)
                         );
-                        _attackedThisTurn = true;
                     }
                 }
                 else
@@ -281,12 +283,6 @@ public partial class Character : CharacterBody2D
             }
         }
 
-        public void OnTurnBegin(List<string> movingSide)
-        {
-            _isOurTurn = movingSide.Contains(_c.CharacterData.ResourcePath);
-            _attackedThisTurn = false;
-        }
-
         public void OnHover()
         {
             _hovered = true;
@@ -307,7 +303,6 @@ public partial class Character : CharacterBody2D
             _c.InputPickable = false;
             _c.MouseEntered -= OnHover;
             _c.MouseExited -= OnHoverEnd;
-            CombatSystem.TurnHandlers -= OnTurnBegin;
             _c.QueueRedraw();
         }
     }
@@ -389,7 +384,7 @@ public partial class Character : CharacterBody2D
                     CombatSystem.AttemptMove(character.CharacterData);
                     _ = character.UpdateCoverState(character.GetWorld2D().DirectSpaceState);
                     _character.SetAnimState(AnimState.Idle);
-                    _character.ControllerState = _character.GetCombatState();
+                    _character.ControllerState = _character.SetCombatState();
                     _onComplete?.Invoke();
                 }
             }
@@ -477,7 +472,7 @@ public partial class Character : CharacterBody2D
         Anim = GetNode<AnimationPlayer>("AnimationPlayer");
         Anim.AnimationFinished += OnAnimationFinished;
         CoverBadge = GetNode<Sprite2D>("CoverBadge");
-        collider = GetNode<CollisionShape2D>("MainCollider");
+        Collider = GetNode<CollisionShape2D>("MainCollider");
         ActionPip1 = GetNode<Sprite2D>("ActionPip");
         ActionPip2 = GetNode<Sprite2D>("ActionPip2");
         _senseArea = GetNode<Area2D>("SenseArea");
@@ -501,6 +496,8 @@ public partial class Character : CharacterBody2D
             HealthSystem.DamageEventHandlers += OnDamage;
             HostilitySystem.HostilityChangeHandlers += OnHostilityChanged;
             _senseArea.BodyEntered += OnBodyEnteredSenseArea;
+            FactionSystem.FactionChangeHandlers += OnFactionChange;
+            FactionSystem.FactionRelationChangeHandlers += OnFactionRelationChange;
 
             Abilities.Insert(0, BasicAttackAbility);
         }
@@ -648,7 +645,7 @@ public partial class Character : CharacterBody2D
     public Vector2 GetClosestOnCollSurface(Vector2 SourcePoint)
     {
         _ = SourcePoint - Position;
-        var supportPoint = collider.Shape.GetRect().GetSupport(SourcePoint);
+        var supportPoint = Collider.Shape.GetRect().GetSupport(SourcePoint);
         return supportPoint;
     }
 
@@ -677,7 +674,7 @@ public partial class Character : CharacterBody2D
         if (e.participants.Contains(CharacterData.ResourcePath))
         {
             _healthLabel.Show();
-            ControllerState = GetCombatState();
+            ControllerState = SetCombatState();
         }
     }
 
@@ -686,11 +683,21 @@ public partial class Character : CharacterBody2D
         if (c.ResourcePath.Equals(CharacterData.ResourcePath))
         {
             _healthLabel.Show();
-            ControllerState = GetCombatState();
+            ControllerState = SetCombatState();
         }
     }
 
-    public virtual ICharacterState GetCombatState() => new CombatState(this);
+    public virtual ICharacterState SetCombatState()
+    {
+        if (FactionSystem.TryGetFaction(CharacterData.ResourcePath, out Faction fact) && fact == Faction.Player)
+        {
+            return new PawnState();
+        }
+        else
+        {
+            return new CombatState(this);
+        }
+    }
 
     public virtual void OnCombatEnded()
     {
@@ -763,7 +770,8 @@ public partial class Character : CharacterBody2D
 
     public virtual void OnHostilityChanged(string characterA, string characterB, bool areHostile) => _senseArea.GetOverlappingBodies().ToList().ForEach(OnBodyEnteredSenseArea);
 
-    public virtual void OnFactionChange(Faction faction1, Faction faction2) => _senseArea.GetOverlappingBodies().ToList().ForEach(OnBodyEnteredSenseArea);
+    public virtual void OnFactionRelationChange(Faction faction1, Faction faction2) => _senseArea.GetOverlappingBodies().ToList().ForEach(OnBodyEnteredSenseArea);
+    public virtual void OnFactionChange(string instance, Faction faction) => _senseArea.GetOverlappingBodies().ToList().ForEach(OnBodyEnteredSenseArea);
 
     public void SetWalkAnimState(Vector2 direction)
     {
@@ -827,6 +835,8 @@ public partial class Character : CharacterBody2D
         HealthSystem.DamageEventHandlers -= OnDamage;
         HostilitySystem.HostilityChangeHandlers -= OnHostilityChanged;
         Anim.AnimationFinished -= OnAnimationFinished;
+        FactionSystem.FactionChangeHandlers -= OnFactionChange;
+        FactionSystem.FactionRelationChangeHandlers -= OnFactionRelationChange;
     }
 
     public void SetFacing(Vector2 dir)
@@ -899,10 +909,10 @@ public partial class Character : CharacterBody2D
     public void SetCollisionOverride(bool @override)
     {
         _collisionOverride = @override;
-        SetCollision(!collider.Disabled);
+        SetCollision(!Collider.Disabled);
     }
 
-    public void SetCollision(bool enabled) => collider.Disabled = !enabled || !_collisionOverride;
+    public void SetCollision(bool enabled) => Collider.Disabled = !enabled || !_collisionOverride;
 
     public void SetIdle()
     {
@@ -923,5 +933,7 @@ public partial class Character : CharacterBody2D
     public Vector2 GetProjectileSpawnPoint() => _projectileSpawnPoint.GlobalPosition;
 
     public void AddPush(Push push) => _currentPushes.Add(push);
+
+    public void SetPawnState() => ControllerState = new PawnState();
 }
 

@@ -5,6 +5,8 @@ using STGDemoScene1.Scripts.Resources.Factions;
 using STGDemoScene1.Scripts.Systems;
 using System;
 
+namespace STGDemoScene1.Scripts.DialogueNodes;
+
 [Tool]
 [GlobalClass]
 public partial class SetFaction : DialogueAction

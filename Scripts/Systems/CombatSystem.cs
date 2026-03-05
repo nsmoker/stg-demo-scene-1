@@ -247,7 +247,7 @@ public static class CombatSystem
             var instance = CharacterSystem.GetInstance(toJoin.ResourcePath);
             // Only redo the nav if the new combatant is not currently moving.
             instance.NavObstacle.AffectNavigationMesh = joiningSide != s_sideMoving;
-            if (joiningSide != s_sideMoving)
+            if (joiningSide != s_sideMoving && NavReady())
             {
                 NavRegion.BakeNavigationPolygon();
             }
@@ -259,20 +259,21 @@ public static class CombatSystem
     {
         var attackerInstance = CharacterSystem.GetInstance(attacker.ResourcePath);
         var attackedInstance = CharacterSystem.GetInstance(target.ResourcePath);
-        var targetVector = (attackedInstance.GlobalPosition - attackerInstance.GlobalPosition);
+        var targetVector = attackedInstance.GlobalPosition - attackerInstance.GlobalPosition;
         return (20.0f - attackedInstance.ComputeAc(targetVector.Normalized()) + attackerInstance.ComputeToHitMod()) / 20.0f;
     }
 
     public static void AttemptMove(CharacterData mover)
     {
         var currentSide = s_sides[s_sideMoving];
-        if (currentSide.Contains(mover.ResourcePath))
+        var currentState = s_currentCombatants[mover.ResourcePath];
+        if (currentSide.Contains(mover.ResourcePath) && currentState.MovesRemaining > 0)
         {
-            var currentState = s_currentCombatants[mover.ResourcePath];
+            int newMovesRem = currentState.MovesRemaining - 1;
             var state = new CombatantState
             {
-                MovesRemaining = currentState.MovesRemaining - 1,
-                ActionsRemaining = currentState.ActionsRemaining,
+                MovesRemaining = newMovesRem,
+                ActionsRemaining = newMovesRem > 0 ? currentState.ActionsRemaining : 0,
             };
 
             s_currentCombatants[mover.ResourcePath] = state;
@@ -295,8 +296,8 @@ public static class CombatSystem
         {
             CombatantState newAttackerState = new()
             {
-                ActionsRemaining = attackerState.ActionsRemaining - 1,
-                MovesRemaining = attackerState.MovesRemaining - 1,
+                ActionsRemaining = 0,
+                MovesRemaining = 0,
             };
             s_currentCombatants[attacker.ResourcePath] = newAttackerState;
             Random rand = new();
@@ -347,9 +348,23 @@ public static class CombatSystem
 
     public static bool IsInCombat(CharacterData c) => s_currentCombatants.ContainsKey(c.ResourcePath);
 
-    public static int GetActionsRemaining(CharacterData c) => s_currentCombatants[c.ResourcePath].ActionsRemaining;
+    public static int GetActionsRemaining(CharacterData c)
+    {
+        if (s_currentCombatants.TryGetValue(c.ResourcePath, out var value))
+        {
+            return value.ActionsRemaining;
+        }
+        return 0;
+    }
 
-    public static int GetMovesRemaining(CharacterData c) => s_currentCombatants[c.ResourcePath].MovesRemaining;
+    public static int GetMovesRemaining(CharacterData c)
+    {
+        if (s_currentCombatants.TryGetValue(c.ResourcePath, out var value))
+        {
+            return value.MovesRemaining;
+        }
+        return 0;
+    }
 
     public static List<Character> GetCharactersInRange(Vector2 position, Shape2D shape)
     {

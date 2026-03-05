@@ -145,14 +145,11 @@ public partial class Player : Character
         }
     }
 
-    public override ICharacterState GetCombatState() => new PlayerCombatPawnState();
+    public override ICharacterState SetCombatState() => new PlayerCombatPawnState();
 
     public override void OnCombatEnded()
     {
-        if (ControllerState is PlayerCombatPawnState or CombatNavState)
-        {
-            ControllerState = new NavigationState();
-        }
+        ControllerState = new NavigationState();
         if (ActionPip1 != null && ActionPip2 != null)
         {
             ActionPip1.Visible = false;

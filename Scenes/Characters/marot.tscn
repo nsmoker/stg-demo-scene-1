@@ -12,7 +12,7 @@
 subpixel_positioning = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ss715"]
-size = Vector2(14, 5)
+size = Vector2(14, 29)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wxkh7"]
 radius = 250.0
@@ -142,7 +142,7 @@ metadata/_custom_type_script = "uid://bsrhat3n35udl"
 
 [node name="MainCollider" type="CollisionShape2D" parent="." unique_id=1265714290]
 z_index = 2
-position = Vector2(0, 2.5)
+position = Vector2(0, -9.5)
 shape = SubResource("RectangleShape2D_ss715")
 
 [node name="SenseArea" type="Area2D" parent="." unique_id=660295556]
@@ -159,7 +159,7 @@ affect_navigation_mesh = true
 [node name="CoverBadge" type="Sprite2D" parent="." unique_id=119297592]
 visible = false
 texture_filter = 1
-position = Vector2(0, -21)
+position = Vector2(0, -38)
 scale = Vector2(0.5, 0.5)
 texture = SubResource("AtlasTexture_dhkrs")
 
@@ -186,9 +186,9 @@ texture = ExtResource("19_5aljl")
 [node name="HealthLabel" type="Label" parent="." unique_id=1856242487]
 visible = false
 offset_left = -7.0
-offset_top = -20.0
+offset_top = -35.0
 offset_right = 13.0
-offset_bottom = -8.833332
+offset_bottom = -23.833332
 text = "asd"
 label_settings = SubResource("LabelSettings_dhkrs")
 

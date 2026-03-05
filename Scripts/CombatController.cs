@@ -2,6 +2,7 @@ using Godot;
 using STGDemoScene1.Addons.Edi.Scripts;
 using STGDemoScene1.Scripts.Resources;
 using STGDemoScene1.Scripts.Resources.Abilities;
+using STGDemoScene1.Scripts.Resources.Factions;
 using STGDemoScene1.Scripts.Systems;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,7 @@ public partial class CombatController : Node
         _character.QueueRedraw();
     }
 
-    private bool IsActive => _inCombat && !_inDialogue && !_pawnMoving && !_pawnAttacking;
+    private bool IsActive => _character != null && _inCombat && !_inDialogue && !_pawnMoving && !_pawnAttacking;
 
     private void ActivateCombatControl()
     {
@@ -50,12 +51,6 @@ public partial class CombatController : Node
         _isOurTurn = CombatSystem.GetMovingSide().Contains(_character.CharacterData.ResourcePath);
         DialogueSystem.OnDialogueStarted += OnDialogueStarted;
         DialogueSystem.OnDialogueComplete += OnDialogueEnded;
-    }
-
-    private Character GetNextCharacter()
-    {
-        var i = _side.IndexOf(_character.CharacterData.ResourcePath);
-        return CharacterSystem.GetInstance(_side[(i + 1) % _side.Count]);
     }
 
     private void OnCombatStarted(CombatStartEvent e)
@@ -70,9 +65,18 @@ public partial class CombatController : Node
 
     private void OnCombatJoined(CharacterData joiner)
     {
-        if (joiner.ResourcePath.Equals(_character.CharacterData.ResourcePath))
+        if (_character == null && joiner.ResourcePath.Equals(SceneSystem.GetMasterScene().GetPlayer().CharacterData.ResourcePath))
+        {
+            SetCharacter(SceneSystem.GetMasterScene().GetPlayer());
+            ActivateCombatControl();
+        }
+        else if (_character != null && joiner.ResourcePath.Equals(_character.CharacterData.ResourcePath))
         {
             ActivateCombatControl();
+        }
+        else if (FactionSystem.TryGetFaction(joiner.ResourcePath, out Faction faction) && faction == Faction.Player)
+        {
+            CharacterSystem.GetInstance(joiner.ResourcePath).SetPawnState();
         }
     }
 
@@ -104,17 +108,25 @@ public partial class CombatController : Node
             return;
         }
 
-        if (IsActive && _isOurTurn && CombatSystem.GetActionsRemaining(_character.CharacterData) == 0)
+        if (IsActive && _isOurTurn && CombatSystem.GetMovesRemaining(_character.CharacterData) == 0)
         {
-            Character next = GetNextCharacter();
             int charsChecked = 0;
-            while (CombatSystem.GetActionsRemaining(next.CharacterData) == 0 && charsChecked < _side.Count)
+            var character = _character;
+            while (CombatSystem.GetMovesRemaining(character.CharacterData) == 0 && charsChecked < _side.Count)
             {
                 charsChecked += 1;
-                next = GetNextCharacter();
+                var i = _side.IndexOf(character.CharacterData.ResourcePath);
+                character = CharacterSystem.GetInstance(_side[(i + 1) % _side.Count]);
             }
 
-            SetCharacter(next);
+            if (charsChecked == _side.Count)
+            {
+                _isOurTurn = false;
+            }
+            else
+            {
+                SetCharacter(character);
+            }
         }
 
         if (Input.IsActionJustPressed("Combat Interact") && CombatSystem.NavReady() && _isOurTurn)
@@ -126,7 +138,11 @@ public partial class CombatController : Node
                 _character.IssueAttack(
                     hoveredChar.CharacterData,
                     _character.GlobalPosition.DirectionTo(hoveredChar.GlobalPosition),
-                    () => _character.BasicAttackAbility.Activate(_character, hoveredChar, _character.GetProjectileSpawnPoint(), hoveredChar.GlobalPosition));
+                    () =>
+                        {
+                            _character.BasicAttackAbility.Activate(_character, hoveredChar, _character.GetProjectileSpawnPoint(), hoveredChar.GlobalPosition);
+                            _pawnAttacking = false;
+                        });
             }
             else
             {
@@ -154,9 +170,9 @@ public partial class CombatController : Node
 
     private void SetPipVisibility()
     {
-        if (_isOurTurn)
+        if (CombatSystem.GetMovesRemaining(_character.CharacterData) > 0)
         {
-            _character.ActionPip1.Visible = true;
+            _character.ActionPip1.Visible = CombatSystem.GetMovesRemaining(_character.CharacterData) > 0;
             _character.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_character.CharacterData) > 1;
         }
         else
@@ -216,10 +232,22 @@ public partial class CombatController : Node
 
     private void OnTurnBegin(List<string> sideMoving)
     {
+        if (_character == null)
+        {
+            return;
+        }
         if (sideMoving.Contains(_character.CharacterData.ResourcePath))
         {
             _isOurTurn = true;
             _side = sideMoving;
+        }
+        foreach (var part in sideMoving)
+        {
+            if (FactionSystem.TryGetFaction(part, out Faction faction) && faction == Faction.Player)
+            {
+                CharacterSystem.GetInstance(part).SetPawnState();
+            }
+
         }
         SetPipVisibility();
         _character.QueueRedraw();
@@ -250,6 +278,22 @@ public partial class CombatController : Node
         _pawnTargetingAbility = false;
         SceneSystem.GetMasterScene().SetAbilityBarReceiveInput(true);
         _character.QueueRedraw();
+    }
+
+    public void OnDeathEvent(DeathEvent e)
+    {
+        _ = _side.Remove(_character.CharacterData.ResourcePath);
+        if (e.deceased == _character)
+        {
+            if (_side.Count > 0)
+            {
+                SetCharacter(CharacterSystem.GetInstance(_side[0]));
+            }
+            else
+            {
+                OnCombatEnded();
+            }
+        }
     }
 }
 

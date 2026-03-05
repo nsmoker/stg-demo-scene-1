@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://67g32ecjus0y" path="res://Scripts/AI/CrowdAIDirector.cs" id="10_jjbca"]
 [ext_resource type="PackedScene" uid="uid://dsawqshhjgquw" path="res://Scenes/Characters/marot.tscn" id="13_uifxh"]
 [ext_resource type="PackedScene" uid="uid://b02trvpappmbg" path="res://Scenes/Props/BrazierProp.tscn" id="14_ftxek"]
+[ext_resource type="PackedScene" uid="uid://djslysixa4d0a" path="res://Scenes/Characters/darian.tscn" id="15_jjbca"]
 [ext_resource type="Texture2D" uid="uid://bjuufd0p1e57q" path="res://Sprites/Backdrops/classroom_test_duel.png" id="16_tmqtc"]
 [ext_resource type="PackedScene" uid="uid://nxmo2nmx88dw" path="res://Scenes/Props/DeskProp.tscn" id="18_b5i2i"]
 
@@ -147,4 +148,7 @@ position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_0kudf")
 
 [node name="Marot" parent="." unique_id=1512459789 instance=ExtResource("13_uifxh")]
-position = Vector2(-212, 40)
+position = Vector2(-231, 73)
+
+[node name="Darian" parent="." unique_id=1387554584 instance=ExtResource("15_jjbca")]
+position = Vector2(-137, 44)
