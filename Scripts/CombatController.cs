@@ -40,6 +40,7 @@ public partial class CombatController : Node
         _character.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_character.CharacterData) > 1;
         _character.Draw += OnPawnDraw;
         _character.QueueRedraw();
+        SceneSystem.GetMasterScene().ActivateAbilityBarForCharacter(_character);
     }
 
     private bool IsActive => _character != null && _inCombat && !_inDialogue && !_pawnMoving && !_pawnAttacking;
@@ -137,7 +138,7 @@ public partial class CombatController : Node
                 _pawnAttacking = true;
                 _character.BeginAttackAnim(
                     _character.GlobalPosition.DirectionTo(hoveredChar.GlobalPosition),
-                    () => _character.BasicAttackAbility.Activate(_character, hoveredChar, _character.GetProjectileSpawnPoint(), hoveredChar.GlobalPosition, () =>
+                    () => _character.BasicAttackAbility.Activate(_character, hoveredChar, _character.GetProjectileSpawnPoint(), hoveredChar.Collider.GlobalPosition, () =>
                                                         _pawnAttacking = false));
             }
             else

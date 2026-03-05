@@ -2,69 +2,63 @@
 
 [ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="1_oow6w"]
 [ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="2_lon5u"]
+[ext_resource type="Resource" uid="uid://dxdi30157jvtw" path="res://Resources/Characters/ethan.tres" id="3_nn37d"]
 [ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/edi/Scripts/Conversation.cs" id="3_xsl1o"]
 [ext_resource type="Resource" uid="uid://cx3eet0w6nlc3" path="res://Resources/Characters/marot.tres" id="4_6dtpj"]
 [ext_resource type="Script" uid="uid://cwtgl1fc7t2gp" path="res://Scripts/DialogueNodes/SetFaction.cs" id="4_xsl1o"]
 
-[sub_resource type="Resource" id="Resource_xsl1o"]
-script = ExtResource("1_oow6w")
-toNode = 4
-
 [sub_resource type="Resource" id="Resource_nn37d"]
 script = ExtResource("1_oow6w")
-fromNode = 4
-toNode = 2
+fromNode = 5
+toNode = 4
 
 [sub_resource type="Resource" id="Resource_6dtpj"]
 script = ExtResource("1_oow6w")
 fromNode = 3
+toNode = 5
 
 [sub_resource type="Resource" id="Resource_gwqdb"]
 script = ExtResource("1_oow6w")
-toNode = 1
+toNode = 3
 
 [sub_resource type="Resource" id="Resource_jrxsd"]
-script = ExtResource("2_lon5u")
-NodeType = 2
-EditorPos = Vector2(-580, 820)
-EditorSize = Vector2(499.99988, 300.00024)
+script = ExtResource("1_oow6w")
+fromNode = 2
 
 [sub_resource type="Resource" id="Resource_vlm5h"]
-script = ExtResource("2_lon5u")
-Content = "Start combat?"
-DNodeId = 2
-EditorPos = Vector2(120, 780)
-EditorSize = Vector2(440.00037, 380)
+script = ExtResource("1_oow6w")
+toNode = 1
 
 [sub_resource type="Resource" id="Resource_f52hs"]
 script = ExtResource("2_lon5u")
-NodeType = 3
-Content = "No"
-DNodeId = 3
-EditorPos = Vector2(1040, 960)
-EditorSize = Vector2(367.00024, 316)
-
-[sub_resource type="Resource" id="Resource_2de30"]
-script = ExtResource("4_xsl1o")
-Character = ExtResource("4_6dtpj")
-Faction = 2
-metadata/_custom_type_script = "uid://cwtgl1fc7t2gp"
-
-[sub_resource type="Resource" id="Resource_2addt"]
-script = ExtResource("2_lon5u")
-NodeType = 1
-DNodeId = 5
-Action = SubResource("Resource_2de30")
-EditorPos = Vector2(1700, 300)
-EditorSize = Vector2(456, 257)
-
-[sub_resource type="Resource" id="Resource_ffo5n"]
-script = ExtResource("2_lon5u")
 NodeType = 2
+DNodeId = 3
 EditorPos = Vector2(-580, 820)
 EditorSize = Vector2(499.99988, 300.00024)
 
+[sub_resource type="Resource" id="Resource_2addt"]
+script = ExtResource("2_lon5u")
+Content = "Start combat?"
+DNodeId = 1
+EditorPos = Vector2(120, 780)
+EditorSize = Vector2(440.00037, 380)
+
+[sub_resource type="Resource" id="Resource_ffo5n"]
+script = ExtResource("2_lon5u")
+NodeType = 3
+Content = "No"
+DNodeId = 2
+EditorPos = Vector2(1040, 960)
+EditorSize = Vector2(367.00024, 316)
+
 [sub_resource type="Resource" id="Resource_ygkw6"]
+script = ExtResource("2_lon5u")
+NodeType = 2
+DNodeId = 3
+EditorPos = Vector2(-580, 820)
+EditorSize = Vector2(499.99988, 300.00024)
+
+[sub_resource type="Resource" id="Resource_d7nhx"]
 script = ExtResource("2_lon5u")
 NodeType = 3
 Content = "Yes"
@@ -72,9 +66,37 @@ DNodeId = 4
 EditorPos = Vector2(980, 300)
 EditorSize = Vector2(367, 316.00006)
 
+[sub_resource type="Resource" id="Resource_yumu8"]
+script = ExtResource("4_xsl1o")
+Character = ExtResource("3_nn37d")
+Faction = 2
+metadata/_custom_type_script = "uid://cwtgl1fc7t2gp"
+
+[sub_resource type="Resource" id="Resource_jdaop"]
+script = ExtResource("2_lon5u")
+NodeType = 1
+DNodeId = 6
+Action = SubResource("Resource_yumu8")
+EditorPos = Vector2(2460, 240)
+EditorSize = Vector2(456, 257)
+
+[sub_resource type="Resource" id="Resource_2de30"]
+script = ExtResource("4_xsl1o")
+Character = ExtResource("4_6dtpj")
+Faction = 2
+metadata/_custom_type_script = "uid://cwtgl1fc7t2gp"
+
+[sub_resource type="Resource" id="Resource_3ooco"]
+script = ExtResource("2_lon5u")
+NodeType = 1
+DNodeId = 5
+Action = SubResource("Resource_2de30")
+EditorPos = Vector2(1720, 260)
+EditorSize = Vector2(456, 257.00024)
+
 [resource]
 script = ExtResource("3_xsl1o")
-Nodes = Array[ExtResource("2_lon5u")]([SubResource("Resource_vlm5h"), SubResource("Resource_f52hs"), SubResource("Resource_2addt"), SubResource("Resource_ffo5n"), SubResource("Resource_ygkw6")])
-EntryPoints = Array[ExtResource("2_lon5u")]([SubResource("Resource_jrxsd")])
-Connections = Array[ExtResource("1_oow6w")]([SubResource("Resource_xsl1o"), SubResource("Resource_nn37d"), SubResource("Resource_6dtpj"), SubResource("Resource_gwqdb")])
+Nodes = Array[ExtResource("2_lon5u")]([SubResource("Resource_2addt"), SubResource("Resource_ffo5n"), SubResource("Resource_ygkw6"), SubResource("Resource_d7nhx"), SubResource("Resource_jdaop"), SubResource("Resource_3ooco")])
+EntryPoints = Array[ExtResource("2_lon5u")]([SubResource("Resource_f52hs")])
+Connections = Array[ExtResource("1_oow6w")]([SubResource("Resource_nn37d"), SubResource("Resource_6dtpj"), SubResource("Resource_gwqdb"), SubResource("Resource_jrxsd"), SubResource("Resource_vlm5h")])
 metadata/_custom_type_script = "uid://cmw85ukaae1eh"

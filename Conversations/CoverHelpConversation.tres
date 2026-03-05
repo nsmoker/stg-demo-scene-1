@@ -39,7 +39,7 @@ Content = "Position a character next to a cover object to take cover, making it 
 Speaker = "Tutorial"
 DNodeId = 1
 EditorPos = Vector2(4160, 780)
-EditorSize = Vector2(659.9968, 439.99512)
+EditorSize = Vector2(659.9971, 439.99512)
 
 [sub_resource type="Resource" id="Resource_4ihu1"]
 script = ExtResource("5_b1lut")

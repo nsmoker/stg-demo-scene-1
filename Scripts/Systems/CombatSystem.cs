@@ -139,7 +139,6 @@ public static class CombatSystem
         var scene = (Engine.GetMainLoop() as SceneTree)
             .CurrentScene as MasterScene;
         s_combatStatusLabel = scene.GetCombatStatusLabel();
-        scene.ActivateAbilityBarForCharacter(scene.GetPlayer());
         if (s_currentCombatants.Count == 0)
         {
             s_currentCombatants.Add(initiator.ResourcePath, new CombatantState { MovesRemaining = initiator.CombatMoves, ActionsRemaining = initiator.CombatActions });
