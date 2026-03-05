@@ -4,6 +4,8 @@ namespace STGDemoScene1.Scripts.Systems;
 
 public static class DialogueSystem
 {
+    private static bool s_inDialogue = false;
+
     public delegate void DialogueCompleteCallback();
 
     public delegate void DialogueStartedCallback(Conversation dialogue, int entryPoint);
@@ -15,9 +17,16 @@ public static class DialogueSystem
     {
         if (dialogue != null)
         {
+            s_inDialogue = true;
             OnDialogueStarted?.Invoke(dialogue, entryPoint);
         }
     }
 
-    public static void CompleteDialogue() => OnDialogueComplete?.Invoke();
+    public static void CompleteDialogue()
+    {
+        s_inDialogue = false;
+        OnDialogueComplete?.Invoke();
+    }
+
+    public static bool IsInDialogue() => s_inDialogue;
 }

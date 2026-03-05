@@ -132,7 +132,11 @@ public static class CombatSystem
         NavRegion.BakeNavigationPolygon();
     }
 
-    public static void Initialize() => NavigationServer2D.MapChanged += OnNavRebakeFinished;
+    public static void Initialize()
+    {
+        NavigationServer2D.MapChanged += OnNavRebakeFinished;
+        CombatLog.Initialize();
+    }
 
     public static void BeginCombat(CharacterData initiator, CharacterData opponent)
     {

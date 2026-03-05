@@ -140,6 +140,29 @@ public partial class Character : CharacterBody2D
     private bool _sitting = false;
     private bool _collisionOverride = true;
     private FurnitureProp _occupiedProp;
+    protected Area2D _interactableRange;
+
+    public List<IInteractable> GetInteractablesInRange() => [.. _interactableRange.GetOverlappingBodies().ToList().Where(n => n is IInteractable).Select(n => n as IInteractable)];
+
+    public IInteractable GetClosestInteractable()
+    {
+        var interactables = GetInteractablesInRange();
+        IInteractable closestInteractable = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (var interactable in interactables)
+        {
+            var node = (Node2D) interactable;
+            var distance = GlobalPosition.DistanceTo(node.GlobalPosition);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestInteractable = interactable;
+            }
+        }
+
+        return closestInteractable;
+    }
 
     public enum AnimState
     {
@@ -479,6 +502,7 @@ public partial class Character : CharacterBody2D
         _mainSprite = GetNode<Sprite2D>("MainSprite");
         _healthLabel = GetNode<Label>("HealthLabel");
         _projectileSpawnPoint = GetNode<Marker2D>("ProjectileSpawnPoint");
+        _interactableRange = GetNode<Area2D>("InteractableRange");
 
         // Only hook into gameplay systems if we are a named, non-background character.
         if (IsNamedCharacter())

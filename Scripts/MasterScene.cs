@@ -17,7 +17,8 @@ public partial class MasterScene : Node2D
     private AbilityBar _abilityBar;
     private StagfootScreen _currentScreen;
     private Label _combatStatusLabel;
-    private CombatController _combatController;
+    private HumanCombatController _combatController;
+    private HumanNavController _navController;
 
     [Export]
     private FactionTable _factionTable;
@@ -30,7 +31,9 @@ public partial class MasterScene : Node2D
         _exitButton.Pressed += OnExitPressed;
         _exitMenu = GetNode<PanelContainer>("Camera2D/ExitMenu");
         _player = GetNode<Player>("Player");
-        _combatController = GetNode<CombatController>("CombatController");
+        _combatController = GetNode<HumanCombatController>("HumanCombatController");
+        _navController = GetNode<HumanNavController>("HumanNavController");
+        _navController.Pawn = _player;
         _abilityBar = GetNode<AbilityBar>("Camera2D/AbilityBar");
         _combatStatusLabel = GetNode<Label>("Camera2D/CombatStatusLabel");
         FactionSystem.Initialize(_factionTable);
@@ -96,6 +99,6 @@ public partial class MasterScene : Node2D
 
     public Player GetPlayer() => _player;
 
-    public CombatController GetCombatController() => _combatController;
+    public HumanCombatController GetCombatController() => _combatController;
 }
 

@@ -10,7 +10,7 @@ using Character = STGDemoScene1.Scripts.Characters.Character;
 
 namespace STGDemoScene1.Scripts;
 
-public partial class CombatController : Node
+public partial class HumanCombatController : Node
 {
     private Character _character;
     private List<string> _side;
