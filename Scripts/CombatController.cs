@@ -135,14 +135,10 @@ public partial class CombatController : Node
             {
                 var hoveredChar = CharacterSystem.GetInstance(HoverSystem.Hovered);
                 _pawnAttacking = true;
-                _character.IssueAttack(
-                    hoveredChar.CharacterData,
+                _character.BeginAttackAnim(
                     _character.GlobalPosition.DirectionTo(hoveredChar.GlobalPosition),
-                    () =>
-                        {
-                            _character.BasicAttackAbility.Activate(_character, hoveredChar, _character.GetProjectileSpawnPoint(), hoveredChar.GlobalPosition);
-                            _pawnAttacking = false;
-                        });
+                    () => _character.BasicAttackAbility.Activate(_character, hoveredChar, _character.GetProjectileSpawnPoint(), hoveredChar.GlobalPosition, () =>
+                                                        _pawnAttacking = false));
             }
             else
             {

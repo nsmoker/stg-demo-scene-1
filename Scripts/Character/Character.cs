@@ -169,7 +169,6 @@ public partial class Character : CharacterBody2D
 
     protected Label _healthLabel;
 
-    protected CharacterData _attackTarget;
     private Action _onAttackComplete;
 
     protected List<Push> _currentPushes = [];
@@ -220,6 +219,7 @@ public partial class Character : CharacterBody2D
     {
         private readonly Character _c;
         private bool _hovered = false;
+        private bool _pawnAttacking = false;
         public CombatState(Character character)
         {
             _c = character;
@@ -253,14 +253,14 @@ public partial class Character : CharacterBody2D
                             character.ControllerState = new CombatNavState(character, TrimPath(character.GlobalPosition, path, character.MovementRange));
                         }
                     }
-                    else if (character._currentAnimState != AnimState.Attack)
+                    else if (!_pawnAttacking)
                     {
+                        _pawnAttacking = true;
                         // In range, attack.
-                        character.IssueAttack(
-                            closestEnemy.CharacterData,
+                        character.BeginAttackAnim(
                             character.GlobalPosition.DirectionTo(closestEnemy.Collider.GlobalPosition),
-                            () => character.BasicAttackAbility.Activate(character, closestEnemy, character.GetProjectileSpawnPoint(), closestEnemy.Collider.GlobalPosition)
-                        );
+                            () => character.BasicAttackAbility.Activate(character, closestEnemy, character.GetProjectileSpawnPoint(), closestEnemy.Collider.GlobalPosition,
+                                    () => _pawnAttacking = false));
                     }
                 }
                 else
@@ -878,12 +878,10 @@ public partial class Character : CharacterBody2D
         }
     }
 
-    public void SetAttackTarget(CharacterData c) => _attackTarget = c;
 
-    public void IssueAttack(CharacterData target, Vector2 direction, Action onComplete = null)
+    public void BeginAttackAnim(Vector2 direction, Action onComplete = null)
     {
         _onAttackComplete = onComplete;
-        SetAttackTarget(target);
         SetAttackAnimState(direction);
     }
 

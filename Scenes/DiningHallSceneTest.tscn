@@ -76,6 +76,7 @@ GenericNpcScene = ExtResource("8_s1uj3")
 GenericNpcDirector = SubResource("Resource_bjgu5")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=883372911]
+visible = false
 z_as_relative = false
 navigation_polygon = SubResource("NavigationPolygon_2impm")
 

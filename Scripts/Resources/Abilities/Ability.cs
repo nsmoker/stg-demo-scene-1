@@ -2,6 +2,7 @@ using Godot;
 using STGDemoScene1.Scripts.Characters;
 using STGDemoScene1.Scripts.Systems;
 using STGDemoScene1.Scripts.Triggers;
+using System;
 
 namespace STGDemoScene1.Scripts.Resources.Abilities;
 
@@ -36,7 +37,7 @@ public partial class Ability : Resource
     [Export]
     public bool TargetingIsAnimated = false;
 
-    public virtual void Activate(Character user, Character target, Vector2 SpawnPoint, Vector2 TargetPoint)
+    public virtual void Activate(Character user, Character target, Vector2 SpawnPoint, Vector2 TargetPoint, Action AnimationCallback)
     {
         if (ProjectileScene != null)
         {
@@ -46,6 +47,7 @@ public partial class Ability : Resource
             user.GetParent().AddChild(projectileInstance);
             projectileInstance.GlobalPosition = SpawnPoint;
             projectileInstance.OnHit += () => OnProjectileHit(user, target, TargetPoint);
+            projectileInstance.OnHit += AnimationCallback;
         }
         else
         {
