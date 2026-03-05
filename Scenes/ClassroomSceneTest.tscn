@@ -53,6 +53,7 @@ GenericNpcScene = ExtResource("4_b5i2i")
 GenericNpcDirector = SubResource("Resource_l265n")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1450764174]
+visible = false
 navigation_polygon = SubResource("NavigationPolygon_02uyx")
 
 [node name="SceneBackdrop" type="Sprite2D" parent="." unique_id=1067931957]

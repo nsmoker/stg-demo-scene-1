@@ -35,6 +35,9 @@ font_size = 10
 [sub_resource type="SystemFont" id="SystemFont_oiltp"]
 subpixel_positioning = 0
 
+[sub_resource type="SystemFont" id="SystemFont_euyus"]
+subpixel_positioning = 0
+
 [sub_resource type="Resource" id="Resource_nuc5r"]
 script = ExtResource("11_euyus")
 Type = 1
@@ -180,11 +183,11 @@ AbilityButtonScene = ExtResource("10_ko0ge")
 [node name="Player" parent="." unique_id=943866917 instance=ExtResource("11_xluw3")]
 position = Vector2(3, 378)
 _factionTable = ExtResource("12_42x8o")
-PathFont = SubResource("SystemFont_oiltp")
 ToHitFont = SubResource("SystemFont_oiltp")
 
 [node name="CombatController" type="Node" parent="." unique_id=1525944130]
 script = ExtResource("13_kv3ts")
+PathFont = SubResource("SystemFont_euyus")
 
 [node name="DiningEntrywaySceneTest" parent="." unique_id=1608461539 instance=ExtResource("14_1nsqu")]
 position = Vector2(0, 360)

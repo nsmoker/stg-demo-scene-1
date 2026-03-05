@@ -1,6 +1,5 @@
 using Godot;
 using STGDemoScene1.Addons.Edi.Scripts;
-using STGDemoScene1.Scripts.Characters;
 using STGDemoScene1.Scripts.Resources;
 using STGDemoScene1.Scripts.Resources.Abilities;
 using STGDemoScene1.Scripts.Systems;
@@ -12,19 +11,22 @@ namespace STGDemoScene1.Scripts;
 
 public partial class CombatController : Node
 {
-    private Player _player;
+    private Character _character;
     private bool _isOurTurn;
     private bool _inCombat;
     private bool _inDialogue;
-    private bool _playerMoving;
-    private bool _playerAttacking;
-    private bool _playerTargetingAbility = false;
+    private bool _pawnMoving;
+    private bool _pawnAttacking;
+    private bool _pawnTargetingAbility = false;
     private Ability _targetingAbility;
     private Targeting _targetingCursor;
 
-    public void SetPlayer(Player player)
+    [Export]
+    public Font PathFont;
+
+    public void SetCharacter(Character character)
     {
-        _player = player;
+        _character = character;
         CombatSystem.CombatStartHandlers += OnCombatStarted;
         CombatSystem.CharacterJoinedCombatHandlers += OnCombatJoined;
         CombatSystem.CombatEnded += OnCombatEnded;
@@ -32,24 +34,24 @@ public partial class CombatController : Node
         DialogueSystem.OnDialogueComplete += OnDialogueEnded;
     }
 
-    private bool IsActive => _inCombat && !_inDialogue && !_playerMoving && !_playerAttacking;
+    private bool IsActive => _inCombat && !_inDialogue && !_pawnMoving && !_pawnAttacking;
 
     private void ActivateCombatControl()
     {
         _inCombat = true;
-        _playerMoving = false;
-        _isOurTurn = CombatSystem.GetMovingSide().Contains(_player.CharacterData.ResourcePath);
-        _ = _player.UpdateCoverState(_player.GetWorld2D().DirectSpaceState);
-        _player.ActionPip1.Visible = true;
-        _player.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_player.CharacterData) > 1;
-        _player.Draw += OnPlayerDraw;
+        _pawnMoving = false;
+        _isOurTurn = CombatSystem.GetMovingSide().Contains(_character.CharacterData.ResourcePath);
+        _ = _character.UpdateCoverState(_character.GetWorld2D().DirectSpaceState);
+        _character.ActionPip1.Visible = true;
+        _character.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_character.CharacterData) > 1;
+        _character.Draw += OnPawnDraw;
         CombatSystem.TurnHandlers += OnTurnBegin;
-        _player.QueueRedraw();
+        _character.QueueRedraw();
     }
 
     private void OnCombatStarted(CombatStartEvent e)
     {
-        if (e.participants.Contains(_player.CharacterData.ResourcePath))
+        if (e.participants.Contains(_character.CharacterData.ResourcePath))
         {
             ActivateCombatControl();
         }
@@ -57,7 +59,7 @@ public partial class CombatController : Node
 
     private void OnCombatJoined(CharacterData joiner)
     {
-        if (joiner.ResourcePath.Equals(_player.CharacterData.ResourcePath))
+        if (joiner.ResourcePath.Equals(_character.CharacterData.ResourcePath))
         {
             ActivateCombatControl();
         }
@@ -66,10 +68,10 @@ public partial class CombatController : Node
     private void OnCombatEnded()
     {
         _inCombat = false;
-        _playerMoving = false;
-        _player.Draw -= OnPlayerDraw;
+        _pawnMoving = false;
+        _character.Draw -= OnPawnDraw;
         CombatSystem.TurnHandlers -= OnTurnBegin;
-        _player.QueueRedraw();
+        _character.QueueRedraw();
     }
 
     private void OnDialogueStarted(Conversation _1, int _2) => _inDialogue = true;
@@ -78,7 +80,7 @@ public partial class CombatController : Node
 
     public override void _PhysicsProcess(double delta)
     {
-        if (!IsActive || _playerTargetingAbility)
+        if (!IsActive || _pawnTargetingAbility)
         {
             return;
         }
@@ -88,109 +90,109 @@ public partial class CombatController : Node
             if (HoverSystem.AnyHovered())
             {
                 var hoveredChar = CharacterSystem.GetInstance(HoverSystem.Hovered);
-                _playerAttacking = true;
-                _player.IssueAttack(
+                _pawnAttacking = true;
+                _character.IssueAttack(
                     hoveredChar.CharacterData,
-                    _player.GlobalPosition.DirectionTo(hoveredChar.GlobalPosition),
-                    () => _player.BasicAttackAbility.Activate(_player, hoveredChar, _player.GetProjectileSpawnPoint(), hoveredChar.GlobalPosition));
+                    _character.GlobalPosition.DirectionTo(hoveredChar.GlobalPosition),
+                    () => _character.BasicAttackAbility.Activate(_character, hoveredChar, _character.GetProjectileSpawnPoint(), hoveredChar.GlobalPosition));
             }
             else
             {
                 var path = NavigationServer2D.MapGetPath(
                     CombatSystem.NavRegion.GetNavigationMap(),
-                    _player.GlobalPosition,
-                    _player.GetGlobalMousePosition(),
+                    _character.GlobalPosition,
+                    _character.GetGlobalMousePosition(),
                     true, 0x1u);
-                var len = Character.ComputePathLength(path, _player.GlobalPosition);
-                if (len <= _player.MovementRange)
+                var len = Character.ComputePathLength(path, _character.GlobalPosition);
+                if (len <= _character.MovementRange)
                 {
-                    _playerMoving = true;
-                    _player.IssueCombatMove(
-                        path.Length > 0 ? path : [_player.GetGlobalMousePosition()],
+                    _pawnMoving = true;
+                    _character.IssueCombatMove(
+                        path.Length > 0 ? path : [_character.GetGlobalMousePosition()],
                         () =>
                     {
-                        _playerMoving = false;
+                        _pawnMoving = false;
                         SetPipVisibility();
                     });
                 }
             }
         }
-        _player.QueueRedraw();
+        _character.QueueRedraw();
     }
 
     private void SetPipVisibility()
     {
         if (_isOurTurn)
         {
-            _player.ActionPip1.Visible = true;
-            _player.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_player.CharacterData) > 1;
+            _character.ActionPip1.Visible = true;
+            _character.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_character.CharacterData) > 1;
         }
         else
         {
-            _player.ActionPip1.Hide();
-            _player.ActionPip2.Hide();
+            _character.ActionPip1.Hide();
+            _character.ActionPip2.Hide();
         }
     }
 
-    private void OnPlayerDraw()
+    private void OnPawnDraw()
     {
-        if (!IsActive || _playerTargetingAbility)
+        if (!IsActive || _pawnTargetingAbility)
         {
             return;
         }
 
         if (_isOurTurn && !HoverSystem.AnyHovered())
         {
-            _player.DrawCircle(new Vector2(0.0f, 2.0f), 8.0f, new Color(0.0f, 0.0f, 1.0f), filled: false);
+            _character.DrawCircle(new Vector2(0.0f, 2.0f), 8.0f, new Color(0.0f, 0.0f, 1.0f), filled: false);
             if (CombatSystem.NavReady())
             {
                 var path = NavigationServer2D.MapGetPath(
                     CombatSystem.NavRegion.GetNavigationMap(),
-                    _player.GlobalPosition,
-                    _player.GetGlobalMousePosition(),
+                    _character.GlobalPosition,
+                    _character.GetGlobalMousePosition(),
                     true, 0x1u);
-                var len = Character.ComputePathLength(path, _player.GlobalPosition);
-                var inRange = len <= _player.MovementRange;
-                var pathTransformed = path.Select(_player.ToLocal).ToArray();
+                var len = Character.ComputePathLength(path, _character.GlobalPosition);
+                var inRange = len <= _character.MovementRange;
+                var pathTransformed = path.Select(_character.ToLocal).ToArray();
                 float dist = path.Length > 1
                     ? len / 16.0f
-                    : _player.GlobalPosition.DistanceTo(_player.GetGlobalMousePosition()) / 16.0f;
+                    : _character.GlobalPosition.DistanceTo(_character.GetGlobalMousePosition()) / 16.0f;
                 var targetPoint = pathTransformed.Length > 1
                     ? pathTransformed[^1]
-                    : _player.GetLocalMousePosition();
+                    : _character.GetLocalMousePosition();
                 Color lineColor = inRange ? new Color(1, 1, 1) : new Color(1, 0, 0);
                 if (pathTransformed.Length > 1)
                 {
-                    _player.DrawPolyline(pathTransformed, lineColor);
+                    _character.DrawPolyline(pathTransformed, lineColor);
                 }
                 else
                 {
-                    _player.DrawLine(_player.ToLocal(_player.GlobalPosition), _player.GetLocalMousePosition(), lineColor);
+                    _character.DrawLine(_character.ToLocal(_character.GlobalPosition), _character.GetLocalMousePosition(), lineColor);
                 }
 
-                _player.DrawString(_player.PathFont, targetPoint, $"{dist:0.00}m", fontSize: 8);
+                _character.DrawString(PathFont, targetPoint, $"{dist:0.00}m", fontSize: 8);
             }
         }
 
         if (HoverSystem.AnyHovered())
         {
             var hovered = CharacterSystem.GetInstance(HoverSystem.Hovered);
-            var chance = CombatSystem.ComputeToHitChance(_player.CharacterData, hovered.CharacterData) * 100.0f;
-            _player.DrawString(_player.ToHitFont, new Vector2(12.0f, 0.0f) + _player.GetLocalMousePosition(), $"{chance:0}%", fontSize: 8);
+            var chance = CombatSystem.ComputeToHitChance(_character.CharacterData, hovered.CharacterData) * 100.0f;
+            _character.DrawString(_character.ToHitFont, new Vector2(12.0f, 0.0f) + _character.GetLocalMousePosition(), $"{chance:0}%", fontSize: 8);
         }
     }
 
     private void OnTurnBegin(List<string> sideMoving)
     {
-        _isOurTurn = sideMoving.Contains(_player.CharacterData.ResourcePath);
+        _isOurTurn = sideMoving.Contains(_character.CharacterData.ResourcePath);
         SetPipVisibility();
-        _player.QueueRedraw();
+        _character.QueueRedraw();
     }
 
     public void OnAbilityTargetingStart(Ability ability, Character caster)
     {
         _targetingAbility = ability;
-        _playerTargetingAbility = true;
+        _pawnTargetingAbility = true;
         var masterScene = SceneSystem.GetMasterScene();
         var swCursor = ability.TargetingScene != null ? ability.TargetingScene.Instantiate<Targeting>() : new Targeting();
         swCursor.ShouldAnimate = ability.TargetingIsAnimated;
@@ -201,7 +203,7 @@ public partial class CombatController : Node
         _targetingCursor = swCursor;
 
         masterScene.SetAbilityBarReceiveInput(false);
-        _player.QueueRedraw();
+        _character.QueueRedraw();
     }
 
     public void OnAbilityTargetingEnd(Ability _)
@@ -209,9 +211,9 @@ public partial class CombatController : Node
         Input.SetCustomMouseCursor(null);
         Input.MouseMode = Input.MouseModeEnum.Visible;
         _targetingAbility = null;
-        _playerTargetingAbility = false;
+        _pawnTargetingAbility = false;
         SceneSystem.GetMasterScene().SetAbilityBarReceiveInput(true);
-        _player.QueueRedraw();
+        _character.QueueRedraw();
     }
 }
 

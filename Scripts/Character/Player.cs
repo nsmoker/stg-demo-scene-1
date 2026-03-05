@@ -112,8 +112,6 @@ public partial class Player : Character
 
     [Export]
     private FactionTable _factionTable;
-    [Export]
-    public Font PathFont;
 
     public override void _Ready()
     {
