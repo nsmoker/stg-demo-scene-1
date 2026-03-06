@@ -12,17 +12,17 @@ namespace STGDemoScene1.Scripts.Systems;
 
 public struct AttackEvent
 {
-    public Character attacker;
-    public Character target;
-    public bool hit;
+    public Character Attacker;
+    public Character Target;
+    public bool Hit;
     // Only use if hit is true.
-    public int targetDamage;
+    public int TargetDamage;
 }
 
 public struct CombatStartEvent
 {
-    public List<Character> participants;
-    public Character initiator;
+    public List<Character> Participants;
+    public Character Initiator;
 }
 
 internal struct CombatantState
@@ -31,9 +31,9 @@ internal struct CombatantState
     public int ActionsRemaining;
 }
 
-public struct CombatTimerHandle
+public readonly struct CombatTimerHandle
 {
-    internal ulong _id;
+    internal readonly ulong _id;
     internal CombatTimerHandle(ulong id) => _id = id;
 
 };
@@ -42,7 +42,7 @@ public static class CombatSystem
 {
     private static readonly Dictionary<Character, CombatantState> s_currentCombatants = [];
 
-    private static ulong s_timerCount = 0;
+    private static ulong s_timerCount;
 
     public delegate void AttackEventHandler(AttackEvent e);
     public delegate void CombatStartHandler(CombatStartEvent e);
@@ -63,7 +63,7 @@ public static class CombatSystem
 
     private static List<CombatTimer> s_combatTimers = [];
 
-    private static int s_sideMoving = 0;
+    private static int s_sideMoving;
 
     private static Label s_combatStatusLabel;
 
@@ -75,7 +75,7 @@ public static class CombatSystem
         }
     }
 
-    private static void OnCharacterDeath(DeathEvent e) => _ = s_sides.Find(x => x.Contains(e.deceased)).Remove(e.deceased);
+    private static void OnCharacterDeath(DeathEvent e) => _ = s_sides.Find(x => x.Contains(e.Deceased)).Remove(e.Deceased);
 
     public static bool NavReady() => s_pathingReady && NavRegion.NavigationPolygon != null;
 
@@ -92,14 +92,7 @@ public static class CombatSystem
             currentSide.ForEach(x => x.NavObstacle.AffectNavigationMesh = true);
             s_sideMoving = (s_sideMoving + 1) % s_sides.Count;
             currentSide = s_sides[s_sideMoving];
-            if (currentSide.Any(x => x is Player))
-            {
-                s_combatStatusLabel.Text = "YOUR TURN";
-            }
-            else
-            {
-                s_combatStatusLabel.Text = "ENEMY TURN";
-            }
+            s_combatStatusLabel.Text = currentSide.Any(x => x is Player) ? "YOUR TURN" : "ENEMY TURN";
             s_pathingReady = false;
             currentSide.ForEach(x =>
             {
@@ -136,9 +129,7 @@ public static class CombatSystem
 
     public static void BeginCombat(Character initiator, Character opponent)
     {
-        var scene = (Engine.GetMainLoop() as SceneTree)
-            .CurrentScene as MasterScene;
-        s_combatStatusLabel = scene.GetCombatStatusLabel();
+        s_combatStatusLabel = SceneSystem.GetMasterScene().GetCombatStatusLabel();
         if (s_currentCombatants.Count == 0)
         {
             s_currentCombatants.Add(initiator, new CombatantState { MovesRemaining = initiator.CharacterData.CombatMoves, ActionsRemaining = initiator.CharacterData.CombatActions });
@@ -148,8 +139,8 @@ public static class CombatSystem
 
             CombatStartEvent e = new()
             {
-                initiator = initiator,
-                participants = [.. s_currentCombatants.Keys]
+                Initiator = initiator,
+                Participants = [.. s_currentCombatants.Keys]
             };
             initiator.NavObstacle.AffectNavigationMesh = false;
             opponent.NavObstacle.AffectNavigationMesh = true;
@@ -171,16 +162,16 @@ public static class CombatSystem
     /// </summary>
     /// <param name="duration">The duration in turns of the timer.</param>
     /// <param name="onTimeout">A callback that will be invoked when the timer finishes.</param>
-    /// <param name="RelativeTo">The character the timer is relative to. The timer ticks when this character's turn starts.</param>
+    /// <param name="relativeTo">The character the timer is relative to. The timer ticks when this character's turn starts.</param>
     /// <returns>An opaque handle to the timer which can be passed to `RemoveTimer` for premature removal.</returns>
-    public static CombatTimerHandle CreateTimer(int duration, Action onTimeout, Character RelativeTo)
+    public static CombatTimerHandle CreateTimer(int duration, Action onTimeout, Character relativeTo)
     {
         s_timerCount += 1;
         var timer = new CombatTimer()
         {
             TurnsRemaining = duration,
             Timeout = onTimeout,
-            RelativeTo = RelativeTo,
+            RelativeTo = relativeTo,
             Id = s_timerCount
         };
         s_combatTimers.Add(timer);
@@ -275,7 +266,7 @@ public static class CombatSystem
     {
         CombatantState attackerState = s_currentCombatants[attacker];
         var currentSide = s_sides[s_sideMoving];
-        if (currentSide.Contains(attacker) && attackerState.ActionsRemaining > 0 && attackerState.MovesRemaining > 0)
+        if (currentSide.Contains(attacker) && attackerState is { ActionsRemaining: > 0, MovesRemaining: > 0 })
         {
             CombatantState newAttackerState = new()
             {
@@ -294,10 +285,10 @@ public static class CombatSystem
             var roll = damageRoll.Roll();
             AttackHandlers?.Invoke(new AttackEvent
             {
-                attacker = attacker,
-                target = target,
-                hit = hit,
-                targetDamage = roll,
+                Attacker = attacker,
+                Target = target,
+                Hit = hit,
+                TargetDamage = roll,
             });
             if (hit)
             {

@@ -22,14 +22,7 @@ public partial class Toggleable : StaticBody2D, IInteractable, IToggleableIntera
 
     public void Toggle()
     {
-        if (_sprite.Animation == "on")
-        {
-            _sprite.Animation = "off";
-        }
-        else
-        {
-            _sprite.Animation = "on";
-        }
+        _sprite.Animation = _sprite.Animation == "on" ? "off" : "on";
         _sprite.Play();
     }
 }

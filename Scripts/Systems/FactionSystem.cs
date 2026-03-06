@@ -2,6 +2,7 @@ using Godot.Collections;
 using STGDemoScene1.Scripts.Resources;
 using STGDemoScene1.Scripts.Resources.Factions;
 using System.Linq;
+using FactionTable = STGDemoScene1.Scripts.Resources.Factions.FactionTable;
 
 namespace STGDemoScene1.Scripts.Systems;
 
@@ -40,14 +41,14 @@ public static class FactionSystem
 
     public static void SetFactionRelation(Faction faction1, Faction faction2, bool relation)
     {
-        s_relationTable.FactionRelations = [.. s_relationTable.FactionRelations
-            .Where(x => (x.FactionA != faction1) || (x.FactionA != faction2))];
-        s_relationTable.FactionRelations.Add(new()
-        {
-            FactionA = faction1,
-            FactionB = faction2,
-            IsHostile = relation
-        });
+        s_relationTable.FactionRelations =
+        [
+            .. s_relationTable.FactionRelations
+                .Where(x => (x.FactionA != faction1) || (x.FactionA != faction2)),
+
+            new FactionRelation { FactionA = faction1, FactionB = faction2, IsHostile = relation }
+
+        ];
 
         FactionRelationChangeHandlers?.Invoke(faction1, faction2);
     }

@@ -13,7 +13,7 @@ public partial class CheckQuestStage : DialogueCondition
     public Quest Quest;
 
     [Export]
-    public int _stage;
+    public int Stage;
 
     [Export]
     private ComparisonOperators _operator;
@@ -25,11 +25,11 @@ public partial class CheckQuestStage : DialogueCondition
             var activeStage = instance.CurrentStage;
             return _operator switch
             {
-                ComparisonOperators.Less => activeStage < _stage,
-                ComparisonOperators.Greater => activeStage > _stage,
-                ComparisonOperators.GreaterEqual => activeStage >= _stage,
-                ComparisonOperators.LessEqual => activeStage <= _stage,
-                ComparisonOperators.Equal => activeStage == _stage,
+                ComparisonOperators.Less => activeStage < Stage,
+                ComparisonOperators.Greater => activeStage > Stage,
+                ComparisonOperators.GreaterEqual => activeStage >= Stage,
+                ComparisonOperators.LessEqual => activeStage <= Stage,
+                ComparisonOperators.Equal => activeStage == Stage,
                 _ => false,
             };
         }

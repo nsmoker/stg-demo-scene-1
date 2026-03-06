@@ -14,7 +14,7 @@ public partial class HumanCombatController : Node
     private List<Character> _side;
     private bool _pawnMoving;
     private bool _pawnAttacking;
-    private bool _pawnTargetingAbility = false;
+    private bool _pawnTargetingAbility;
     private Ability _targetingAbility;
     private Targeting _targetingCursor;
 
@@ -47,7 +47,7 @@ public partial class HumanCombatController : Node
     private void OnCombatStarted(CombatStartEvent e)
     {
         var player = SceneSystem.GetMasterScene().GetPlayer();
-        if (e.participants.Contains(player))
+        if (e.Participants.Contains(player))
         {
             SetCharacter(player);
             ActivateCombatControl();
@@ -112,7 +112,7 @@ public partial class HumanCombatController : Node
                     CombatSystem.NavRegion.GetNavigationMap(),
                     _character.GlobalPosition,
                     _character.GetGlobalMousePosition(),
-                    true, 0x1u);
+                    true);
                 var len = Character.ComputePathLength(path, _character.GlobalPosition);
                 if (len <= _character.MovementRange)
                 {
@@ -160,7 +160,7 @@ public partial class HumanCombatController : Node
                     CombatSystem.NavRegion.GetNavigationMap(),
                     _character.GlobalPosition,
                     _character.GetGlobalMousePosition(),
-                    true, 0x1u);
+                    true);
                 var len = Character.ComputePathLength(path, _character.GlobalPosition);
                 var inRange = len <= _character.MovementRange;
                 var pathTransformed = path.Select(_character.ToLocal).ToArray();
@@ -223,7 +223,7 @@ public partial class HumanCombatController : Node
         var swCursor = ability.TargetingScene != null ? ability.TargetingScene.Instantiate<Targeting>() : new Targeting();
         swCursor.ShouldAnimate = ability.TargetingIsAnimated;
         swCursor.Tex = ability.TargetingSprite;
-        swCursor.caster = caster;
+        swCursor.Caster = caster;
         swCursor.Ability = ability;
         masterScene.AddChild(swCursor);
         _targetingCursor = swCursor;
@@ -244,8 +244,8 @@ public partial class HumanCombatController : Node
 
     public void OnDeathEvent(DeathEvent e)
     {
-        _ = _side.Remove(e.deceased);
-        if (e.deceased == _character)
+        _ = _side.Remove(e.Deceased);
+        if (e.Deceased == _character)
         {
             if (_side.Count > 0)
             {

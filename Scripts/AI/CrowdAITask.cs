@@ -2,7 +2,7 @@ using Godot;
 
 namespace STGDemoScene1.Scripts.AI;
 
-public enum CrowdAITaskType
+public enum CrowdAiTaskType
 {
     Idle,
     WalkToRandomPoint,
@@ -13,10 +13,10 @@ public enum CrowdAITaskType
 
 [GlobalClass]
 [Tool]
-public partial class CrowdAITask : Resource
+public partial class CrowdAiTask : Resource
 {
     [Export]
-    public CrowdAITaskType Type;
+    public CrowdAiTaskType Type;
 
     [Export]
     public double Duration;

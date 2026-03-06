@@ -19,8 +19,11 @@ public partial class SetDialogueEntry : DialogueAction
 
     public override void Execute(Action onComplete)
     {
-        var characterInstance = CharacterSystem.GetInstance(InteractableCharacterData.ResourcePath) as InteractableCharacter;
-        characterInstance.EntryPoint = EntryIndex;
+        if (CharacterSystem.GetInstance(InteractableCharacterData.ResourcePath) is InteractableCharacter characterInstance)
+        {
+            characterInstance.EntryPoint = EntryIndex;
+        }
+
         onComplete?.Invoke();
     }
 }

@@ -14,7 +14,6 @@ public partial class AreaEffect : Area2D
     private Character _caster;
     private DamageRoll _damageRoll;
     private Shape2D _shape;
-    private CombatTimerHandle _lifetimeHandle;
 
     public System.Action<Character> ApplyToCharacter;
 
@@ -28,14 +27,14 @@ public partial class AreaEffect : Area2D
         {
             DealAreaDamage(side, true);
         }
-        _lifetimeHandle = CombatSystem.CreateTimer(_duration, () =>
+        _ = CombatSystem.CreateTimer(_duration, () =>
         {
             CombatSystem.TurnHandlers -= OnTurnBegin;
             QueueFree();
         }, _caster);
     }
 
-    public void PlayEndAnimation() => _anim.Play("end");
+    private void PlayEndAnimation() => _anim.Play("end");
 
     public void SetDuration(int duration) => _duration = duration;
 
@@ -44,11 +43,11 @@ public partial class AreaEffect : Area2D
     public void SetDamageRoll(DamageRoll damageRoll) => _damageRoll = damageRoll;
 
 
-    public Character GetCaster() => _caster;
+    private Character GetCaster() => _caster;
 
-    public void OnTurnBegin(List<Character> side) => DealAreaDamage(side);
+    private void OnTurnBegin(List<Character> side) => DealAreaDamage(side);
 
-    public void DealAreaDamage(List<Character> movingSide, bool manualShapecast = false)
+    private void DealAreaDamage(List<Character> movingSide, bool manualShapecast = false)
     {
         // Due to a bug in Godot's area initialization, we cannot rely on GetOverlappingBodies or signals to
         // report intersections with bodies that start inside the area, even if we wait for the next physics update.

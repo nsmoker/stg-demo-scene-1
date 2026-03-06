@@ -12,7 +12,7 @@ public partial class Aeolus : EditorPlugin
     private Vector2 _controlPointOrigin = Vector2.Zero;
     private Vector2 _controlPointDestination = Vector2.Zero;
 
-    private bool _controlPointInCreation = false;
+    private bool _controlPointInCreation;
 
 
     public override void _EnablePlugin() => SceneChanged += OnSceneChanged;
@@ -21,12 +21,14 @@ public partial class Aeolus : EditorPlugin
 
     public override void _Edit(GodotObject @object)
     {
-        if (@object is FlowField field)
+        if (@object is not FlowField field)
         {
-            _editedField = field;
-            _editedScene = EditorInterface.Singleton.GetEditedSceneRoot() as Node2D;
-            _editedScene.QueueRedraw();
+            return;
         }
+
+        _editedField = field;
+        _editedScene = EditorInterface.Singleton.GetEditedSceneRoot() as Node2D;
+        _editedScene?.QueueRedraw();
     }
 
     private void AddControlPoint(Vector2 controlPoint, Vector2 gradient)
@@ -51,33 +53,39 @@ public partial class Aeolus : EditorPlugin
 
     public override bool _ForwardCanvasGuiInput(InputEvent @event)
     {
-        if (@event is InputEventMouseButton button && button.IsPressed() && button.ButtonIndex == MouseButton.Right && _editedField != null)
+        switch (@event)
         {
-            _controlPointInCreation = true;
-            _controlPointOrigin = _editedScene.GetLocalMousePosition();
-            _editedScene.QueueRedraw();
-            return true;
-        }
-        else if (@event is InputEventMouseMotion && _controlPointInCreation)
-        {
-            _controlPointDestination = _editedScene.GetLocalMousePosition();
-            _editedScene.QueueRedraw();
-            return true;
-        }
-        else if (@event is InputEventMouseButton b && b.IsReleased() && b.ButtonIndex == MouseButton.Right && _controlPointInCreation)
-        {
-            var undoRedo = GetUndoRedo();
-            undoRedo.CreateAction($"Add point at {_controlPointOrigin}");
-            undoRedo.AddDoMethod(this, "AddControlPoint", _controlPointOrigin, _controlPointDestination - _controlPointOrigin);
-            undoRedo.AddUndoMethod(this, "RemoveControlPoint", _editedField.ControlPoints.Count);
-            undoRedo.CommitAction();
-            return true;
+            case InputEventMouseButton button when button.IsPressed() && button.ButtonIndex == MouseButton.Right && _editedField != null:
+                _controlPointInCreation = true;
+                _controlPointOrigin = _editedScene.GetLocalMousePosition();
+                _editedScene.QueueRedraw();
+                return true;
+            case InputEventMouseMotion when _controlPointInCreation:
+                _controlPointDestination = _editedScene.GetLocalMousePosition();
+                _editedScene.QueueRedraw();
+                return true;
         }
 
-        return false;
+        if (@event is not InputEventMouseButton b || !b.IsReleased() || b.ButtonIndex != MouseButton.Right ||
+            !_controlPointInCreation)
+        {
+            return false;
+        }
+
+        var undoRedo = GetUndoRedo();
+        undoRedo.CreateAction($"Add point at {_controlPointOrigin}");
+        undoRedo.AddDoMethod(this, "AddControlPoint", _controlPointOrigin, _controlPointDestination - _controlPointOrigin);
+        if (_editedField != null)
+        {
+            undoRedo.AddUndoMethod(this, "RemoveControlPoint", _editedField.ControlPoints.Count);
+        }
+
+        undoRedo.CommitAction();
+        return true;
+
     }
 
-    public void DrawOverScene()
+    private void DrawOverScene()
     {
         var rasterSize = 20;
 
@@ -125,9 +133,9 @@ public partial class Aeolus : EditorPlugin
         }
     }
 
-    public void OnSceneChanged(Node _sceneRoot)
+    private void OnSceneChanged(Node scenRoot)
     {
-        if (_sceneRoot is Node2D sceneRoot)
+        if (scenRoot is Node2D sceneRoot)
         {
             _editedScene = sceneRoot;
         }

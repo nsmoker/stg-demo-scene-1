@@ -4,7 +4,7 @@ namespace STGDemoScene1.Scripts.Systems;
 
 public static class DialogueSystem
 {
-    private static bool s_inDialogue = false;
+    private static bool s_inDialogue;
 
     public delegate void DialogueCompleteCallback();
 

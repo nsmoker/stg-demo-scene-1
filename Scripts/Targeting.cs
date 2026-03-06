@@ -11,7 +11,7 @@ public partial class Targeting : Sprite2D
 
     public Ability Ability;
 
-    public Character caster;
+    public Character Caster;
 
     public bool ShouldAnimate = false;
 
@@ -42,7 +42,7 @@ public partial class Targeting : Sprite2D
         {
             var pos = GetGlobalMousePosition();
             var hovered = CharacterSystem.GetInstance(HoverSystem.Hovered);
-            var c = caster;
+            var c = Caster;
             if (HoverSystem.AnyHovered() || Ability.ContactDamage == null)
             {
                 c.BeginAttackAnim(

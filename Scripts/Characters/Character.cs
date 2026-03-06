@@ -694,7 +694,7 @@ public partial class Character : CharacterBody2D
 
     public virtual void OnCombatStarted(CombatStartEvent e)
     {
-        if (e.participants.Contains(this))
+        if (e.Participants.Contains(this))
         {
             HealthLabel.Show();
             ControllerState = SetCombatState();
@@ -740,7 +740,7 @@ public partial class Character : CharacterBody2D
 
     public virtual void OnDeath(DeathEvent e)
     {
-        if (e.deceased.CharacterData.ResourcePath.Equals(CharacterData.ResourcePath))
+        if (e.Deceased.CharacterData.ResourcePath.Equals(CharacterData.ResourcePath))
         {
             Despawn();
         }
@@ -784,7 +784,7 @@ public partial class Character : CharacterBody2D
 
     public virtual void OnDamage(DamageEvent e)
     {
-        string recipientId = e.recipient.CharacterData.ResourcePath;
+        string recipientId = e.Recipient.CharacterData.ResourcePath;
         if (recipientId == CharacterData.ResourcePath)
         {
             HealthLabel.Text = $"{HealthSystem.GetCurrentHitpoints(recipientId)} / {CharacterData.MaxHitpoints}";

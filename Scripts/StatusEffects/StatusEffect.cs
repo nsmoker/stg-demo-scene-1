@@ -10,9 +10,9 @@ public partial class StatusEffect : Resource
     [Export]
     public string Name = "Status Effect";
     [Export]
-    public bool Stacks = false;
+    public bool Stacks;
     [Export]
-    public bool IsPermanent = false;
+    public bool IsPermanent;
     [Export]
     public int Duration;
     [Export]

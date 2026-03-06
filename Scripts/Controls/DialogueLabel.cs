@@ -65,7 +65,7 @@ public partial class DialogueLabel : Label
         }
     }
 
-    public void OnMouseEnter() => LabelSettings.FontColor = HoveredColor;
+    private void OnMouseEnter() => LabelSettings.FontColor = HoveredColor;
 
-    public void OnMouseExit() => LabelSettings.FontColor = NormalColor;
+    private void OnMouseExit() => LabelSettings.FontColor = NormalColor;
 }

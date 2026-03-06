@@ -5,15 +5,15 @@ namespace STGDemoScene1.Scripts.Systems;
 
 public struct DamageEvent
 {
-    public Character inflicter;
-    public Character recipient;
-    public int damage;
+    public Character Inflicter;
+    public Character Recipient;
+    public int Damage;
 }
 
 public struct DeathEvent
 {
-    public Character deceased;
-    public Character killer;
+    public Character Deceased;
+    public Character Killer;
 }
 
 public static class HealthSystem
@@ -28,15 +28,15 @@ public static class HealthSystem
 
     public static void SetCurrentHitpoints(string characterId, int hitpoints) => s_characterHealthMap[characterId] = hitpoints;
 
-    public static int GetCurrentHitpoints(string characterId) => s_characterHealthMap.TryGetValue(characterId, out var hp) ? hp : 0;
+    public static int GetCurrentHitpoints(string characterId) => s_characterHealthMap.GetValueOrDefault(characterId, 0);
 
     public static void PostDamageEvent(Character inflicter, Character recipient, int damage)
     {
         var ret = new DamageEvent
         {
-            inflicter = inflicter,
-            recipient = recipient,
-            damage = damage,
+            Inflicter = inflicter,
+            Recipient = recipient,
+            Damage = damage,
         };
         s_characterHealthMap[recipient.CharacterData.ResourcePath] -= damage;
         DamageEventHandlers?.Invoke(ret);
@@ -51,8 +51,8 @@ public static class HealthSystem
     {
         var ret = new DeathEvent
         {
-            deceased = deceased,
-            killer = killer
+            Deceased = deceased,
+            Killer = killer
         };
         HoverSystem.SetUnhovered(deceased.CharacterData.ResourcePath);
         DeathEventHandlers?.Invoke(ret);

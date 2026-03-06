@@ -28,7 +28,7 @@ public partial class DialogueController : ScrollContainer
     [Export]
     public Color NormalColor;
 
-    public interface IDialogueControllerState
+    protected interface IDialogueControllerState
     {
         void Process(double delta, DialogueController controller);
     }
@@ -158,7 +158,7 @@ public partial class DialogueController : ScrollContainer
     private class WriteState : IDialogueControllerState
     {
         private readonly DialogueGraphNode _node;
-        private double _timeSinceLastWrite = 0;
+        private double _timeSinceLastWrite;
 
         public WriteState(DialogueController controller, DialogueGraphNode node)
         {
@@ -205,7 +205,6 @@ public partial class DialogueController : ScrollContainer
     private class ChoiceState : IDialogueControllerState
     {
         private readonly DialogueController _controller;
-        private readonly DialogueGraphNode _node;
 
         private void AddChoiceLabel(DialogueController controller, DialogueGraphNode choice, int number)
         {
@@ -226,7 +225,6 @@ public partial class DialogueController : ScrollContainer
         public ChoiceState(DialogueController controller, DialogueGraphNode node)
         {
             _controller = controller;
-            _node = node;
 
             var choices = controller._conversation.GetContinuationsForNode(node).Where(x => x.NodeType == DialogueNodeType.PlayerResponse && (x.Condition == null || x.Condition.Evaluate())).ToList();
             for (int i = 0; i < choices.Count; ++i)

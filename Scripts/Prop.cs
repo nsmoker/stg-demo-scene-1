@@ -65,10 +65,6 @@ public partial class Prop : StaticBody2D
                     _animationPlayer.Play("idle");
                     break;
                 }
-            default:
-                {
-                    break;
-                }
         }
     }
 

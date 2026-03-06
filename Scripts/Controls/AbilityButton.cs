@@ -9,7 +9,7 @@ public partial class AbilityButton : Button
 {
     private Ability _ability;
 
-    public Character character;
+    public Character Character;
 
     public override void _Ready()
     {
@@ -35,11 +35,11 @@ public partial class AbilityButton : Button
         };
     }
 
-    public void OnPressed()
+    private void OnPressed()
     {
         if (_ability != null)
         {
-            SceneSystem.GetMasterScene().GetCombatController().OnAbilityTargetingStart(_ability, character);
+            SceneSystem.GetMasterScene().GetCombatController().OnAbilityTargetingStart(_ability, Character);
         }
     }
 }

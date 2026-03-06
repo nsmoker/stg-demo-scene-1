@@ -9,7 +9,8 @@ public partial class ContainerDisplay : ItemListDisplay
     private Button _getAllButton;
 
     private string _containerEntity = "";
-    public string ContainerEntity
+
+    private string ContainerEntity
     {
         get => _containerEntity;
         set
@@ -38,9 +39,9 @@ public partial class ContainerDisplay : ItemListDisplay
         }
     }
 
-    public bool GetAllPressed() => _getAllButton.IsPressed();
+    private bool GetAllPressed() => _getAllButton.IsPressed();
 
-    public void OnInventoryChangeEvent(string entity, Item _1, bool _2)
+    private void OnInventoryChangeEvent(string entity, Item _1, bool _2)
     {
         if (entity == ContainerEntity)
         {

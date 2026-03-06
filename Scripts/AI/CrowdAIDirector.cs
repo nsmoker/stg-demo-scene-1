@@ -6,26 +6,24 @@ using Character = STGDemoScene1.Scripts.Characters.Character;
 
 namespace STGDemoScene1.Scripts.AI;
 
+/// A crowd AI Director cycles a group of NPCs through a defined set of tasks with durations and draw probabilities.
 [GlobalClass]
 [Tool]
-/// <summary>
-/// A crowd AI Director cycles a group of NPCs through a defined set of tasks with durations and draw probabilities.
-/// </summary>
-public partial class CrowdAIDirector : Resource
+public partial class CrowdAiDirector : Resource
 {
-    public struct CrowdAICharacterState
+    public struct CrowdAiCharacterState
     {
-        public CrowdAITask Task;
+        public CrowdAiTask Task;
         public double RemainingDuration;
         public Action OnComplete = () => { };
 
-        public CrowdAICharacterState() { }
+        public CrowdAiCharacterState() { }
     }
 
     [Export]
-    private Godot.Collections.Array<CrowdAITask> _possibleTasks;
+    private Godot.Collections.Array<CrowdAiTask> _possibleTasks;
 
-    public Godot.Collections.Array<CrowdAITask> PossibleTasks
+    public Godot.Collections.Array<CrowdAiTask> PossibleTasks
     {
         get => _possibleTasks;
         set
@@ -33,7 +31,7 @@ public partial class CrowdAIDirector : Resource
             foreach (var character in _managedCharacters)
             {
                 var state = _states[character.GetInstanceId()];
-                _states[character.GetInstanceId()] = new CrowdAICharacterState
+                _states[character.GetInstanceId()] = new CrowdAiCharacterState
                 {
                     Task = state.Task,
                     RemainingDuration = 0.0f,
@@ -48,7 +46,7 @@ public partial class CrowdAIDirector : Resource
     public float WalkSpeed = 20.0f;
 
     private List<Character> _managedCharacters = [];
-    private readonly Dictionary<ulong, CrowdAICharacterState> _states = [];
+    private readonly Dictionary<ulong, CrowdAiCharacterState> _states = [];
     private readonly Dictionary<ulong, bool> _chairMap = [];
     private readonly Random _random = new();
 
@@ -61,8 +59,8 @@ public partial class CrowdAIDirector : Resource
             _states.Clear();
             foreach (Character c in _managedCharacters)
             {
-                CrowdAITask task = DrawRandomTask();
-                var state = new CrowdAICharacterState
+                CrowdAiTask task = DrawRandomTask();
+                var state = new CrowdAiCharacterState
                 {
                     Task = task,
                     RemainingDuration = 0.0f
@@ -72,11 +70,11 @@ public partial class CrowdAIDirector : Resource
         }
     }
 
-    private CrowdAITask DrawRandomTask()
+    private CrowdAiTask DrawRandomTask()
     {
         float draw = _random.NextSingle();
-        CrowdAITask returnTask = new();
-        foreach (CrowdAITask task in PossibleTasks)
+        CrowdAiTask returnTask = new();
+        foreach (CrowdAiTask task in PossibleTasks)
         {
             draw -= task.Probability;
             if (draw <= 0)
@@ -89,45 +87,48 @@ public partial class CrowdAIDirector : Resource
         return returnTask;
     }
 
-    public CrowdAITask GetTask(ulong instanceId) => _states[instanceId].Task;
+    public CrowdAiTask GetTask(ulong instanceId) => _states[instanceId].Task;
 
-    public void SetState(ulong instanceId, CrowdAICharacterState state) => _states[instanceId] = state;
+    public void SetState(ulong instanceId, CrowdAiCharacterState state) => _states[instanceId] = state;
 
-    public CrowdAICharacterState GetState(ulong instanceId) => _states[instanceId];
+    public CrowdAiCharacterState GetState(ulong instanceId) => _states[instanceId];
 
-    public void StartTask(CrowdAITask task, Character character, StagfootScreen area)
+    public void StartTask(CrowdAiTask task, Character character, StagfootScreen area)
     {
-        var state = new CrowdAICharacterState
+        var state = new CrowdAiCharacterState
         {
             Task = task,
             RemainingDuration = task.Duration
         };
         switch (task.Type)
         {
-            case CrowdAITaskType.WalkToRandomPoint:
+            case CrowdAiTaskType.WalkToRandomPoint:
                 {
                     var targetPoint = character.ToLocal(area.GetRandomTraversablePoint());
-                    character.WalkToPoint(targetPoint, onComplete: () => SetState(character.GetInstanceId(), new CrowdAICharacterState
+                    character.WalkToPoint(targetPoint, onComplete: () => SetState(character.GetInstanceId(), new CrowdAiCharacterState
                     {
                         Task = task,
                         RemainingDuration = 0.0f
                     }), speed: WalkSpeed);
                     break;
                 }
-            case CrowdAITaskType.Idle:
+            case CrowdAiTaskType.Idle:
                 {
                     character.SetIdle();
                     break;
                 }
-            case CrowdAITaskType.FindOpenSeat:
+            case CrowdAiTaskType.FindOpenSeat:
                 {
                     if (!character.IsSeated())
                     {
-                        var openChairs = area.GetUnnamedFurnitureProps().Where(chair => chair is FurnitureProp furniture && !furniture.Occupied
-                            && (!_chairMap.ContainsKey(chair.GetInstanceId()) || !_chairMap[chair.GetInstanceId()]));
-                        if (openChairs.Any())
+                        var openChairs = area.GetUnnamedFurnitureProps().Where(chair => chair is FurnitureProp
                         {
-                            var chair = openChairs.MinBy(x => x.GlobalPosition.DistanceTo(character.GlobalPosition));
+                            Occupied: false
+                        } && (!_chairMap.ContainsKey(chair.GetInstanceId()) || !_chairMap[chair.GetInstanceId()]));
+                        var staticBody2Ds = openChairs.ToList();
+                        if (staticBody2Ds.Count != 0)
+                        {
+                            var chair = staticBody2Ds.MinBy(x => x.GlobalPosition.DistanceTo(character.GlobalPosition));
                             _chairMap[chair.GetInstanceId()] = true;
                             character.WalkToPoint(chair.GlobalPosition, () => character.SitOn((Prop) chair), speed: WalkSpeed);
                             state.OnComplete = () => _chairMap[chair.GetInstanceId()] = false;
@@ -135,19 +136,19 @@ public partial class CrowdAIDirector : Resource
                     }
                     break;
                 }
-            case CrowdAITaskType.TalkToPartner:
+            case CrowdAiTaskType.TalkToPartner:
                 {
                     // Do not interrupt current conversations.
                     var possibleConversationPartners = _managedCharacters.Where(c =>
                     {
                         var t = GetTask(c.GetInstanceId());
-                        return t.Type != CrowdAITaskType.TalkToPartner || _states[c.GetInstanceId()].RemainingDuration <= 0.0f;
+                        return t.Type != CrowdAiTaskType.TalkToPartner || _states[c.GetInstanceId()].RemainingDuration <= 0.0f;
                     }).ToList();
                     if (possibleConversationPartners.Count > 0)
                     {
                         int partnerIndex = _random.Next(0, possibleConversationPartners.Count);
                         Character partnerInstance = possibleConversationPartners[partnerIndex];
-                        CrowdAICharacterState partnerState = GetState(partnerInstance.GetInstanceId());
+                        CrowdAiCharacterState partnerState = GetState(partnerInstance.GetInstanceId());
                         // Don't pick ourselves as a conversation partner
                         if (partnerInstance.GetInstanceId().Equals(character.GetInstanceId()))
                         {
@@ -172,17 +173,17 @@ public partial class CrowdAIDirector : Resource
 
                     break;
                 }
-            case CrowdAITaskType.FollowCrowdFlow:
+            case CrowdAiTaskType.FollowCrowdFlow:
                 {
                     var randomField = area.FlowFields[task.Tag];
                     var flow = randomField.SampleFlowField(area.ToLocal(character.GlobalPosition));
                     character.WalkToPoint(character.GlobalPosition + flow.Normalized() * WalkSpeed, () =>
                     {
-                        var state = GetState(character.GetInstanceId());
-                        StartTask(new CrowdAITask
+                        var characterState = GetState(character.GetInstanceId());
+                        StartTask(new CrowdAiTask
                         {
-                            Type = CrowdAITaskType.FollowCrowdFlow,
-                            Duration = state.RemainingDuration,
+                            Type = CrowdAiTaskType.FollowCrowdFlow,
+                            Duration = characterState.RemainingDuration,
                             Tag = task.Tag
                         }, character, area);
                         if (!area.CheckBounds(character.Position))
@@ -192,8 +193,6 @@ public partial class CrowdAIDirector : Resource
                     }, 20.0f);
                     break;
                 }
-            default:
-                break;
         }
 
         SetState(character.GetInstanceId(), state);

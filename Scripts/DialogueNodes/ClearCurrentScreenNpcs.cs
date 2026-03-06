@@ -1,5 +1,6 @@
 using Godot;
 using STGDemoScene1.Addons.Edi.Scripts;
+using STGDemoScene1.Scripts.Systems;
 using System;
 
 namespace STGDemoScene1.Scripts.DialogueNodes;
@@ -10,8 +11,7 @@ public partial class ClearCurrentScreenNpcs : DialogueAction
 {
     public override void Execute(Action onComplete)
     {
-        var masterScene = (Godot.Engine.GetMainLoop() as SceneTree).CurrentScene as MasterScene;
-        var currentScene = masterScene.GetCurrentScreen();
+        var currentScene = SceneSystem.GetMasterScene().GetCurrentScreen();
         currentScene.ClearNpcs();
     }
 }

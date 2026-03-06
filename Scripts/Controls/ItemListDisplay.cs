@@ -7,7 +7,7 @@ namespace STGDemoScene1.Scripts.Controls;
 
 public partial class ItemListDisplay : PanelContainer
 {
-    protected readonly List<ItemDisplay> _displayedItems = [];
+    private readonly List<ItemDisplay> _displayedItems = [];
 
     private VBoxContainer _container;
     private Button _closeButton;
@@ -54,7 +54,7 @@ public partial class ItemListDisplay : PanelContainer
         }
     }
 
-    public bool ClosePressed() => _closeButton.IsPressed();
+    private bool ClosePressed() => _closeButton.IsPressed();
 
     private void OnChildSelected(Item item) => OnItemSelected?.Invoke(item);
 }

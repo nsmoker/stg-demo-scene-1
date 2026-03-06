@@ -13,10 +13,11 @@ public partial class InventoryDisplay : Panel
 
     private ItemListDisplay _itemListDisplay;
 
-    public string EquipmentId;
+    private string _equipmentId;
 
     private string _currentEntity = "";
-    public string CurrentEntity
+
+    private string CurrentEntity
     {
         get => _currentEntity;
         set
@@ -124,7 +125,7 @@ public partial class InventoryDisplay : Panel
 
     private void OnEquipSetChanged(string id, EquipmentSet equipmentSet)
     {
-        if (id == EquipmentId)
+        if (id == _equipmentId)
         {
             _armorButton.SetItem(equipmentSet.Armor);
             _weaponButton.SetItem(equipmentSet.Weapon);

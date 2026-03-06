@@ -4,9 +4,9 @@ namespace STGDemoScene1.Scripts.Controls;
 
 public partial class AbilityMenu : Control
 {
-    public TextureButton _activationButton;
+    private TextureButton _activationButton;
 
-    private int _currentIndex = 0;
+    private int _currentIndex;
 
     public override void _Ready()
     {

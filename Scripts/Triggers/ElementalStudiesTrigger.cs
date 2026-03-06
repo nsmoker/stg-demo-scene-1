@@ -41,7 +41,7 @@ public partial class ElementalStudiesTrigger : Area2D
         _collider = GetNode<CollisionShape2D>("CollisionShape2D");
     }
 
-    public void OnBodyEntered(Node2D body)
+    private void OnBodyEntered(Node2D body)
     {
         if (body is Player && QuestSystem.TryGetQuest(IntroQuest.ResourcePath, out Quest introQuest) && introQuest.CurrentStage < 2)
         {
@@ -51,7 +51,7 @@ public partial class ElementalStudiesTrigger : Area2D
         }
     }
 
-    public void OnBodyExited(Node2D body)
+    private void OnBodyExited(Node2D body)
     {
         if (body is Player && !_collider.Shape.GetRect().HasPoint(body.GlobalPosition))
         {
@@ -67,9 +67,9 @@ public partial class ElementalStudiesTrigger : Area2D
         }
     }
 
-    public void OnCombatAttack(AttackEvent e)
+    private void OnCombatAttack(AttackEvent e)
     {
-        if (e.target.CharacterData.ResourcePath.Equals(Player.ResourcePath))
+        if (e.Target.CharacterData.ResourcePath.Equals(Player.ResourcePath))
         {
             _ = QuestSystem.TryGetQuest(IntroQuest.ResourcePath, out Quest introQuest);
             if (introQuest.CurrentStage < 3)
@@ -80,5 +80,5 @@ public partial class ElementalStudiesTrigger : Area2D
         }
     }
 
-    public void OnCharacterDeath(DeathEvent e) => DialogueSystem.StartDialogue(DeathConversation, 0);
+    private void OnCharacterDeath(DeathEvent e) => DialogueSystem.StartDialogue(DeathConversation, 0);
 }

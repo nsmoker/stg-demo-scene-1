@@ -8,9 +8,9 @@ namespace STGDemoScene1.Addons.Edi.Scripts;
 [GlobalClass]
 public abstract partial class DialogueAction : Resource
 {
-    protected static Player GetPlayerNode()
+    private static Player GetPlayerNode()
     {
-        Node root = ((SceneTree) Godot.Engine.GetMainLoop()).CurrentScene;
+        Node root = ((SceneTree) Engine.GetMainLoop()).CurrentScene;
         return root.GetNode<Player>("Player");
     }
 

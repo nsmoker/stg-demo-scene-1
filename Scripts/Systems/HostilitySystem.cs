@@ -15,14 +15,7 @@ public static class HostilitySystem
     {
         if (s_hostilityOverrides.TryGetValue(entity1.ResourcePath, out var overrides))
         {
-            if (hostile)
-            {
-                _ = overrides.Add(entity2.ResourcePath);
-            }
-            else
-            {
-                _ = overrides.Remove(entity2.ResourcePath);
-            }
+            _ = hostile ? overrides.Add(entity2.ResourcePath) : overrides.Remove(entity2.ResourcePath);
         }
         else if (hostile)
         {

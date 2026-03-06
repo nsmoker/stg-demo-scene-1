@@ -15,7 +15,7 @@ public partial class Ability : Resource
     [Export]
     public string Description = "Ability Description";
     [Export]
-    public int Cooldown = 0;
+    public int Cooldown;
     [Export]
     public float ProjectileSpeed = 150.0f;
     [Export]
@@ -35,43 +35,45 @@ public partial class Ability : Resource
     [Export]
     public Texture2D TargetingSprite;
     [Export]
-    public bool TargetingIsAnimated = false;
+    public bool TargetingIsAnimated;
 
-    public virtual void Activate(Character user, Character target, Vector2 SpawnPoint, Vector2 TargetPoint, Action AnimationCallback)
+    public void Activate(Character user, Character target, Vector2 spawnPoint, Vector2 targetPoint, Action animationCallback)
     {
         if (ProjectileScene != null)
         {
             Projectile projectileInstance = ProjectileScene.Instantiate<Projectile>();
-            Vector2 direction = TargetPoint - user.GlobalPosition;
-            projectileInstance.Initialize(direction, target != null ? target.GetInstanceId() : 0, ProjectileSpeed);
+            Vector2 direction = targetPoint - user.GlobalPosition;
+            projectileInstance.Initialize(direction, target?.GetInstanceId() ?? 0, ProjectileSpeed);
             user.GetParent().AddChild(projectileInstance);
-            projectileInstance.GlobalPosition = SpawnPoint;
-            projectileInstance.OnHit += () => OnProjectileHit(user, target, TargetPoint);
-            projectileInstance.OnHit += AnimationCallback;
+            projectileInstance.GlobalPosition = spawnPoint;
+            projectileInstance.OnHit += () => OnProjectileHit(user, target, targetPoint);
+            projectileInstance.OnHit += animationCallback;
         }
         else
         {
-            OnProjectileHit(user, target, TargetPoint);
+            OnProjectileHit(user, target, targetPoint);
         }
     }
 
-    public virtual void OnProjectileHit(Character user, Character target, Vector2 Position)
+    protected virtual void OnProjectileHit(Character user, Character target, Vector2 position)
     {
         if (ContactDamage != null)
         {
             CombatSystem.AttemptAttack(user, target, ContactDamage);
         }
 
-        if (AreaEffectScene != null)
+        if (AreaEffectScene == null)
         {
-            AreaEffect areaEffectInstance = AreaEffectScene.Instantiate<AreaEffect>();
-            areaEffectInstance.Position = Position;
-            areaEffectInstance.SetCaster(user);
-            areaEffectInstance.SetDamageRoll(AreaDamage);
-            areaEffectInstance.SetDuration(AreaDuration);
-            SceneSystem.GetMasterScene().AddChild(areaEffectInstance);
-            CombatSystem.PassTurn(user);
+            return;
         }
+
+        AreaEffect areaEffectInstance = AreaEffectScene.Instantiate<AreaEffect>();
+        areaEffectInstance.Position = position;
+        areaEffectInstance.SetCaster(user);
+        areaEffectInstance.SetDamageRoll(AreaDamage);
+        areaEffectInstance.SetDuration(AreaDuration);
+        SceneSystem.GetMasterScene().AddChild(areaEffectInstance);
+        CombatSystem.PassTurn(user);
     }
 }
 

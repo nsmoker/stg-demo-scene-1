@@ -14,8 +14,6 @@ public partial class InteractableCharacter : Character, IDialogueInteractable, I
 
     private Sprite2D _badgeSprite;
 
-    public override void _EnterTree() => base._EnterTree();
-
     public override void _Ready()
     {
         base._Ready();

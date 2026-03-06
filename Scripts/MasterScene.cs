@@ -5,6 +5,7 @@ using STGDemoScene1.Scripts.Controls;
 using STGDemoScene1.Scripts.Resources;
 using STGDemoScene1.Scripts.Systems;
 using System.Collections.Generic;
+using FactionTable = STGDemoScene1.Scripts.Resources.Factions.FactionTable;
 
 namespace STGDemoScene1.Scripts;
 
@@ -80,13 +81,13 @@ public partial class MasterScene : Node2D
 
     public void SetJournalEntries(List<Quest> quests) => _journalDisplay.SetQuestEntries(quests);
 
-    public bool ToggleExitMenu()
+    private bool ToggleExitMenu()
     {
         _exitMenu.Visible = !_exitMenu.Visible;
         return _exitMenu.Visible;
     }
 
-    public void OnExitPressed() => GetTree().Quit();
+    private void OnExitPressed() => GetTree().Quit();
 
     public void SetAbilityBarVisible(bool visible) => _abilityBar.Visible = visible;
 

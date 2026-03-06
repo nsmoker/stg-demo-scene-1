@@ -1,7 +1,6 @@
 using Godot;
-using STGDemoScene1.Scripts.Resources.Factions;
 
-namespace STGDemoScene1.Scripts.Resources;
+namespace STGDemoScene1.Scripts.Resources.Factions;
 
 [Tool]
 [GlobalClass]
