@@ -12,14 +12,6 @@ using System.Linq;
 
 namespace STGDemoScene1.Scripts.Characters;
 
-public struct CoverCheckResult
-{
-    public int CoverLevelNorth;
-    public int CoverLevelSouth;
-    public int CoverLevelEast;
-    public int CoverLevelWest;
-};
-
 public class StackStatus
 {
     public int NumStacks;
@@ -573,32 +565,7 @@ public partial class Character : CharacterBody2D
 
     public CoverCheckResult UpdateCoverState(PhysicsDirectSpaceState2D physicsState)
     {
-        var ret = new CoverCheckResult();
-        var rayNorth = PhysicsRayQueryParameters2D.Create(GlobalPosition, GlobalPosition + new Vector2(0.0f, -30.0f), 1 << (22 - 1));
-        var raySouth = PhysicsRayQueryParameters2D.Create(GlobalPosition, GlobalPosition + new Vector2(0.0f, 30.0f), 1 << (22 - 1));
-        var rayWest = PhysicsRayQueryParameters2D.Create(GlobalPosition, GlobalPosition + new Vector2(-30.0f, 0.0f), 1 << (22 - 1));
-        var rayEast = PhysicsRayQueryParameters2D.Create(GlobalPosition, GlobalPosition + new Vector2(30.0f, 0.0f), 1 << (22 - 1));
-        var northResult = physicsState.IntersectRay(rayNorth);
-        if (northResult.Count > 0)
-        {
-            ret.CoverLevelNorth = 1;
-        }
-        var southResult = physicsState.IntersectRay(raySouth);
-        if (southResult.Count > 0)
-        {
-            ret.CoverLevelSouth = 1;
-        }
-        var eastResult = physicsState.IntersectRay(rayEast);
-        if (eastResult.Count > 0)
-        {
-            ret.CoverLevelEast = 1;
-        }
-        var westResult = physicsState.IntersectRay(rayWest);
-        if (westResult.Count > 0)
-        {
-            ret.CoverLevelWest = 1;
-        }
-
+        var ret = CoverSystem.CheckCover(GlobalPosition, physicsState);
         _coverState = ret;
         _coverBadge.Visible = IsTakingCover();
 
@@ -778,5 +745,8 @@ public partial class Character : CharacterBody2D
         QueueRedraw();
     }
 
+    public Character GetClosestEnemy() =>
+        SenseArea.GetOverlappingBodies()
+            .OfType<Character>().FirstOrDefault(x => HostilitySystem.GetHostility(x.CharacterData, CharacterData));
 }
 

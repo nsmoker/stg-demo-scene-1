@@ -205,14 +205,14 @@ AbilityButtonScene = ExtResource("10_ko0ge")
 position = Vector2(3, 378)
 ToHitFont = SubResource("SystemFont_oiltp")
 
-[node name="HumanCombatController" type="Node" parent="." unique_id=1525944130]
+[node name="HumanCombatController" type="Node2D" parent="." unique_id=959709568]
 script = ExtResource("10_1nsqu")
 PathFont = SubResource("SystemFont_1nsqu")
 
-[node name="HumanNavController" type="Node" parent="." unique_id=1261220662]
+[node name="HumanNavController" type="Node2D" parent="." unique_id=175809298]
 script = ExtResource("11_rbe05")
 
-[node name="ZombieAiCombatController" type="Node" parent="." unique_id=1167158590]
+[node name="ZombieAiCombatController" type="Node2D" parent="." unique_id=1260215160]
 script = ExtResource("12_5hl87")
 
 [node name="DiningEntrywaySceneTest" parent="." unique_id=1608461539 instance=ExtResource("14_1nsqu")]

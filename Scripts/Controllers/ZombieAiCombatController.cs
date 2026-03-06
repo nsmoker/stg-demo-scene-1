@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace STGDemoScene1.Scripts.Controllers;
 
-public partial class ZombieAiCombatController : Node
+public partial class ZombieAiCombatController : Node2D
 {
     private class PawnState
     {
@@ -62,62 +62,81 @@ public partial class ZombieAiCombatController : Node
         }
     }
 
-    private static void TryMovePawn(PawnState pState)
+    private static List<Vector2> GeneratePossibleMoves(Character pawn)
     {
+        Vector2 topLeft = pawn.GlobalPosition + new Vector2(-1, -1).Normalized() * pawn.CharacterData.MovementRange;
+        Vector2 bottomRight = pawn.GlobalPosition + new Vector2(1, 1).Normalized() * pawn.CharacterData.MovementRange;
+        List<Vector2> ret = [];
+        for (float x = topLeft.X; x <= bottomRight.X; x += 8.0f)
+        {
+            for (float y = topLeft.Y; y <= bottomRight.Y; y += 8.0f)
+            {
+                var p =  new Vector2(x, y);
+                if (NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), pawn.GlobalPosition, p, false).Length > 0)
+                {
+                    ret.Add(p);
+                }
+            }
+        }
+
+        return ret;
+    }
+
+    private void TryMovePawn(PawnState pState)
+    {
+        if (pState.Attacking)
+        {
+            return;
+        }
         var pawn = pState.Pawn;
         GD.Print($"Trying to move {pawn.CharacterData.CharacterName}.");
-        List<Character> enemiesInSense =
-        [
-            .. pawn.GetSenseArea().GetOverlappingBodies().Where(body => body is Character).Cast<Character>()
-                .Where(c => HostilitySystem.GetHostility(pawn.CharacterData, c.CharacterData))
-        ];
-        var closestEnemy = enemiesInSense.OrderBy(c => c.GlobalPosition.DistanceTo(pawn.GlobalPosition))
-            .FirstOrDefault();
-        if (closestEnemy != null)
+        var closestEnemy = pawn.GetClosestEnemy();
+        if (closestEnemy != null &&
+            closestEnemy.GlobalPosition.DistanceTo(pawn.GlobalPosition) <= pawn.CharacterData.AttackRange)
         {
             GD.Print($"Selected target {closestEnemy.CharacterData.CharacterName}.");
-            var distance = closestEnemy.GlobalPosition.DistanceTo(pawn.GlobalPosition);
-            if (distance > pawn.CharacterData.AttackRange)
-            {
-                GD.Print($"Target {distance}m away, out of range of {pawn.CharacterData.AttackRange}m. Pursuing.");
-                var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(),
-                    pawn.GlobalPosition, closestEnemy.GlobalPosition, true);
-                foreach (var pathNode in path)
-                {
-                    GD.Print(pathNode.ToString());
-                }
-
-                if (path.Length > 0)
-                {
-                    pawn.IssueCombatMove(Math.TrimPath(pawn.GlobalPosition, path, pawn.MovementRange));
-                }
-                else
-                {
-                    GD.Print("Pathing failed. Skipping turn.");
-                    CombatSystem.PassTurn(pawn);
-                }
-            }
-            else if (pState.Attacking)
-            {
-                GD.Print("Already attacking. Taking no action.");
-            }
-            else if (!pState.Attacking)
-            {
-                GD.Print("In range. Attacking.");
-                pState.Attacking = true;
-                // In range, attack.
-                pawn.BeginAttackAnim(
-                    pawn.GlobalPosition.DirectionTo(closestEnemy.Collider.GlobalPosition),
-                    () => pawn.BasicAttackAbility.Activate(pawn, closestEnemy,
-                        pawn.GetProjectileSpawnPoint(), closestEnemy.Collider.GlobalPosition,
-                        () => pState.Attacking = false));
-            }
+            GD.Print("In range. Attacking.");
+            pState.Attacking = true;
+            pawn.BeginAttackAnim(
+                pawn.GlobalPosition.DirectionTo(closestEnemy.Collider.GlobalPosition),
+                () => pawn.BasicAttackAbility.Activate(pawn, closestEnemy,
+                    pawn.GetProjectileSpawnPoint(), closestEnemy.Collider.GlobalPosition,
+                    () => pState.Attacking = false));
         }
         else
         {
-            GD.Print("No enemies in range. Skipping turn.");
-            CombatSystem.PassTurn(pawn);
+            var moves = GeneratePossibleMoves(pawn);
+            var myPrioritiesInLife = pawn.CharacterData.MovePriorities;
+            foreach (var priority in myPrioritiesInLife)
+            {
+                var maxScore = 0.0f;
+                foreach (var move in moves)
+                {
+                    var score = priority.ScorePosition(move, pawn, GetWorld2D().GetDirectSpaceState());
+                    maxScore = Mathf.Max(maxScore, score);
+                }
+
+                moves = [..moves.Where(x => priority.ScorePosition(x, pawn, GetWorld2D().GetDirectSpaceState()) >= maxScore)];
+            }
+            var maxMove = closestEnemy == null ? moves.OrderBy(GlobalPosition.DistanceTo).Last() : moves.OrderBy(closestEnemy.GlobalPosition.DistanceTo).First();
+
+            var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(),
+                pawn.GlobalPosition, maxMove, true);
+            foreach (var pathNode in path)
+            {
+                GD.Print(pathNode.ToString());
+            }
+            if (path.Length > 0)
+            {
+                pawn.IssueCombatMove(Math.TrimPath(pawn.GlobalPosition, path, pawn.MovementRange));
+            }
+            else
+            {
+                GD.Print("Pathing failed. Skipping turn.");
+                CombatSystem.PassTurn(pawn);
+            }
         }
+
 
         pawn.QueueRedraw();
     }
