@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using STGDemoScene1.Scripts.Characters;
 using STGDemoScene1.Scripts.Systems;
 using System.Collections.Generic;

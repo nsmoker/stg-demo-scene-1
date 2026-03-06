@@ -59,7 +59,7 @@ public partial class AreaEffect : Area2D
             {
                 Shape = _shape,
                 Transform = Transform,
-                CollisionMask =  CollisionMask,
+                CollisionMask = CollisionMask,
             };
             foreach (var result in physicsState.IntersectShape(physicsShapeQueryParameters2D))
             {

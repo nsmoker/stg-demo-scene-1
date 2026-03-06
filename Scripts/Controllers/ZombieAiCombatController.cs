@@ -71,7 +71,7 @@ public partial class ZombieAiCombatController : Node2D
         {
             for (float y = topLeft.Y; y <= bottomRight.Y; y += 8.0f)
             {
-                var p =  new Vector2(x, y);
+                var p = new Vector2(x, y);
                 if (NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), pawn.GlobalPosition, p, false).Length > 0)
                 {
                     ret.Add(p);
@@ -117,7 +117,7 @@ public partial class ZombieAiCombatController : Node2D
                     maxScore = Mathf.Max(maxScore, score);
                 }
 
-                moves = [..moves.Where(x => priority.ScorePosition(x, pawn, enemiesInRange, GetWorld2D().GetDirectSpaceState()) >= maxScore)];
+                moves = [.. moves.Where(x => priority.ScorePosition(x, pawn, enemiesInRange, GetWorld2D().GetDirectSpaceState()) >= maxScore)];
             }
             var maxMove = closestEnemy == null ? moves.OrderBy(GlobalPosition.DistanceTo).Last() : moves.OrderBy(closestEnemy.GlobalPosition.DistanceTo).First();
 

@@ -742,8 +742,7 @@ public partial class Character : CharacterBody2D
         QueueRedraw();
     }
 
-    public List<Character> GetEnemiesInSense() => SenseArea.GetOverlappingBodies().OfType<Character>()
-        .Where(c => HostilitySystem.GetHostility(c.CharacterData, CharacterData)).ToList();
+    public List<Character> GetEnemiesInSense() => [.. SenseArea.GetOverlappingBodies().OfType<Character>().Where(c => HostilitySystem.GetHostility(c.CharacterData, CharacterData))];
 
     public Character GetClosestEnemy() =>
         SenseArea.GetOverlappingBodies()

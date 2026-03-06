@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/Resources/PatrolLeg.cs" id="4_8e6xs"]
 [ext_resource type="Script" uid="uid://crgny1nnuhmds" path="res://Scripts/AI/MovePriority.cs" id="4_wp58j"]
 [ext_resource type="Script" uid="uid://chq8866nk4oq4" path="res://Scripts/AI/IsCover.cs" id="5_8e6xs"]
+[ext_resource type="Script" uid="uid://bfmeji5ep73gs" path="res://Scripts/AI/DontStandInAoe.cs" id="5_d620f"]
 [ext_resource type="Script" uid="uid://5hcjkamye5ns" path="res://Scripts/Items/AttributeBonus.cs" id="5_yj2cb"]
 [ext_resource type="Script" uid="uid://c54dlxcx6qrkd" path="res://Scripts/Items/SkillBonus.cs" id="6_d620f"]
 [ext_resource type="Script" uid="uid://ktuwspy67kj8" path="res://Scripts/AI/CanAttackEnemy.cs" id="6_yj2cb"]
@@ -25,6 +26,10 @@ script = ExtResource("1_7hk7w")
 
 [sub_resource type="Resource" id="Resource_8uf12"]
 script = ExtResource("2_wp58j")
+
+[sub_resource type="Resource" id="Resource_txfrr"]
+script = ExtResource("5_d620f")
+metadata/_custom_type_script = "uid://bfmeji5ep73gs"
 
 [sub_resource type="Resource" id="Resource_d620f"]
 script = ExtResource("5_8e6xs")
@@ -238,5 +243,5 @@ Speed = 50.0
 StartingEquipment = SubResource("Resource_fmsty")
 MovementRange = 100.0
 AttackRange = 150
-MovePriorities = Array[ExtResource("4_wp58j")]([SubResource("Resource_d620f"), SubResource("Resource_wku0l")])
+MovePriorities = Array[ExtResource("4_wp58j")]([SubResource("Resource_txfrr"), SubResource("Resource_d620f"), SubResource("Resource_wku0l")])
 metadata/_custom_type_script = "uid://cng8hqptg2rbu"

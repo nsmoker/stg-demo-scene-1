@@ -1,5 +1,4 @@
-﻿using Godot;
-using STGDemoScene1.Scripts.AI;
+using Godot;
 
 namespace STGDemoScene1.Scripts.Systems;
 
