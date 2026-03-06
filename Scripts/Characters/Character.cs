@@ -481,6 +481,8 @@ public partial class Character : CharacterBody2D
         {
             _ = effect.OnStackRemove(this);
             _statusEffects[effect].NumStacks -= 1;
+            _statusEffects[effect].StackTimers =
+                [.. _statusEffects[effect].StackTimers.Where(CombatSystem.TimerActive)];
         }, this);
         _statusEffects[effect].StackTimers.Add(timer);
     }

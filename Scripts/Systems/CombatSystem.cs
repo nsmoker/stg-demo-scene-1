@@ -193,6 +193,8 @@ public static class CombatSystem
     /// <param name="handle">A handle to the timer to clear.</param>
     public static void RemoveTimer(CombatTimerHandle handle) => s_combatTimers = [.. s_combatTimers.Where(x => x.Id != handle._id)];
 
+    public static bool TimerActive(CombatTimerHandle handle) => s_combatTimers.Any(x => x.Id == handle._id);
+
     private static void TriggerTimers(Side side)
     {
         foreach (var timer in from timer in s_combatTimers let timer1 = timer where side.Any(x => x == timer1.RelativeTo) select timer)
