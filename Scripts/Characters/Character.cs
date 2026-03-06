@@ -39,22 +39,24 @@ public class Push
 [GlobalClass]
 public partial class Character : CharacterBody2D
 {
-    public static Vector2[] TrimPath(Vector2 start, Vector2[] path, float maxLength)
+    private static Vector2[] TrimPath(Vector2 start, Vector2[] path, float maxLength)
     {
         Vector2 loc = start;
         float remainingLength = maxLength;
         List<Vector2> trimmedPath = [];
         foreach (Vector2 p in path)
         {
-            if (remainingLength > 0)
+            if (!(remainingLength > 0))
             {
-                float length = Mathf.Min((p - start).Length(), remainingLength);
-                remainingLength -= length;
-                Vector2 targetVector = p - loc;
-                Vector2 newLoc = loc + targetVector.Normalized() * length;
-                trimmedPath.Add(newLoc);
-                loc = newLoc;
+                continue;
             }
+
+            float length = Mathf.Min((p - start).Length(), remainingLength);
+            remainingLength -= length;
+            Vector2 targetVector = p - loc;
+            Vector2 newLoc = loc + targetVector.Normalized() * length;
+            trimmedPath.Add(newLoc);
+            loc = newLoc;
         }
 
         return [.. trimmedPath];
@@ -74,7 +76,7 @@ public partial class Character : CharacterBody2D
     }
 
     public CollisionShape2D Collider;
-    protected AnimationPlayer Anim;
+    private AnimationPlayer _anim;
     public NavigationObstacle2D NavObstacle;
 
     [Export]
@@ -94,7 +96,7 @@ public partial class Character : CharacterBody2D
 
     private Marker2D _projectileSpawnPoint;
 
-    public Sprite2D CoverBadge;
+    private Sprite2D _coverBadge;
 
     private readonly Dictionary<StatusEffect, StackStatus> _statusEffects = [];
 
@@ -103,18 +105,18 @@ public partial class Character : CharacterBody2D
 
     private StatusEffectContainer _statusEffectContainer;
 
-    public int Strength => CharacterData.BaseAttributes.Strength + GetEquipmentSet().ComputeAttributeBonus().StrengthBonus;
-    public int Endurance => CharacterData.BaseAttributes.Endurance + GetEquipmentSet().ComputeAttributeBonus().EnduranceBonus;
-    public int Dexterity => CharacterData.BaseAttributes.Dexterity + GetEquipmentSet().ComputeAttributeBonus().DexterityBonus;
-    public int Intelligence => CharacterData.BaseAttributes.Intelligence + GetEquipmentSet().ComputeAttributeBonus().IntelligenceBonus;
-    public int Wisdom => CharacterData.BaseAttributes.Wisdom + GetEquipmentSet().ComputeAttributeBonus().WisdomBonus;
-    public int Charisma => CharacterData.BaseAttributes.Charisma + GetEquipmentSet().ComputeAttributeBonus().CharismaBonus;
-    public int Willpower => CharacterData.BaseAttributes.Willpower + GetEquipmentSet().ComputeAttributeBonus().WillpowerBonus;
+    private int Strength => CharacterData.BaseAttributes.Strength + GetEquipmentSet().ComputeAttributeBonus().StrengthBonus;
+    private int Endurance => CharacterData.BaseAttributes.Endurance + GetEquipmentSet().ComputeAttributeBonus().EnduranceBonus;
+    private int Dexterity => CharacterData.BaseAttributes.Dexterity + GetEquipmentSet().ComputeAttributeBonus().DexterityBonus;
+    private int Intelligence => CharacterData.BaseAttributes.Intelligence + GetEquipmentSet().ComputeAttributeBonus().IntelligenceBonus;
+    private int Wisdom => CharacterData.BaseAttributes.Wisdom + GetEquipmentSet().ComputeAttributeBonus().WisdomBonus;
+    private int Charisma => CharacterData.BaseAttributes.Charisma + GetEquipmentSet().ComputeAttributeBonus().CharismaBonus;
+    private int Willpower => CharacterData.BaseAttributes.Willpower + GetEquipmentSet().ComputeAttributeBonus().WillpowerBonus;
 
     public Sprite2D ActionPip1;
     public Sprite2D ActionPip2;
 
-    public AttributeSet FinalAttributes => new()
+    private AttributeSet FinalAttributes => new()
     {
         Strength = Strength,
         Endurance = Endurance,
@@ -125,24 +127,24 @@ public partial class Character : CharacterBody2D
         Willpower = Willpower,
     };
 
-    private static int ComputeAttributeMod(int value) => (int) Math.Floor(((double) value - 10.0) / 2.0);
+    private static int ComputeAttributeMod(int value) => (int) Math.Floor((value - 10.0) / 2.0);
 
-    public int StrengthMod => ComputeAttributeMod(Strength);
-    public int EnduranceMod => ComputeAttributeMod(Endurance);
-    public int DexterityMod => ComputeAttributeMod(Dexterity);
-    public int IntelligenceMod => ComputeAttributeMod(Intelligence);
-    public int WisdomMod => ComputeAttributeMod(Wisdom);
-    public int CharismaMod => ComputeAttributeMod(Charisma);
-    public int WillpowerMod => ComputeAttributeMod(Willpower);
+    private int StrengthMod => ComputeAttributeMod(Strength);
+    private int EnduranceMod => ComputeAttributeMod(Endurance);
+    private int DexterityMod => ComputeAttributeMod(Dexterity);
+    private int IntelligenceMod => ComputeAttributeMod(Intelligence);
+    private int WisdomMod => ComputeAttributeMod(Wisdom);
+    private int CharismaMod => ComputeAttributeMod(Charisma);
+    private int WillpowerMod => ComputeAttributeMod(Willpower);
 
     private int _patrolLegIndex;
-    private double _patrolLegProgress = 0;
-    private bool _sitting = false;
+    private double _patrolLegProgress;
+    private bool _sitting;
     private bool _collisionOverride = true;
     private FurnitureProp _occupiedProp;
-    protected Area2D _interactableRange;
+    private Area2D _interactableRange;
 
-    public List<IInteractable> GetInteractablesInRange() => [.. _interactableRange.GetOverlappingBodies().ToList().Where(n => n is IInteractable).Select(n => n as IInteractable)];
+    private List<IInteractable> GetInteractablesInRange() => [.. _interactableRange.GetOverlappingBodies().ToList().OfType<IInteractable>()];
 
     public IInteractable GetClosestInteractable()
     {
@@ -176,9 +178,9 @@ public partial class Character : CharacterBody2D
         Talking
     }
 
-    protected AnimState _currentAnimState = AnimState.Idle;
+    protected AnimState CurrentAnimState = AnimState.Idle;
 
-    protected Sprite2D _mainSprite;
+    protected Sprite2D MainSprite;
 
     private CoverCheckResult _coverState = new()
     {
@@ -188,13 +190,13 @@ public partial class Character : CharacterBody2D
         CoverLevelWest = 0,
     };
 
-    protected Area2D _senseArea;
+    protected Area2D SenseArea;
 
-    protected Label _healthLabel;
+    protected Label HealthLabel;
 
     private Action _onAttackComplete;
 
-    protected List<Push> _currentPushes = [];
+    protected List<Push> CurrentPushes = [];
 
     protected class DialogueState : ICharacterState
     {
@@ -241,8 +243,8 @@ public partial class Character : CharacterBody2D
     private class CombatState : ICharacterState
     {
         private readonly Character _c;
-        private bool _hovered = false;
-        private bool _pawnAttacking = false;
+        private bool _hovered;
+        private bool _pawnAttacking;
         public CombatState(Character character)
         {
             _c = character;
@@ -265,7 +267,7 @@ public partial class Character : CharacterBody2D
                     var distance = closestEnemy.GlobalPosition.DistanceTo(character.GlobalPosition);
                     if (distance > character.CharacterData.AttackRange)
                     {
-                        var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), character.GlobalPosition, closestEnemy.GlobalPosition, true, 0x1u); var len = ComputePathLength(path, character.GlobalPosition);
+                        var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), character.GlobalPosition, closestEnemy.GlobalPosition, true);
                         if (path.Length == 0)
                         {
                             var targetVec = closestEnemy.GlobalPosition - character.GlobalPosition;
@@ -298,7 +300,7 @@ public partial class Character : CharacterBody2D
         {
         }
 
-        public void OnCharacterDraw()
+        private void OnCharacterDraw()
         {
             if (_hovered)
             {
@@ -306,14 +308,14 @@ public partial class Character : CharacterBody2D
             }
         }
 
-        public void OnHover()
+        private void OnHover()
         {
             _hovered = true;
             HoverSystem.SetHovered(_c.CharacterData.ResourcePath);
             _c.QueueRedraw();
         }
 
-        public void OnHoverEnd()
+        private void OnHoverEnd()
         {
             _hovered = false;
             HoverSystem.SetUnhovered(_c.CharacterData.ResourcePath);
@@ -332,13 +334,7 @@ public partial class Character : CharacterBody2D
 
     protected class NavState(Vector2[] path, ICharacterState nextState, Action onComplete = null, float speed = -1, float tolerance = 1.0f) : ICharacterState
     {
-        private readonly ICharacterState _nextState = nextState;
-
-        private readonly Action _onComplete = onComplete;
-        private readonly Vector2[] _path = path;
-        private int _currentPoint = 0;
-        private readonly float _speed = speed;
-        private readonly float _tolerance = tolerance;
+        private int _currentPoint;
 
         public void Process(double delta, Character character)
         {
@@ -347,24 +343,24 @@ public partial class Character : CharacterBody2D
 
         public void PhysicsProcess(double delta, Character character)
         {
-            var targetPoint = _path[_currentPoint];
-            if (character.GlobalPosition.DistanceTo(targetPoint) <= _tolerance)
+            var targetPoint = path[_currentPoint];
+            if (character.GlobalPosition.DistanceTo(targetPoint) <= tolerance)
             {
-                if (_currentPoint + 1 < _path.Length)
+                if (_currentPoint + 1 < path.Length)
                 {
                     _currentPoint += 1;
                 }
                 else
                 {
                     character.SetWalkAnimState(Vector2.Zero);
-                    character.ControllerState = _nextState;
-                    _onComplete();
+                    character.ControllerState = nextState;
+                    onComplete();
                     return;
                 }
             }
 
             var targetVector = targetPoint - character.GlobalPosition;
-            var vel = targetVector.Normalized() * (_speed > 0.0f ? _speed : character.Speed);
+            var vel = targetVector.Normalized() * (speed > 0.0f ? speed : character.Speed);
             character.Velocity += vel;
             character.SetWalkAnimState(vel);
             _ = character.MoveAndSlide();
@@ -379,7 +375,7 @@ public partial class Character : CharacterBody2D
         private readonly Action _onComplete;
 
         private readonly Vector2[] _path;
-        private int _currentPoint = 0;
+        private int _currentPoint;
 
         public CombatNavState(Character character, Vector2[] path, Action onComplete = null)
         {
@@ -387,7 +383,7 @@ public partial class Character : CharacterBody2D
             _path = path;
             _onComplete = onComplete;
             HoverSystem.SetUnhovered(character.CharacterData.ResourcePath);
-            character.CoverBadge.Hide();
+            character._coverBadge.Hide();
         }
 
         public void OnTransition(Character character) { }
@@ -437,7 +433,7 @@ public partial class Character : CharacterBody2D
 
         public void PhysicsProcess(double delta, Character character)
         {
-            var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), _self.GlobalPosition, _target.GlobalPosition, true, 0x1u);
+            var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), _self.GlobalPosition, _target.GlobalPosition, true);
             var substate = new NavState([.. path.TakeLast(path.Length - 1)], _prevState, _onComplete, _speed, _tolerance);
             substate.PhysicsProcess(delta, _self);
         }
@@ -476,38 +472,39 @@ public partial class Character : CharacterBody2D
         }
         _ = effect.OnStackAdd(this);
         _statusEffects[effect].NumStacks += 1;
-        if (!effect.IsPermanent)
+        if (effect.IsPermanent)
         {
-            _statusEffects[effect].StackTimers.Add(
-                CombatSystem.CreateTimer(effect.Duration, () =>
-                {
-                    _ = effect.OnStackRemove(this);
-                    _statusEffects[effect].NumStacks -= 1;
-                }, this)
-            );
+            return;
         }
+
+        var timer = CombatSystem.CreateTimer(effect.Duration, () =>
+        {
+            _ = effect.OnStackRemove(this);
+            _statusEffects[effect].NumStacks -= 1;
+        }, this);
+        _statusEffects[effect].StackTimers.Add(timer);
     }
 
     public void RemoveStatusEffect(StatusEffect effect) => _statusEffects[effect].NumStacks -= 1;
 
     public override void _Ready()
     {
-        Anim = GetNode<AnimationPlayer>("AnimationPlayer");
-        Anim.AnimationFinished += OnAnimationFinished;
-        CoverBadge = GetNode<Sprite2D>("CoverBadge");
+        _anim = GetNode<AnimationPlayer>("AnimationPlayer");
+        _anim.AnimationFinished += OnAnimationFinished;
+        _coverBadge = GetNode<Sprite2D>("CoverBadge");
         Collider = GetNode<CollisionShape2D>("MainCollider");
         ActionPip1 = GetNode<Sprite2D>("ActionPip");
         ActionPip2 = GetNode<Sprite2D>("ActionPip2");
-        _senseArea = GetNode<Area2D>("SenseArea");
-        _mainSprite = GetNode<Sprite2D>("MainSprite");
-        _healthLabel = GetNode<Label>("HealthLabel");
+        SenseArea = GetNode<Area2D>("SenseArea");
+        MainSprite = GetNode<Sprite2D>("MainSprite");
+        HealthLabel = GetNode<Label>("HealthLabel");
         _projectileSpawnPoint = GetNode<Marker2D>("ProjectileSpawnPoint");
         _interactableRange = GetNode<Area2D>("InteractableRange");
 
         // Only hook into gameplay systems if we are a named, non-background character.
         if (IsNamedCharacter())
         {
-            _healthLabel.Text = $"{CharacterData.CurrentHitpoints} / {CharacterData.MaxHitpoints}";
+            HealthLabel.Text = $"{CharacterData.CurrentHitpoints} / {CharacterData.MaxHitpoints}";
             EquipmentSystem.SetEquipment(CharacterData.ResourcePath, CharacterData.StartingEquipment);
             FactionSystem.SetFaction(CharacterData, CharacterData.InitialFaction);
             InventorySystem.SetInventory(CharacterData.ResourcePath, [.. _initialInventory]);
@@ -519,7 +516,7 @@ public partial class Character : CharacterBody2D
             HealthSystem.DeathEventHandlers += OnDeath;
             HealthSystem.DamageEventHandlers += OnDamage;
             HostilitySystem.HostilityChangeHandlers += OnHostilityChanged;
-            _senseArea.BodyEntered += OnBodyEnteredSenseArea;
+            SenseArea.BodyEntered += OnBodyEnteredSenseArea;
             FactionSystem.FactionChangeHandlers += OnFactionChange;
             FactionSystem.FactionRelationChangeHandlers += OnFactionRelationChange;
 
@@ -537,15 +534,15 @@ public partial class Character : CharacterBody2D
     {
         ControllerState.Process(delta, this);
         UpdateAnimation();
-        UpdateUI();
+        UpdateUi();
     }
-    public void UpdateUI() => _statusEffectContainer.SetStatusEffects(_statusEffects);
+    public void UpdateUi() => _statusEffectContainer.SetStatusEffects(_statusEffects);
 
     public virtual void UpdateAnimation()
     {
         string desiredAnim;
 
-        switch (_currentAnimState)
+        switch (CurrentAnimState)
         {
             case AnimState.Idle:
                 desiredAnim = "idle";
@@ -557,11 +554,11 @@ public partial class Character : CharacterBody2D
                 desiredAnim = "walk_south";
                 break;
             case AnimState.WalkEast:
-                _mainSprite.FlipH = false;
+                MainSprite.FlipH = false;
                 desiredAnim = "walk_h";
                 break;
             case AnimState.WalkWest:
-                _mainSprite.FlipH = true;
+                MainSprite.FlipH = true;
                 desiredAnim = "walk_h";
                 break;
             case AnimState.Attack:
@@ -578,12 +575,12 @@ public partial class Character : CharacterBody2D
                 break;
         }
 
-        if (desiredAnim != Anim.CurrentAnimation && Anim.HasAnimation(desiredAnim))
+        if (desiredAnim != _anim.CurrentAnimation && _anim.HasAnimation(desiredAnim))
         {
-            Anim.Play(desiredAnim);
+            _anim.Play(desiredAnim);
         }
 
-        if (_currentAnimState != AnimState.Sitting)
+        if (CurrentAnimState != AnimState.Sitting)
         {
             SetCollision(true);
         }
@@ -592,7 +589,7 @@ public partial class Character : CharacterBody2D
     public override void _PhysicsProcess(double delta)
     {
         Velocity = Vector2.Zero;
-        foreach (var push in _currentPushes)
+        foreach (var push in CurrentPushes)
         {
             Velocity += push.Velocity;
             push.Duration -= delta;
@@ -602,7 +599,7 @@ public partial class Character : CharacterBody2D
             }
         }
         _ = MoveAndSlide();
-        _ = _currentPushes.RemoveAll(push => push.Duration <= 0);
+        _ = CurrentPushes.RemoveAll(push => push.Duration <= 0);
         Velocity = Vector2.Zero;
         ControllerState.PhysicsProcess(delta, this);
     }
@@ -666,14 +663,14 @@ public partial class Character : CharacterBody2D
     public bool MeetsEquipRequirements(Item item) => item.AttributeRequirements.MeetsRequirements(FinalAttributes) &&
                item.SkillRequirements.Proficiencies.All(CharacterData.BaseSkills.Proficiencies.Contains);
 
-    public Vector2 GetClosestOnCollSurface(Vector2 SourcePoint)
+    public Vector2 GetClosestOnCollSurface(Vector2 sourcePoint)
     {
-        _ = SourcePoint - Position;
-        var supportPoint = Collider.Shape.GetRect().GetSupport(SourcePoint);
+        _ = sourcePoint - Position;
+        var supportPoint = Collider.Shape.GetRect().GetSupport(sourcePoint);
         return supportPoint;
     }
 
-    public Area2D GetSenseArea() => _senseArea;
+    public Area2D GetSenseArea() => SenseArea;
 
     public virtual void OnBodyEnteredSenseArea(Node2D body)
     {
@@ -697,7 +694,7 @@ public partial class Character : CharacterBody2D
     {
         if (e.participants.Contains(this))
         {
-            _healthLabel.Show();
+            HealthLabel.Show();
             ControllerState = SetCombatState();
         }
     }
@@ -706,7 +703,7 @@ public partial class Character : CharacterBody2D
     {
         if (c == this)
         {
-            _healthLabel.Show();
+            HealthLabel.Show();
             ControllerState = SetCombatState();
         }
     }
@@ -729,13 +726,13 @@ public partial class Character : CharacterBody2D
         {
             ControllerState = new PatrolState();
         }
-        CoverBadge.Visible = false;
+        _coverBadge.Visible = false;
         if (ActionPip1 != null && ActionPip2 != null)
         {
             ActionPip1.Visible = false;
             ActionPip2.Visible = false;
         }
-        _healthLabel.Hide();
+        HealthLabel.Hide();
         QueueRedraw();
     }
 
@@ -778,7 +775,7 @@ public partial class Character : CharacterBody2D
         }
 
         _coverState = ret;
-        CoverBadge.Visible = IsTakingCover();
+        _coverBadge.Visible = IsTakingCover();
 
         return ret;
     }
@@ -788,14 +785,14 @@ public partial class Character : CharacterBody2D
         string recipientId = e.recipient.CharacterData.ResourcePath;
         if (recipientId == CharacterData.ResourcePath)
         {
-            _healthLabel.Text = $"{HealthSystem.GetCurrentHitpoints(recipientId)} / {CharacterData.MaxHitpoints}";
+            HealthLabel.Text = $"{HealthSystem.GetCurrentHitpoints(recipientId)} / {CharacterData.MaxHitpoints}";
         }
     }
 
-    public virtual void OnHostilityChanged(CharacterData _, CharacterData _1, bool _2) => _senseArea.GetOverlappingBodies().ToList().ForEach(OnBodyEnteredSenseArea);
+    public virtual void OnHostilityChanged(CharacterData _, CharacterData _1, bool _2) => SenseArea.GetOverlappingBodies().ToList().ForEach(OnBodyEnteredSenseArea);
 
-    public virtual void OnFactionRelationChange(Faction _, Faction _1) => _senseArea.GetOverlappingBodies().ToList().ForEach(OnBodyEnteredSenseArea);
-    public virtual void OnFactionChange(string _, Faction _1) => _senseArea.GetOverlappingBodies().ToList().ForEach(OnBodyEnteredSenseArea);
+    public virtual void OnFactionRelationChange(Faction _, Faction _1) => SenseArea.GetOverlappingBodies().ToList().ForEach(OnBodyEnteredSenseArea);
+    public virtual void OnFactionChange(string _, Faction _1) => SenseArea.GetOverlappingBodies().ToList().ForEach(OnBodyEnteredSenseArea);
 
     public void SetWalkAnimState(Vector2 direction)
     {
@@ -839,15 +836,8 @@ public partial class Character : CharacterBody2D
 
     public void WalkToPoint(Vector2 point, Action onComplete = null, float speed = -1.0f)
     {
-        var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), GlobalPosition, point, true, 0x1u);
-        if (path.Length == 0)
-        {
-            ControllerState = new NavState([GlobalPosition, point], new PatrolState(), onComplete, speed > 0 ? speed : Speed);
-        }
-        else
-        {
-            ControllerState = new NavState(path, new PatrolState(), onComplete, speed > 0 ? speed : Speed);
-        }
+        var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), GlobalPosition, point, true);
+        ControllerState = path.Length == 0 ? new NavState([GlobalPosition, point], new PatrolState(), onComplete, speed > 0 ? speed : Speed) : new NavState(path, new PatrolState(), onComplete, speed > 0 ? speed : Speed);
     }
 
     private void CleanDelegates()
@@ -858,22 +848,12 @@ public partial class Character : CharacterBody2D
         HealthSystem.DeathEventHandlers -= OnDeath;
         HealthSystem.DamageEventHandlers -= OnDamage;
         HostilitySystem.HostilityChangeHandlers -= OnHostilityChanged;
-        Anim.AnimationFinished -= OnAnimationFinished;
+        _anim.AnimationFinished -= OnAnimationFinished;
         FactionSystem.FactionChangeHandlers -= OnFactionChange;
         FactionSystem.FactionRelationChangeHandlers -= OnFactionRelationChange;
     }
 
-    public void SetFacing(Vector2 dir)
-    {
-        if (dir.X < 0)
-        {
-            _mainSprite.FlipH = true;
-        }
-        else
-        {
-            _mainSprite.FlipH = false;
-        }
-    }
+    public void SetFacing(Vector2 dir) => MainSprite.FlipH = dir.X < 0;
 
     public virtual void OnAnimationFinished(StringName animationName)
     {
@@ -893,12 +873,12 @@ public partial class Character : CharacterBody2D
 
     public void SetAnimState(AnimState state)
     {
-        if (state != _currentAnimState)
+        if (state != CurrentAnimState)
         {
             // Reset
-            Anim.Play("RESET");
-            Anim.Advance(0);
-            _currentAnimState = state;
+            _anim.Play("RESET");
+            _anim.Advance(0);
+            CurrentAnimState = state;
         }
     }
 
@@ -913,20 +893,22 @@ public partial class Character : CharacterBody2D
 
     public void SitOn(Prop prop)
     {
-        if (prop is FurnitureProp furniture && !furniture.Occupied)
+        if (prop is not FurnitureProp { Occupied: false } furniture)
         {
-            SetAnimState(AnimState.Sitting);
-
-            Vector2 seatBottomLeft = furniture.GetSeatRegionCenter();
-            furniture.Occupied = true;
-            _occupiedProp = furniture;
-            GlobalPosition = seatBottomLeft;
-            SetCollision(false);
-            _sitting = true;
+            return;
         }
+
+        SetAnimState(AnimState.Sitting);
+
+        Vector2 seatBottomLeft = furniture.GetSeatRegionCenter();
+        furniture.Occupied = true;
+        _occupiedProp = furniture;
+        GlobalPosition = seatBottomLeft;
+        SetCollision(false);
+        _sitting = true;
     }
 
-    public void SetSprite(Texture2D sprite) => _mainSprite.Texture = sprite;
+    public void SetSprite(Texture2D sprite) => MainSprite.Texture = sprite;
 
     public void SetCollisionOverride(bool @override)
     {
@@ -954,7 +936,7 @@ public partial class Character : CharacterBody2D
 
     public Vector2 GetProjectileSpawnPoint() => _projectileSpawnPoint.GlobalPosition;
 
-    public void AddPush(Push push) => _currentPushes.Add(push);
+    public void AddPush(Push push) => CurrentPushes.Add(push);
 
     public void SetPawnState() => ControllerState = new PawnState();
 }

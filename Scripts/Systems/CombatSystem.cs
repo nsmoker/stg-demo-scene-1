@@ -195,16 +195,12 @@ public static class CombatSystem
 
     private static void TriggerTimers(Side side)
     {
-        for (int i = 0; i < s_combatTimers.Count; ++i)
+        foreach (var timer in from timer in s_combatTimers let timer1 = timer where side.Any(x => x == timer1.RelativeTo) select timer)
         {
-            CombatTimer timer = s_combatTimers[i];
-            if (side.Any(x => x == timer.RelativeTo))
+            timer.TurnsRemaining -= 1;
+            if (timer.TurnsRemaining <= 0)
             {
-                timer.TurnsRemaining -= 1;
-                if (timer.TurnsRemaining <= 0)
-                {
-                    timer.Timeout?.Invoke();
-                }
+                timer.Timeout?.Invoke();
             }
         }
 

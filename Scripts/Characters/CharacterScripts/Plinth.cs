@@ -10,7 +10,7 @@ public partial class Plinth : InteractableCharacter
     public override void _Ready()
     {
         base._Ready();
-        _senseArea.BodyEntered += OnCharacterSensed;
+        SenseArea.BodyEntered += OnCharacterSensed;
     }
 
     public void OnCharacterSensed(Node2D node)
