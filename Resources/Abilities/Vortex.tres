@@ -1,27 +1,9 @@
 [gd_resource type="Resource" format=3 uid="uid://b6nd1qemtfjj7"]
 
-[ext_resource type="Script" uid="uid://mxrfbr2ffrey" path="res://Scripts/Resources/DamageRoll.cs" id="1_st6ui"]
-[ext_resource type="Texture2D" uid="uid://bafdlmkvhng80" path="res://Sprites/Icons/spiral.png" id="2_eh0c1"]
-[ext_resource type="PackedScene" uid="uid://dwpb4ovkas1au" path="res://Scenes/Effects/VortexEffect.tscn" id="2_njm86"]
 [ext_resource type="Resource" uid="uid://djyo8vgywvbt3" path="res://Resources/Status Effects/SlowEffect.tres" id="4_som66"]
-[ext_resource type="PackedScene" uid="uid://c03bv8tn38ctf" path="res://Scenes/Targeting/VortexTargeting.tscn" id="4_v44ja"]
 [ext_resource type="Script" uid="uid://cigdqyd8phqmv" path="res://Scripts/Resources/Abilities/Vortex.cs" id="5_v44ja"]
-
-[sub_resource type="Resource" id="Resource_eh0c1"]
-script = ExtResource("1_st6ui")
-Rolls = Array[int]([4])
-metadata/_custom_type_script = "uid://mxrfbr2ffrey"
 
 [resource]
 script = ExtResource("5_v44ja")
 SlowEffect = ExtResource("4_som66")
-AbilityName = "Vortex"
-Description = "Summon a damaging vortex of interplanar forces."
-Cooldown = 3
-AreaDamage = SubResource("Resource_eh0c1")
-AreaDuration = 2
-Icon = ExtResource("2_eh0c1")
-AreaEffectScene = ExtResource("2_njm86")
-TargetingScene = ExtResource("4_v44ja")
-TargetingIsAnimated = true
 metadata/_custom_type_script = "uid://6s50muiotg4i"

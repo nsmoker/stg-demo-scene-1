@@ -8,8 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://c3xdtaspbe1s1" path="res://Sprites/Characters/pc_ingame_player_mb.png" id="6_7o575"]
 [ext_resource type="Texture2D" uid="uid://b6wph1kvjioyc" path="res://Sprites/Characters/pc_ingame_player_mc.png" id="7_yuoml"]
 [ext_resource type="PackedScene" uid="uid://cy27gk81ig72o" path="res://Scenes/Characters/generic_npc.tscn" id="8_v6kvt"]
-[ext_resource type="Script" uid="uid://bqhkr10ewh7xe" path="res://Scripts/AI/CrowdAITask.cs" id="9_krf63"]
-[ext_resource type="Script" uid="uid://67g32ecjus0y" path="res://Scripts/AI/CrowdAIDirector.cs" id="10_a72yo"]
+[ext_resource type="Script" uid="uid://bqhkr10ewh7xe" path="res://Scripts/AI/CrowdAiTask.cs" id="9_krf63"]
+[ext_resource type="Script" uid="uid://67g32ecjus0y" path="res://Scripts/AI/CrowdAiDirector.cs" id="10_a72yo"]
 [ext_resource type="Texture2D" uid="uid://dbbkelulqxlly" path="res://Sprites/Backdrops/DiningEntranceHallway.png" id="14_oux8e"]
 [ext_resource type="PackedScene" uid="uid://b02trvpappmbg" path="res://Scenes/Props/BrazierProp.tscn" id="15_nabcb"]
 

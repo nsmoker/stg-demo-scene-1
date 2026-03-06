@@ -9,10 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://bj34uqmte0qf3" path="res://Scenes/Controls/AbilitiesMenu.tscn" id="9_waam2"]
 [ext_resource type="Script" uid="uid://cj7w5j6lrdqlu" path="res://Scripts/Controllers/HumanCombatController.cs" id="10_1nsqu"]
 [ext_resource type="PackedScene" uid="uid://bg7o07th2w4x1" path="res://Scenes/Controls/AbilityButton.tscn" id="10_ko0ge"]
-[ext_resource type="Script" uid="uid://bqhkr10ewh7xe" path="res://Scripts/AI/CrowdAITask.cs" id="11_euyus"]
+[ext_resource type="Script" uid="uid://bqhkr10ewh7xe" path="res://Scripts/AI/CrowdAiTask.cs" id="11_euyus"]
 [ext_resource type="Script" uid="uid://0pywnr0jtcvl" path="res://Scripts/Controllers/HumanNavController.cs" id="11_rbe05"]
 [ext_resource type="PackedScene" uid="uid://gedp1qirf71n" path="res://Scenes/Characters/player.tscn" id="11_xluw3"]
-[ext_resource type="Script" uid="uid://67g32ecjus0y" path="res://Scripts/AI/CrowdAIDirector.cs" id="12_1nsqu"]
+[ext_resource type="Script" uid="uid://67g32ecjus0y" path="res://Scripts/AI/CrowdAiDirector.cs" id="12_1nsqu"]
 [ext_resource type="PackedScene" uid="uid://bgk5v73hj7cv0" path="res://Scenes/ClassroomSceneTest.tscn" id="12_482ib"]
 [ext_resource type="PackedScene" uid="uid://c1uq7y0hjwsl3" path="res://Scenes/DiningHallSceneTest.tscn" id="12_aysf6"]
 [ext_resource type="PackedScene" uid="uid://wqa42iuow1t4" path="res://Scenes/DiningEntranceHallwayScene.tscn" id="14_1nsqu"]
@@ -31,7 +31,7 @@ metadata/_custom_type_script = "uid://x2cwkvtiybtp"
 
 [sub_resource type="Resource" id="Resource_dxrhf"]
 script = ExtResource("3_1nsqu")
-FactionRelations = Array[ExtResource("2_1nsqu")]([SubResource("Resource_5hl87"), SubResource("Resource_annar")])
+FactionRelations = [SubResource("Resource_5hl87"), SubResource("Resource_annar")]
 metadata/_custom_type_script = "uid://c1b50cgacwuvh"
 
 [sub_resource type="SystemFont" id="SystemFont_8fl2o"]

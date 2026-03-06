@@ -9,25 +9,25 @@
 
 [sub_resource type="Resource" id="Resource_nn37d"]
 script = ExtResource("1_oow6w")
-fromNode = 5
-toNode = 4
+FromNode = 5
+ToNode = 4
 
 [sub_resource type="Resource" id="Resource_6dtpj"]
 script = ExtResource("1_oow6w")
-fromNode = 3
-toNode = 5
+FromNode = 3
+ToNode = 5
 
 [sub_resource type="Resource" id="Resource_gwqdb"]
 script = ExtResource("1_oow6w")
-toNode = 3
+ToNode = 3
 
 [sub_resource type="Resource" id="Resource_jrxsd"]
 script = ExtResource("1_oow6w")
-fromNode = 2
+FromNode = 2
 
 [sub_resource type="Resource" id="Resource_vlm5h"]
 script = ExtResource("1_oow6w")
-toNode = 1
+ToNode = 1
 
 [sub_resource type="Resource" id="Resource_f52hs"]
 script = ExtResource("2_lon5u")

@@ -9,85 +9,54 @@
 
 [sub_resource type="Resource" id="Resource_tfaht"]
 script = ExtResource("1_oxqrr")
-fromNode = 4
-toNode = 6
 
 [sub_resource type="Resource" id="Resource_l8aqh"]
 script = ExtResource("1_oxqrr")
-fromNode = 6
-toNode = 5
 
 [sub_resource type="Resource" id="Resource_0smud"]
 script = ExtResource("1_oxqrr")
-toNode = 3
 
 [sub_resource type="Resource" id="Resource_11bn8"]
 script = ExtResource("1_oxqrr")
-fromNode = 3
-toNode = 1
 
 [sub_resource type="Resource" id="Resource_3da1e"]
 script = ExtResource("1_oxqrr")
-fromNode = 4
-toNode = 13
 
 [sub_resource type="Resource" id="Resource_udfk6"]
 script = ExtResource("1_oxqrr")
-fromNode = 7
-toNode = 8
 
 [sub_resource type="Resource" id="Resource_33w5l"]
 script = ExtResource("1_oxqrr")
-fromNode = 8
-toNode = 9
 
 [sub_resource type="Resource" id="Resource_6hua1"]
 script = ExtResource("1_oxqrr")
-fromNode = 13
-toNode = 7
 
 [sub_resource type="Resource" id="Resource_pxsiu"]
 script = ExtResource("1_oxqrr")
-toNode = 12
 
 [sub_resource type="Resource" id="Resource_t1qrt"]
 script = ExtResource("1_oxqrr")
-fromNode = 2
-toNode = 4
 
 [sub_resource type="Resource" id="Resource_6v78y"]
 script = ExtResource("1_oxqrr")
-fromNode = 12
-toNode = 2
 
 [sub_resource type="Resource" id="Resource_bd2o5"]
 script = ExtResource("1_oxqrr")
-fromNode = 10
 
 [sub_resource type="Resource" id="Resource_kpx75"]
 script = ExtResource("1_oxqrr")
-fromNode = 4
-toNode = 11
 
 [sub_resource type="Resource" id="Resource_8eksi"]
 script = ExtResource("1_oxqrr")
-fromNode = 11
-toNode = 15
 
 [sub_resource type="Resource" id="Resource_w2x2p"]
 script = ExtResource("1_oxqrr")
-fromNode = 4
-toNode = 14
 
 [sub_resource type="Resource" id="Resource_f26bc"]
 script = ExtResource("1_oxqrr")
-fromNode = 14
-toNode = 16
 
 [sub_resource type="Resource" id="Resource_pxjla"]
 script = ExtResource("1_oxqrr")
-fromNode = 16
-toNode = 17
 
 [sub_resource type="Resource" id="Resource_usqqm"]
 script = ExtResource("2_dm36e")

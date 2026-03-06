@@ -9,72 +9,45 @@
 
 [sub_resource type="Resource" id="Resource_ygft4"]
 script = ExtResource("1_6sd6r")
-fromNode = 1
-toNode = 8
 
 [sub_resource type="Resource" id="Resource_0bit8"]
 script = ExtResource("1_6sd6r")
-fromNode = 1
-toNode = 2
 
 [sub_resource type="Resource" id="Resource_6cbt5"]
 script = ExtResource("1_6sd6r")
-fromNode = 1
-toNode = 3
 
 [sub_resource type="Resource" id="Resource_nfbxk"]
 script = ExtResource("1_6sd6r")
-fromNode = 2
-toNode = 3
 
 [sub_resource type="Resource" id="Resource_3ynid"]
 script = ExtResource("1_6sd6r")
-fromNode = 8
-toNode = 3
 
 [sub_resource type="Resource" id="Resource_dn4y3"]
 script = ExtResource("1_6sd6r")
-toNode = 1
 
 [sub_resource type="Resource" id="Resource_lnc8t"]
 script = ExtResource("1_6sd6r")
-fromNode = 3
-toNode = 4
 
 [sub_resource type="Resource" id="Resource_kpxlu"]
 script = ExtResource("1_6sd6r")
-fromNode = 1
-toNode = 5
 
 [sub_resource type="Resource" id="Resource_8a1y7"]
 script = ExtResource("1_6sd6r")
-fromNode = 2
-toNode = 5
 
 [sub_resource type="Resource" id="Resource_2g60y"]
 script = ExtResource("1_6sd6r")
-fromNode = 5
-toNode = 6
 
 [sub_resource type="Resource" id="Resource_lrrai"]
 script = ExtResource("1_6sd6r")
-fromNode = 8
-toNode = 5
 
 [sub_resource type="Resource" id="Resource_0tuv5"]
 script = ExtResource("1_6sd6r")
-fromNode = 1
-toNode = 7
 
 [sub_resource type="Resource" id="Resource_ldvex"]
 script = ExtResource("1_6sd6r")
-fromNode = 2
-toNode = 7
 
 [sub_resource type="Resource" id="Resource_xprpo"]
 script = ExtResource("1_6sd6r")
-fromNode = 8
-toNode = 7
 
 [sub_resource type="Resource" id="Resource_5j5ky"]
 script = ExtResource("2_s18b8")
