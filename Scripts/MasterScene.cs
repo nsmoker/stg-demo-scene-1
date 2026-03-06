@@ -1,5 +1,6 @@
 using Godot;
 using STGDemoScene1.Scripts.Characters;
+using STGDemoScene1.Scripts.Controllers;
 using STGDemoScene1.Scripts.Controls;
 using STGDemoScene1.Scripts.Resources;
 using STGDemoScene1.Scripts.Systems;

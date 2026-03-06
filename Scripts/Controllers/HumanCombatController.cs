@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Character = STGDemoScene1.Scripts.Characters.Character;
 
-namespace STGDemoScene1.Scripts;
+namespace STGDemoScene1.Scripts.Controllers;
 
 public partial class HumanCombatController : Node
 {
@@ -211,6 +211,7 @@ public partial class HumanCombatController : Node
 
         }
         SetPipVisibility();
+        SceneSystem.GetMasterScene().SetAbilityBarVisible(IsOurTurn);
         _character.QueueRedraw();
     }
 

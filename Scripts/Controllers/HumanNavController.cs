@@ -2,7 +2,7 @@ using Godot;
 using STGDemoScene1.Scripts.Characters;
 using STGDemoScene1.Scripts.Systems;
 
-namespace STGDemoScene1.Scripts;
+namespace STGDemoScene1.Scripts.Controllers;
 
 public partial class HumanNavController : Node
 {
