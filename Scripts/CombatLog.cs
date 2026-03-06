@@ -1,4 +1,5 @@
 using Godot;
+using STGDemoScene1.Scripts.Characters;
 using STGDemoScene1.Scripts.Resources;
 using STGDemoScene1.Scripts.Systems;
 using System.Collections.Generic;
@@ -31,14 +32,14 @@ public static class CombatLog
 
     public static void OnQuestUpdate(Quest quest) => GD.Print($"New journal entry: {quest.Title}: {quest.GetCurrentStage().Title}");
 
-    public static void OnCombatStarted(CombatStartEvent e) => GD.Print($"Combat started by {e.initiator.CharacterName}.");
+    public static void OnCombatStarted(CombatStartEvent e) => GD.Print($"Combat started by {e.initiator.CharacterData.CharacterName}.");
 
-    public static void OnCombatJoined(CharacterData joiner) => GD.Print($"{joiner.CharacterName} joined combat.");
+    public static void OnCombatJoined(Character joiner) => GD.Print($"{joiner.CharacterData.CharacterName} joined combat.");
 
-    public static void OnTurnStarted(List<string> movingSide)
+    public static void OnTurnStarted(List<Character> movingSide)
     {
         var characterNames = movingSide
-            .Select(path => ResourceLoader.Load<CharacterData>(path).CharacterName)
+            .Select(c => c.CharacterData.CharacterName)
             .ToArray();
         GD.Print($"It is now {characterNames[0]}'s turn.");
     }

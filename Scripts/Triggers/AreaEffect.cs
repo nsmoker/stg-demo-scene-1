@@ -32,7 +32,7 @@ public partial class AreaEffect : Area2D
         {
             CombatSystem.TurnHandlers -= OnTurnBegin;
             QueueFree();
-        }, _caster.CharacterData);
+        }, _caster);
     }
 
     public void PlayEndAnimation() => _anim.Play("end");
@@ -46,9 +46,9 @@ public partial class AreaEffect : Area2D
 
     public Character GetCaster() => _caster;
 
-    public void OnTurnBegin(List<string> side) => DealAreaDamage(side);
+    public void OnTurnBegin(List<Character> side) => DealAreaDamage(side);
 
-    public void DealAreaDamage(List<string> movingSide, bool manualShapecast = false)
+    public void DealAreaDamage(List<Character> movingSide, bool manualShapecast = false)
     {
         // Due to a bug in Godot's area initialization, we cannot rely on GetOverlappingBodies or signals to
         // report intersections with bodies that start inside the area, even if we wait for the next physics update.
@@ -64,7 +64,7 @@ public partial class AreaEffect : Area2D
             foreach (var result in physicsState.IntersectShape(physicsShapeQueryParameters2D))
             {
                 var character = result["collider"].As<Character>();
-                if (character != null && movingSide.Contains(character.CharacterData.ResourcePath))
+                if (character != null && movingSide.Contains(character))
                 {
                     HealthSystem.PostDamageEvent(_caster, character, _damageRoll.Roll());
                     ApplyToCharacter?.Invoke(character);
@@ -75,7 +75,7 @@ public partial class AreaEffect : Area2D
         {
             foreach (var x in GetOverlappingBodies())
             {
-                if (x is Character character && movingSide.Contains(character.CharacterData.ResourcePath))
+                if (x is Character character && movingSide.Contains(character))
                 {
                     HealthSystem.PostDamageEvent(_caster, character, _damageRoll.Roll());
                     ApplyToCharacter?.Invoke(character);

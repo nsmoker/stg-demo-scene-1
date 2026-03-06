@@ -10,7 +10,7 @@ public partial class HumanNavController : Node
 
     public override void _Process(double delta)
     {
-        if (!(CombatSystem.IsInCombat(Pawn.CharacterData) || DialogueSystem.IsInDialogue()))
+        if (!(CombatSystem.IsInCombat(Pawn) || DialogueSystem.IsInDialogue()))
         {
             var closestInteractable = Pawn.GetClosestInteractable();
             if (Input.IsActionJustPressed("Interact") && closestInteractable != null)
@@ -46,7 +46,7 @@ public partial class HumanNavController : Node
 
     public override void _PhysicsProcess(double delta)
     {
-        if (!(CombatSystem.IsInCombat(Pawn.CharacterData) || DialogueSystem.IsInDialogue()))
+        if (!(CombatSystem.IsInCombat(Pawn) || DialogueSystem.IsInDialogue()))
         {
             // Get the input direction and handle the movement.
             Vector2 direction = Input.GetVector("Move West", "Move East", "Move North", "Move South");

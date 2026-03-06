@@ -19,7 +19,7 @@ public partial class SetFaction : DialogueAction
 
     public override void Execute(Action onComplete)
     {
-        FactionSystem.SetFaction(Character.ResourcePath, Faction);
+        FactionSystem.SetFaction(Character, Faction);
         onComplete();
     }
 }

@@ -1,6 +1,4 @@
 using Godot;
-using STGDemoScene1.Addons.Edi.Scripts;
-using STGDemoScene1.Scripts.Resources;
 using STGDemoScene1.Scripts.Resources.Abilities;
 using STGDemoScene1.Scripts.Resources.Factions;
 using STGDemoScene1.Scripts.Systems;
@@ -13,10 +11,7 @@ namespace STGDemoScene1.Scripts;
 public partial class HumanCombatController : Node
 {
     private Character _character;
-    private List<string> _side;
-    private bool _isOurTurn;
-    private bool _inCombat;
-    private bool _inDialogue;
+    private List<Character> _side;
     private bool _pawnMoving;
     private bool _pawnAttacking;
     private bool _pawnTargetingAbility = false;
@@ -37,62 +32,48 @@ public partial class HumanCombatController : Node
         _character = character;
         _ = _character.UpdateCoverState(_character.GetWorld2D().DirectSpaceState);
         _character.ActionPip1.Visible = true;
-        _character.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_character.CharacterData) > 1;
+        _character.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_character) > 1;
         _character.Draw += OnPawnDraw;
         _character.QueueRedraw();
         SceneSystem.GetMasterScene().ActivateAbilityBarForCharacter(_character);
     }
 
-    private bool IsActive => _character != null && _inCombat && !_inDialogue && !_pawnMoving && !_pawnAttacking;
+    private bool IsOurTurn => CombatSystem.GetMovingSide().Contains(_character);
+    private bool IsActive => _character != null && CombatSystem.IsInCombat(_character) && !DialogueSystem.IsInDialogue() && !_pawnMoving && !_pawnAttacking;
 
-    private void ActivateCombatControl()
-    {
-        _inCombat = true;
-        _pawnMoving = false;
-        _isOurTurn = CombatSystem.GetMovingSide().Contains(_character.CharacterData.ResourcePath);
-        DialogueSystem.OnDialogueStarted += OnDialogueStarted;
-        DialogueSystem.OnDialogueComplete += OnDialogueEnded;
-    }
+
+    private void ActivateCombatControl() => _pawnMoving = false;
 
     private void OnCombatStarted(CombatStartEvent e)
     {
         var player = SceneSystem.GetMasterScene().GetPlayer();
-        if (e.participants.Contains(player.CharacterData.ResourcePath))
+        if (e.participants.Contains(player))
         {
             SetCharacter(player);
             ActivateCombatControl();
         }
     }
 
-    private void OnCombatJoined(CharacterData joiner)
+    private void OnCombatJoined(Character joiner)
     {
-        if (_character == null && joiner.ResourcePath.Equals(SceneSystem.GetMasterScene().GetPlayer().CharacterData.ResourcePath))
+        if (_character == null && joiner == SceneSystem.GetMasterScene().GetPlayer())
         {
             SetCharacter(SceneSystem.GetMasterScene().GetPlayer());
             ActivateCombatControl();
         }
-        else if (_character != null && joiner.ResourcePath.Equals(_character.CharacterData.ResourcePath))
+        else if (FactionSystem.TryGetFaction(joiner.CharacterData, out Faction faction) && faction == Faction.Player)
         {
-            ActivateCombatControl();
-        }
-        else if (FactionSystem.TryGetFaction(joiner.ResourcePath, out Faction faction) && faction == Faction.Player)
-        {
-            CharacterSystem.GetInstance(joiner.ResourcePath).SetPawnState();
+            CharacterSystem.GetInstance(joiner.CharacterData).SetPawnState();
         }
     }
 
     private void OnCombatEnded()
     {
-        _inCombat = false;
         _pawnMoving = false;
         _character.Draw -= OnPawnDraw;
         CombatSystem.TurnHandlers -= OnTurnBegin;
         _character.QueueRedraw();
     }
-
-    private void OnDialogueStarted(Conversation _1, int _2) => _inDialogue = true;
-
-    private void OnDialogueEnded() => _inDialogue = false;
 
     public override void _Ready()
     {
@@ -109,28 +90,12 @@ public partial class HumanCombatController : Node
             return;
         }
 
-        if (IsActive && _isOurTurn && CombatSystem.GetMovesRemaining(_character.CharacterData) == 0)
+        if (IsActive && IsOurTurn && CombatSystem.GetMovesRemaining(_character) == 0)
         {
-            int charsChecked = 0;
-            var character = _character;
-            while (CombatSystem.GetMovesRemaining(character.CharacterData) == 0 && charsChecked < _side.Count)
-            {
-                charsChecked += 1;
-                var i = _side.IndexOf(character.CharacterData.ResourcePath);
-                character = CharacterSystem.GetInstance(_side[(i + 1) % _side.Count]);
-            }
-
-            if (charsChecked == _side.Count)
-            {
-                _isOurTurn = false;
-            }
-            else
-            {
-                SetCharacter(character);
-            }
+            SetCharacter(_side.First(c => CombatSystem.GetMovesRemaining(c) > 0));
         }
 
-        if (Input.IsActionJustPressed("Combat Interact") && CombatSystem.NavReady() && _isOurTurn)
+        if (Input.IsActionJustPressed("Combat Interact") && CombatSystem.NavReady() && IsOurTurn)
         {
             if (HoverSystem.AnyHovered())
             {
@@ -167,10 +132,10 @@ public partial class HumanCombatController : Node
 
     private void SetPipVisibility()
     {
-        if (CombatSystem.GetMovesRemaining(_character.CharacterData) > 0)
+        if (CombatSystem.GetMovesRemaining(_character) > 0)
         {
-            _character.ActionPip1.Visible = CombatSystem.GetMovesRemaining(_character.CharacterData) > 0;
-            _character.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_character.CharacterData) > 1;
+            _character.ActionPip1.Visible = CombatSystem.GetMovesRemaining(_character) > 0;
+            _character.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_character) > 1;
         }
         else
         {
@@ -186,7 +151,7 @@ public partial class HumanCombatController : Node
             return;
         }
 
-        if (_isOurTurn && !HoverSystem.AnyHovered())
+        if (IsOurTurn && !HoverSystem.AnyHovered())
         {
             _character.DrawCircle(new Vector2(0.0f, 2.0f), 8.0f, new Color(0.0f, 0.0f, 1.0f), filled: false);
             if (CombatSystem.NavReady())
@@ -222,27 +187,26 @@ public partial class HumanCombatController : Node
         if (HoverSystem.AnyHovered())
         {
             var hovered = CharacterSystem.GetInstance(HoverSystem.Hovered);
-            var chance = CombatSystem.ComputeToHitChance(_character.CharacterData, hovered.CharacterData) * 100.0f;
+            var chance = CombatSystem.ComputeToHitChance(_character, hovered) * 100.0f;
             _character.DrawString(_character.ToHitFont, new Vector2(12.0f, 0.0f) + _character.GetLocalMousePosition(), $"{chance:0}%", fontSize: 8);
         }
     }
 
-    private void OnTurnBegin(List<string> sideMoving)
+    private void OnTurnBegin(List<Character> sideMoving)
     {
         if (_character == null)
         {
             return;
         }
-        if (sideMoving.Contains(_character.CharacterData.ResourcePath))
+        if (sideMoving.Contains(_character))
         {
-            _isOurTurn = true;
             _side = sideMoving;
         }
         foreach (var part in sideMoving)
         {
-            if (FactionSystem.TryGetFaction(part, out Faction faction) && faction == Faction.Player)
+            if (FactionSystem.TryGetFaction(part.CharacterData, out Faction faction) && faction == Faction.Player)
             {
-                CharacterSystem.GetInstance(part).SetPawnState();
+                part.SetPawnState();
             }
 
         }
@@ -279,12 +243,12 @@ public partial class HumanCombatController : Node
 
     public void OnDeathEvent(DeathEvent e)
     {
-        _ = _side.Remove(_character.CharacterData.ResourcePath);
+        _ = _side.Remove(e.deceased);
         if (e.deceased == _character)
         {
             if (_side.Count > 0)
             {
-                SetCharacter(CharacterSystem.GetInstance(_side[0]));
+                SetCharacter(_side[0]);
             }
             else
             {

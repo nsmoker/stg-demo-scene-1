@@ -20,7 +20,7 @@ public partial class KineticBlast : Ability
         {
             Duration = PushDuration,
             Velocity = (Position - user.GlobalPosition).Normalized() * PushStrength,
-            OnFinish = () => CombatSystem.AttemptAttack(user.CharacterData, target.CharacterData, ContactDamage)
+            OnFinish = () => CombatSystem.AttemptAttack(user, target, ContactDamage)
         };
         target.AddPush(push);
     }

@@ -1,4 +1,4 @@
-using STGDemoScene1.Scripts.Resources;
+using STGDemoScene1.Scripts.Characters;
 
 namespace STGDemoScene1.Scripts.Systems;
 
@@ -6,6 +6,6 @@ public class CombatTimer
 {
     public System.Action Timeout;
     public int TurnsRemaining;
-    public CharacterData RelativeToCharacter;
+    public Character RelativeTo;
     public ulong Id;
 }

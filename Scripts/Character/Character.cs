@@ -256,9 +256,9 @@ public partial class Character : CharacterBody2D
 
         public void PhysicsProcess(double delta, Character character)
         {
-            if (CombatSystem.NavReady() && CombatSystem.GetMovesRemaining(character.CharacterData) > 0)
+            if (CombatSystem.NavReady() && CombatSystem.GetMovesRemaining(character) > 0)
             {
-                List<Character> enemiesInSense = [.. character.GetSenseArea().GetOverlappingBodies().Where(body => body is Character).Cast<Character>().Where(c => HostilitySystem.GetHostility(character.CharacterData.ResourcePath, c.CharacterData.ResourcePath))];
+                List<Character> enemiesInSense = [.. character.GetSenseArea().GetOverlappingBodies().Where(body => body is Character).Cast<Character>().Where(c => HostilitySystem.GetHostility(character.CharacterData, c.CharacterData))];
                 var closestEnemy = enemiesInSense.OrderBy(c => c.GlobalPosition.DistanceTo(character.GlobalPosition)).FirstOrDefault();
                 if (closestEnemy != null)
                 {
@@ -288,7 +288,7 @@ public partial class Character : CharacterBody2D
                 }
                 else
                 {
-                    CombatSystem.PassTurn(character.CharacterData);
+                    CombatSystem.PassTurn(character);
                 }
             }
             character.QueueRedraw();
@@ -404,7 +404,7 @@ public partial class Character : CharacterBody2D
                 }
                 else
                 {
-                    CombatSystem.AttemptMove(character.CharacterData);
+                    CombatSystem.AttemptMove(character);
                     _ = character.UpdateCoverState(character.GetWorld2D().DirectSpaceState);
                     _character.SetAnimState(AnimState.Idle);
                     _character.ControllerState = _character.SetCombatState();
@@ -483,7 +483,7 @@ public partial class Character : CharacterBody2D
                 {
                     _ = effect.OnStackRemove(this);
                     _statusEffects[effect].NumStacks -= 1;
-                }, CharacterData)
+                }, this)
             );
         }
     }
@@ -509,9 +509,9 @@ public partial class Character : CharacterBody2D
         {
             _healthLabel.Text = $"{CharacterData.CurrentHitpoints} / {CharacterData.MaxHitpoints}";
             EquipmentSystem.SetEquipment(CharacterData.ResourcePath, CharacterData.StartingEquipment);
-            FactionSystem.SetFaction(CharacterData.ResourcePath, CharacterData.InitialFaction);
+            FactionSystem.SetFaction(CharacterData, CharacterData.InitialFaction);
             InventorySystem.SetInventory(CharacterData.ResourcePath, [.. _initialInventory]);
-            CharacterSystem.SetInstance(CharacterData.ResourcePath, this);
+            CharacterSystem.SetInstance(CharacterData, this);
             HealthSystem.SetCurrentHitpoints(CharacterData.ResourcePath, CharacterData.CurrentHitpoints);
             CombatSystem.CombatStartHandlers += OnCombatStarted;
             CombatSystem.CharacterJoinedCombatHandlers += OnCombatJoined;
@@ -680,31 +680,31 @@ public partial class Character : CharacterBody2D
         if (body is Character character &&
             character.IsNamedCharacter() &&
             character.CharacterData.ResourcePath != CharacterData.ResourcePath &&
-            HostilitySystem.GetHostility(character.CharacterData.ResourcePath, CharacterData.ResourcePath))
+            HostilitySystem.GetHostility(character.CharacterData, CharacterData))
         {
-            if (CombatSystem.IsInCombat(CharacterData))
+            if (CombatSystem.IsInCombat(this))
             {
-                CombatSystem.JoinCombat(character.CharacterData);
+                CombatSystem.JoinCombat(character);
             }
             else
             {
-                CombatSystem.BeginCombat(CharacterData, character.CharacterData);
+                CombatSystem.BeginCombat(this, character);
             }
         }
     }
 
     public virtual void OnCombatStarted(CombatStartEvent e)
     {
-        if (e.participants.Contains(CharacterData.ResourcePath))
+        if (e.participants.Contains(this))
         {
             _healthLabel.Show();
             ControllerState = SetCombatState();
         }
     }
 
-    public virtual void OnCombatJoined(CharacterData c)
+    public virtual void OnCombatJoined(Character c)
     {
-        if (c.ResourcePath.Equals(CharacterData.ResourcePath))
+        if (c == this)
         {
             _healthLabel.Show();
             ControllerState = SetCombatState();
@@ -713,7 +713,7 @@ public partial class Character : CharacterBody2D
 
     public virtual ICharacterState SetCombatState()
     {
-        if (FactionSystem.TryGetFaction(CharacterData.ResourcePath, out Faction fact) && fact == Faction.Player)
+        if (FactionSystem.TryGetFaction(CharacterData, out Faction fact) && fact == Faction.Player)
         {
             return new PawnState();
         }
@@ -792,10 +792,10 @@ public partial class Character : CharacterBody2D
         }
     }
 
-    public virtual void OnHostilityChanged(string characterA, string characterB, bool areHostile) => _senseArea.GetOverlappingBodies().ToList().ForEach(OnBodyEnteredSenseArea);
+    public virtual void OnHostilityChanged(CharacterData _, CharacterData _1, bool _2) => _senseArea.GetOverlappingBodies().ToList().ForEach(OnBodyEnteredSenseArea);
 
-    public virtual void OnFactionRelationChange(Faction faction1, Faction faction2) => _senseArea.GetOverlappingBodies().ToList().ForEach(OnBodyEnteredSenseArea);
-    public virtual void OnFactionChange(string instance, Faction faction) => _senseArea.GetOverlappingBodies().ToList().ForEach(OnBodyEnteredSenseArea);
+    public virtual void OnFactionRelationChange(Faction _, Faction _1) => _senseArea.GetOverlappingBodies().ToList().ForEach(OnBodyEnteredSenseArea);
+    public virtual void OnFactionChange(string _, Faction _1) => _senseArea.GetOverlappingBodies().ToList().ForEach(OnBodyEnteredSenseArea);
 
     public void SetWalkAnimState(Vector2 direction)
     {

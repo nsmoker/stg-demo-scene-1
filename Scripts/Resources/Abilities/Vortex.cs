@@ -21,7 +21,7 @@ public partial class Vortex : Ability
             areaEffectInstance.SetDuration(AreaDuration);
             areaEffectInstance.ApplyToCharacter = (ch) => ch.AddStatusEffect(SlowEffect);
             SceneSystem.GetMasterScene().AddChild(areaEffectInstance);
-            CombatSystem.PassTurn(user.CharacterData);
+            CombatSystem.PassTurn(user);
         }
     }
 }

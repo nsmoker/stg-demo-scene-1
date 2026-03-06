@@ -59,7 +59,7 @@ public partial class Ability : Resource
     {
         if (ContactDamage != null)
         {
-            CombatSystem.AttemptAttack(user.CharacterData, target.CharacterData, ContactDamage);
+            CombatSystem.AttemptAttack(user, target, ContactDamage);
         }
 
         if (AreaEffectScene != null)
@@ -70,7 +70,7 @@ public partial class Ability : Resource
             areaEffectInstance.SetDamageRoll(AreaDamage);
             areaEffectInstance.SetDuration(AreaDuration);
             SceneSystem.GetMasterScene().AddChild(areaEffectInstance);
-            CombatSystem.PassTurn(user.CharacterData);
+            CombatSystem.PassTurn(user);
         }
     }
 }

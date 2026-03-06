@@ -27,13 +27,13 @@ public static class FactionSystem
         }
     }
 
-    public static void SetFaction(string instance, Faction faction)
+    public static void SetFaction(CharacterData character, Faction faction)
     {
-        s_factionMap[instance] = faction;
-        FactionChangeHandlers?.Invoke(instance, faction);
+        s_factionMap[character.ResourcePath] = faction;
+        FactionChangeHandlers?.Invoke(character.ResourcePath, faction);
     }
 
-    public static bool TryGetFaction(string instance, out Faction faction) => s_factionMap.TryGetValue(instance, out faction);
+    public static bool TryGetFaction(CharacterData character, out Faction faction) => s_factionMap.TryGetValue(character.ResourcePath, out faction);
 
     public static bool GetFactionRelation(Faction faction1, Faction faction2) => s_relationTable.FactionRelations.Any(x =>
         x.FactionA == faction1 && x.FactionB == faction2 && x.IsHostile);

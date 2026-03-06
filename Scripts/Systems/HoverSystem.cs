@@ -16,6 +16,4 @@ public static class HoverSystem
     }
 
     public static bool AnyHovered() => Hovered != null;
-
-    public static bool IsCharacterHovered() => CharacterSystem.GetInstance(Hovered) != null;
 }
