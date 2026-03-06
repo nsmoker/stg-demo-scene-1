@@ -7,6 +7,7 @@
 size = Vector2(9, 9)
 
 [node name="BasicAttackProjectile" type="Area2D" unique_id=877181893]
+collision_mask = 3
 script = ExtResource("1_hyuf5")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1739501716]

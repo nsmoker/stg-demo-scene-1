@@ -17,7 +17,6 @@ public partial class InteractableCharacter : Character, IDialogueInteractable, I
     public override void _Ready()
     {
         base._Ready();
-        SetCollisionLayer(1 | (1 << 20));
         _badgeSprite = GetNode<Sprite2D>("BadgeSprite");
     }
 

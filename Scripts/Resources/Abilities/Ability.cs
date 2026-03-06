@@ -43,7 +43,7 @@ public partial class Ability : Resource
         {
             Projectile projectileInstance = ProjectileScene.Instantiate<Projectile>();
             Vector2 direction = targetPoint - user.GlobalPosition;
-            projectileInstance.Initialize(direction, target?.GetInstanceId() ?? 0, ProjectileSpeed);
+            projectileInstance.Initialize(direction, target, ProjectileSpeed);
             user.GetParent().AddChild(projectileInstance);
             projectileInstance.GlobalPosition = spawnPoint;
             projectileInstance.OnHit += () => OnProjectileHit(user, target, targetPoint);

@@ -176,6 +176,7 @@ radius = 50.0
 [node name="GenericNpc" type="CharacterBody2D" unique_id=1509352439]
 z_index = 1
 y_sort_enabled = true
+collision_layer = 2
 script = ExtResource("1_o8lhq")
 ToHitFont = SubResource("SystemFont_tk7xo")
 metadata/_custom_type_script = "uid://bsrhat3n35udl"
@@ -187,6 +188,7 @@ shape = SubResource("RectangleShape2D_ss715")
 
 [node name="SenseArea" type="Area2D" parent="." unique_id=410358380]
 position = Vector2(0, -11)
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea" unique_id=104367834]
 visible = false

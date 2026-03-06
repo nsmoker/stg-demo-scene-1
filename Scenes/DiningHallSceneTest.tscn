@@ -178,6 +178,7 @@ position = Vector2(182, 49)
 
 [node name="ScreenArea" type="Area2D" parent="." unique_id=526517413]
 visible = false
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenArea" unique_id=369510884]
 position = Vector2(0, -1)

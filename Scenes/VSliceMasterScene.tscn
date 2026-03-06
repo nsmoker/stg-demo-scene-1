@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://0pywnr0jtcvl" path="res://Scripts/Controllers/HumanNavController.cs" id="11_rbe05"]
 [ext_resource type="PackedScene" uid="uid://gedp1qirf71n" path="res://Scenes/Characters/player.tscn" id="11_xluw3"]
 [ext_resource type="Script" uid="uid://67g32ecjus0y" path="res://Scripts/AI/CrowdAiDirector.cs" id="12_1nsqu"]
+[ext_resource type="Script" uid="uid://ehhchopxygt1" path="res://Scripts/Controllers/ZombieAiCombatController.cs" id="12_5hl87"]
 [ext_resource type="PackedScene" uid="uid://bgk5v73hj7cv0" path="res://Scenes/ClassroomSceneTest.tscn" id="12_482ib"]
 [ext_resource type="PackedScene" uid="uid://c1uq7y0hjwsl3" path="res://Scenes/DiningHallSceneTest.tscn" id="12_aysf6"]
 [ext_resource type="PackedScene" uid="uid://wqa42iuow1t4" path="res://Scenes/DiningEntranceHallwayScene.tscn" id="14_1nsqu"]
@@ -210,6 +211,9 @@ PathFont = SubResource("SystemFont_1nsqu")
 
 [node name="HumanNavController" type="Node" parent="." unique_id=1261220662]
 script = ExtResource("11_rbe05")
+
+[node name="ZombieAiCombatController" type="Node" parent="." unique_id=1167158590]
+script = ExtResource("12_5hl87")
 
 [node name="DiningEntrywaySceneTest" parent="." unique_id=1608461539 instance=ExtResource("14_1nsqu")]
 position = Vector2(0, 360)

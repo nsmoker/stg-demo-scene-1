@@ -96,7 +96,7 @@ EditorSize = Vector2(456, 257.00024)
 
 [resource]
 script = ExtResource("3_xsl1o")
-Nodes = Array[ExtResource("2_lon5u")]([SubResource("Resource_2addt"), SubResource("Resource_ffo5n"), SubResource("Resource_ygkw6"), SubResource("Resource_d7nhx"), SubResource("Resource_jdaop"), SubResource("Resource_3ooco")])
-EntryPoints = Array[ExtResource("2_lon5u")]([SubResource("Resource_f52hs")])
-Connections = Array[ExtResource("1_oow6w")]([SubResource("Resource_nn37d"), SubResource("Resource_6dtpj"), SubResource("Resource_gwqdb"), SubResource("Resource_jrxsd"), SubResource("Resource_vlm5h")])
+Nodes = [SubResource("Resource_2addt"), SubResource("Resource_ffo5n"), SubResource("Resource_ygkw6"), SubResource("Resource_d7nhx"), SubResource("Resource_jdaop"), SubResource("Resource_3ooco")]
+EntryPoints = [SubResource("Resource_f52hs")]
+Connections = [SubResource("Resource_nn37d"), SubResource("Resource_6dtpj"), SubResource("Resource_gwqdb"), SubResource("Resource_jrxsd"), SubResource("Resource_vlm5h")]
 metadata/_custom_type_script = "uid://cmw85ukaae1eh"

@@ -123,6 +123,7 @@ Map={
 [layer_names]
 
 2d_physics/layer_1="Obstacles"
+2d_physics/layer_2="Characters"
 2d_physics/layer_19="Hitboxes"
 2d_physics/layer_20="Interactable"
 2d_physics/layer_21="Attacks"

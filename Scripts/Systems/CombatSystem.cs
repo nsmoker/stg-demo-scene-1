@@ -47,17 +47,21 @@ public static class CombatSystem
     public delegate void AttackEventHandler(AttackEvent e);
     public delegate void CombatStartHandler(CombatStartEvent e);
     public delegate void CharacterJoinedCombatHandler(Character c);
+    /// <summary>
+    /// Called when a combat event has resolved and it is time for characters to act again.
+    /// <param name="side">The set of characters who should act.</param>
+    /// </summary>
     public delegate void TurnHandler(Side side);
 
     public static NavigationRegion2D NavRegion { get; set; }
 
     private static bool s_pathingReady = true;
 
-    public static AttackEventHandler AttackHandlers { get; set; }
-    public static CombatStartHandler CombatStartHandlers { get; set; }
-    public static CharacterJoinedCombatHandler CharacterJoinedCombatHandlers { get; set; }
-    public static TurnHandler TurnHandlers { get; set; }
-    public static Action CombatEnded { get; set; }
+    public static event AttackEventHandler AttackHandlers;
+    public static event CombatStartHandler CombatStartHandlers;
+    public static event CharacterJoinedCombatHandler CharacterJoinedCombatHandlers;
+    public static event TurnHandler TurnHandlers;
+    public static event Action CombatEnded;
 
     private static List<Side> s_sides = [];
 
@@ -69,7 +73,7 @@ public static class CombatSystem
 
     private static void OnNavRebakeFinished(Rid rid)
     {
-        if (rid == NavRegion.GetNavigationMap())
+        if (rid == NavRegion?.GetNavigationMap())
         {
             s_pathingReady = true;
         }
@@ -77,7 +81,7 @@ public static class CombatSystem
 
     private static void OnCharacterDeath(DeathEvent e) => _ = s_sides.Find(x => x.Contains(e.Deceased)).Remove(e.Deceased);
 
-    public static bool NavReady() => s_pathingReady && NavRegion.NavigationPolygon != null;
+    public static bool NavReady() => s_pathingReady && NavRegion?.NavigationPolygon != null;
 
     private static void EndTurn()
     {
@@ -239,6 +243,12 @@ public static class CombatSystem
         return (20.0f - target.ComputeAc(targetVector.Normalized()) + attacker.ComputeToHitMod()) / 20.0f;
     }
 
+    /// <summary>
+    /// Attempt to consume a movement action point for <c>mover</c>. This function tells the <c>CombatSystem</c> that the
+    /// movement is complete and that other characters should begin moving. Only call this function when movement
+    /// is actually complete.
+    /// </summary>
+    /// <param name="mover">The character who took a movement action.</param>
     public static void AttemptMove(Character mover)
     {
         var currentSide = s_sides[s_sideMoving];
@@ -257,6 +267,10 @@ public static class CombatSystem
             if (TurnShouldEnd())
             {
                 EndTurn();
+            }
+            else
+            {
+                TurnHandlers?.Invoke([.. GetMovingSide().Where(c => GetMovesRemaining(c) > 0)]);
             }
         }
     }
@@ -300,6 +314,10 @@ public static class CombatSystem
         {
             EndTurn();
         }
+        else
+        {
+            TurnHandlers?.Invoke([.. GetMovingSide().Where(c => GetMovesRemaining(c) > 0)]);
+        }
     }
 
     public static void PassTurn(Character character)
@@ -313,6 +331,10 @@ public static class CombatSystem
         if (TurnShouldEnd())
         {
             EndTurn();
+        }
+        else
+        {
+            TurnHandlers?.Invoke([.. GetMovingSide().Where(c => GetMovesRemaining(c) > 0)]);
         }
     }
 
@@ -356,7 +378,7 @@ public static class CombatSystem
         foreach (var r in result)
         {
             var collider = r["collider"].As<Node>();
-            if (collider is not null and Character character)
+            if (collider is Character character)
             {
                 charactersInRange.Add(character);
             }

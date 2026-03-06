@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using System.Collections.Generic;
 
 namespace STGDemoScene1.Scripts;
@@ -17,7 +17,7 @@ public static class Math
                 continue;
             }
 
-            float length = Mathf.Min((p - start).Length(), remainingLength);
+            float length = Mathf.Min((p - loc).Length(), remainingLength);
             remainingLength -= length;
             Vector2 targetVector = p - loc;
             Vector2 newLoc = loc + targetVector.Normalized() * length;

@@ -13,7 +13,7 @@ public partial class Projectile : Area2D
 
     public System.Action OnHit;
 
-    private ulong _targetInstanceId;
+    private Character _target;
 
     public override void _Ready() => BodyEntered += OnBodyEntered;
 
@@ -21,19 +21,24 @@ public partial class Projectile : Area2D
     {
         float deltaTime = (float) delta;
         GlobalPosition += _velocity * deltaTime;
+        if (GlobalPosition.DistanceTo(_target.GlobalPosition) < 5.0f)
+        {
+            OnHit?.Invoke();
+            QueueFree();
+        }
     }
 
-    public void Initialize(Vector2 direction, ulong targetInstanceId, float speed)
+    public void Initialize(Vector2 direction, Character target, float speed)
     {
         direction = direction.Normalized();
         Rotation = direction.Angle();
         _velocity = direction * speed;
-        _targetInstanceId = targetInstanceId;
+        _target = target;
     }
 
     private void OnBodyEntered(Node body)
     {
-        if (body is Character character && character.GetInstanceId() == _targetInstanceId)
+        if (body is Character character && character == _target)
         {
             OnHit?.Invoke();
             QueueFree();
