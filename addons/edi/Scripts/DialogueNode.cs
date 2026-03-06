@@ -16,13 +16,13 @@ public partial class DialogueNode : GraphNode
     [Export]
     public string Addressee;
     [Export]
-    public ulong DNodeId = 0;
+    public ulong DNodeId;
     [Export]
     public DialogueCondition Condition;
     [Export]
     public DialogueAction Action;
     [Export]
-    public ulong LinkDNodeId = 0;
+    public ulong LinkDNodeId;
 
     private LineEdit _speakerEdit;
     private LineEdit _addresseeEdit;
@@ -48,13 +48,12 @@ public partial class DialogueNode : GraphNode
             CustomMinimumSize = new Vector2(400, 30),
             BaseType = "DialogueCondition"
         };
-        _editorConditionPicker.ResourceChanged += resource =>
+        _editorConditionPicker.ResourceChanged += _ =>
         {
-            if (_editorConditionPicker.EditedResource is not null and DialogueCondition condition)
+            if (_editorConditionPicker.EditedResource is DialogueCondition condition)
             {
                 Condition = condition;
             }
-            ;
         };
         _editorConditionPicker.ResourceSelected += OnResourceEditRequest;
 
@@ -73,13 +72,12 @@ public partial class DialogueNode : GraphNode
                 CustomMinimumSize = new Vector2(400, 30),
                 BaseType = "DialogueAction"
             };
-            _editorActionPicker.ResourceChanged += resource =>
+            _editorActionPicker.ResourceChanged += _ =>
             {
-                if (_editorActionPicker.EditedResource is not null and DialogueAction action)
+                if (_editorActionPicker.EditedResource is DialogueAction action)
                 {
                     Action = action;
                 }
-                ;
             };
             _editorActionPicker.ResourceSelected += OnResourceEditRequest;
 
@@ -169,6 +167,6 @@ public partial class DialogueNode : GraphNode
         }
     }
 
-    public static void OnResourceEditRequest(Resource resource, bool _) => EditorInterface.Singleton.GetInspector().Edit(resource);
+    private static void OnResourceEditRequest(Resource resource, bool _) => EditorInterface.Singleton.GetInspector().Edit(resource);
 }
 #endif

@@ -1,10 +1,9 @@
 [gd_scene format=3 uid="uid://dsawqshhjgquw"]
 
-[ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character/Character.cs" id="1_cw48i"]
+[ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Characters/Character.cs" id="1_cw48i"]
 [ext_resource type="Resource" uid="uid://cx3eet0w6nlc3" path="res://Resources/Characters/marot.tres" id="2_322xl"]
-[ext_resource type="PackedScene" uid="uid://dmt32gtrfhfqp" path="res://Scenes/Projectiles/BasicAttackProjectile.tscn" id="3_uvfcp"]
 [ext_resource type="Resource" uid="uid://bnl26jpb4ux27" path="res://Resources/Abilities/BasicAttack.tres" id="4_cytio"]
-[ext_resource type="PackedScene" uid="uid://cc3g2hp8txivb" path="res://Scenes/status_effect_container.tscn" id="8_mh6cb"]
+[ext_resource type="PackedScene" uid="uid://cc3g2hp8txivb" path="res://Scenes/Controls/status_effect_container.tscn" id="8_mh6cb"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="17_yaiay"]
 [ext_resource type="Texture2D" uid="uid://bxwkf6u5ijdho" path="res://Sprites/Characters/marot_ingame_placeholder.png" id="18_cw48i"]
 [ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="19_5aljl"]
@@ -13,7 +12,7 @@
 subpixel_positioning = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ss715"]
-size = Vector2(14, 29)
+size = Vector2(14, 5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wxkh7"]
 radius = 500.0
@@ -132,38 +131,46 @@ _data = {
 &"walk_south": SubResource("Animation_7dp3o")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_uvfcp"]
+radius = 50.0
+
 [node name="Marot" type="CharacterBody2D" unique_id=1512459789]
 z_index = 1
+y_sort_enabled = true
+collision_layer = 2
 script = ExtResource("1_cw48i")
 CharacterData = ExtResource("2_322xl")
 ToHitFont = SubResource("SystemFont_tk7xo")
-ProjectileScene = ExtResource("3_uvfcp")
 BasicAttackAbility = ExtResource("4_cytio")
 metadata/_custom_type_script = "uid://bsrhat3n35udl"
 
 [node name="MainCollider" type="CollisionShape2D" parent="." unique_id=1265714290]
 z_index = 2
-position = Vector2(0, 1.5)
+position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_ss715")
 
 [node name="SenseArea" type="Area2D" parent="." unique_id=660295556]
+position = Vector2(0, -11)
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea" unique_id=949522603]
 shape = SubResource("CircleShape2D_wxkh7")
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." unique_id=543871803]
+position = Vector2(0, -11)
 radius = 8.39
 affect_navigation_mesh = true
 
 [node name="CoverBadge" type="Sprite2D" parent="." unique_id=119297592]
 visible = false
 texture_filter = 1
-position = Vector2(0, -21)
+position = Vector2(0, -38)
 scale = Vector2(0.5, 0.5)
 texture = SubResource("AtlasTexture_dhkrs")
 
 [node name="MainSprite" type="Sprite2D" parent="." unique_id=1870433887]
 texture_filter = 1
+position = Vector2(0, -11)
 texture = ExtResource("18_cw48i")
 hframes = 18
 
@@ -184,9 +191,9 @@ texture = ExtResource("19_5aljl")
 [node name="HealthLabel" type="Label" parent="." unique_id=1856242487]
 visible = false
 offset_left = -7.0
-offset_top = -20.0
+offset_top = -35.0
 offset_right = 13.0
-offset_bottom = -8.833332
+offset_bottom = -23.833332
 text = "asd"
 label_settings = SubResource("LabelSettings_dhkrs")
 
@@ -194,12 +201,19 @@ label_settings = SubResource("LabelSettings_dhkrs")
 libraries/ = SubResource("AnimationLibrary_ukyrk")
 
 [node name="ProjectileSpawnPoint" type="Marker2D" parent="." unique_id=99369641]
-position = Vector2(7, 1)
+position = Vector2(7, -10)
 
 [node name="StatusEffectContainer" parent="." unique_id=5491049 instance=ExtResource("8_mh6cb")]
 offset_left = -4.0
-offset_top = -32.0
+offset_top = -43.0
 offset_right = 28.0
-offset_bottom = 26.0
+offset_bottom = 15.0
 scale = Vector2(0.25, 0.25)
 alignment = 1
+
+[node name="InteractableRange" type="Area2D" parent="." unique_id=90356798]
+visible = false
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableRange" unique_id=391309491]
+shape = SubResource("CircleShape2D_uvfcp")

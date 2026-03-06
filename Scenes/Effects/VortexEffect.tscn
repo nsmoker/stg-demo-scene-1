@@ -44,6 +44,7 @@ _data = {
 radius = 15.0
 
 [node name="VortexEffect" type="Area2D" unique_id=86274276]
+collision_mask = 2
 script = ExtResource("1_gnkvf")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2050823815]

@@ -8,17 +8,19 @@ public static class CharacterSystem
 {
     private static readonly Dictionary<string, Character> s_characterMap = [];
 
-    public static void SetInstance(string characterId, Character instance) => s_characterMap.Add(characterId, instance);
+    public static void SetInstance(CharacterData character, Character instance) => s_characterMap.Add(character.ResourcePath, instance);
 
-    public static Character GetInstance(string id)
+    public static Character GetInstance(CharacterData character)
     {
-        if (id == null)
+        if (character == null)
         {
             return null;
         }
-        return s_characterMap[id];
+        return s_characterMap[character.ResourcePath];
     }
 
-    public static void Despawn(CharacterData character) => GetInstance(character.ResourcePath).Despawn();
+    public static Character GetInstance(string path) => s_characterMap[path];
+
+    public static void Despawn(CharacterData character) => GetInstance(character).Despawn();
 }
 

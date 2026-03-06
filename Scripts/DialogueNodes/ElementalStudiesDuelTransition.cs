@@ -26,12 +26,10 @@ public partial class ElementalStudiesDuelTransition : DialogueAction
 
     public override void Execute(Action onComplete)
     {
-        var masterScene = (Godot.Engine.GetMainLoop() as SceneTree)
-            .CurrentScene as MasterScene;
-        StagfootScreen stagfootScreen = masterScene.GetCurrentScreen();
+        StagfootScreen stagfootScreen = SceneSystem.GetMasterScene().GetCurrentScreen();
         var tween = stagfootScreen.GetTree().CreateTween();
         _ = tween
-            .TweenProperty(masterScene, "modulate", new Color(0.0f, 0.0f, 0.0f, 1.0f), 1.0f)
+            .TweenProperty(SceneSystem.GetMasterScene(), "modulate", new Color(0.0f, 0.0f, 0.0f, 1.0f), 1.0f)
             .SetTrans(Tween.TransitionType.Sine)
             .SetEase(Tween.EaseType.In);
         _ = tween.TweenCallback(Callable.From(stagfootScreen.DisableProps));
@@ -46,7 +44,7 @@ public partial class ElementalStudiesDuelTransition : DialogueAction
             player.SetAnimState(Character.AnimState.Idle);
         }));
         _ = tween
-            .TweenProperty(masterScene, "modulate", new Color(1.0f, 1.0f, 1.0f, 1.0f), 1.0f)
+            .TweenProperty(SceneSystem.GetMasterScene(), "modulate", new Color(1.0f, 1.0f, 1.0f, 1.0f), 1.0f)
             .SetTrans(Tween.TransitionType.Sine)
             .SetEase(Tween.EaseType.Out);
         _ = tween.TweenCallback(Callable.From(onComplete));

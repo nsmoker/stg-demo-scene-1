@@ -1,5 +1,6 @@
 using Godot;
-using STGDemoScene1.Scripts.Systems;
+using STGDemoScene1.Scripts.AI;
+using STGDemoScene1.Scripts.Resources.Factions;
 
 namespace STGDemoScene1.Scripts.Resources;
 
@@ -49,4 +50,7 @@ public partial class CharacterData : Resource
     // Quests the character has or has had.
     [Export]
     public Godot.Collections.Array<Quest> Journal = [];
+
+    [Export]
+    public Godot.Collections.Array<MovePriority> MovePriorities = [];
 }

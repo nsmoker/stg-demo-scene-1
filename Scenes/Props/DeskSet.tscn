@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bfngs83wkjeur"]
+
+[ext_resource type="PackedScene" uid="uid://nxmo2nmx88dw" path="res://Scenes/Props/DeskProp.tscn" id="1_37sht"]
+[ext_resource type="PackedScene" uid="uid://cmpn1crr0je53" path="res://Scenes/Props/ChairProp.tscn" id="2_bc1vk"]
+
+[node name="DeskSet" type="Node2D" unique_id=46795063]
+z_index = 1
+y_sort_enabled = true
+
+[node name="DeskProp" parent="." unique_id=663553340 instance=ExtResource("1_37sht")]
+
+[node name="ChairProp" parent="." unique_id=479496596 instance=ExtResource("2_bc1vk")]
+position = Vector2(-14, 9)
+
+[node name="ChairProp2" parent="." unique_id=22203083 instance=ExtResource("2_bc1vk")]
+position = Vector2(14, 9)

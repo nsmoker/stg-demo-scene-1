@@ -14,12 +14,13 @@ public partial class StagfootScreen : Node2D
     private Node2D _clearableProps;
     private Node2D _genericNpcRoot;
     private readonly List<Character> _genericNpcInstances = [];
+    private Area2D _screenArea;
 
-    public Sprite2D Backdrop { get; set; }
-    public NavigationRegion2D NavRegion { get; set; }
+    private Sprite2D Backdrop { get; set; }
+    public NavigationRegion2D NavRegion { get; private set; }
 
     [Export]
-    public int GenericNpcCount = 0;
+    public int GenericNpcCount;
 
     [Export]
     public Godot.Collections.Array<Texture2D> GenericNpcSprites = [];
@@ -28,7 +29,7 @@ public partial class StagfootScreen : Node2D
     public PackedScene GenericNpcScene;
 
     [Export]
-    public CrowdAIDirector GenericNpcDirector = new();
+    public CrowdAiDirector GenericNpcDirector = new();
 
     [Export]
     public Godot.Collections.Array<FlowField> FlowFields = [];
@@ -37,10 +38,10 @@ public partial class StagfootScreen : Node2D
     public Vector2 GetRandomTraversablePoint()
     {
         // Generate a random point within the axis aligned bounding box of the nav mesh.
-        Rect2 navMeshAABB = NavRegion.GetBounds();
-        Vector2 aabbTopLeft = navMeshAABB.Position;
+        Rect2 navMeshAabb = NavRegion.GetBounds();
+        Vector2 aabbTopLeft = navMeshAabb.Position;
         // We have to call .Abs because the Godot docs explicitly state that Rect2.Size is not always positive (?!?!?!?!?)
-        Vector2 aabbExtent = navMeshAABB.Size.Abs();
+        Vector2 aabbExtent = navMeshAabb.Size.Abs();
         var random = new Random();
         float xVal = aabbTopLeft.X + aabbExtent.X * random.NextSingle();
         float yVal = aabbTopLeft.Y + aabbExtent.Y * random.NextSingle();
@@ -57,8 +58,19 @@ public partial class StagfootScreen : Node2D
         NavRegion = GetNode<NavigationRegion2D>("NavigationRegion2D");
         Backdrop = GetNode<Sprite2D>("SceneBackdrop");
         SceneSystem.Register(SceneFilePath, this);
-        _clearableProps = GetNodeOrNull<Node2D>("ClearableProps");
+        _clearableProps = GetNode<Node2D>("ClearableProps");
+        _screenArea = GetNode<Area2D>("ScreenArea");
         NavigationServer2D.MapChanged += OnFirstNavMeshSync;
+    }
+
+    public void OnSceneSystemReady()
+    {
+        // Trigger body entered for nodes already in the area.
+        foreach (Node2D body in _screenArea.GetOverlappingBodies())
+        {
+            OnBodyEntered(body);
+        }
+        _screenArea.BodyEntered += OnBodyEntered;
     }
 
     public override void _Process(double delta) => GenericNpcDirector.Process(delta, this);
@@ -69,7 +81,8 @@ public partial class StagfootScreen : Node2D
         {
             _genericNpcRoot = new Node2D
             {
-                Name = "GenericNpcRoot"
+                Name = "GenericNpcRoot",
+                YSortEnabled = true
             };
             AddChild(_genericNpcRoot);
             var random = new Random();
@@ -104,7 +117,7 @@ public partial class StagfootScreen : Node2D
 
     public void SetBackdropTexture(Texture2D texture) => Backdrop.Texture = texture;
 
-    public IEnumerable<StaticBody2D> GetProps() => _clearableProps.FindChildren("*", type: "StaticBody2D", recursive: true).Cast<StaticBody2D>();
+    private IEnumerable<StaticBody2D> GetProps() => _clearableProps.FindChildren("*", type: "StaticBody2D", recursive: true).Cast<StaticBody2D>();
 
     public IEnumerable<StaticBody2D> GetUnnamedFurnitureProps() => GetProps().Where(x => x is Prop prop && prop.IsSeat() && !prop.IsNamedProp());
 
@@ -113,7 +126,7 @@ public partial class StagfootScreen : Node2D
         if (_clearableProps != null)
         {
             var children = GetProps();
-            foreach (Node2D child in children)
+            foreach (StaticBody2D child in children)
             {
                 child.Visible = false;
                 child.ProcessMode = ProcessModeEnum.Disabled;
@@ -123,18 +136,26 @@ public partial class StagfootScreen : Node2D
         }
     }
 
-    public void EnableProps()
+    private void EnableProps()
     {
         if (_clearableProps != null)
         {
             var children = GetProps();
-            foreach (Node2D child in children)
+            foreach (StaticBody2D child in children)
             {
                 child.Visible = true;
                 child.ProcessMode = ProcessModeEnum.Inherit;
                 child.AddToGroup("NavObjects");
             }
             CombatSystem.NavRegion.BakeNavigationPolygon();
+        }
+    }
+
+    private void OnBodyEntered(Node2D body)
+    {
+        if (body is Player)
+        {
+            SceneSystem.GetMasterScene().SwitchScene(this, true);
         }
     }
 

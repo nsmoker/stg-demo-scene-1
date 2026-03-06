@@ -1,5 +1,6 @@
 using Godot;
 using STGDemoScene1.Scripts.Resources;
+using STGDemoScene1.Scripts.Systems;
 using System.Collections.Generic;
 
 namespace STGDemoScene1.Scripts.Controls;
@@ -13,7 +14,11 @@ public partial class JournalDisplay : ScrollContainer
     public PackedScene QuestEntryScene;
 
     // Called when the node enters the scene tree for the first time.
-    public override void _Ready() => _contentVBox = GetNode<VBoxContainer>("PanelContainer/VBoxContainer");
+    public override void _Ready()
+    {
+        _contentVBox = GetNode<VBoxContainer>("PanelContainer/VBoxContainer");
+        VisibilityChanged += () => SetQuestEntries(QuestSystem.GetAllQuests());
+    }
 
     public void SetQuestEntries(List<Quest> entries)
     {

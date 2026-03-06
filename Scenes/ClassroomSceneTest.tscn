@@ -1,255 +1,159 @@
 [gd_scene format=3 uid="uid://bgk5v73hj7cv0"]
 
 [ext_resource type="Script" uid="uid://dkohw1ks4ohtd" path="res://Scripts/StagfootScreen.cs" id="1_gokwg"]
-[ext_resource type="Script" uid="uid://c7teux2ktd83c" path="res://Scripts/CombatNavRegion.cs" id="1_ndsb5"]
 [ext_resource type="Texture2D" uid="uid://r2xchsyxvc4r" path="res://Sprites/Characters/pc_ingame_npc_fa.png" id="2_gokwg"]
 [ext_resource type="Texture2D" uid="uid://c6syadx2hm1cg" path="res://Sprites/Characters/pc_ingame_npc_fb.png" id="3_l4oaw"]
 [ext_resource type="PackedScene" uid="uid://cy27gk81ig72o" path="res://Scenes/Characters/generic_npc.tscn" id="4_b5i2i"]
-[ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/Characters/player_data.tres" id="4_hbowc"]
 [ext_resource type="Texture2D" uid="uid://b15gt320egkk8" path="res://Sprites/Characters/pc_ingame_npc_fc.png" id="4_su8nj"]
 [ext_resource type="Texture2D" uid="uid://cd7kmy7sbrwsy" path="res://Sprites/Characters/pc_ingame_player_ma.png" id="5_wqt3d"]
-[ext_resource type="PackedScene" uid="uid://c7jepn55q3mxg" path="res://Scenes/Characters/henneman.tscn" id="6_4iq4d"]
 [ext_resource type="Texture2D" uid="uid://c3xdtaspbe1s1" path="res://Sprites/Characters/pc_ingame_player_mb.png" id="6_r2l7g"]
 [ext_resource type="Texture2D" uid="uid://b6wph1kvjioyc" path="res://Sprites/Characters/pc_ingame_player_mc.png" id="7_qvvil"]
-[ext_resource type="Script" uid="uid://ub8tuk2mpv4d" path="res://Scripts/Triggers/ElementalStudiesTrigger.cs" id="10_713ei"]
-[ext_resource type="Resource" uid="uid://c1vd5jl7hb2nd" path="res://Resources/Quests/elemental_studies_day_1_quest.tres" id="11_sw1uk"]
-[ext_resource type="Script" uid="uid://b56v5x2jg14o4" path="res://Scripts/DialogueNodes/ExitGame.cs" id="13_0bad5"]
-[ext_resource type="Resource" uid="uid://bw07dkj8e3pq0" path="res://Conversations/CoverHelpConversation.tres" id="13_b8mys"]
-[ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="13_tw53w"]
-[ext_resource type="Script" uid="uid://ctqwrwf20m1nj" path="res://Scripts/DialogueNodes/FadeToBlack.cs" id="14_02uyx"]
-[ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="14_b8mys"]
-[ext_resource type="Script" uid="uid://cmw85ukaae1eh" path="res://addons/edi/Scripts/Conversation.cs" id="15_j6uhh"]
-[ext_resource type="Script" uid="uid://b53uhtgi4ltn7" path="res://Scripts/DialogueNodes/WalkCharToPointBlocking.cs" id="16_j6uhh"]
+[ext_resource type="Script" uid="uid://bqhkr10ewh7xe" path="res://Scripts/AI/CrowdAiTask.cs" id="9_ftxek"]
+[ext_resource type="Script" uid="uid://67g32ecjus0y" path="res://Scripts/AI/CrowdAiDirector.cs" id="10_jjbca"]
+[ext_resource type="PackedScene" uid="uid://dsawqshhjgquw" path="res://Scenes/Characters/marot.tscn" id="13_uifxh"]
+[ext_resource type="PackedScene" uid="uid://b02trvpappmbg" path="res://Scenes/Props/BrazierProp.tscn" id="14_ftxek"]
+[ext_resource type="PackedScene" uid="uid://djslysixa4d0a" path="res://Scenes/Characters/darian.tscn" id="15_jjbca"]
+[ext_resource type="PackedScene" uid="uid://cp1hrm2ms5ieg" path="res://Scenes/Characters/ethan.tscn" id="16_qi8ur"]
 [ext_resource type="Texture2D" uid="uid://bjuufd0p1e57q" path="res://Sprites/Backdrops/classroom_test_duel.png" id="16_tmqtc"]
-[ext_resource type="PackedScene" uid="uid://nxmo2nmx88dw" path="res://Scenes/DeskProp.tscn" id="18_b5i2i"]
-[ext_resource type="PackedScene" uid="uid://djslysixa4d0a" path="res://Scenes/Characters/darian.tscn" id="18_tmqtc"]
-[ext_resource type="PackedScene" uid="uid://bfngs83wkjeur" path="res://Scenes/DeskSet.tscn" id="19_h4iwy"]
-[ext_resource type="Resource" uid="uid://c60sxlkob5sq6" path="res://Resources/Named Props/darian_chair_elem_intro.tres" id="20_b5i2i"]
-[ext_resource type="Resource" uid="uid://cbhlbpdtrwxxy" path="res://Resources/Named Props/player_chair_elem_intro.tres" id="21_02uyx"]
-[ext_resource type="PackedScene" uid="uid://cmpn1crr0je53" path="res://Scenes/ChairProp.tscn" id="22_gokwg"]
-[ext_resource type="Resource" uid="uid://d0vtobfhyip5c" path="res://Conversations/elemental_studies_intro.tres" id="26_gokwg"]
+[ext_resource type="PackedScene" uid="uid://nxmo2nmx88dw" path="res://Scenes/Props/DeskProp.tscn" id="18_b5i2i"]
+
+[sub_resource type="Resource" id="Resource_qi8ur"]
+script = ExtResource("9_ftxek")
+Type = 1
+Duration = 5.0
+Probability = 0.5
+metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
+
+[sub_resource type="Resource" id="Resource_u4tfm"]
+script = ExtResource("9_ftxek")
+Type = 3
+Duration = 10.0
+Probability = 0.5
+metadata/_custom_type_script = "uid://bqhkr10ewh7xe"
+
+[sub_resource type="Resource" id="Resource_l265n"]
+script = ExtResource("10_jjbca")
+_possibleTasks = Array[Object]([SubResource("Resource_qi8ur"), SubResource("Resource_u4tfm")])
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_02uyx"]
-vertices = PackedVector2Array(274, 6, 174, 6, -174, -1, -162, -1, 274, 78, 174, 78, -174, 63, -162, 63, 302, 165.77344, -302, 158.21875, -174, 135, -162, 135, 274, -1, 274, -58, 302, -166, -274, 135, -302, -166, -274, 78, 174, -58, 174, 63, 162, 63, 162, 6, 62, 6, 174, 135, 162, 135, 162, 78, 62, 78, 174, -1, 162, -1, 162, -58, 62, -58, 274, 135, 274, 63, 62, 135, -62, 135, -62, 78, -162, 78, -274, 63, 62, 63, -62, 63, -62, 6, -162, 6, -174, 6, -174, 78, -274, 6, 62, -1, -62, -1, -62, -58, -162, -58, -274, -1, -274, -58, -174, -58)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 9, 10, 11), PackedInt32Array(12, 13, 14, 8), PackedInt32Array(15, 10, 9), PackedInt32Array(15, 9, 16, 17), PackedInt32Array(16, 14, 13, 18), PackedInt32Array(1, 19, 20, 21), PackedInt32Array(2, 1, 21), PackedInt32Array(2, 21, 22), PackedInt32Array(5, 23, 24, 25), PackedInt32Array(6, 5, 25), PackedInt32Array(6, 25, 26), PackedInt32Array(18, 27, 28, 29), PackedInt32Array(16, 18, 29), PackedInt32Array(16, 29, 30), PackedInt32Array(23, 31, 8), PackedInt32Array(8, 31, 4), PackedInt32Array(32, 8, 4), PackedInt32Array(19, 32, 4), PackedInt32Array(8, 32, 0), PackedInt32Array(12, 8, 0), PackedInt32Array(27, 12, 0), PackedInt32Array(24, 23, 8), PackedInt32Array(33, 24, 8), PackedInt32Array(33, 8, 34), PackedInt32Array(26, 33, 34, 35), PackedInt32Array(6, 26, 35), PackedInt32Array(6, 35, 36, 37), PackedInt32Array(20, 19, 4), PackedInt32Array(38, 20, 4), PackedInt32Array(38, 4, 39), PackedInt32Array(22, 38, 39, 40), PackedInt32Array(2, 22, 40), PackedInt32Array(2, 40, 41), PackedInt32Array(2, 41, 7, 42), PackedInt32Array(11, 34, 8), PackedInt32Array(36, 11, 10, 43), PackedInt32Array(37, 36, 43), PackedInt32Array(37, 43, 17), PackedInt32Array(37, 17, 16), PackedInt32Array(44, 37, 16), PackedInt32Array(28, 27, 0), PackedInt32Array(45, 28, 0), PackedInt32Array(45, 0, 46), PackedInt32Array(45, 46, 47, 30), PackedInt32Array(16, 30, 47), PackedInt32Array(16, 47, 48), PackedInt32Array(7, 39, 4), PackedInt32Array(7, 6, 42), PackedInt32Array(49, 2, 42, 44), PackedInt32Array(49, 44, 16), PackedInt32Array(50, 49, 16), PackedInt32Array(51, 50, 16), PackedInt32Array(51, 16, 48), PackedInt32Array(51, 48, 3, 2), PackedInt32Array(0, 3, 46)])
+vertices = PackedVector2Array(124, 131, -20, 131, -64, 114, -21, 40, 16, 40, 134, 63, 171, 143, 312, 175.89063, 124, 151, 134, 143, -312, 168.09375, -20, 151, 58, 7, 95, 7, 165, 45, 171, 63, 202, 45, 312, -176, 202, -35, 58, -73, 16, -40, 46, -70, -98, -70, -21, -40, -92, -63, 165, -35, 95, -73, -64, 34, -92, 17, -129, -63, 46, -90, -101, 34, -129, 17, -101, 114, -312, -176, -193.60156, -74.859375, -98, -90, -161.54688, -56.359375, -121.546875, -125.640625, -153.60156, -144.14063)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5), PackedInt32Array(6, 7, 8, 9), PackedInt32Array(8, 7, 10, 11), PackedInt32Array(5, 4, 12, 13, 14, 15), PackedInt32Array(7, 6, 16, 17), PackedInt32Array(16, 6, 15), PackedInt32Array(14, 16, 15), PackedInt32Array(17, 16, 18), PackedInt32Array(9, 8, 0, 5), PackedInt32Array(19, 12, 4, 20, 21), PackedInt32Array(22, 21, 20, 23, 24), PackedInt32Array(25, 14, 13, 26), PackedInt32Array(23, 3, 27, 28, 24), PackedInt32Array(22, 24, 29), PackedInt32Array(19, 21, 30), PackedInt32Array(3, 2, 27), PackedInt32Array(28, 27, 31, 32), PackedInt32Array(2, 1, 11, 10, 33), PackedInt32Array(32, 33, 10, 34, 35), PackedInt32Array(36, 22, 29, 37, 38), PackedInt32Array(32, 31, 33), PackedInt32Array(26, 19, 30, 17), PackedInt32Array(17, 18, 25, 26), PackedInt32Array(17, 30, 38, 39), PackedInt32Array(38, 30, 36), PackedInt32Array(37, 29, 32), PackedInt32Array(34, 17, 39), PackedInt32Array(34, 39, 35), PackedInt32Array(37, 32, 35)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-320, 176, -320, -184, 320, -184, 320, 184)])
 source_geometry_mode = 1
 source_geometry_group_name = &"NavObjects"
-agent_radius = 16.0
+agent_radius = 8.0
 
-[sub_resource type="Resource" id="Resource_b5i2i"]
-script = ExtResource("13_tw53w")
-fromNode = 1
-toNode = 2
-
-[sub_resource type="Resource" id="Resource_qilru"]
-script = ExtResource("13_tw53w")
-toNode = 1
-
-[sub_resource type="Resource" id="Resource_044gb"]
-script = ExtResource("14_b8mys")
-NodeType = 2
-DNodeId = 1
-EditorPos = Vector2(5653.3584, 1956.9138)
-EditorSize = Vector2(300, 194.00024)
-
-[sub_resource type="Resource" id="Resource_gokwg"]
-script = ExtResource("14_b8mys")
-NodeType = 2
-DNodeId = 1
-EditorPos = Vector2(5653.3584, 1956.9138)
-EditorSize = Vector2(300, 194.00024)
-
-[sub_resource type="Resource" id="Resource_afsmo"]
-script = ExtResource("14_b8mys")
-Content = "Mr. Tines? Get back here, please."
-Speaker = "Henneman"
-Addressee = "Player"
-DNodeId = 2
-EditorPos = Vector2(6232.631, 1969.0237)
-EditorSize = Vector2(720, 419.99976)
-
-[sub_resource type="Resource" id="Resource_ndsb5"]
-script = ExtResource("16_j6uhh")
-CharacterData = ExtResource("4_hbowc")
-Point = Vector2(-32, -128)
-Facing = Vector2(-1, 0)
-metadata/_custom_type_script = "uid://b53uhtgi4ltn7"
-
-[sub_resource type="Resource" id="Resource_5c5rk"]
-script = ExtResource("14_b8mys")
-NodeType = 1
-DNodeId = 3
-Action = SubResource("Resource_ndsb5")
-EditorPos = Vector2(7260, 1960)
-EditorSize = Vector2(720, 380)
-
-[sub_resource type="Resource" id="Resource_j6uhh"]
-script = ExtResource("15_j6uhh")
-Nodes = Array[ExtResource("14_b8mys")]([SubResource("Resource_gokwg"), SubResource("Resource_afsmo"), SubResource("Resource_5c5rk")])
-EntryPoints = Array[ExtResource("14_b8mys")]([SubResource("Resource_044gb")])
-Connections = Array[ExtResource("13_tw53w")]([SubResource("Resource_b5i2i"), SubResource("Resource_qilru")])
-metadata/_custom_type_script = "uid://cmw85ukaae1eh"
-
-[sub_resource type="Resource" id="Resource_l4oaw"]
-script = ExtResource("13_tw53w")
-fromNode = 1
-toNode = 3
-
-[sub_resource type="Resource" id="Resource_su8nj"]
-script = ExtResource("13_tw53w")
-fromNode = 4
-toNode = 2
-
-[sub_resource type="Resource" id="Resource_wqt3d"]
-script = ExtResource("13_tw53w")
-fromNode = 3
-toNode = 4
-
-[sub_resource type="Resource" id="Resource_r2l7g"]
-script = ExtResource("13_tw53w")
-toNode = 1
-
-[sub_resource type="Resource" id="Resource_wyuvk"]
-script = ExtResource("14_b8mys")
-NodeType = 2
-DNodeId = 1
-EditorPos = Vector2(293, 782)
-EditorSize = Vector2(300, 194)
-
-[sub_resource type="Resource" id="Resource_4ch5w"]
-script = ExtResource("14_b8mys")
-NodeType = 2
-DNodeId = 1
-EditorPos = Vector2(293, 782)
-EditorSize = Vector2(300, 194)
-
-[sub_resource type="Resource" id="Resource_fftnu"]
-script = ExtResource("14_02uyx")
-metadata/_custom_type_script = "uid://ctqwrwf20m1nj"
-
-[sub_resource type="Resource" id="Resource_324pm"]
-script = ExtResource("14_b8mys")
-NodeType = 1
-DNodeId = 2
-Action = SubResource("Resource_fftnu")
-EditorPos = Vector2(800, 780)
-EditorSize = Vector2(456.00012, 257)
-
-[sub_resource type="Resource" id="Resource_qvvil"]
-script = ExtResource("13_0bad5")
-metadata/_custom_type_script = "uid://b56v5x2jg14o4"
-
-[sub_resource type="Resource" id="Resource_svi83"]
-script = ExtResource("14_b8mys")
-NodeType = 1
-DNodeId = 3
-Action = SubResource("Resource_qvvil")
-EditorPos = Vector2(3960, 720)
-EditorSize = Vector2(456.00024, 257.00024)
-
-[sub_resource type="Resource" id="Resource_dj2i3"]
-script = ExtResource("14_b8mys")
-Content = "You beat the game by murduring that poor child. Congrats."
-DNodeId = 4
-EditorPos = Vector2(1860, 720)
-EditorSize = Vector2(640.00006, 379.99976)
-
-[sub_resource type="Resource" id="Resource_3hohp"]
-script = ExtResource("14_b8mys")
-Content = "You may press E to exit the game. Monster."
-DNodeId = 5
-EditorPos = Vector2(2840, 740)
-EditorSize = Vector2(679.99963, 359.99915)
-
-[sub_resource type="Resource" id="Resource_lh5eo"]
-script = ExtResource("15_j6uhh")
-Nodes = Array[ExtResource("14_b8mys")]([SubResource("Resource_4ch5w"), SubResource("Resource_324pm"), SubResource("Resource_svi83"), SubResource("Resource_dj2i3"), SubResource("Resource_3hohp")])
-EntryPoints = Array[ExtResource("14_b8mys")]([SubResource("Resource_wyuvk")])
-Connections = Array[ExtResource("13_tw53w")]([SubResource("Resource_l4oaw"), SubResource("Resource_su8nj"), SubResource("Resource_wqt3d"), SubResource("Resource_r2l7g")])
-metadata/_custom_type_script = "uid://cmw85ukaae1eh"
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_f311p"]
-size = Vector2(640, 324)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0kudf"]
+size = Vector2(640, 360)
 
 [node name="ClassroomSceneTest" type="Node2D" unique_id=828485593]
+y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_gokwg")
-GenericNpcCount = 5
 GenericNpcSprites = Array[Texture2D]([ExtResource("2_gokwg"), ExtResource("3_l4oaw"), ExtResource("4_su8nj"), ExtResource("5_wqt3d"), ExtResource("6_r2l7g"), ExtResource("7_qvvil")])
 GenericNpcScene = ExtResource("4_b5i2i")
+GenericNpcDirector = SubResource("Resource_l265n")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1450764174]
+visible = false
 navigation_polygon = SubResource("NavigationPolygon_02uyx")
-script = ExtResource("1_ndsb5")
-
-[node name="ElementalStudiesTrigger" type="Area2D" parent="." unique_id=1903984240]
-script = ExtResource("10_713ei")
-IntroQuest = ExtResource("11_sw1uk")
-Player = ExtResource("4_hbowc")
-IntroConversation = ExtResource("26_gokwg")
-CoverHelpConversation = ExtResource("13_b8mys")
-ForceGetBackConversation = SubResource("Resource_j6uhh")
-DeathConversation = SubResource("Resource_lh5eo")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ElementalStudiesTrigger" unique_id=542609678]
-position = Vector2(0, -18)
-shape = SubResource("RectangleShape2D_f311p")
-
-[node name="Darian" parent="." unique_id=1474250728 instance=ExtResource("18_tmqtc")]
-position = Vector2(-12, 158)
-
-[node name="Henneman" parent="." unique_id=242483597 instance=ExtResource("6_4iq4d")]
-position = Vector2(0, -117)
 
 [node name="SceneBackdrop" type="Sprite2D" parent="." unique_id=1067931957]
 z_index = -1
 texture = ExtResource("16_tmqtc")
 
 [node name="ClearableProps" type="Node2D" parent="." unique_id=1309397710]
+y_sort_enabled = true
 
-[node name="DeskSet" parent="ClearableProps" unique_id=1461604005 instance=ExtResource("19_h4iwy")]
-position = Vector2(-112, -24)
+[node name="DeskProp" parent="ClearableProps" unique_id=926914703 instance=ExtResource("18_b5i2i")]
+position = Vector2(-126, -23)
+rotation = 1.5707964
 
-[node name="DeskSet2" parent="ClearableProps" unique_id=1244537041 instance=ExtResource("19_h4iwy")]
-position = Vector2(-224, -24)
+[node name="DeskProp2" parent="ClearableProps" unique_id=1175602192 instance=ExtResource("18_b5i2i")]
+position = Vector2(199, 5)
+rotation = -1.5707964
 
-[node name="DeskSet3" parent="ClearableProps" unique_id=1229707156 instance=ExtResource("19_h4iwy")]
-position = Vector2(112, -24)
+[node name="DeskProp3" parent="ClearableProps" unique_id=1988785246 instance=ExtResource("18_b5i2i")]
+position = Vector2(-98, 74)
+rotation = 1.5707964
 
-[node name="DeskSet4" parent="ClearableProps" unique_id=1479031855 instance=ExtResource("19_h4iwy")]
-position = Vector2(224, -24)
+[node name="DeskProp4" parent="ClearableProps" unique_id=1761478833 instance=ExtResource("18_b5i2i")]
+position = Vector2(61, -33)
+rotation = 1.5707964
 
-[node name="DeskSet5" parent="ClearableProps" unique_id=1030364959 instance=ExtResource("19_h4iwy")]
-position = Vector2(-112, 40)
+[node name="DeskProp5" parent="ClearableProps" unique_id=1712464416 instance=ExtResource("18_b5i2i")]
+position = Vector2(168, 103)
+rotation = -1.5707964
 
-[node name="DeskSet6" parent="ClearableProps" unique_id=630521645 instance=ExtResource("19_h4iwy")]
-position = Vector2(-224, 40)
+[node name="DeskProp6" parent="ClearableProps" unique_id=2051740366 instance=ExtResource("18_b5i2i")]
+position = Vector2(-171, -108)
+rotation = 2.0943952
 
-[node name="DeskSet7" parent="ClearableProps" unique_id=1387529823 instance=ExtResource("19_h4iwy")]
-position = Vector2(112, 40)
+[node name="DeskProp7" parent="ClearableProps" unique_id=1773589770 instance=ExtResource("18_b5i2i")]
+position = Vector2(13, 0)
+rotation = -1.5707964
 
-[node name="DeskSet9" parent="ClearableProps" unique_id=1152991421 instance=ExtResource("19_h4iwy")]
-position = Vector2(-112, 112)
+[node name="BrazierProp" parent="ClearableProps" unique_id=242201632 instance=ExtResource("14_ftxek")]
+position = Vector2(92, 138)
 
-[node name="DeskSet10" parent="ClearableProps" unique_id=1694237759 instance=ExtResource("19_h4iwy")]
-position = Vector2(-224, 112)
+[node name="BrazierProp2" parent="ClearableProps" unique_id=2017871708 instance=ExtResource("14_ftxek")]
+position = Vector2(108, 138)
 
-[node name="DeskSet11" parent="ClearableProps" unique_id=989575720 instance=ExtResource("19_h4iwy")]
-position = Vector2(112, 112)
+[node name="BrazierProp3" parent="ClearableProps" unique_id=599897782 instance=ExtResource("14_ftxek")]
+position = Vector2(60, 138)
 
-[node name="DeskSet12" parent="ClearableProps" unique_id=279293181 instance=ExtResource("19_h4iwy")]
-position = Vector2(224, 112)
+[node name="BrazierProp4" parent="ClearableProps" unique_id=262031683 instance=ExtResource("14_ftxek")]
+position = Vector2(76, 138)
 
-[node name="DeskSet8" type="Node2D" parent="ClearableProps" unique_id=618888478]
-position = Vector2(224, 40)
+[node name="BrazierProp5" parent="ClearableProps" unique_id=1978754634 instance=ExtResource("14_ftxek")]
+position = Vector2(28, 138)
 
-[node name="DeskProp" parent="ClearableProps/DeskSet8" unique_id=1058844939 instance=ExtResource("18_b5i2i")]
+[node name="BrazierProp6" parent="ClearableProps" unique_id=711673464 instance=ExtResource("14_ftxek")]
+position = Vector2(44, 138)
 
-[node name="ChairProp" parent="ClearableProps/DeskSet8" unique_id=1272281032 instance=ExtResource("22_gokwg")]
-position = Vector2(-14, 9)
-_data = ExtResource("20_b5i2i")
+[node name="BrazierProp7" parent="ClearableProps" unique_id=1123298783 instance=ExtResource("14_ftxek")]
+position = Vector2(-4, 138)
 
-[node name="ChairProp2" parent="ClearableProps/DeskSet8" unique_id=178042387 instance=ExtResource("22_gokwg")]
-position = Vector2(14, 9)
-_data = ExtResource("21_02uyx")
+[node name="BrazierProp8" parent="ClearableProps" unique_id=190741109 instance=ExtResource("14_ftxek")]
+position = Vector2(12, 138)
+
+[node name="BrazierProp9" parent="ClearableProps" unique_id=1664002320 instance=ExtResource("14_ftxek")]
+position = Vector2(14, -83)
+
+[node name="BrazierProp10" parent="ClearableProps" unique_id=613456835 instance=ExtResource("14_ftxek")]
+position = Vector2(30, -83)
+
+[node name="BrazierProp11" parent="ClearableProps" unique_id=827930418 instance=ExtResource("14_ftxek")]
+position = Vector2(-18, -83)
+
+[node name="BrazierProp12" parent="ClearableProps" unique_id=1192787559 instance=ExtResource("14_ftxek")]
+position = Vector2(-2, -83)
+
+[node name="BrazierProp13" parent="ClearableProps" unique_id=1134857532 instance=ExtResource("14_ftxek")]
+position = Vector2(-50, -83)
+
+[node name="BrazierProp14" parent="ClearableProps" unique_id=2027150934 instance=ExtResource("14_ftxek")]
+position = Vector2(-34, -83)
+
+[node name="BrazierProp15" parent="ClearableProps" unique_id=367911788 instance=ExtResource("14_ftxek")]
+position = Vector2(-82, -83)
+
+[node name="BrazierProp16" parent="ClearableProps" unique_id=1767657784 instance=ExtResource("14_ftxek")]
+position = Vector2(-66, -83)
+
+[node name="ScreenArea" type="Area2D" parent="." unique_id=1491864735]
+visible = false
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenArea" unique_id=1099199140]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_0kudf")
+
+[node name="Marot" parent="." unique_id=1512459789 instance=ExtResource("13_uifxh")]
+position = Vector2(-231, 73)
+
+[node name="Darian" parent="." unique_id=1387554584 instance=ExtResource("15_jjbca")]
+position = Vector2(237, 68)
+
+[node name="Ethan" parent="." unique_id=1370574117 instance=ExtResource("16_qi8ur")]
+position = Vector2(-230, 39)

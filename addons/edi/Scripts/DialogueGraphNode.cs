@@ -23,19 +23,17 @@ public partial class DialogueGraphNode : Resource
     [Export]
     public string Addressee;
     [Export]
-    public ulong DNodeId = 0;
+    public ulong DNodeId;
     [Export]
     public DialogueCondition Condition;
     [Export]
     public DialogueAction Action;
 
     [Export]
-    public ulong LinkDNodeId = 0;
+    public ulong LinkDNodeId;
 
     [Export]
     public Vector2 EditorPos = Vector2.Zero;
     [Export]
     public Vector2 EditorSize = Vector2.Zero;
-
-    public DialogueGraphNode() { }
 }

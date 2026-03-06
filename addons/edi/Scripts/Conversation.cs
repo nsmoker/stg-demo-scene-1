@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace STGDemoScene1.Addons.Edi.Scripts;
 
@@ -16,23 +17,14 @@ public partial class Conversation : Resource
     [Export]
     public Godot.Collections.Array<DialogueConnection> Connections = [];
 
-    public Conversation() { }
-
-    public List<DialogueGraphNode> GetNodeConnections(int i)
+    private List<DialogueGraphNode> GetNodeConnections(int i)
     {
         List<DialogueGraphNode> ret = [];
-        foreach (var connection in Connections)
-        {
-            if (connection.fromNode == i)
-            {
-                ret.Add(Nodes[connection.toNode]);
-            }
-        }
-
+        ret.AddRange(from connection in Connections where connection.FromNode == i select Nodes[connection.ToNode]);
         return ret;
     }
 
-    public int GetIndexOfNode(DialogueGraphNode node)
+    private int GetIndexOfNode(DialogueGraphNode node)
     {
         int i = -1;
         foreach (var node2 in Nodes)

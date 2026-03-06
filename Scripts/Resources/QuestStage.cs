@@ -13,7 +13,7 @@ public partial class QuestStage : Resource
     [Export(PropertyHint.MultilineText)]
     public string Description;
     [Export]
-    public bool CompleteQuest = false;
+    public bool CompleteQuest;
     [Export]
     public QuestObjectiveData Objective;
 }

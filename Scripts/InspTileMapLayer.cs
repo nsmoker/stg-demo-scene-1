@@ -17,19 +17,19 @@ public partial class InspTileMapLayer : Node2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        var tilemap_rect = _tileMapLayer.GetUsedRect();
-        var tilemap_cell_size = _tileMapLayer.TileSet.TileSize;
+        var tilemapRect = _tileMapLayer.GetUsedRect();
+        var tilemapCellSize = _tileMapLayer.TileSet.TileSize;
 
-        for (int y = 0; y < tilemap_rect.Size.Y; ++y)
+        for (int y = 0; y < tilemapRect.Size.Y; ++y)
         {
-            _horizontalPoints.Add(tilemap_rect.Position + new Vector2(0, y * tilemap_cell_size.Y));
-            _horizontalPoints.Add(tilemap_rect.Position + new Vector2(tilemap_rect.Size.X * tilemap_cell_size.X, y * tilemap_cell_size.Y));
+            _horizontalPoints.Add(tilemapRect.Position + new Vector2(0, y * tilemapCellSize.Y));
+            _horizontalPoints.Add(tilemapRect.Position + new Vector2(tilemapRect.Size.X * tilemapCellSize.X, y * tilemapCellSize.Y));
         }
 
-        for (int x = 0; x < tilemap_rect.Size.X; ++x)
+        for (int x = 0; x < tilemapRect.Size.X; ++x)
         {
-            _verticalPoints.Add(tilemap_rect.Position + new Vector2(x * tilemap_cell_size.X, 0));
-            _verticalPoints.Add(tilemap_rect.Position + new Vector2(x * tilemap_cell_size.X, tilemap_rect.Size.Y * tilemap_cell_size.Y));
+            _verticalPoints.Add(tilemapRect.Position + new Vector2(x * tilemapCellSize.X, 0));
+            _verticalPoints.Add(tilemapRect.Position + new Vector2(x * tilemapCellSize.X, tilemapRect.Size.Y * tilemapCellSize.Y));
         }
 
         QueueRedraw();

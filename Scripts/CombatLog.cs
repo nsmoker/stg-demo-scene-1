@@ -1,4 +1,5 @@
 using Godot;
+using STGDemoScene1.Scripts.Characters;
 using STGDemoScene1.Scripts.Resources;
 using STGDemoScene1.Scripts.Systems;
 using System.Collections.Generic;
@@ -19,26 +20,26 @@ public static class CombatLog
         QuestSystem.OnQuestUpdated += OnQuestUpdate;
     }
 
-    public static void OnDamageEvent(DamageEvent e)
+    private static void OnDamageEvent(DamageEvent e)
     {
-        var recipientHp = HealthSystem.GetCurrentHitpoints(e.recipient.CharacterData.ResourcePath);
-        GD.Print($"{e.inflicter.Name} dealt {e.damage} damage to {e.recipient.Name}. {e.recipient.Name} has {recipientHp} HP remaining out of {e.recipient.CharacterData.MaxHitpoints}.");
+        var recipientHp = HealthSystem.GetCurrentHitpoints(e.Recipient.CharacterData.ResourcePath);
+        GD.Print($"{e.Inflicter.Name} dealt {e.Damage} damage to {e.Recipient.Name}. {e.Recipient.Name} has {recipientHp} HP remaining out of {e.Recipient.CharacterData.MaxHitpoints}.");
     }
 
-    public static void OnAbilityUse(AttackEvent e) => GD.Print($"{e.attacker.Name} {(e.hit ? "hit" : "missed")} against {e.target.Name}.");
+    private static void OnAbilityUse(AttackEvent e) => GD.Print($"{e.Attacker.Name} {(e.Hit ? "hit" : "missed")} against {e.Target.Name}.");
 
-    public static void OnDeathEvent(DeathEvent e) => GD.Print($"{e.deceased.Name} {(e.killer.Name != null ? $"was killed by {e.killer.Name}!" : "died!")}");
+    private static void OnDeathEvent(DeathEvent e) => GD.Print($"{e.Deceased.Name} {(e.Killer.Name != null ? $"was killed by {e.Killer.Name}!" : "died!")}");
 
-    public static void OnQuestUpdate(Quest quest) => GD.Print($"New journal entry: {quest.Title}: {quest.GetCurrentStage().Title}");
+    private static void OnQuestUpdate(Quest quest) => GD.Print($"New journal entry: {quest.Title}: {quest.GetCurrentStage().Title}");
 
-    public static void OnCombatStarted(CombatStartEvent e) => GD.Print($"Combat started by {e.initiator.CharacterName}.");
+    private static void OnCombatStarted(CombatStartEvent e) => GD.Print($"Combat started by {e.Initiator.CharacterData.CharacterName}.");
 
-    public static void OnCombatJoined(CharacterData joiner) => GD.Print($"{joiner.CharacterName} joined combat.");
+    private static void OnCombatJoined(Character joiner) => GD.Print($"{joiner.CharacterData.CharacterName} joined combat.");
 
-    public static void OnTurnStarted(List<string> movingSide)
+    private static void OnTurnStarted(List<Character> movingSide)
     {
         var characterNames = movingSide
-            .Select(path => ResourceLoader.Load<CharacterData>(path).CharacterName)
+            .Select(c => c.CharacterData.CharacterName)
             .ToArray();
         GD.Print($"It is now {characterNames[0]}'s turn.");
     }

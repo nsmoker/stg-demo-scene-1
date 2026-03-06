@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://cng8hqptg2rbu" path="res://Scripts/Resources/CharacterData.cs" id="4_rgtfi"]
 [ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/Resources/PatrolLeg.cs" id="5_l0335"]
 [ext_resource type="Script" uid="uid://5hcjkamye5ns" path="res://Scripts/Items/AttributeBonus.cs" id="5_qqbd3"]
+[ext_resource type="Script" uid="uid://crgny1nnuhmds" path="res://Scripts/AI/MovePriority.cs" id="5_s4i28"]
 [ext_resource type="Script" uid="uid://c54dlxcx6qrkd" path="res://Scripts/Items/SkillBonus.cs" id="6_07smw"]
 [ext_resource type="Script" uid="uid://dgvr4h6v7mkj5" path="res://Scripts/Items/ArmorStats.cs" id="7_4ictf"]
 [ext_resource type="Script" uid="uid://bg3xbg8f0cawp" path="res://Scripts/Items/AttributeRequirement.cs" id="8_5ptjh"]
@@ -231,6 +232,6 @@ BaseSkills = SubResource("Resource_jhnre")
 Speed = 50.0
 StartingEquipment = SubResource("Resource_tvgtd")
 MovementRange = 100.0
-AttackRange = 100
+AttackRange = 150
 Journal = Array[ExtResource("3_vjktr")]([ExtResource("4_l0335")])
 metadata/_custom_type_script = "uid://cng8hqptg2rbu"

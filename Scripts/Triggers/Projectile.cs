@@ -9,39 +9,36 @@ public partial class Projectile : Area2D
     [Export]
     public float MaxLifetime = 5f;
 
-    public Vector2 Velocity;
+    private Vector2 _velocity;
 
     public System.Action OnHit;
 
-    public ulong TargetInstanceId;
-
-    private float _timeAlive;
+    private Character _target;
 
     public override void _Ready() => BodyEntered += OnBodyEntered;
 
     public override void _Process(double delta)
     {
         float deltaTime = (float) delta;
-        Position += Velocity * deltaTime;
-        _timeAlive += deltaTime;
-
-        if (_timeAlive >= MaxLifetime)
+        GlobalPosition += _velocity * deltaTime;
+        if (GlobalPosition.DistanceTo(_target.GlobalPosition) < 16.0f)
         {
+            OnHit?.Invoke();
             QueueFree();
         }
     }
 
-    public void Initialize(Vector2 direction, ulong targetInstanceId, float speed)
+    public void Initialize(Vector2 direction, Character target, float speed)
     {
         direction = direction.Normalized();
         Rotation = direction.Angle();
-        Velocity = direction * speed;
-        TargetInstanceId = targetInstanceId;
+        _velocity = direction * speed;
+        _target = target;
     }
 
     private void OnBodyEntered(Node body)
     {
-        if (body is Character character && character.GetInstanceId() == TargetInstanceId)
+        if (body is Character character && character == _target)
         {
             OnHit?.Invoke();
             QueueFree();

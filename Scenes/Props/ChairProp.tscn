@@ -1,0 +1,143 @@
+[gd_scene format=3 uid="uid://cmpn1crr0je53"]
+
+[ext_resource type="Script" uid="uid://tlag86dnnlf8" path="res://Scripts/FurnitureProp.cs" id="1_qvr8u"]
+[ext_resource type="Texture2D" uid="uid://dkv1adercf2v7" path="res://Sprites/Props/chair_back.png" id="2_j0p0k"]
+[ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="3_qvr8u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hvgce"]
+size = Vector2(8, 9)
+
+[sub_resource type="Animation" id="Animation_hvgce"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_hyryu"]
+resource_name = "hover"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(0.75, 0.75, 1),
+"update": 0,
+"values": [Vector2(0, -12), Vector2(0, -2), Vector2(0, -12)]
+}
+
+[sub_resource type="Animation" id="Animation_onwmm"]
+resource_name = "idle"
+length = 4.0
+loop_mode = 1
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_2s0bl"]
+resource_name = "land"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.05831472, 1),
+"update": 0,
+"values": [Vector2(0, -2), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_r8e0v"]
+resource_name = "takeoff"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -12)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hvgce"]
+_data = {
+&"RESET": SubResource("Animation_hvgce"),
+&"hover": SubResource("Animation_hyryu"),
+&"idle": SubResource("Animation_onwmm"),
+&"land": SubResource("Animation_2s0bl"),
+&"takeoff": SubResource("Animation_r8e0v")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n5wt5"]
+atlas = ExtResource("3_qvr8u")
+region = Rect2(0, 64, 16, 16)
+
+[node name="ChairProp" type="StaticBody2D" unique_id=942591783]
+z_index = 1
+y_sort_enabled = true
+collision_layer = 2097154
+script = ExtResource("1_qvr8u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1816575283]
+position = Vector2(0, -7.5)
+shape = SubResource("RectangleShape2D_hvgce")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1261149789]
+texture_filter = 1
+position = Vector2(0, -6)
+texture = ExtResource("2_j0p0k")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=500443605]
+libraries/ = SubResource("AnimationLibrary_hvgce")
+
+[node name="SeatMarker" type="Marker2D" parent="." unique_id=1949927795]
+position = Vector2(0, -9)
+
+[node name="BadgeSprite" type="Sprite2D" parent="." unique_id=2096954151]
+visible = false
+z_index = 500
+texture_filter = 1
+position = Vector2(0, -15)
+scale = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_n5wt5")

@@ -16,7 +16,7 @@
 [ext_resource type="Resource" uid="uid://cbhlbpdtrwxxy" path="res://Resources/Named Props/player_chair_elem_intro.tres" id="16_2go6d"]
 [ext_resource type="Script" uid="uid://botrmedkq7fbb" path="res://Scripts/DialogueNodes/SitOnPropBlocking.cs" id="17_p6uxs"]
 [ext_resource type="Script" uid="uid://b7078p410g42l" path="res://Scripts/DialogueNodes/SetCurrentScreenCrowdActions.cs" id="17_qopdl"]
-[ext_resource type="Script" uid="uid://bqhkr10ewh7xe" path="res://Scripts/AI/CrowdAITask.cs" id="19_vgrsl"]
+[ext_resource type="Script" uid="uid://bqhkr10ewh7xe" path="res://Scripts/AI/CrowdAiTask.cs" id="19_vgrsl"]
 [ext_resource type="Script" uid="uid://rwlxgbnachp6" path="res://Scripts/DialogueNodes/HostilityOverride.cs" id="21_7ojc4"]
 [ext_resource type="Resource" uid="uid://cx3eet0w6nlc3" path="res://Resources/Characters/marot.tres" id="21_y3wwa"]
 

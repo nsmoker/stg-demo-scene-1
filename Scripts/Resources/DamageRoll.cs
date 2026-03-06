@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 
 namespace STGDemoScene1.Scripts.Resources;
 
@@ -17,11 +18,7 @@ public partial class DamageRoll : Resource
     public int Roll()
     {
         var random = new Random();
-        int ret = 0;
-        for (int i = 0; i < Rolls.Count; i++)
-        {
-            ret += random.Next(1, Rolls[i]);
-        }
+        int ret = Rolls.Sum(t => random.Next(1, t));
         ret += Mod;
         return ret;
     }

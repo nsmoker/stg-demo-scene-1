@@ -5,22 +5,24 @@ using System.Collections.Generic;
 using System.Linq;
 using Character = STGDemoScene1.Scripts.Characters.Character;
 using Player = STGDemoScene1.Scripts.Characters.Player;
+using Side = System.Collections.Generic.List<STGDemoScene1.Scripts.Characters.Character>;
 
 namespace STGDemoScene1.Scripts.Systems;
 
+
 public struct AttackEvent
 {
-    public Character attacker;
-    public Character target;
-    public bool hit;
+    public Character Attacker;
+    public Character Target;
+    public bool Hit;
     // Only use if hit is true.
-    public int targetDamage;
+    public int TargetDamage;
 }
 
 public struct CombatStartEvent
 {
-    public List<string> participants;
-    public CharacterData initiator;
+    public List<Character> Participants;
+    public Character Initiator;
 }
 
 internal struct CombatantState
@@ -29,58 +31,57 @@ internal struct CombatantState
     public int ActionsRemaining;
 }
 
-public struct CombatTimerHandle
+public readonly struct CombatTimerHandle
 {
-    internal ulong _id;
+    internal readonly ulong _id;
     internal CombatTimerHandle(ulong id) => _id = id;
 
 };
 
 public static class CombatSystem
 {
-    private static readonly Dictionary<string, CombatantState> s_currentCombatants = [];
+    private static readonly Dictionary<Character, CombatantState> s_currentCombatants = [];
 
-    private static ulong s_timerCount = 0;
+    private static ulong s_timerCount;
 
     public delegate void AttackEventHandler(AttackEvent e);
     public delegate void CombatStartHandler(CombatStartEvent e);
-    public delegate void CharacterJoinedCombatHandler(CharacterData c);
-    public delegate void TurnHandler(List<string> side);
+    public delegate void CharacterJoinedCombatHandler(Character c);
+    /// <summary>
+    /// Called when a combat event has resolved and it is time for characters to act again.
+    /// <param name="side">The set of characters who should act.</param>
+    /// </summary>
+    public delegate void TurnHandler(Side side);
 
     public static NavigationRegion2D NavRegion { get; set; }
 
     private static bool s_pathingReady = true;
 
-    public static AttackEventHandler AttackHandlers { get; set; }
-    public static CombatStartHandler CombatStartHandlers { get; set; }
-    public static CharacterJoinedCombatHandler CharacterJoinedCombatHandlers { get; set; }
-    public static TurnHandler TurnHandlers { get; set; }
-    public static Action CombatEnded { get; set; }
+    public static event AttackEventHandler AttackHandlers;
+    public static event CombatStartHandler CombatStartHandlers;
+    public static event CharacterJoinedCombatHandler CharacterJoinedCombatHandlers;
+    public static event TurnHandler TurnHandlers;
+    public static event Action CombatEnded;
 
-    private static List<List<string>> s_sides = [];
+    private static List<Side> s_sides = [];
 
     private static List<CombatTimer> s_combatTimers = [];
 
-    private static int s_sideMoving = 0;
+    private static int s_sideMoving;
 
     private static Label s_combatStatusLabel;
 
     private static void OnNavRebakeFinished(Rid rid)
     {
-        if (rid == NavRegion.GetNavigationMap())
+        if (rid == NavRegion?.GetNavigationMap())
         {
             s_pathingReady = true;
         }
     }
 
-    private static void OnCharacterDeath(DeathEvent e)
-    {
-        var deceasedId = e.deceased.CharacterData.ResourcePath;
-        _ = s_currentCombatants.Remove(deceasedId);
-        _ = s_sides.Find(x => x.Contains(deceasedId)).Remove(deceasedId);
-    }
+    private static void OnCharacterDeath(DeathEvent e) => _ = s_sides.Find(x => x.Contains(e.Deceased)).Remove(e.Deceased);
 
-    public static bool NavReady() => s_pathingReady && NavRegion.NavigationPolygon != null;
+    public static bool NavReady() => s_pathingReady && NavRegion?.NavigationPolygon != null;
 
     private static void EndTurn()
     {
@@ -92,26 +93,18 @@ public static class CombatSystem
         else
         {
             var currentSide = s_sides[s_sideMoving];
-            currentSide.ForEach(x => CharacterSystem.GetInstance(x).NavObstacle.AffectNavigationMesh = true);
+            currentSide.ForEach(x => x.NavObstacle.AffectNavigationMesh = true);
             s_sideMoving = (s_sideMoving + 1) % s_sides.Count;
             currentSide = s_sides[s_sideMoving];
-            if (currentSide.Any(x => CharacterSystem.GetInstance(x) is Player))
-            {
-                s_combatStatusLabel.Text = "YOUR TURN";
-            }
-            else
-            {
-                s_combatStatusLabel.Text = "ENEMY TURN";
-            }
+            s_combatStatusLabel.Text = currentSide.Any(x => x is Player) ? "YOUR TURN" : "ENEMY TURN";
             s_pathingReady = false;
             currentSide.ForEach(x =>
             {
-                var instance = CharacterSystem.GetInstance(x);
-                instance.NavObstacle.AffectNavigationMesh = false;
+                x.NavObstacle.AffectNavigationMesh = false;
                 var state = new CombatantState
                 {
-                    ActionsRemaining = instance.CharacterData.CombatActions,
-                    MovesRemaining = instance.CharacterData.CombatMoves
+                    ActionsRemaining = x.CharacterData.CombatActions,
+                    MovesRemaining = x.CharacterData.CombatMoves
                 };
                 s_currentCombatants[x] = state;
             });
@@ -132,41 +125,33 @@ public static class CombatSystem
         NavRegion.BakeNavigationPolygon();
     }
 
-    public static void Initialize() => NavigationServer2D.MapChanged += OnNavRebakeFinished;
-
-    public static void BeginCombat(CharacterData initiator, CharacterData opponent)
+    public static void Initialize()
     {
-        var scene = (Godot.Engine.GetMainLoop() as SceneTree)
-            .CurrentScene as MasterScene;
-        s_combatStatusLabel = scene.GetCombatStatusLabel();
-        scene.ActivateAbilityBarForCharacter(scene.GetPlayer());
+        NavigationServer2D.MapChanged += OnNavRebakeFinished;
+        CombatLog.Initialize();
+    }
+
+    public static void BeginCombat(Character initiator, Character opponent)
+    {
+        s_combatStatusLabel = SceneSystem.GetMasterScene().GetCombatStatusLabel();
         if (s_currentCombatants.Count == 0)
         {
-            s_currentCombatants.Add(initiator.ResourcePath, new CombatantState { MovesRemaining = initiator.CombatMoves, ActionsRemaining = initiator.CombatActions });
-            s_currentCombatants.Add(opponent.ResourcePath, new CombatantState { MovesRemaining = opponent.CombatMoves, ActionsRemaining = opponent.CombatActions });
-            s_sides.Add([initiator.ResourcePath]);
-            s_sides.Add([opponent.ResourcePath]);
+            s_currentCombatants.Add(initiator, new CombatantState { MovesRemaining = initiator.CharacterData.CombatMoves, ActionsRemaining = initiator.CharacterData.CombatActions });
+            s_currentCombatants.Add(opponent, new CombatantState { MovesRemaining = opponent.CharacterData.CombatMoves, ActionsRemaining = opponent.CharacterData.CombatActions });
+            s_sides.Add([initiator]);
+            s_sides.Add([opponent]);
 
             CombatStartEvent e = new()
             {
-                initiator = initiator,
-                participants = [.. s_currentCombatants.Keys]
+                Initiator = initiator,
+                Participants = [.. s_currentCombatants.Keys]
             };
-            var initiatiorInstance = CharacterSystem.GetInstance(initiator.ResourcePath);
-            initiatiorInstance.NavObstacle.AffectNavigationMesh = false;
-            var opponentInstance = CharacterSystem.GetInstance(opponent.ResourcePath);
-            opponentInstance.NavObstacle.AffectNavigationMesh = true;
+            initiator.NavObstacle.AffectNavigationMesh = false;
+            opponent.NavObstacle.AffectNavigationMesh = true;
             s_pathingReady = false;
             NavRegion.BakeNavigationPolygon();
 
-            if (initiatiorInstance is Player)
-            {
-                s_combatStatusLabel.Text = "YOUR TURN";
-            }
-            else
-            {
-                s_combatStatusLabel.Text = "ENEMY TURN";
-            }
+            s_combatStatusLabel.Text = initiator is Player ? "YOUR TURN" : "ENEMY TURN";
             HealthSystem.DeathEventHandlers += OnCharacterDeath;
             s_combatStatusLabel.Visible = true;
             CombatStartHandlers?.Invoke(e);
@@ -181,16 +166,16 @@ public static class CombatSystem
     /// </summary>
     /// <param name="duration">The duration in turns of the timer.</param>
     /// <param name="onTimeout">A callback that will be invoked when the timer finishes.</param>
-    /// <param name="RelativeTo">The character the timer is relative to. The timer ticks when this character's turn starts.</param>
+    /// <param name="relativeTo">The character the timer is relative to. The timer ticks when this character's turn starts.</param>
     /// <returns>An opaque handle to the timer which can be passed to `RemoveTimer` for premature removal.</returns>
-    public static CombatTimerHandle CreateTimer(int duration, Action onTimeout, CharacterData RelativeTo)
+    public static CombatTimerHandle CreateTimer(int duration, Action onTimeout, Character relativeTo)
     {
         s_timerCount += 1;
         var timer = new CombatTimer()
         {
             TurnsRemaining = duration,
             Timeout = onTimeout,
-            RelativeToCharacter = RelativeTo,
+            RelativeTo = relativeTo,
             Id = s_timerCount
         };
         s_combatTimers.Add(timer);
@@ -203,37 +188,35 @@ public static class CombatSystem
     /// <param name="handle">A handle to the timer to clear.</param>
     public static void RemoveTimer(CombatTimerHandle handle) => s_combatTimers = [.. s_combatTimers.Where(x => x.Id != handle._id)];
 
-    private static void TriggerTimers(List<string> side)
+    public static bool TimerActive(CombatTimerHandle handle) => s_combatTimers.Any(x => x.Id == handle._id);
+
+    private static void TriggerTimers(Side side)
     {
-        for (int i = 0; i < s_combatTimers.Count; ++i)
+        foreach (var timer in from timer in s_combatTimers let timer1 = timer where side.Any(x => x == timer1.RelativeTo) select timer)
         {
-            CombatTimer timer = s_combatTimers[i];
-            if (side.Any(x => x == timer.RelativeToCharacter.ResourcePath))
+            timer.TurnsRemaining -= 1;
+            if (timer.TurnsRemaining <= 0)
             {
-                timer.TurnsRemaining -= 1;
-                if (timer.TurnsRemaining <= 0)
-                {
-                    timer.Timeout?.Invoke();
-                }
+                timer.Timeout?.Invoke();
             }
         }
 
         s_combatTimers = [.. s_combatTimers.Where(x => x.TurnsRemaining > 0)];
     }
 
-    public static void JoinCombat(CharacterData toJoin)
+    public static void JoinCombat(Character toJoin)
     {
-        if (!s_currentCombatants.ContainsKey(toJoin.ResourcePath))
+        if (!s_currentCombatants.ContainsKey(toJoin))
         {
-            s_currentCombatants.Add(toJoin.ResourcePath, new CombatantState { MovesRemaining = toJoin.CombatMoves, ActionsRemaining = toJoin.CombatActions });
+            s_currentCombatants.Add(toJoin, new CombatantState { MovesRemaining = toJoin.CharacterData.CombatMoves, ActionsRemaining = toJoin.CharacterData.CombatActions });
             // New participant fights on the first side in which they are hostile to noone.
             var joiningSide = -1;
             for (int i = 0; i < s_sides.Count; ++i)
             {
                 var side = s_sides[i];
-                if (!side.Any(x => HostilitySystem.GetHostility(x, toJoin.ResourcePath) || HostilitySystem.GetHostility(toJoin.ResourcePath, x)))
+                if (!side.Any(x => HostilitySystem.GetHostility(x.CharacterData, toJoin.CharacterData) || HostilitySystem.GetHostility(toJoin.CharacterData, x.CharacterData)))
                 {
-                    side.Add(toJoin.ResourcePath);
+                    side.Add(toJoin);
                     joiningSide = i;
                     break;
                 }
@@ -241,13 +224,12 @@ public static class CombatSystem
             // If no suitable side is found, make a new one.
             if (joiningSide < 0)
             {
-                s_sides.Add([toJoin.ResourcePath]);
+                s_sides.Add([toJoin]);
                 joiningSide = s_sides.Count - 1;
             }
-            var instance = CharacterSystem.GetInstance(toJoin.ResourcePath);
             // Only redo the nav if the new combatant is not currently moving.
-            instance.NavObstacle.AffectNavigationMesh = joiningSide != s_sideMoving;
-            if (joiningSide != s_sideMoving)
+            toJoin.NavObstacle.AffectNavigationMesh = joiningSide != s_sideMoving;
+            if (joiningSide != s_sideMoving && NavReady())
             {
                 NavRegion.BakeNavigationPolygon();
             }
@@ -255,69 +237,76 @@ public static class CombatSystem
         }
     }
 
-    public static float ComputeToHitChance(CharacterData attacker, CharacterData target)
+    public static float ComputeToHitChance(Character attacker, Character target)
     {
-        var attackerInstance = CharacterSystem.GetInstance(attacker.ResourcePath);
-        var attackedInstance = CharacterSystem.GetInstance(target.ResourcePath);
-        var targetVector = (attackedInstance.GlobalPosition - attackerInstance.GlobalPosition);
-        return (20.0f - attackedInstance.ComputeAc(targetVector.Normalized()) + attackerInstance.ComputeToHitMod()) / 20.0f;
+        var targetVector = target.GlobalPosition - attacker.GlobalPosition;
+        return (20.0f - target.ComputeAc(targetVector.Normalized()) + attacker.ComputeToHitMod()) / 20.0f;
     }
 
-    public static void AttemptMove(CharacterData mover)
+    /// <summary>
+    /// Attempt to consume a movement action point for <c>mover</c>. This function tells the <c>CombatSystem</c> that the
+    /// movement is complete and that other characters should begin moving. Only call this function when movement
+    /// is actually complete.
+    /// </summary>
+    /// <param name="mover">The character who took a movement action.</param>
+    public static void AttemptMove(Character mover)
     {
         var currentSide = s_sides[s_sideMoving];
-        if (currentSide.Contains(mover.ResourcePath))
+        var currentState = s_currentCombatants[mover];
+        if (currentSide.Contains(mover) && currentState.MovesRemaining > 0)
         {
-            var currentState = s_currentCombatants[mover.ResourcePath];
+            int newMovesRem = currentState.MovesRemaining - 1;
             var state = new CombatantState
             {
-                MovesRemaining = currentState.MovesRemaining - 1,
-                ActionsRemaining = currentState.ActionsRemaining,
+                MovesRemaining = newMovesRem,
+                ActionsRemaining = newMovesRem > 0 ? currentState.ActionsRemaining : 0,
             };
 
-            s_currentCombatants[mover.ResourcePath] = state;
+            s_currentCombatants[mover] = state;
 
             if (TurnShouldEnd())
             {
                 EndTurn();
             }
+            else
+            {
+                TurnHandlers?.Invoke([.. GetMovingSide().Where(c => GetMovesRemaining(c) > 0)]);
+            }
         }
     }
 
 
-    public static void AttemptAttack(CharacterData attacker, CharacterData attacked, DamageRoll damageRoll)
+    public static void AttemptAttack(Character attacker, Character target, DamageRoll damageRoll)
     {
-        Character attackerInstance = CharacterSystem.GetInstance(attacker.ResourcePath);
-        Character attackedInstance = CharacterSystem.GetInstance(attacked.ResourcePath);
-        CombatantState attackerState = s_currentCombatants[attacker.ResourcePath];
+        CombatantState attackerState = s_currentCombatants[attacker];
         var currentSide = s_sides[s_sideMoving];
-        if (currentSide.Contains(attacker.ResourcePath) && attackerState.ActionsRemaining > 0 && attackerState.MovesRemaining > 0)
+        if (currentSide.Contains(attacker) && attackerState is { ActionsRemaining: > 0, MovesRemaining: > 0 })
         {
             CombatantState newAttackerState = new()
             {
-                ActionsRemaining = attackerState.ActionsRemaining - 1,
-                MovesRemaining = attackerState.MovesRemaining - 1,
+                ActionsRemaining = 0,
+                MovesRemaining = 0,
             };
-            s_currentCombatants[attacker.ResourcePath] = newAttackerState;
+            s_currentCombatants[attacker] = newAttackerState;
             Random rand = new();
-            int toHitMod = attackerInstance.ComputeToHitMod();
-            int toHitRoll = Math.Max(0, Math.Min(19, rand.Next(20) + toHitMod));
+            int toHitMod = attacker.ComputeToHitMod();
+            int toHitRoll = System.Math.Max(0, System.Math.Min(19, rand.Next(20) + toHitMod));
 
-            Vector2 targetVector = attackedInstance.GlobalPosition - attackerInstance.GlobalPosition;
-            int hitThresh = attackedInstance.ComputeAc(targetVector);
+            Vector2 targetVector = target.GlobalPosition - attacker.GlobalPosition;
+            int hitThresh = target.ComputeAc(targetVector);
 
             bool hit = toHitRoll >= hitThresh;
             var roll = damageRoll.Roll();
             AttackHandlers?.Invoke(new AttackEvent
             {
-                attacker = attackerInstance,
-                target = attackedInstance,
-                hit = hit,
-                targetDamage = roll,
+                Attacker = attacker,
+                Target = target,
+                Hit = hit,
+                TargetDamage = roll,
             });
             if (hit)
             {
-                HealthSystem.PostDamageEvent(attackerInstance, attackedInstance, roll);
+                HealthSystem.PostDamageEvent(attacker, target, roll);
             }
         }
 
@@ -325,11 +314,15 @@ public static class CombatSystem
         {
             EndTurn();
         }
+        else
+        {
+            TurnHandlers?.Invoke([.. GetMovingSide().Where(c => GetMovesRemaining(c) > 0)]);
+        }
     }
 
-    public static void PassTurn(CharacterData character)
+    public static void PassTurn(Character character)
     {
-        s_currentCombatants[character.ResourcePath] = new CombatantState
+        s_currentCombatants[character] = new CombatantState
         {
             ActionsRemaining = 0,
             MovesRemaining = 0,
@@ -339,17 +332,35 @@ public static class CombatSystem
         {
             EndTurn();
         }
+        else
+        {
+            TurnHandlers?.Invoke([.. GetMovingSide().Where(c => GetMovesRemaining(c) > 0)]);
+        }
     }
 
     public static bool TurnShouldEnd() => !s_sides[s_sideMoving].Any(x => s_currentCombatants[x].MovesRemaining > 0 && s_currentCombatants[x].ActionsRemaining > 0);
 
-    public static List<string> GetMovingSide() => s_sides[s_sideMoving];
+    public static Side GetMovingSide() => s_sides[s_sideMoving];
 
-    public static bool IsInCombat(CharacterData c) => s_currentCombatants.ContainsKey(c.ResourcePath);
+    public static bool IsInCombat(Character c) => s_currentCombatants.ContainsKey(c);
 
-    public static int GetActionsRemianing(CharacterData c) => s_currentCombatants[c.ResourcePath].ActionsRemaining;
+    public static int GetActionsRemaining(Character c)
+    {
+        if (s_currentCombatants.TryGetValue(c, out var value))
+        {
+            return value.ActionsRemaining;
+        }
+        return 0;
+    }
 
-    public static int GetMovesRemaining(CharacterData c) => s_currentCombatants[c.ResourcePath].MovesRemaining;
+    public static int GetMovesRemaining(Character c)
+    {
+        if (s_currentCombatants.TryGetValue(c, out var value))
+        {
+            return value.MovesRemaining;
+        }
+        return 0;
+    }
 
     public static List<Character> GetCharactersInRange(Vector2 position, Shape2D shape)
     {
@@ -367,7 +378,7 @@ public static class CombatSystem
         foreach (var r in result)
         {
             var collider = r["collider"].As<Node>();
-            if (collider is not null and Character character)
+            if (collider is Character character)
             {
                 charactersInRange.Add(character);
             }
@@ -375,6 +386,6 @@ public static class CombatSystem
         return charactersInRange;
     }
 
-    public static List<List<string>> GetSides() => s_sides;
+    public static List<Side> GetSides() => s_sides;
 }
 

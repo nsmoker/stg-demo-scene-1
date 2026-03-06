@@ -1,5 +1,6 @@
 using Godot;
 using STGDemoScene1.Addons.Edi.Scripts;
+using STGDemoScene1.Scripts.Resources.Factions;
 using STGDemoScene1.Scripts.Systems;
 using System;
 

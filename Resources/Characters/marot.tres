@@ -5,8 +5,12 @@
 [ext_resource type="Script" uid="uid://be0fsg3lmta4c" path="res://Scripts/Resources/Quest.cs" id="3_40hyh"]
 [ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/Resources/PatrolLeg.cs" id="4_4uyc1"]
 [ext_resource type="Script" uid="uid://5hcjkamye5ns" path="res://Scripts/Items/AttributeBonus.cs" id="4_6w02r"]
+[ext_resource type="Script" uid="uid://crgny1nnuhmds" path="res://Scripts/AI/MovePriority.cs" id="4_sj4w5"]
+[ext_resource type="Script" uid="uid://chq8866nk4oq4" path="res://Scripts/AI/IsCover.cs" id="5_jr3y0"]
+[ext_resource type="Script" uid="uid://bfmeji5ep73gs" path="res://Scripts/AI/DontStandInAoe.cs" id="5_qkav0"]
 [ext_resource type="Script" uid="uid://c54dlxcx6qrkd" path="res://Scripts/Items/SkillBonus.cs" id="5_sj4w5"]
 [ext_resource type="Script" uid="uid://dgvr4h6v7mkj5" path="res://Scripts/Items/ArmorStats.cs" id="6_jr3y0"]
+[ext_resource type="Script" uid="uid://ktuwspy67kj8" path="res://Scripts/AI/CanAttackEnemy.cs" id="6_qkav0"]
 [ext_resource type="Script" uid="uid://bg3xbg8f0cawp" path="res://Scripts/Items/AttributeRequirement.cs" id="7_qkav0"]
 [ext_resource type="Script" uid="uid://cn548gp046jaa" path="res://Scripts/Items/ConsumableStats.cs" id="8_bf2pw"]
 [ext_resource type="Script" uid="uid://bjq8iqwdrtj6w" path="res://Scripts/Items/SkillRequirement.cs" id="9_3v5o1"]
@@ -22,6 +26,18 @@ script = ExtResource("1_2rvwv")
 
 [sub_resource type="Resource" id="Resource_8uf12"]
 script = ExtResource("2_40hyh")
+
+[sub_resource type="Resource" id="Resource_atfxo"]
+script = ExtResource("5_qkav0")
+metadata/_custom_type_script = "uid://bfmeji5ep73gs"
+
+[sub_resource type="Resource" id="Resource_bf2pw"]
+script = ExtResource("5_jr3y0")
+metadata/_custom_type_script = "uid://chq8866nk4oq4"
+
+[sub_resource type="Resource" id="Resource_3v5o1"]
+script = ExtResource("6_qkav0")
+metadata/_custom_type_script = "uid://ktuwspy67kj8"
 
 [sub_resource type="Resource" id="Resource_n85mp"]
 script = ExtResource("4_6w02r")
@@ -222,9 +238,10 @@ BaseAttributes = SubResource("Resource_auwsv")
 BaseSkills = SubResource("Resource_8uf12")
 MaxHitpoints = 10
 CurrentHitpoints = 10
-InitialFaction = 2
+InitialFaction = 1
 Speed = 50.0
 StartingEquipment = SubResource("Resource_fmsty")
-MovementRange = 50.0
-AttackRange = 100
+MovementRange = 100.0
+AttackRange = 150
+MovePriorities = Array[ExtResource("4_sj4w5")]([SubResource("Resource_atfxo"), SubResource("Resource_bf2pw"), SubResource("Resource_3v5o1")])
 metadata/_custom_type_script = "uid://cng8hqptg2rbu"

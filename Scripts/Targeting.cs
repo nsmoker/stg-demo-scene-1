@@ -11,7 +11,7 @@ public partial class Targeting : Sprite2D
 
     public Ability Ability;
 
-    public Character caster;
+    public Character Caster;
 
     public bool ShouldAnimate = false;
 
@@ -41,15 +41,19 @@ public partial class Targeting : Sprite2D
         if (Input.IsActionJustReleased("Targeting Interact"))
         {
             var pos = GetGlobalMousePosition();
-            var hovered = CharacterSystem.GetInstance(HoverSystem.Hovered);
-            var c = caster;
-            c.IssueAttack(Ability.ContactDamage != null ? CharacterSystem.GetInstance(HoverSystem.Hovered).CharacterData : null,
-            pos - c.GlobalPosition,
-            // Note: this lambda is evil and Godot will rightly punish us for trying to do things this way if we are not very, very cautious about the lifetimes of the objects here.
-            () => Ability.Activate(c, hovered, c.GetProjectileSpawnPoint(), pos));
+            var c = Caster;
+            var hovered = HoverSystem.AnyHovered() ? CharacterSystem.GetInstance(HoverSystem.Hovered) : null;
+            if (hovered != null || Ability.ContactDamage == null)
+            {
+                c.BeginAttackAnim(
+                    pos - c.GlobalPosition,
+                    // Note: this lambda is evil and Godot will rightly punish us for trying to do things this way if we are not very, very cautious about the lifetimes of the objects here.
+                    () => Ability.Activate(c, hovered, c.GetProjectileSpawnPoint(), pos, () => { })
+                );
 
-            SceneSystem.GetMasterScene().GetCombatController().OnAbilityTargetingEnd(Ability);
-            Free();
+                SceneSystem.GetMasterScene().GetCombatController().OnAbilityTargetingEnd(Ability);
+                Free();
+            }
         }
         else if (Input.IsActionJustReleased("Targeting Back"))
         {

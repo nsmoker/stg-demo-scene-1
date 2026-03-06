@@ -16,10 +16,10 @@ public partial class Quest : Resource
     public Godot.Collections.Array<QuestStage> Stages = [];
 
     [Export]
-    public bool IsCompleted = false;
+    public bool IsCompleted;
 
     [Export]
-    public int CurrentStage = 0;
+    public int CurrentStage;
 
     public QuestStage GetCurrentStage()
     {

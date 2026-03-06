@@ -12,17 +12,15 @@ public static class PropSystem
 
     public static void Instantiate(PropData data, Vector2 position)
     {
-        Node scene = (Godot.Engine.GetMainLoop() as SceneTree)
-            .CurrentScene;
         var prop = data.BaseScene.Instantiate<Prop>();
-        scene.AddChild(prop);
+        SceneSystem.GetMasterScene().AddChild(prop);
         prop.SetSprite(data.Sprite);
         prop.Name = data.Name;
         prop.GlobalPosition = position;
         Register(data, prop);
     }
 
-    public static void Unregister(PropData data) => s_instanceMap.Remove(data.ResourcePath);
+    private static void Unregister(PropData data) => s_instanceMap.Remove(data.ResourcePath);
 
     public static Prop GetInstance(PropData data) => s_instanceMap[data.ResourcePath];
 

@@ -1,6 +1,5 @@
 #if TOOLS
 using Godot;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,11 +12,11 @@ public partial class DialogueEditor : Control
     public GraphEdit EditorNode;
     private readonly List<DialogueNode> _selection = [];
     private readonly List<DialogueNode> _clipboard = [];
-    private ulong _nodeCounter = 0;
+    private ulong _nodeCounter;
     private Conversation _editedConversation;
     private Label _statusLabel;
 
-    public EditorUndoRedoManager undoRedoManager;
+    public EditorUndoRedoManager UndoRedoManager;
 
     public override void _Ready()
     {
@@ -113,7 +112,7 @@ public partial class DialogueEditor : Control
         _statusLabel.Text = $"Dialogue Editor - Editing {conversation.ResourcePath}";
 
         List<DialogueNode> nodes = [];
-        foreach (var node in conversation?.Nodes)
+        foreach (var node in conversation.Nodes)
         {
             var nodePath = node.NodeType switch
             {
@@ -141,9 +140,9 @@ public partial class DialogueEditor : Control
             nodes.Add(editorNode);
         }
 
-        foreach (var conn in conversation?.Connections)
+        foreach (var conn in conversation.Connections)
         {
-            _ = EditorNode.ConnectNode(nodes[conn.fromNode].Name, 0, nodes[conn.toNode].Name, 0);
+            _ = EditorNode.ConnectNode(nodes[conn.FromNode].Name, 0, nodes[conn.ToNode].Name, 0);
         }
 
         _editedConversation = conversation;
@@ -189,62 +188,65 @@ public partial class DialogueEditor : Control
     public override void _DropData(Vector2 atPosition, Variant data)
     {
         // This isn't documented anywhere by Godot, so could break at any time.
-        if (data.VariantType == Variant.Type.Dictionary)
+        if (data.VariantType != Variant.Type.Dictionary)
         {
-            var dict = data.AsGodotDictionary();
-            switch (dict["type"].AsString())
-            {
-                case "files":
+            return;
+        }
+
+        var dict = data.AsGodotDictionary();
+        switch (dict["type"].AsString())
+        {
+            case "files":
+                {
+                    var path = dict["files"].AsGodotArray()[0].AsString();
+                    var res = ResourceLoader.Load(path);
+                    if (res is Conversation conversation)
                     {
-                        var path = dict["files"].AsGodotArray()[0].AsString();
-                        var res = ResourceLoader.Load(path);
-                        if (res is Conversation conversation)
-                        {
-                            LoadConversation(conversation);
-                        }
-                        break;
+                        LoadConversation(conversation);
                     }
-                case "obj_property":
-                    {
-                        var val = dict["value"];
-                        if (val.VariantType == Variant.Type.Object && val.AsGodotObject() is Conversation conversation)
-                        {
-                            LoadConversation(conversation);
-                        }
-                        break;
-                    }
-                case "resource":
-                    {
-                        var val = dict["resource"].AsGodotObject();
-                        if (val is Conversation conversation)
-                        {
-                            LoadConversation(conversation);
-                        }
-                        break;
-                    }
-                default:
                     break;
-            }
+                }
+            case "obj_property":
+                {
+                    var val = dict["value"];
+                    if (val.VariantType == Variant.Type.Object && val.AsGodotObject() is Conversation conversation)
+                    {
+                        LoadConversation(conversation);
+                    }
+                    break;
+                }
+            case "resource":
+                {
+                    var val = dict["resource"].AsGodotObject();
+                    if (val is Conversation conversation)
+                    {
+                        LoadConversation(conversation);
+                    }
+                    break;
+                }
         }
     }
 
-    public void OnInputEvent(InputEvent e)
+    private void OnInputEvent(InputEvent e)
     {
-        if (e is InputEventMouseButton mouseEvent)
+        if (e is not InputEventMouseButton mouseEvent)
         {
-            if (mouseEvent.ButtonIndex == MouseButton.Right && mouseEvent.IsPressed())
-            {
+            return;
+        }
+
+        switch (mouseEvent.ButtonIndex)
+        {
+            case MouseButton.Right when mouseEvent.IsPressed():
                 _contextMenu.Visible = !_contextMenu.Visible;
                 _contextMenu.Position = GetLocalMousePosition();
 
-                _contextMenu.GetNode<Button>("VBoxContainer/ConditionButton").Visible = _selection.Count == 1 && _selection.Where(x => x.NodeType != DialogueNodeType.ScriptEntry).Count() == 1;
+                _contextMenu.GetNode<Button>("VBoxContainer/ConditionButton").Visible = _selection.Count == 1 && _selection.Count(x => x.NodeType != DialogueNodeType.ScriptEntry) == 1;
                 _contextMenu.GetNode<Button>("VBoxContainer/RemoveConditionButton").Visible =
-                    _selection.Count == 1 && _selection.Where(x => x.NodeType != DialogueNodeType.ScriptEntry && x.Condition != null).Count() == 1;
-            }
-            else if (mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.IsPressed())
-            {
+                    _selection.Count == 1 && _selection.Count(x => x.NodeType != DialogueNodeType.ScriptEntry && x.Condition != null) == 1;
+                break;
+            case MouseButton.Left when mouseEvent.IsPressed():
                 _contextMenu.Visible = false;
-            }
+                break;
         }
     }
 
@@ -259,21 +261,21 @@ public partial class DialogueEditor : Control
         return newNode;
     }
 
-    public DialogueNode AddNode(string localPath, Vector2 _ = new Vector2())
+    private DialogueNode AddNode(string localPath, Vector2 _ = new Vector2())
     {
         var newNode = _AddNodeInternal(localPath);
         newNode.PositionOffset = (EditorNode.ScrollOffset + EditorNode.Size / 2) / EditorNode.Zoom - newNode.Size / 2;
-        undoRedoManager.CreateAction($"Add {newNode.Title}");
-        undoRedoManager.AddDoMethod(this, MethodName.AddAndEnableNode, newNode);
-        undoRedoManager.AddUndoMethod(this, MethodName.DisableNode, newNode);
-        undoRedoManager.AddDoReference(newNode);
-        undoRedoManager.CommitAction();
+        UndoRedoManager.CreateAction($"Add {newNode.Title}");
+        UndoRedoManager.AddDoMethod(this, MethodName.AddAndEnableNode, newNode);
+        UndoRedoManager.AddUndoMethod(this, MethodName.DisableNode, newNode);
+        UndoRedoManager.AddDoReference(newNode);
+        UndoRedoManager.CommitAction();
 
         UpdateLinkOptions(); // Refresh options after adding a node
         return newNode;
     }
 
-    public void AddAndEnableNode(DialogueNode node)
+    private void AddAndEnableNode(DialogueNode node)
     {
         if (node.GetParent() == null)
         {
@@ -285,19 +287,18 @@ public partial class DialogueEditor : Control
         UpdateLinkOptions(); // Refresh options after adding and enabling a node
     }
 
-    public void DisableNode(DialogueNode node)
+    private void DisableNode(DialogueNode node)
     {
         node.Visible = false;
         node.ProcessMode = ProcessModeEnum.Disabled;
         UpdateLinkOptions(); // Refresh options after disabling a node
     }
 
-    public void DisableNodes(Godot.Collections.Array<StringName> names)
+    private void DisableNodes(Godot.Collections.Array<StringName> names)
     {
         foreach (var name in names)
         {
             var node = EditorNode.GetNode<GraphNode>(name.ToString());
-            var dnode = (DialogueNode) node;
             node.ProcessMode = ProcessModeEnum.Disabled;
             node.Visible = false;
 
@@ -311,7 +312,7 @@ public partial class DialogueEditor : Control
         UpdateLinkOptions(); // Refresh options after disabling nodes
     }
 
-    public void ReenableNodes(Godot.Collections.Array<StringName> names, Godot.Collections.Array<Godot.Collections.Array<Godot.Collections.Dictionary>> connectionLists)
+    private void ReenableNodes(Godot.Collections.Array<StringName> names, Godot.Collections.Array<Godot.Collections.Array<Godot.Collections.Dictionary>> connectionLists)
     {
         foreach (var name in names)
         {
@@ -330,39 +331,39 @@ public partial class DialogueEditor : Control
         UpdateLinkOptions(); // Refresh options after reenabling nodes
     }
 
-    public void RemoveNodes(Godot.Collections.Array<StringName> names)
+    private void RemoveNodes(Godot.Collections.Array<StringName> names)
     {
         Godot.Collections.Array<Godot.Collections.Array<Godot.Collections.Dictionary>> connectionLists = [];
         foreach (var name in names)
         {
             connectionLists.Add(EditorNode.GetConnectionListFromNode(name));
         }
-        undoRedoManager.CreateAction($"Remove {names.Count} nodes");
-        undoRedoManager.AddDoMethod(this, MethodName.DisableNodes, names);
-        undoRedoManager.AddUndoMethod(this, MethodName.ReenableNodes, names, connectionLists);
+        UndoRedoManager.CreateAction($"Remove {names.Count} nodes");
+        UndoRedoManager.AddDoMethod(this, MethodName.DisableNodes, names);
+        UndoRedoManager.AddUndoMethod(this, MethodName.ReenableNodes, names, connectionLists);
         foreach (var name in names)
         {
-            undoRedoManager.AddUndoReference(EditorNode.GetNode(name.ToString()));
+            UndoRedoManager.AddUndoReference(EditorNode.GetNode(name.ToString()));
         }
-        undoRedoManager.CommitAction();
+        UndoRedoManager.CommitAction();
 
         UpdateLinkOptions(); // Refresh options after removing nodes
     }
 
-    public void OnConnectionRequest(StringName from, long fromPort, StringName to, long toPort)
+    private void OnConnectionRequest(StringName from, long fromPort, StringName to, long toPort)
     {
-        undoRedoManager.CreateAction($"Connect {from} to {to}");
-        undoRedoManager.AddDoMethod(EditorNode, GraphEdit.MethodName.ConnectNode, from, (int) fromPort, to, (int) toPort);
-        undoRedoManager.AddUndoMethod(EditorNode, GraphEdit.MethodName.DisconnectNode, from, (int) fromPort, to, (int) toPort);
-        undoRedoManager.CommitAction();
+        UndoRedoManager.CreateAction($"Connect {from} to {to}");
+        UndoRedoManager.AddDoMethod(EditorNode, GraphEdit.MethodName.ConnectNode, from, (int) fromPort, to, (int) toPort);
+        UndoRedoManager.AddUndoMethod(EditorNode, GraphEdit.MethodName.DisconnectNode, from, (int) fromPort, to, (int) toPort);
+        UndoRedoManager.CommitAction();
     }
 
-    public void OnDisconnectionRequest(StringName from, long fromPort, StringName to, long toPort)
+    private void OnDisconnectionRequest(StringName from, long fromPort, StringName to, long toPort)
     {
-        undoRedoManager.CreateAction($"Disconnect {from} from {to}");
-        undoRedoManager.AddDoMethod(EditorNode, GraphEdit.MethodName.DisconnectNode, from, (int) fromPort, to, (int) toPort);
-        undoRedoManager.AddUndoMethod(EditorNode, GraphEdit.MethodName.ConnectNode, from, (int) fromPort, to, (int) toPort);
-        undoRedoManager.CommitAction();
+        UndoRedoManager.CreateAction($"Disconnect {from} from {to}");
+        UndoRedoManager.AddDoMethod(EditorNode, GraphEdit.MethodName.DisconnectNode, from, (int) fromPort, to, (int) toPort);
+        UndoRedoManager.AddUndoMethod(EditorNode, GraphEdit.MethodName.ConnectNode, from, (int) fromPort, to, (int) toPort);
+        UndoRedoManager.CommitAction();
     }
 
     private void OnCopyRequest()
@@ -390,7 +391,7 @@ public partial class DialogueEditor : Control
             return;
         }
 
-        undoRedoManager.CreateAction("Paste Nodes");
+        UndoRedoManager.CreateAction("Paste Nodes");
         foreach (var node in _clipboard)
         {
             if (node.Duplicate() is DialogueNode pastedNode)
@@ -407,16 +408,16 @@ public partial class DialogueEditor : Control
                 pastedNode.DNodeId = _nodeCounter;
                 _nodeCounter++;
                 pastedNode.PositionOffset += new Vector2(50, 50); // Offset to avoid overlap
-                undoRedoManager.AddDoMethod(this, MethodName.AddAndEnableNode, pastedNode);
-                undoRedoManager.AddUndoMethod(this, MethodName.DisableNode, pastedNode);
+                UndoRedoManager.AddDoMethod(this, MethodName.AddAndEnableNode, pastedNode);
+                UndoRedoManager.AddUndoMethod(this, MethodName.DisableNode, pastedNode);
             }
         }
-        undoRedoManager.CommitAction();
+        UndoRedoManager.CommitAction();
     }
 
     private void UpdateLinkOptions()
     {
-        var nodes = EditorNode.GetChildren().Where(x => x is DialogueNode).Select(x => (DialogueNode) x).ToList();
+        var nodes = EditorNode.GetChildren().OfType<DialogueNode>().ToList();
         foreach (var node in nodes)
         {
             if (node.Visible && !node.IsQueuedForDeletion())
@@ -434,7 +435,7 @@ public partial class DialogueEditor : Control
 
         foreach (var child in EditorNode.GetChildren())
         {
-            if (child is DialogueNode dialogueNode && dialogueNode.Visible)
+            if (child is DialogueNode { Visible: true } dialogueNode)
             {
                 ret.Add(dialogueNode.Save());
                 if (dialogueNode.NodeType == DialogueNodeType.ScriptEntry)
@@ -447,7 +448,7 @@ public partial class DialogueEditor : Control
         foreach (var dialogueGraphNode in ret)
         {
             var dialogueNode = EditorNode.GetChildren().First(x => x is DialogueNode n && n.DNodeId == dialogueGraphNode.DNodeId) as DialogueNode;
-            var connList = EditorNode.GetConnectionListFromNode(dialogueNode.Name);
+            var connList = EditorNode.GetConnectionListFromNode(dialogueNode?.Name);
             foreach (var conn in connList)
             {
                 var from = EditorNode.GetNode<DialogueNode>(((StringName) conn["from_node"]).ToString());
@@ -459,8 +460,8 @@ public partial class DialogueEditor : Control
                 {
                     _ = conns.Add(new DialogueConnection
                     {
-                        fromNode = fromLoc,
-                        toNode = toLoc
+                        FromNode = fromLoc,
+                        ToNode = toLoc
                     });
                 }
             }
@@ -469,7 +470,7 @@ public partial class DialogueEditor : Control
         // Sort connections by to-node y-position.
         Godot.Collections.Array<DialogueConnection> connsRet = [.. conns.OrderBy(x =>
         {
-            var toNode = ret[x.toNode];
+            var toNode = ret[x.ToNode];
             return toNode.EditorPos.Y;
         })];
 
@@ -480,7 +481,7 @@ public partial class DialogueEditor : Control
             EntryPoints = [.. entrysRet],
         };
 
-        if (_editedConversation != null && _editedConversation.ResourcePath != null)
+        if (_editedConversation is { ResourcePath: not null })
         {
             _editedConversation.Nodes = conv.Nodes;
             _editedConversation.Connections = conv.Connections;
@@ -519,16 +520,18 @@ public partial class DialogueEditor : Control
         return button;
     }
 
-    public void RegenerateNodeIds()
+    private void RegenerateNodeIds()
     {
         _nodeCounter = 0;
         foreach (var child in EditorNode.GetChildren())
         {
-            if (child is DialogueNode dialogueNode)
+            if (child is not DialogueNode dialogueNode)
             {
-                _nodeCounter++;
-                dialogueNode.DNodeId = _nodeCounter;
+                continue;
             }
+
+            _nodeCounter++;
+            dialogueNode.DNodeId = _nodeCounter;
         }
     }
 }

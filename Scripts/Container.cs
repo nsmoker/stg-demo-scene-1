@@ -19,7 +19,6 @@ public partial class Container : StaticBody2D, IInteractable, IContainerInteract
     public override void _Ready()
     {
         InventorySystem.SetInventory(ContainerData.ResourcePath, [.. ContainerData.StartingItems]);
-        SetCollisionLayer(1 | (1 << 20));
         _badgeSprite = GetNode<Sprite2D>("BadgeSprite");
         _closedSprite = GetNode<Sprite2D>("ClosedSprite");
         _openedSprite = GetNode<Sprite2D>("OpenedSprite");
@@ -36,7 +35,7 @@ public partial class Container : StaticBody2D, IInteractable, IContainerInteract
         return InventorySystem.RetrieveInventory(ContainerData.ResourcePath);
     }
 
-    public void RemoveItem(Item item) => InventorySystem.RemoveItem(ContainerData.ResourcePath, item);
+    private void RemoveItem(Item item) => InventorySystem.RemoveItem(ContainerData.ResourcePath, item);
 
-    public void ClearItems() => InventorySystem.Remove(ContainerData.ResourcePath);
+    private void ClearItems() => InventorySystem.Remove(ContainerData.ResourcePath);
 }

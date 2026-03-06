@@ -7,6 +7,7 @@
 size = Vector2(11, 6)
 
 [node name="FireballProjectile" type="Area2D" unique_id=877181893]
+collision_mask = 3
 script = ExtResource("1_siumb")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1739501716]

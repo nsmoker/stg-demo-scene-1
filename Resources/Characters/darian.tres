@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://biavri6qdyh0n" path="res://Scripts/Resources/AttributeSet.cs" id="1_bodei"]
 [ext_resource type="Script" uid="uid://cgng01q8ok4ba" path="res://Scripts/Resources/SkillSet.cs" id="2_y0ri8"]
 [ext_resource type="Script" uid="uid://be0fsg3lmta4c" path="res://Scripts/Resources/Quest.cs" id="3_bodei"]
+[ext_resource type="Script" uid="uid://crgny1nnuhmds" path="res://Scripts/AI/MovePriority.cs" id="4_filnt"]
 [ext_resource type="Script" uid="uid://bjgfioljdfdnx" path="res://Scripts/Resources/PatrolLeg.cs" id="4_y0ri8"]
 [ext_resource type="Script" uid="uid://5hcjkamye5ns" path="res://Scripts/Items/AttributeBonus.cs" id="5_xn5hf"]
 [ext_resource type="Script" uid="uid://c54dlxcx6qrkd" path="res://Scripts/Items/SkillBonus.cs" id="6_f8q3p"]
@@ -222,9 +223,8 @@ BaseAttributes = SubResource("Resource_auwsv")
 BaseSkills = SubResource("Resource_8uf12")
 MaxHitpoints = 10
 CurrentHitpoints = 10
-InitialFaction = 2
 Speed = 50.0
 StartingEquipment = SubResource("Resource_fmsty")
-MovementRange = 50.0
-AttackRange = 100
+MovementRange = 100.0
+AttackRange = 150
 metadata/_custom_type_script = "uid://cng8hqptg2rbu"

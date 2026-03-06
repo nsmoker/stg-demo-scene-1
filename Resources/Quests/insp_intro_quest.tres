@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Quest" load_steps=4 format=3 uid="uid://7160f80bbe6a"]
+[gd_resource type="Resource" script_class="Quest" format=3 uid="uid://7160f80bbe6a"]
 
 [ext_resource type="Script" uid="uid://ho5p3miawhuu" path="res://Scripts/Resources/QuestStage.cs" id="1_45ooe"]
 [ext_resource type="Script" uid="uid://be0fsg3lmta4c" path="res://Scripts/Resources/Quest.cs" id="2_myc1u"]

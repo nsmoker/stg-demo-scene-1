@@ -6,7 +6,7 @@ namespace STGDemoScene1.Scripts.Controls;
 
 public partial class AbilityBar : HBoxContainer
 {
-    public List<AbilityButton> AbilityButtons = [];
+    private readonly List<AbilityButton> _abilityButtons = [];
 
     [Export]
     public PackedScene AbilityButtonScene;
@@ -16,25 +16,24 @@ public partial class AbilityBar : HBoxContainer
         Visible = true;
         ClearButtons();
 
-        for (int i = 0; i < character.Abilities.Count; i++)
+        foreach (var ability in character.Abilities)
         {
-            var ability = character.Abilities[i];
             var button = AbilityButtonScene.Instantiate<AbilityButton>();
             AddChild(button);
-            button.character = character;
+            button.Character = character;
             button.SetAbility(ability);
-            button.SetIndex(AbilityButtons.Count + 1);
-            AbilityButtons.Add(button);
+            button.SetIndex(_abilityButtons.Count + 1);
+            _abilityButtons.Add(button);
         }
     }
 
-    public void ClearButtons()
+    private void ClearButtons()
     {
-        foreach (var button in AbilityButtons)
+        foreach (var button in _abilityButtons)
         {
             button.QueueFree();
         }
-        AbilityButtons.Clear();
+        _abilityButtons.Clear();
     }
 }
 

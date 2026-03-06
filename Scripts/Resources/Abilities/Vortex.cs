@@ -10,19 +10,22 @@ public partial class Vortex : Ability
 {
     [Export]
     public StatusEffect SlowEffect;
-    public override void OnProjectileHit(Character user, Character target, Vector2 Position)
+
+    protected override void OnProjectileHit(Character user, Character target, Vector2 position)
     {
-        if (AreaEffectScene != null)
+        if (AreaEffectScene == null)
         {
-            AreaEffect areaEffectInstance = AreaEffectScene.Instantiate<AreaEffect>();
-            areaEffectInstance.Position = Position;
-            areaEffectInstance.SetCaster(user);
-            areaEffectInstance.SetDamageRoll(AreaDamage);
-            areaEffectInstance.SetDuration(AreaDuration);
-            areaEffectInstance.ApplyToCharacter = (ch) => ch.AddStatusEffect(SlowEffect);
-            SceneSystem.GetMasterScene().AddChild(areaEffectInstance);
-            CombatSystem.PassTurn(user.CharacterData);
+            return;
         }
+
+        AreaEffect areaEffectInstance = AreaEffectScene.Instantiate<AreaEffect>();
+        areaEffectInstance.Position = position;
+        areaEffectInstance.SetCaster(user);
+        areaEffectInstance.SetDamageRoll(AreaDamage);
+        areaEffectInstance.SetDuration(AreaDuration);
+        areaEffectInstance.ApplyToCharacter = (ch) => ch.AddStatusEffect(SlowEffect);
+        SceneSystem.GetMasterScene().AddChild(areaEffectInstance);
+        CombatSystem.PassTurn(user);
     }
 }
 

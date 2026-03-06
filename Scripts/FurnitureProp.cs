@@ -6,7 +6,7 @@ public partial class FurnitureProp : Prop, IInteractable
 {
     private Sprite2D _badgeSprite;
 
-    public bool Occupied { get; set; } = false;
+    public bool Occupied { get; set; }
 
     public override void _Ready()
     {

@@ -1,9 +1,11 @@
 using Godot;
 using STGDemoScene1.Scripts.Characters;
+using STGDemoScene1.Scripts.Controllers;
 using STGDemoScene1.Scripts.Controls;
 using STGDemoScene1.Scripts.Resources;
 using STGDemoScene1.Scripts.Systems;
 using System.Collections.Generic;
+using FactionTable = STGDemoScene1.Scripts.Resources.Factions.FactionTable;
 
 namespace STGDemoScene1.Scripts;
 
@@ -17,10 +19,11 @@ public partial class MasterScene : Node2D
     private AbilityBar _abilityBar;
     private StagfootScreen _currentScreen;
     private Label _combatStatusLabel;
-    private CombatController _combatController;
+    private HumanCombatController _combatController;
+    private HumanNavController _navController;
 
     [Export]
-    private PackedScene _startingScene;
+    private FactionTable _factionTable;
 
     public override void _Ready()
     {
@@ -30,14 +33,14 @@ public partial class MasterScene : Node2D
         _exitButton.Pressed += OnExitPressed;
         _exitMenu = GetNode<PanelContainer>("Camera2D/ExitMenu");
         _player = GetNode<Player>("Player");
-        _combatController = GetNode<CombatController>("CombatController");
-        _combatController.SetPlayer(_player);
+        _combatController = GetNode<HumanCombatController>("HumanCombatController");
+        _navController = GetNode<HumanNavController>("HumanNavController");
+        _navController.Pawn = _player;
         _abilityBar = GetNode<AbilityBar>("Camera2D/AbilityBar");
-        _currentScreen = SceneSystem.GetInstance(_startingScene.ResourcePath);
         _combatStatusLabel = GetNode<Label>("Camera2D/CombatStatusLabel");
+        FactionSystem.Initialize(_factionTable);
         SceneSystem.SetMasterScene(this);
         CombatSystem.Initialize();
-        SwitchScene(_currentScreen);
     }
 
     public override void _Process(double delta)
@@ -52,15 +55,22 @@ public partial class MasterScene : Node2D
 
     public Label GetCombatStatusLabel() => _combatStatusLabel;
 
-    public void SwitchScene(StagfootScreen destination)
+    public void SwitchScene(StagfootScreen destination, bool fade)
     {
         _currentScreen = destination;
         CombatSystem.NavRegion = destination.NavRegion;
         Camera2D camera = GetViewport().GetCamera2D();
 
-        var tween = GetTree().CreateTween();
-        _ = tween.TweenProperty(camera, "global_position", destination.GlobalPosition, 0.3f);
-        _ = tween.SetEase(Tween.EaseType.InOut);
+        if (fade)
+        {
+            var tween = GetTree().CreateTween();
+            _ = tween.TweenProperty(camera, "global_position", destination.GlobalPosition, 0.3f);
+            _ = tween.SetEase(Tween.EaseType.InOut);
+        }
+        else
+        {
+            camera.GlobalPosition = destination.GlobalPosition;
+        }
     }
 
     public bool ToggleJournalDisplay()
@@ -71,13 +81,13 @@ public partial class MasterScene : Node2D
 
     public void SetJournalEntries(List<Quest> quests) => _journalDisplay.SetQuestEntries(quests);
 
-    public bool ToggleExitMenu()
+    private bool ToggleExitMenu()
     {
         _exitMenu.Visible = !_exitMenu.Visible;
         return _exitMenu.Visible;
     }
 
-    public void OnExitPressed() => GetTree().Quit();
+    private void OnExitPressed() => GetTree().Quit();
 
     public void SetAbilityBarVisible(bool visible) => _abilityBar.Visible = visible;
 
@@ -91,6 +101,6 @@ public partial class MasterScene : Node2D
 
     public Player GetPlayer() => _player;
 
-    public CombatController GetCombatController() => _combatController;
+    public HumanCombatController GetCombatController() => _combatController;
 }
 

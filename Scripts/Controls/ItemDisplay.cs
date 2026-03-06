@@ -19,9 +19,9 @@ public partial class ItemDisplay : VBoxContainer
         _descriptionLabel = GetNode<Label>("DescriptionLabel");
         _textureRect = GetNode<TextureRect>("TextureRect");
 
-        base.MouseEntered += OnMouseEntered;
-        base.MouseExited += OnMouseExited;
-        base.GuiInput += InputHandler;
+        MouseEntered += OnMouseEntered;
+        MouseExited += OnMouseExited;
+        GuiInput += InputHandler;
     }
 
     public void DisplayItem(Item item)

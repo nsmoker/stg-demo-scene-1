@@ -10,13 +10,16 @@ namespace STGDemoScene1.Scripts.DialogueNodes;
 public partial class SetCurrentScreenCrowdActions : DialogueAction
 {
     [Export]
-    public Godot.Collections.Array<CrowdAITask> tasks;
+    public Godot.Collections.Array<CrowdAiTask> Tasks;
 
     public override void Execute(Action onComplete)
     {
-        var masterScene = (Godot.Engine.GetMainLoop() as SceneTree).CurrentScene as MasterScene;
-        var currentScene = masterScene.GetCurrentScreen();
-        currentScene.GenericNpcDirector.PossibleTasks = tasks;
+        if (Engine.GetMainLoop() is SceneTree { CurrentScene: MasterScene masterScene })
+        {
+            var currentScene = masterScene.GetCurrentScreen();
+            currentScene.GenericNpcDirector.PossibleTasks = Tasks;
+        }
+
         onComplete?.Invoke();
     }
 }

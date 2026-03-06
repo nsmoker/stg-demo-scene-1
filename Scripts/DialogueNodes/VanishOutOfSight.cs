@@ -12,10 +12,10 @@ namespace STGDemoScene1.Scripts.DialogueNodes;
 public partial class VanishOutOfSight : DialogueAction
 {
     [Export]
-    public CharacterData characterToVanish;
+    public CharacterData CharacterToVanish;
 
     [Export]
-    public CharacterData visionRangeOf;
+    public CharacterData VisionRangeOf;
 
     private Character _vanishInstance;
     private Character _visionInstance;
@@ -23,8 +23,8 @@ public partial class VanishOutOfSight : DialogueAction
 
     public override void Execute(Action onComplete)
     {
-        _vanishInstance = CharacterSystem.GetInstance(characterToVanish.ResourcePath);
-        _visionInstance = CharacterSystem.GetInstance(visionRangeOf.ResourcePath);
+        _vanishInstance = CharacterSystem.GetInstance(CharacterToVanish.ResourcePath);
+        _visionInstance = CharacterSystem.GetInstance(VisionRangeOf.ResourcePath);
 
         _visionRange = _visionInstance.GetSenseArea();
 
@@ -32,13 +32,16 @@ public partial class VanishOutOfSight : DialogueAction
         onComplete?.Invoke();
     }
 
-    public void VisionHandler(Node2D body)
+    private void VisionHandler(Node2D body)
     {
-        if (body is Character character && character.CharacterData.ResourcePath.Equals(characterToVanish.ResourcePath))
+        if (body is not Character character ||
+            !character.CharacterData.ResourcePath.Equals(CharacterToVanish.ResourcePath))
         {
-            _vanishInstance.QueueFree();
-            _visionRange.BodyExited -= VisionHandler;
+            return;
         }
+
+        _vanishInstance.QueueFree();
+        _visionRange.BodyExited -= VisionHandler;
     }
 }
 

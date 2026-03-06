@@ -10,7 +10,6 @@ public partial class Toggleable : StaticBody2D, IInteractable, IToggleableIntera
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        SetCollisionLayer(1 | (1 << 20));
         _sprite = GetNode<AnimatedSprite2D>("AnimatedSprite");
         _sprite.Play();
         _badgeSprite = GetNode<Sprite2D>("BadgeSprite");
@@ -22,14 +21,7 @@ public partial class Toggleable : StaticBody2D, IInteractable, IToggleableIntera
 
     public void Toggle()
     {
-        if (_sprite.Animation == "on")
-        {
-            _sprite.Animation = "off";
-        }
-        else
-        {
-            _sprite.Animation = "on";
-        }
+        _sprite.Animation = _sprite.Animation == "on" ? "off" : "on";
         _sprite.Play();
     }
 }

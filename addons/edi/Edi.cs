@@ -21,7 +21,7 @@ public partial class Edi : EditorPlugin
         };
         _dock.AddChild(_dockContent);
         AddDock(_dock);
-        _editor.undoRedoManager = GetUndoRedo();
+        _editor.UndoRedoManager = GetUndoRedo();
     }
 
     public override void _ExitTree()

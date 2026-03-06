@@ -7,10 +7,8 @@ namespace STGDemoScene1.Addons.Edi.Scripts;
 public partial class DialogueConnection : Resource
 {
     [Export]
-    public int fromNode;
+    public int FromNode;
 
     [Export]
-    public int toNode;
-
-    public DialogueConnection() { }
+    public int ToNode;
 }
