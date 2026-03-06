@@ -41,9 +41,9 @@ public partial class Targeting : Sprite2D
         if (Input.IsActionJustReleased("Targeting Interact"))
         {
             var pos = GetGlobalMousePosition();
-            var hovered = CharacterSystem.GetInstance(HoverSystem.Hovered);
             var c = Caster;
-            if (HoverSystem.AnyHovered() || Ability.ContactDamage == null)
+            var hovered = HoverSystem.AnyHovered() ? CharacterSystem.GetInstance(HoverSystem.Hovered) : null;
+            if (hovered != null || Ability.ContactDamage == null)
             {
                 c.BeginAttackAnim(
                     pos - c.GlobalPosition,

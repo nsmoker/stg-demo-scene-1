@@ -276,7 +276,7 @@ public static class CombatSystem
             s_currentCombatants[attacker] = newAttackerState;
             Random rand = new();
             int toHitMod = attacker.ComputeToHitMod();
-            int toHitRoll = Math.Max(0, Math.Min(19, rand.Next(20) + toHitMod));
+            int toHitRoll = System.Math.Max(0, System.Math.Min(19, rand.Next(20) + toHitMod));
 
             Vector2 targetVector = target.GlobalPosition - attacker.GlobalPosition;
             int hitThresh = target.ComputeAc(targetVector);

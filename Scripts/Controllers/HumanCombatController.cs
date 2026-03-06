@@ -21,7 +21,7 @@ public partial class HumanCombatController : Node
     [Export]
     public Font PathFont;
 
-    public void SetCharacter(Character character)
+    private void SetCharacter(Character character)
     {
         if (_character != null)
         {
@@ -113,7 +113,7 @@ public partial class HumanCombatController : Node
                     _character.GlobalPosition,
                     _character.GetGlobalMousePosition(),
                     true);
-                var len = Character.ComputePathLength(path, _character.GlobalPosition);
+                var len = Math.ComputePathLength(path, _character.GlobalPosition);
                 if (len <= _character.MovementRange)
                 {
                     _pawnMoving = true;
@@ -161,7 +161,7 @@ public partial class HumanCombatController : Node
                     _character.GlobalPosition,
                     _character.GetGlobalMousePosition(),
                     true);
-                var len = Character.ComputePathLength(path, _character.GlobalPosition);
+                var len = Math.ComputePathLength(path, _character.GlobalPosition);
                 var inRange = len <= _character.MovementRange;
                 var pathTransformed = path.Select(_character.ToLocal).ToArray();
                 float dist = path.Length > 1

@@ -31,7 +31,7 @@ metadata/_custom_type_script = "uid://x2cwkvtiybtp"
 
 [sub_resource type="Resource" id="Resource_dxrhf"]
 script = ExtResource("3_1nsqu")
-FactionRelations = [SubResource("Resource_5hl87"), SubResource("Resource_annar")]
+FactionRelations = Array[ExtResource("2_1nsqu")]([SubResource("Resource_5hl87"), SubResource("Resource_annar")])
 metadata/_custom_type_script = "uid://c1b50cgacwuvh"
 
 [sub_resource type="SystemFont" id="SystemFont_8fl2o"]

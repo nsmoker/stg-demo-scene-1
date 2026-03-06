@@ -26,9 +26,7 @@ public class StackStatus
     public List<CombatTimerHandle> StackTimers = [];
 }
 
-/// <summary>
 /// A fake, linear "push." These are not true physics forces, but just simple vectors we use to animate characters during combat.
-/// </summary>
 public class Push
 {
     public Vector2 Velocity;
@@ -39,42 +37,6 @@ public class Push
 [GlobalClass]
 public partial class Character : CharacterBody2D
 {
-    private static Vector2[] TrimPath(Vector2 start, Vector2[] path, float maxLength)
-    {
-        Vector2 loc = start;
-        float remainingLength = maxLength;
-        List<Vector2> trimmedPath = [];
-        foreach (Vector2 p in path)
-        {
-            if (!(remainingLength > 0))
-            {
-                continue;
-            }
-
-            float length = Mathf.Min((p - start).Length(), remainingLength);
-            remainingLength -= length;
-            Vector2 targetVector = p - loc;
-            Vector2 newLoc = loc + targetVector.Normalized() * length;
-            trimmedPath.Add(newLoc);
-            loc = newLoc;
-        }
-
-        return [.. trimmedPath];
-    }
-
-    public static float ComputePathLength(Vector2[] path, Vector2 origin)
-    {
-        Vector2 start = origin;
-        float len = 0;
-        foreach (var vertex in path)
-        {
-            len += vertex.DistanceTo(start);
-            start = vertex;
-        }
-
-        return len;
-    }
-
     public CollisionShape2D Collider;
     private AnimationPlayer _anim;
     public NavigationObstacle2D NavObstacle;
@@ -127,7 +89,7 @@ public partial class Character : CharacterBody2D
         Willpower = Willpower,
     };
 
-    private static int ComputeAttributeMod(int value) => (int) Math.Floor((value - 10.0) / 2.0);
+    private static int ComputeAttributeMod(int value) => (int) System.Math.Floor((value - 10.0) / 2.0);
 
     private int StrengthMod => ComputeAttributeMod(Strength);
     private int EnduranceMod => ComputeAttributeMod(Endurance);
@@ -198,41 +160,6 @@ public partial class Character : CharacterBody2D
 
     protected List<Push> CurrentPushes = [];
 
-    protected class DialogueState : ICharacterState
-    {
-        public void Process(double delta, Character character) { }
-
-        public void PhysicsProcess(double delta, Character player) { }
-
-        public void OnTransition(Character character) { }
-    }
-
-    private class PatrolState : ICharacterState
-    {
-        public void Process(double delta, Character character) { }
-
-        public void PhysicsProcess(double delta, Character character)
-        {
-            if (character.IsNamedCharacter() && character.CharacterData.PatrolLegs.Count > 0)
-            {
-                var currentPatrolLeg = character.CharacterData.PatrolLegs[character._patrolLegIndex];
-                if (character._patrolLegProgress >= currentPatrolLeg.Distance)
-                {
-                    character._patrolLegProgress = 0;
-                    character._patrolLegIndex = (character._patrolLegIndex + 1) % character.CharacterData.PatrolLegs.Count;
-                    currentPatrolLeg = character.CharacterData.PatrolLegs[character._patrolLegIndex];
-                }
-
-                character.Velocity += currentPatrolLeg.Direction * character.Speed;
-                character._patrolLegProgress += character.Velocity.Length();
-                _ = character.MoveAndSlide();
-                character.SetWalkAnimState(character.Velocity);
-            }
-        }
-
-        public void OnTransition(Character c) { }
-    }
-
     private class PawnState : ICharacterState
     {
         public void OnTransition(Character character) { }
@@ -275,7 +202,7 @@ public partial class Character : CharacterBody2D
                         }
                         else
                         {
-                            character.ControllerState = new CombatNavState(character, TrimPath(character.GlobalPosition, path, character.MovementRange));
+                            character.ControllerState = new CombatNavState(character, Math.TrimPath(character.GlobalPosition, path, character.MovementRange));
                         }
                     }
                     else if (!_pawnAttacking)
@@ -422,20 +349,13 @@ public partial class Character : CharacterBody2D
 
     protected class NavToCharacterState(Character self, Character target, ICharacterState prevState, Action onComplete, float speed, float tolerance) : ICharacterState
     {
-        private readonly Character _target = target;
-        private readonly Character _self = self;
-        private readonly ICharacterState _prevState = prevState;
-        private readonly Action _onComplete = onComplete;
-        private readonly float _speed = speed;
-        private readonly float _tolerance = tolerance;
-
         public void OnTransition(Character character) { }
 
         public void PhysicsProcess(double delta, Character character)
         {
-            var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), _self.GlobalPosition, _target.GlobalPosition, true);
-            var substate = new NavState([.. path.TakeLast(path.Length - 1)], _prevState, _onComplete, _speed, _tolerance);
-            substate.PhysicsProcess(delta, _self);
+            var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), self.GlobalPosition, target.GlobalPosition, true);
+            var substate = new NavState([.. path.TakeLast(path.Length - 1)], prevState, onComplete, speed, tolerance);
+            substate.PhysicsProcess(delta, self);
         }
 
         public void Process(double delta, Character character) { }
@@ -449,7 +369,7 @@ public partial class Character : CharacterBody2D
         void OnTransition(Character character);
     }
 
-    private ICharacterState _controllerState = new PatrolState();
+    private ICharacterState _controllerState = new PawnState();
 
     public ICharacterState ControllerState
     {
@@ -726,7 +646,7 @@ public partial class Character : CharacterBody2D
     {
         if (ControllerState is CombatState or CombatNavState)
         {
-            ControllerState = new PatrolState();
+            ControllerState = new PawnState();
         }
         _coverBadge.Visible = false;
         if (ActionPip1 != null && ActionPip2 != null)
@@ -839,7 +759,7 @@ public partial class Character : CharacterBody2D
     public void WalkToPoint(Vector2 point, Action onComplete = null, float speed = -1.0f)
     {
         var path = NavigationServer2D.MapGetPath(CombatSystem.NavRegion.GetNavigationMap(), GlobalPosition, point, true);
-        ControllerState = path.Length == 0 ? new NavState([GlobalPosition, point], new PatrolState(), onComplete, speed > 0 ? speed : Speed) : new NavState(path, new PatrolState(), onComplete, speed > 0 ? speed : Speed);
+        ControllerState = path.Length == 0 ? new NavState([GlobalPosition, point], new PawnState(), onComplete, speed > 0 ? speed : Speed) : new NavState(path, new PawnState(), onComplete, speed > 0 ? speed : Speed);
     }
 
     private void CleanDelegates()
@@ -922,15 +842,16 @@ public partial class Character : CharacterBody2D
 
     public void SetIdle()
     {
-        ControllerState = new PatrolState();
+        ControllerState = new PawnState();
         SetAnimState(AnimState.Idle);
     }
 
-    public void WalkToCharacter(Character instance, Action onComplete, float speed, float tolerance = 1.0f) => ControllerState = new NavToCharacterState(this, instance, new PatrolState(), onComplete, speed, tolerance);
+    public void WalkToCharacter(Character instance, Action onComplete, float speed, float tolerance = 1.0f) =>
+        ControllerState = new NavToCharacterState(this, instance, new PawnState(), onComplete, speed, tolerance);
 
     public void SetTalking()
     {
-        ControllerState = new PatrolState();
+        ControllerState = new PawnState();
         SetAnimState(AnimState.Talking);
     }
 
