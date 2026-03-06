@@ -2,7 +2,7 @@
 
 [ext_resource type="TileSet" uid="uid://cem5hy2763dx" path="res://SpritesPlaceholder/Tilesets/placeholder_tile_set.tres" id="1_dw8ip"]
 [ext_resource type="PackedScene" uid="uid://ybqbrpd6jk4p" path="res://Scenes/Characters/herald.tscn" id="6_8an7w"]
-[ext_resource type="Script" uid="uid://d4dn75qbvhtwf" path="res://Scripts/Character/CharacterScripts/Plinth.cs" id="7_rymyd"]
+[ext_resource type="Script" uid="uid://d4dn75qbvhtwf" path="res://Scripts/Characters/CharacterScripts/Plinth.cs" id="7_rymyd"]
 [ext_resource type="Script" uid="uid://dg8lhy3xgkqs0" path="res://addons/edi/Scripts/DialogueConnection.cs" id="7_u4jjt"]
 [ext_resource type="PackedScene" uid="uid://gedp1qirf71n" path="res://Scenes/Characters/player.tscn" id="8_cyqer"]
 [ext_resource type="Script" uid="uid://bl82ixaru14td" path="res://addons/edi/Scripts/DialogueGraphNode.cs" id="8_rymyd"]

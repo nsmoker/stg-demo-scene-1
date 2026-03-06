@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dsawqshhjgquw"]
 
-[ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character/Character.cs" id="1_cw48i"]
+[ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Characters/Character.cs" id="1_cw48i"]
 [ext_resource type="Resource" uid="uid://cx3eet0w6nlc3" path="res://Resources/Characters/marot.tres" id="2_322xl"]
 [ext_resource type="Resource" uid="uid://bnl26jpb4ux27" path="res://Resources/Abilities/BasicAttack.tres" id="4_cytio"]
 [ext_resource type="PackedScene" uid="uid://cc3g2hp8txivb" path="res://Scenes/Controls/status_effect_container.tscn" id="8_mh6cb"]

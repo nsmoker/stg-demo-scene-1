@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://gedp1qirf71n"]
 
-[ext_resource type="Script" uid="uid://04a5i0tk15gy" path="res://Scripts/Character/Player.cs" id="1_co212"]
+[ext_resource type="Script" uid="uid://04a5i0tk15gy" path="res://Scripts/Characters/Player.cs" id="1_co212"]
 [ext_resource type="Resource" uid="uid://bsymeb5yuv4bp" path="res://Resources/Characters/player_data.tres" id="2_pu2lt"]
 [ext_resource type="Resource" uid="uid://bnl26jpb4ux27" path="res://Resources/Abilities/BasicAttack.tres" id="4_8erm5"]
 [ext_resource type="Script" uid="uid://6s50muiotg4i" path="res://Scripts/Resources/Abilities/Ability.cs" id="5_fcmex"]

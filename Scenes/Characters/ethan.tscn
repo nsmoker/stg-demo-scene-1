@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cp1hrm2ms5ieg"]
 
-[ext_resource type="Script" uid="uid://dolf38tlsle5r" path="res://Scripts/Character/InteractableCharacter.cs" id="1_81v3y"]
+[ext_resource type="Script" uid="uid://dolf38tlsle5r" path="res://Scripts/Characters/InteractableCharacter.cs" id="1_81v3y"]
 [ext_resource type="Resource" uid="uid://dxdi30157jvtw" path="res://Resources/Characters/ethan.tres" id="2_81v3y"]
 [ext_resource type="Resource" uid="uid://bnl26jpb4ux27" path="res://Resources/Abilities/BasicAttack.tres" id="3_fndw6"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="3_l0kn5"]

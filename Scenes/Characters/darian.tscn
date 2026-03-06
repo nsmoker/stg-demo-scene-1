@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://djslysixa4d0a"]
 
-[ext_resource type="Script" uid="uid://dolf38tlsle5r" path="res://Scripts/Character/InteractableCharacter.cs" id="1_2jieg"]
+[ext_resource type="Script" uid="uid://dolf38tlsle5r" path="res://Scripts/Characters/InteractableCharacter.cs" id="1_2jieg"]
 [ext_resource type="Resource" uid="uid://c0ev20u8e7nyu" path="res://Resources/Characters/darian.tres" id="2_p6ogr"]
 [ext_resource type="Resource" uid="uid://btc6ofwhdmhx" path="res://Conversations/combat_trigger_conv.tres" id="2_qoc2n"]
 [ext_resource type="Resource" uid="uid://bnl26jpb4ux27" path="res://Resources/Abilities/BasicAttack.tres" id="3_o5t7d"]

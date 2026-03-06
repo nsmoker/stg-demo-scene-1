@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cy27gk81ig72o"]
 
-[ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Character/Character.cs" id="1_o8lhq"]
+[ext_resource type="Script" uid="uid://bsrhat3n35udl" path="res://Scripts/Characters/Character.cs" id="1_o8lhq"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="3_anx2h"]
 [ext_resource type="Texture2D" uid="uid://cusnf7nuh7o57" path="res://Sprites/Characters/pc_ingame_placeholder.png" id="4_bxoaq"]
 [ext_resource type="Texture2D" uid="uid://dkqa0kos72rpq" path="res://SpritesPlaceholder/Images/action_pip.png" id="5_8bwv0"]

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c7xooyytkhw6g"]
 
-[ext_resource type="Script" uid="uid://dolf38tlsle5r" path="res://Scripts/Character/InteractableCharacter.cs" id="1_6k4le"]
+[ext_resource type="Script" uid="uid://dolf38tlsle5r" path="res://Scripts/Characters/InteractableCharacter.cs" id="1_6k4le"]
 [ext_resource type="Resource" uid="uid://bewehuhajler" path="res://Conversations/argus_1.tres" id="2_uyqtx"]
 [ext_resource type="Texture2D" uid="uid://dvrg245q3n4kg" path="res://SpritesPlaceholder/Images/Characters/char_06.png" id="3_81qwi"]
 [ext_resource type="Texture2D" uid="uid://bufjtaavk1kad" path="res://SpritesPlaceholder/Images/spr_itemsncolectables.png" id="4_tjpj8"]
@@ -32,32 +32,32 @@ region = Rect2(0, 64, 16, 16)
 [sub_resource type="CircleShape2D" id="CircleShape2D_u6bny"]
 radius = 66.11
 
-[node name="Argus" type="CharacterBody2D"]
+[node name="Argus" type="CharacterBody2D" unique_id=1624755750]
 script = ExtResource("1_6k4le")
 Dialogue = ExtResource("2_uyqtx")
 CharacterData = ExtResource("5_12ub5")
 metadata/_custom_type_script = "uid://bsrhat3n35udl"
 
-[node name="MainCollider" type="CollisionShape2D" parent="."]
+[node name="MainCollider" type="CollisionShape2D" parent="." unique_id=309428]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_ntfr8")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1596461596]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_qwoug")
 
-[node name="BadgeSprite" type="Sprite2D" parent="."]
+[node name="BadgeSprite" type="Sprite2D" parent="." unique_id=1855351160]
 visible = false
 texture_filter = 1
 position = Vector2(0, -15.44)
 texture = SubResource("AtlasTexture_sonf1")
 
-[node name="SenseArea" type="Area2D" parent="."]
+[node name="SenseArea" type="Area2D" parent="." unique_id=758343080]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea" unique_id=1309630687]
 shape = SubResource("CircleShape2D_u6bny")
 
-[node name="CombatInteractionMenu" parent="." instance=ExtResource("5_36l5g")]
+[node name="CombatInteractionMenu" parent="." unique_id=636634023 instance=ExtResource("5_36l5g")]
 visible = false
 offset_left = 8.0
 offset_top = -7.0
@@ -65,6 +65,6 @@ offset_right = 38.0
 offset_bottom = 43.0
 scale = Vector2(0.5, 0.5)
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=945723263]
 avoidance_enabled = true
 radius = 16.0
