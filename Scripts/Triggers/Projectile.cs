@@ -21,7 +21,7 @@ public partial class Projectile : Area2D
     {
         float deltaTime = (float) delta;
         GlobalPosition += _velocity * deltaTime;
-        if (GlobalPosition.DistanceTo(_target.GlobalPosition) < 5.0f)
+        if (GlobalPosition.DistanceTo(_target.GlobalPosition) < 16.0f)
         {
             OnHit?.Invoke();
             QueueFree();

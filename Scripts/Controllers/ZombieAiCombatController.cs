@@ -107,16 +107,17 @@ public partial class ZombieAiCombatController : Node2D
         {
             var moves = GeneratePossibleMoves(pawn);
             var myPrioritiesInLife = pawn.CharacterData.MovePriorities;
+            var enemiesInRange = pawn.GetEnemiesInSense();
             foreach (var priority in myPrioritiesInLife)
             {
                 var maxScore = 0.0f;
                 foreach (var move in moves)
                 {
-                    var score = priority.ScorePosition(move, pawn, GetWorld2D().GetDirectSpaceState());
+                    var score = priority.ScorePosition(move, pawn, enemiesInRange, GetWorld2D().GetDirectSpaceState());
                     maxScore = Mathf.Max(maxScore, score);
                 }
 
-                moves = [..moves.Where(x => priority.ScorePosition(x, pawn, GetWorld2D().GetDirectSpaceState()) >= maxScore)];
+                moves = [..moves.Where(x => priority.ScorePosition(x, pawn, enemiesInRange, GetWorld2D().GetDirectSpaceState()) >= maxScore)];
             }
             var maxMove = closestEnemy == null ? moves.OrderBy(GlobalPosition.DistanceTo).Last() : moves.OrderBy(closestEnemy.GlobalPosition.DistanceTo).First();
 

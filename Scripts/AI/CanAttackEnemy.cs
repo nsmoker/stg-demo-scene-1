@@ -1,5 +1,6 @@
 ﻿using Godot;
 using STGDemoScene1.Scripts.Characters;
+using System.Collections.Generic;
 
 namespace STGDemoScene1.Scripts.AI;
 
@@ -7,7 +8,7 @@ namespace STGDemoScene1.Scripts.AI;
 [Tool]
 public partial class CanAttackEnemy : MovePriority
 {
-    public override float ScorePosition(Vector2 position, Character me, PhysicsDirectSpaceState2D physicsState)
+    public override float ScorePosition(Vector2 position, Character me, List<Character> enemies, PhysicsDirectSpaceState2D physicsState)
     {
         var closestEnemy = me.GetClosestEnemy();
         if (closestEnemy != null && position.DistanceTo(closestEnemy.GlobalPosition) <= me.CharacterData.AttackRange)

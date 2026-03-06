@@ -1,5 +1,6 @@
 ﻿using Godot;
 using STGDemoScene1.Scripts.Characters;
+using System.Collections.Generic;
 
 namespace STGDemoScene1.Scripts.AI;
 
@@ -7,5 +8,5 @@ namespace STGDemoScene1.Scripts.AI;
 [Tool]
 public partial class MovePriority : Resource
 {
-    public virtual float ScorePosition(Vector2 position, Character me, PhysicsDirectSpaceState2D physicsState) => 0;
+    public virtual float ScorePosition(Vector2 position, Character me, List<Character> enemies, PhysicsDirectSpaceState2D physicsState) => 0;
 }

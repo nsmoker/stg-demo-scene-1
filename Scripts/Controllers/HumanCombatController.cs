@@ -10,7 +10,7 @@ namespace STGDemoScene1.Scripts.Controllers;
 
 public partial class HumanCombatController : Node
 {
-    private Character _character;
+    private Character _pawn;
     private List<Character> _side;
     private bool _pawnMoving;
     private bool _pawnAttacking;
@@ -23,23 +23,23 @@ public partial class HumanCombatController : Node
 
     private void SetCharacter(Character character)
     {
-        if (_character != null)
+        if (_pawn != null)
         {
-            _character.Draw -= OnPawnDraw;
-            _character.ActionPip1.Visible = _character.ActionPip2.Visible = false;
-            _character.QueueRedraw();
+            _pawn.Draw -= OnPawnDraw;
+            _pawn.ActionPip1.Visible = _pawn.ActionPip2.Visible = false;
+            _pawn.QueueRedraw();
         }
-        _character = character;
-        _ = _character.UpdateCoverState(_character.GetWorld2D().DirectSpaceState);
-        _character.ActionPip1.Visible = true;
-        _character.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_character) > 1;
-        _character.Draw += OnPawnDraw;
-        _character.QueueRedraw();
-        SceneSystem.GetMasterScene().ActivateAbilityBarForCharacter(_character);
+        _pawn = character;
+        _ = _pawn.UpdateCoverState(_pawn.GetWorld2D().DirectSpaceState);
+        _pawn.ActionPip1.Visible = true;
+        _pawn.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_pawn) > 1;
+        _pawn.Draw += OnPawnDraw;
+        _pawn.QueueRedraw();
+        SceneSystem.GetMasterScene().ActivateAbilityBarForCharacter(_pawn);
     }
 
-    private bool IsOurTurn => CombatSystem.GetMovingSide().Contains(_character);
-    private bool IsActive => _character != null && CombatSystem.IsInCombat(_character) && !DialogueSystem.IsInDialogue() && !_pawnMoving && !_pawnAttacking;
+    private bool IsOurTurn => CombatSystem.GetMovingSide().Contains(_pawn);
+    private bool IsActive => _pawn != null && CombatSystem.IsInCombat(_pawn) && !DialogueSystem.IsInDialogue() && !_pawnMoving && !_pawnAttacking;
 
 
     private void ActivateCombatControl() => _pawnMoving = false;
@@ -56,7 +56,7 @@ public partial class HumanCombatController : Node
 
     private void OnCombatJoined(Character joiner)
     {
-        if (_character == null && joiner == SceneSystem.GetMasterScene().GetPlayer())
+        if (_pawn == null && joiner == SceneSystem.GetMasterScene().GetPlayer())
         {
             SetCharacter(SceneSystem.GetMasterScene().GetPlayer());
             ActivateCombatControl();
@@ -70,9 +70,9 @@ public partial class HumanCombatController : Node
     private void OnCombatEnded()
     {
         _pawnMoving = false;
-        _character.Draw -= OnPawnDraw;
+        _pawn.Draw -= OnPawnDraw;
         CombatSystem.TurnHandlers -= OnTurnBegin;
-        _character.QueueRedraw();
+        _pawn.QueueRedraw();
     }
 
     public override void _Ready()
@@ -81,6 +81,7 @@ public partial class HumanCombatController : Node
         CombatSystem.CharacterJoinedCombatHandlers += OnCombatJoined;
         CombatSystem.CombatEnded += OnCombatEnded;
         CombatSystem.TurnHandlers += OnTurnBegin;
+        HealthSystem.DeathEventHandlers += OnDeathEvent;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -90,7 +91,7 @@ public partial class HumanCombatController : Node
             return;
         }
 
-        if (IsActive && IsOurTurn && CombatSystem.GetMovesRemaining(_character) == 0)
+        if (IsActive && IsOurTurn && CombatSystem.GetMovesRemaining(_pawn) == 0)
         {
             SetCharacter(_side.First(c => CombatSystem.GetMovesRemaining(c) > 0));
         }
@@ -100,25 +101,30 @@ public partial class HumanCombatController : Node
             if (HoverSystem.AnyHovered())
             {
                 var hoveredChar = CharacterSystem.GetInstance(HoverSystem.Hovered);
+                var dist = _pawn.GlobalPosition.DistanceTo(hoveredChar.GlobalPosition);
+                if (dist > _pawn.CharacterData.AttackRange)
+                {
+                    return;
+                }
                 _pawnAttacking = true;
-                _character.BeginAttackAnim(
-                    _character.GlobalPosition.DirectionTo(hoveredChar.GlobalPosition),
-                    () => _character.BasicAttackAbility.Activate(_character, hoveredChar, _character.GetProjectileSpawnPoint(), hoveredChar.Collider.GlobalPosition, () =>
+                _pawn.BeginAttackAnim(
+                    _pawn.GlobalPosition.DirectionTo(hoveredChar.GlobalPosition),
+                    () => _pawn.BasicAttackAbility.Activate(_pawn, hoveredChar, _pawn.GetProjectileSpawnPoint(), hoveredChar.Collider.GlobalPosition, () =>
                                                         _pawnAttacking = false));
             }
             else
             {
                 var path = NavigationServer2D.MapGetPath(
                     CombatSystem.NavRegion.GetNavigationMap(),
-                    _character.GlobalPosition,
-                    _character.GetGlobalMousePosition(),
+                    _pawn.GlobalPosition,
+                    _pawn.GetGlobalMousePosition(),
                     true);
-                var len = Math.ComputePathLength(path, _character.GlobalPosition);
-                if (len <= _character.MovementRange)
+                var len = Math.ComputePathLength(path, _pawn.GlobalPosition);
+                if (len <= _pawn.MovementRange)
                 {
                     _pawnMoving = true;
-                    _character.IssueCombatMove(
-                        path.Length > 0 ? path : [_character.GetGlobalMousePosition()],
+                    _pawn.IssueCombatMove(
+                        path.Length > 0 ? path : [_pawn.GetGlobalMousePosition()],
                         () =>
                     {
                         _pawnMoving = false;
@@ -127,20 +133,20 @@ public partial class HumanCombatController : Node
                 }
             }
         }
-        _character.QueueRedraw();
+        _pawn.QueueRedraw();
     }
 
     private void SetPipVisibility()
     {
-        if (CombatSystem.GetMovesRemaining(_character) > 0)
+        if (CombatSystem.GetMovesRemaining(_pawn) > 0)
         {
-            _character.ActionPip1.Visible = CombatSystem.GetMovesRemaining(_character) > 0;
-            _character.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_character) > 1;
+            _pawn.ActionPip1.Visible = CombatSystem.GetMovesRemaining(_pawn) > 0;
+            _pawn.ActionPip2.Visible = CombatSystem.GetMovesRemaining(_pawn) > 1;
         }
         else
         {
-            _character.ActionPip1.Hide();
-            _character.ActionPip2.Hide();
+            _pawn.ActionPip1.Hide();
+            _pawn.ActionPip2.Hide();
         }
     }
 
@@ -153,52 +159,52 @@ public partial class HumanCombatController : Node
 
         if (IsOurTurn && !HoverSystem.AnyHovered())
         {
-            _character.DrawCircle(new Vector2(0.0f, 2.0f), 8.0f, new Color(0.0f, 0.0f, 1.0f), filled: false);
+            _pawn.DrawCircle(new Vector2(0.0f, 2.0f), 8.0f, new Color(0.0f, 0.0f, 1.0f), filled: false);
             if (CombatSystem.NavReady())
             {
                 var path = NavigationServer2D.MapGetPath(
                     CombatSystem.NavRegion.GetNavigationMap(),
-                    _character.GlobalPosition,
-                    _character.GetGlobalMousePosition(),
+                    _pawn.GlobalPosition,
+                    _pawn.GetGlobalMousePosition(),
                     true);
-                var len = Math.ComputePathLength(path, _character.GlobalPosition);
-                var inRange = len <= _character.MovementRange;
-                var pathTransformed = path.Select(_character.ToLocal).ToArray();
+                var len = Math.ComputePathLength(path, _pawn.GlobalPosition);
+                var inRange = len <= _pawn.MovementRange;
+                var pathTransformed = path.Select(_pawn.ToLocal).ToArray();
                 float dist = path.Length > 1
                     ? len / 16.0f
-                    : _character.GlobalPosition.DistanceTo(_character.GetGlobalMousePosition()) / 16.0f;
+                    : _pawn.GlobalPosition.DistanceTo(_pawn.GetGlobalMousePosition()) / 16.0f;
                 var targetPoint = pathTransformed.Length > 1
                     ? pathTransformed[^1]
-                    : _character.GetLocalMousePosition();
+                    : _pawn.GetLocalMousePosition();
                 Color lineColor = inRange ? new Color(1, 1, 1) : new Color(1, 0, 0);
                 if (pathTransformed.Length > 1)
                 {
-                    _character.DrawPolyline(pathTransformed, lineColor);
+                    _pawn.DrawPolyline(pathTransformed, lineColor);
                 }
                 else
                 {
-                    _character.DrawLine(_character.ToLocal(_character.GlobalPosition), _character.GetLocalMousePosition(), lineColor);
+                    _pawn.DrawLine(_pawn.ToLocal(_pawn.GlobalPosition), _pawn.GetLocalMousePosition(), lineColor);
                 }
 
-                _character.DrawString(PathFont, targetPoint, $"{dist:0.00}m", fontSize: 8);
+                _pawn.DrawString(PathFont, targetPoint, $"{dist:0.00}m", fontSize: 8);
             }
         }
 
         if (HoverSystem.AnyHovered())
         {
             var hovered = CharacterSystem.GetInstance(HoverSystem.Hovered);
-            var chance = CombatSystem.ComputeToHitChance(_character, hovered) * 100.0f;
-            _character.DrawString(_character.ToHitFont, new Vector2(12.0f, 0.0f) + _character.GetLocalMousePosition(), $"{chance:0}%", fontSize: 8);
+            var chance = CombatSystem.ComputeToHitChance(_pawn, hovered) * 100.0f;
+            _pawn.DrawString(_pawn.ToHitFont, new Vector2(12.0f, 0.0f) + _pawn.GetLocalMousePosition(), $"{chance:0}%", fontSize: 8);
         }
     }
 
     private void OnTurnBegin(List<Character> sideMoving)
     {
-        if (_character == null)
+        if (_pawn == null)
         {
             return;
         }
-        if (sideMoving.Contains(_character))
+        if (sideMoving.Contains(_pawn))
         {
             _side = sideMoving;
         }
@@ -212,7 +218,7 @@ public partial class HumanCombatController : Node
         }
         SetPipVisibility();
         SceneSystem.GetMasterScene().SetAbilityBarVisible(IsOurTurn);
-        _character.QueueRedraw();
+        _pawn.QueueRedraw();
     }
 
     public void OnAbilityTargetingStart(Ability ability, Character caster)
@@ -229,7 +235,7 @@ public partial class HumanCombatController : Node
         _targetingCursor = swCursor;
 
         masterScene.SetAbilityBarReceiveInput(false);
-        _character.QueueRedraw();
+        _pawn.QueueRedraw();
     }
 
     public void OnAbilityTargetingEnd(Ability _)
@@ -239,13 +245,13 @@ public partial class HumanCombatController : Node
         _targetingAbility = null;
         _pawnTargetingAbility = false;
         SceneSystem.GetMasterScene().SetAbilityBarReceiveInput(true);
-        _character.QueueRedraw();
+        _pawn.QueueRedraw();
     }
 
     public void OnDeathEvent(DeathEvent e)
     {
         _ = _side.Remove(e.Deceased);
-        if (e.Deceased == _character)
+        if (e.Deceased == _pawn)
         {
             if (_side.Count > 0)
             {

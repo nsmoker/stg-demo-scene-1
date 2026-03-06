@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace STGDemoScene1.Scripts;
 
@@ -39,5 +40,13 @@ public static class Math
         }
 
         return len;
+    }
+
+    public static Vector2 GetCardinalQuantization(Vector2 fromDirection)
+    {
+        var toDirection = fromDirection.Normalized();
+        List<Vector2> cardinals = [Vector2.Up, Vector2.Down, Vector2.Right, Vector2.Left];
+        // Use the cover level of the cardinal direction with the minimum angular distance to the attacker's target vector.
+        return cardinals.MinBy(cardinal => Mathf.Abs(toDirection.AngleTo(cardinal)));
     }
 }

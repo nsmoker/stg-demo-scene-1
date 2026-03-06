@@ -452,11 +452,8 @@ public partial class Character : CharacterBody2D
 
         if (IsTakingCover())
         {
+            var toAttackerQuantized = Math.GetCardinalQuantization(-fromDirection);
             // Add cover.
-            var toAttacker = (-fromDirection).Normalized();
-            List<Vector2> cardinals = [Vector2.Up, Vector2.Down, Vector2.Right, Vector2.Left];
-            // Use the cover level of the cardinal direction with the minimum angular distance to the attacker's target vector.
-            var toAttackerQuantized = cardinals.MinBy(cardinal => Mathf.Abs(toAttacker.AngleTo(cardinal)));
             if (toAttackerQuantized == Vector2.Up)
             {
                 ac += _coverState.CoverLevelNorth * 2;
@@ -744,6 +741,9 @@ public partial class Character : CharacterBody2D
         HoverSystem.SetUnhovered(CharacterData.ResourcePath);
         QueueRedraw();
     }
+
+    public List<Character> GetEnemiesInSense() => SenseArea.GetOverlappingBodies().OfType<Character>()
+        .Where(c => HostilitySystem.GetHostility(c.CharacterData, CharacterData)).ToList();
 
     public Character GetClosestEnemy() =>
         SenseArea.GetOverlappingBodies()
